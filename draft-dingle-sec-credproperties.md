@@ -112,6 +112,16 @@ Enrollment binding describes the mechanism that binds the credential to the enro
 ## Credential Provider Trustworthiness
 Credential provider trustworthiness properties describe the requirements placed on the issuer or provider of a credential. 
 
+### Provider Type
+Provider type describes the category of entity that issues or generates the credential.
+
+### Verifiability
+Verifiability describes whether the provider's identity and properties can be independently verified at credential registration or use time.
+
+### Certification Level
+Certification level describes the formal certifications that apply to the credential's provider or hardware. Multiple values may apply simultaneously.
+
+
 ## Credential Compliance
 Credential provider compliance properties describe requirements on composition or management dictated by regulatory bodies.
 
