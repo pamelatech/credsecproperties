@@ -93,10 +93,6 @@ A credential may be unlocked by different parties which defines the scope of whi
 ### Unlock Persistence
 Credentials may be unlocked once with an activation factor (e.g. using a hardware security key), or the activation factor may be presented seconds to minutes before use (e.g. a credential vault remains unlocked for 5 minutes after use).  
 
-
-## Credential Enrollment
-Credential enrollment properties describe requirements placed on a credential as it is created. 
-
 ## Credential Enrollment
 Credential enrollment properties describe requirements required to be met before a credential is created.
 
@@ -124,6 +120,16 @@ Certification level describes the formal certifications that apply to the creden
 
 ## Credential Compliance
 Credential provider compliance properties describe requirements on composition or management dictated by regulatory bodies.
+
+### Composition Rules
+Composition rules describe regulatory or standards-based requirements on how the credential must be constructed such as acceptable cryptographic algorithms.
+
+### Lifecycle Rules
+Lifecycle rules describe regulatory or standards-based requirements on credential rotation, expiry, or revocation.
+
+### Regulatory Framework
+Regulatory framework describes which regulatory framework or frameworks impose requirements on this credential type. Multiple values may apply simultaneously.
+
 
 ## Credential Recovery
 Credential Recovery properties describe limitations of who can reset the credential or how a credential can be reset.
