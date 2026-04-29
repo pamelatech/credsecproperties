@@ -132,9 +132,19 @@ Regulatory framework describes which regulatory framework or frameworks impose r
 
 
 ## Credential Recovery
-Credential Recovery properties describe limitations of who can reset the credential or how a credential can be reset.
+Credential Recovery properties describe limitations of who can reset a credential or how a credential can be reset.  
 
+### Recoverability
+Recoverability is a binary property that describes whether access to a valid credential can be restored after loss.  Not all systems support recoverability.
 
+### Recovery Agent
+Recovery agent describes the entity, such as the user or an administrator, that can initiate and execute the recovery process.
+
+### Recovery Mechanism
+Recovery mechanism describes the processes and/or artifacts that enables recovery of a credential.  
+
+### Recovery Assurance
+TODO - determine whether this can be defined in concrete terms vs. abstract terms 
 
 # Conventions and Definitions
 
@@ -145,7 +155,6 @@ TODO define two parts of credential (secret, generated)
 # Security Considerations
 
 TODO Security
-
 
 # IANA Considerations
 
