@@ -105,17 +105,20 @@ A vouched credential is one whose enrollment was enabled by the subject first au
 ### Enrollment Binding
 Enrollment binding describes the mechanism that binds the credential to the enrolled identity.
 
-## Credential Provider Trustworthiness
-Credential provider trustworthiness properties describe the requirements placed on the issuer or provider of a credential. 
+## Substantiation
+Substantiation describes how a credential might derive security properties from an authority or other third party entity such as an issuer, provenance chain, or cryptographic signature. 
 
-### Provider Type
-Provider type describes the category of entity that issues or generates the credential.
+### Identifier Binding
+The primary content of a credential is cryptographically bound to an identifier. Examples of credentials that include bound identifiers include SAML assertions, JSON Web Tokens (jwts), X.509 certificates, ISO 18013 mobile drivers license objects and verifiable credentials
 
-### Verifiability
-Verifiability describes whether the provider's identity and properties can be independently verified at credential registration or use time.
+### Integrity
+Integrity describes mechanisms built into the credential that ensure that the data within the credential can not be tampered with.
 
-### Certification Level
-Certification level describes the formal certifications that apply to the credential's provider or hardware. Multiple values may apply simultaneously.
+### Authoritative Relationship
+Authority reputation describes any entities that the credential may derive security from, such as issuers, attestation authorities, delegators, or trust frameworks.
+
+### Chainability
+The credential is capable of including links to or content of other credentials.
 
 
 ## Credential Compliance
