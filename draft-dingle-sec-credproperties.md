@@ -53,6 +53,7 @@ Properties are organized into areas of scrutiny, with each class containing the 
 
 ## Presentation Limits
 Credential reuse properties describe ways in which the use of a credential is functionally restricted.
+
 ### Validity Count
 A credential becomes invalid after a specified number of successful presentations. An example would be a temporary password that can only be used 5 times, or a one-time password.
 
@@ -68,8 +69,8 @@ A mechanism that specifies which destination consumers of the credential are val
 ## Credential Containment & Unlock
 Credential containment describes the at-rest state of a credential and its storage location(s). Unlock properties describe how the contained credential is made available for use at runtime and how the containment facility, if any, can play a security role in an observable way at operation time.
 
-### Containment (see FIDO security requirements for sync fabric)
-Describes how the creation, storage, and usage of a credential occurs. At one extreme, containment be within the boundary of a cryptographically supervised service or hardware element, e.g. an SSH private key stored in an HSM.  At the other extreme, the credential may be uncontained, e.g. a manually generated password.  A SSH private key stored on volatile media sits between these extremes, it is contained by access to the media on which it resides but it is not permanently bound to the media (see Boundary Binding, below).
+### Containment (TODO: see FIDO security requirements for sync fabric)
+Describes how the creation, storage, and usage of a credential is managed. At one extreme, containment be within the boundary of a cryptographically supervised service or hardware element, e.g. an SSH private key stored in an HSM.  At the other extreme, the credential may be uncontained, e.g. a manually generated password.  A SSH private key stored on volatile media sits between these extremes, it is contained by access to the media on which it resides but it is not permanently bound to the media (see Boundary Binding, below).
 
 ### Boundary Binding
 Boundary bindings describe the operational rules or limitations that limit where the secret portion of a credential could be stored. In the prior examples, the HSM bound SSH private key may not be extractable from the HSM, the HSM provides the boundary binding.  The password is unbounded, there are no limits on how the password may be moved or shared. The SSH key stored on volatile media is also unbound, since it may be copied and moved freely, e.g. it is exportable.  
@@ -78,14 +79,10 @@ Boundary bindings describe the operational rules or limitations that limit where
 The boundary enforcement property describes the mechanisms which ensure that operational rules are followed. Boundary enforcements can be proactive or reactive.  An example of a proactive boundary enforcement include binding the credential to the device, e.g. the SSH key generated and stored in an HSM. An example of a reactive boundary enforcement includes credential scanning of source code repositories. 
 
 ### Transference
-Transference is the ability for an end user to give the credential away to another user such that durable ongoing use is possible by two different entities.
+Transference is the ability for an end user to give the credential away to another user such that durable ongoing use is possible by two different entities.  This transference may be within the enforced boundary (e.g. sharing a synced passkey via a credential manager) or outside of the boundary (e.g. user copies a password from a credential manager to a file which is emailed to another user).
 
 ### Dynamism
-Dynamism describes a credential whose stored and active forms are different. Credentials with no dynamism (or dynamic genarativity) such as passwords exibit no difference between the stored (in memory, in a password manager, etc.) and the credential sent to the verifier. Dynamic generativity indicates that some function is used to operate on the stored credential such that what is sent over the wire is different than what is stored (e.g a challenge response protocol like FIDO.
-
-
-
-
+Dynamism describes a credential whose stored and active forms are different. Credentials with no dynamism (or dynamic genarativity) such as passwords exibit no difference between the stored (in memory, in a password manager, etc.) and the credential sent to the verifier. Dynamic generativity indicates that some function is used to operate on the stored credential such that what is sent over the wire is different than what is stored (e.g. a challenge response protocol like FIDO).  Credentials that do not exhibit dynamism, such as shared secrets, are definitionally not able to be contained.
 
 ### Activation
 A credential becomes available for an operation only when a local user gesture is performed. This user gesture may also be called an activation factor (see 800-63-4). Only a credential that is contained can be activated. A FIDO2 private key on a hardware security device that requires a PIN is an example of an activated credential. A biometric that unlocks a TPM on a laptop is another example of an activated credential.  Presence Activation is a case where locality is required but confirmation of a secret or biometric is not required. Individual Activation is a case where only one human can trigger the container to unlock.  
