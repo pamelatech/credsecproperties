@@ -1,3 +1,4 @@
+---
 title: "Credential Management Security properties"
 abbrev: "credproperties"
 category: info
