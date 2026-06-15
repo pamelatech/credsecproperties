@@ -2,7 +2,7 @@ title: "Credential Management Security properties"
 abbrev: "credproperties"
 category: info
 
-docname: draft-dingle-sec-credproperties
+docname: draft-dingle-sec-credproperties-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
