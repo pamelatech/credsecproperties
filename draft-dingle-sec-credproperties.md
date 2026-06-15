@@ -39,7 +39,7 @@ informative:
 
 --- abstract
 
-This document defines a set of properties which explain and differentiate unique security characteristics of an authentication method. 
+This document defines a set of properties which explain and differentiate unique security characteristics of an authentication method.
 
 --- middle
 
@@ -73,10 +73,10 @@ Credential containment describes the at-rest state of a credential and its stora
 Describes how the creation, storage, and usage of a credential is managed. At one extreme, containment be within the boundary of a cryptographically supervised service or hardware element, e.g. an SSH private key stored in an HSM.  At the other extreme, the credential may be uncontained, e.g. a manually generated password.  A SSH private key stored on volatile media sits between these extremes, it is contained by access to the media on which it resides but it is not permanently bound to the media (see Boundary Binding, below).
 
 ### Boundary Binding
-Boundary bindings describe the operational rules or limitations that limit where the secret portion of a credential could be stored. In the prior examples, the HSM bound SSH private key may not be extractable from the HSM, the HSM provides the boundary binding.  The password is unbounded, there are no limits on how the password may be moved or shared. The SSH key stored on volatile media is also unbound, since it may be copied and moved freely, e.g. it is exportable.  
+Boundary bindings describe the operational rules or limitations that limit where the secret portion of a credential could be stored. In the prior examples, the HSM bound SSH private key may not be extractable from the HSM, the HSM provides the boundary binding.  The password is unbounded, there are no limits on how the password may be moved or shared. The SSH key stored on volatile media is also unbound, since it may be copied and moved freely, e.g. it is exportable.
 
 ### Boundary Enforcement
-The boundary enforcement property describes the mechanisms which ensure that operational rules are followed. Boundary enforcements can be proactive or reactive.  An example of a proactive boundary enforcement include binding the credential to the device, e.g. the SSH key generated and stored in an HSM. An example of a reactive boundary enforcement includes credential scanning of source code repositories. 
+The boundary enforcement property describes the mechanisms which ensure that operational rules are followed. Boundary enforcements can be proactive or reactive.  An example of a proactive boundary enforcement include binding the credential to the device, e.g. the SSH key generated and stored in an HSM. An example of a reactive boundary enforcement includes credential scanning of source code repositories.
 
 ### Transference
 Transference is the ability for an end user to give the credential away to another user such that durable ongoing use is possible by two different entities.  This transference may be within the enforced boundary (e.g. sharing a synced passkey via a credential manager) or outside of the boundary (e.g. user copies a password from a credential manager to a file which is emailed to another user).
@@ -85,19 +85,19 @@ Transference is the ability for an end user to give the credential away to anoth
 Dynamism describes a credential whose stored and active forms are different. Credentials with no dynamism (or dynamic genarativity) such as passwords exibit no difference between the stored (in memory, in a password manager, etc.) and the credential sent to the verifier. Dynamic generativity indicates that some function is used to operate on the stored credential such that what is sent over the wire is different than what is stored (e.g. a challenge response protocol like FIDO).  Credentials that do not exhibit dynamism, such as shared secrets, are definitionally not able to be contained.
 
 ### Activation
-A credential becomes available for an operation only when a local user gesture is performed. This user gesture may also be called an activation factor (see 800-63-4). Only a credential that is contained can be activated. A FIDO2 private key on a hardware security device that requires a PIN is an example of an activated credential. A biometric that unlocks a TPM on a laptop is another example of an activated credential.  Presence Activation is a case where locality is required but confirmation of a secret or biometric is not required. Individual Activation is a case where only one human can trigger the container to unlock.  
+A credential becomes available for an operation only when a local user gesture is performed. This user gesture may also be called an activation factor (see 800-63-4). Only a credential that is contained can be activated. A FIDO2 private key on a hardware security device that requires a PIN is an example of an activated credential. A biometric that unlocks a TPM on a laptop is another example of an activated credential.  Presence Activation is a case where locality is required but confirmation of a secret or biometric is not required. Individual Activation is a case where only one human can trigger the container to unlock.
 
 ### Unlock Scope
 A credential may be unlocked by different parties which defines the scope of which entities can unlock credential for use.  The owner of a credential is always expected to be able to unlock their own credential. Credentials on shared devices may be unlocked by all users sharing the device. Similarly, credentials in a shared enterprise vault may be unlocked by a vault administrator.  Unlock scope is related to an instance of a credential and is distinct from the Credential Management Security Properties.
 
 ### Unlock Persistence
-Credentials may be unlocked once with an activation factor (e.g. using a hardware security key), or the activation factor may be presented seconds to minutes before use (e.g. a credential vault remains unlocked for 5 minutes after use).  
+Credentials may be unlocked once with an activation factor (e.g. using a hardware security key), or the activation factor may be presented seconds to minutes before use (e.g. a credential vault remains unlocked for 5 minutes after use).
 
 ## Credential Enrollment
 Credential enrollment properties describe requirements required to be met before a credential is created.
 
 ### Enrollment Assurance
-Enrollment assurance describes the identity verification assurance level (todo, this feels like it points at NIST!) at the time the credential was created. 
+Enrollment assurance describes the identity verification assurance level (todo, this feels like it points at NIST!) at the time the credential was created.
 
 ### Vouching
 A vouched credential is one whose enrollment was enabled by the subject first authenticating with a separate, pre-existing credential. The prior credential acts as a gate on the enrollment event but does not contribute its key material to the new credential. After enrollment, the vouched credential is fully independent.  A user may present a passport as a proof of citizenship to be granted a state digital identity.
@@ -106,7 +106,7 @@ A vouched credential is one whose enrollment was enabled by the subject first au
 Enrollment binding describes the mechanism that binds the credential to the enrolled identity.
 
 ## Substantiation
-Substantiation describes how a credential might derive security properties from an authority or other third party entity such as an issuer, provenance chain, or cryptographic signature. 
+Substantiation describes how a credential might derive security properties from an authority or other third party entity such as an issuer, provenance chain, or cryptographic signature.
 
 ### Identifier Binding
 The primary content of a credential is cryptographically bound to an identifier. Examples of credentials that include bound identifiers include SAML assertions, JSON Web Tokens (jwts), X.509 certificates, ISO 18013 mobile drivers license objects and verifiable credentials
@@ -135,7 +135,7 @@ Regulatory framework describes which regulatory framework or frameworks impose r
 
 
 ## Credential Recovery
-Credential Recovery properties describe limitations of who can reset a credential or how a credential can be reset.  
+Credential Recovery properties describe limitations of who can reset a credential or how a credential can be reset.
 
 ### Recoverability
 Recoverability is a binary property that describes whether access to a valid credential can be restored after loss.  Not all systems support recoverability.
@@ -144,10 +144,10 @@ Recoverability is a binary property that describes whether access to a valid cre
 Recovery agent describes the entity, such as the user or an administrator, that can initiate and execute the recovery process.
 
 ### Recovery Mechanism
-Recovery mechanism describes the processes and/or artifacts that enables recovery of a credential.  
+Recovery mechanism describes the processes and/or artifacts that enables recovery of a credential.
 
 ### Recovery Assurance
-TODO - determine whether this can be defined in concrete terms vs. abstract terms 
+TODO - determine whether this can be defined in concrete terms vs. abstract terms
 
 # Conventions and Definitions
 
