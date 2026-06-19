@@ -5,8 +5,8 @@
 Network Working Group                                          P. Dingle
 Internet-Draft                                                 Microsoft
 Intended status: Informational                                D. H. Saxe
-Expires: 17 December 2026                                        Remitly
-                                                            15 June 2026
+Expires: 21 December 2026                                        Remitly
+                                                            19 June 2026
 
 
                Credential Management Security properties
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 December 2026.
+   This Internet-Draft will expire on 21 December 2026.
 
 Copyright Notice
 
