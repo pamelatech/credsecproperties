@@ -1261,7 +1261,10 @@ svg {
                     <p id="section-toc.1-1.3.2.6.2.3.1"><a href="#section-3.6.3" class="auto internal xref">3.6.3</a>.  <a href="#name-recovery-mechanism" class="internal xref">Recovery Mechanism</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.6.2.4">
-                    <p id="section-toc.1-1.3.2.6.2.4.1"><a href="#section-3.6.4" class="auto internal xref">3.6.4</a>.  <a href="#name-recovery-assurance" class="internal xref">Recovery Assurance</a></p>
+                    <p id="section-toc.1-1.3.2.6.2.4.1"><a href="#section-3.6.4" class="auto internal xref">3.6.4</a>.  <a href="#name-recovery-artifact" class="internal xref">Recovery Artifact</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.6.2.5">
+                    <p id="section-toc.1-1.3.2.6.2.5.1"><a href="#section-3.6.5" class="auto internal xref">3.6.5</a>.  <a href="#name-recovery-assurance" class="internal xref">Recovery Assurance</a></p>
 </li>
                 </ul>
 </li>
@@ -1545,7 +1548,7 @@ svg {
           <h4 id="name-recovery-agent">
 <a href="#section-3.6.2" class="section-number selfRef">3.6.2. </a><a href="#name-recovery-agent" class="section-name selfRef">Recovery Agent</a>
           </h4>
-<p id="section-3.6.2-1">Recovery agent describes the entity, such as the user or an administrator, that can initiate and execute the recovery process.<a href="#section-3.6.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.6.2-1">Recovery agent describes the entity, such as the user or an administrator, that can initiate and execute the recovery process.  A recovery agent <span class="bcp14">MAY</span> be null, e.g. when <em>Recoverability</em> is "no".  Multiple recovery agents <span class="bcp14">MAY</span> be supported, e.g. when both the user and an administrator are required for recovery.<a href="#section-3.6.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="recovery-mechanism">
@@ -1553,15 +1556,23 @@ svg {
           <h4 id="name-recovery-mechanism">
 <a href="#section-3.6.3" class="section-number selfRef">3.6.3. </a><a href="#name-recovery-mechanism" class="section-name selfRef">Recovery Mechanism</a>
           </h4>
-<p id="section-3.6.3-1">Recovery mechanism describes the processes and/or artifacts that enables recovery of a credential.<a href="#section-3.6.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.6.3-1">Recovery mechanism describes the processes that enables recovery of a credential.  Example mechanisms may include SMS OTP, remote identity proofing, in-person identity proofing with a trusted referee, vouching, etc.<a href="#section-3.6.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="recovery-artifact">
+<section id="section-3.6.4">
+          <h4 id="name-recovery-artifact">
+<a href="#section-3.6.4" class="section-number selfRef">3.6.4. </a><a href="#name-recovery-artifact" class="section-name selfRef">Recovery Artifact</a>
+          </h4>
+<p id="section-3.6.4-1">Recovery artifacts are items used as part of the recovery mechanism. For example, a remote identity proofing session may be dependent upon an identity document such as a passport and a selfie video. Not all recovery mechanisms will use recovery artifacts, e.g. SMS or email OTP.<a href="#section-3.6.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="recovery-assurance">
-<section id="section-3.6.4">
+<section id="section-3.6.5">
           <h4 id="name-recovery-assurance">
-<a href="#section-3.6.4" class="section-number selfRef">3.6.4. </a><a href="#name-recovery-assurance" class="section-name selfRef">Recovery Assurance</a>
+<a href="#section-3.6.5" class="section-number selfRef">3.6.5. </a><a href="#name-recovery-assurance" class="section-name selfRef">Recovery Assurance</a>
           </h4>
-<p id="section-3.6.4-1">TODO - determine whether this can be defined in concrete terms vs. abstract terms<a href="#section-3.6.4-1" class="pilcrow">¶</a></p>
+<p id="section-3.6.5-1">TODO - determine whether this can be defined in concrete terms vs. abstract terms<a href="#section-3.6.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>

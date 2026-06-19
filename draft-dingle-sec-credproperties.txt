@@ -99,7 +99,8 @@ Table of Contents
        3.6.1.  Recoverability
        3.6.2.  Recovery Agent
        3.6.3.  Recovery Mechanism
-       3.6.4.  Recovery Assurance
+       3.6.4.  Recovery Artifact
+       3.6.5.  Recovery Assurance
    4.  Conventions and Definitions
    5.  Security Considerations
    6.  IANA Considerations
@@ -342,14 +343,27 @@ Table of Contents
 3.6.2.  Recovery Agent
 
    Recovery agent describes the entity, such as the user or an
-   administrator, that can initiate and execute the recovery process.
+   administrator, that can initiate and execute the recovery process.  A
+   recovery agent MAY be null, e.g. when _Recoverability_ is "no".
+   Multiple recovery agents MAY be supported, e.g. when both the user
+   and an administrator are required for recovery.
 
 3.6.3.  Recovery Mechanism
 
-   Recovery mechanism describes the processes and/or artifacts that
-   enables recovery of a credential.
+   Recovery mechanism describes the processes that enables recovery of a
+   credential.  Example mechanisms may include SMS OTP, remote identity
+   proofing, in-person identity proofing with a trusted referee,
+   vouching, etc.
 
-3.6.4.  Recovery Assurance
+3.6.4.  Recovery Artifact
+
+   Recovery artifacts are items used as part of the recovery mechanism.
+   For example, a remote identity proofing session may be dependent upon
+   an identity document such as a passport and a selfie video.  Not all
+   recovery mechanisms will use recovery artifacts, e.g. SMS or email
+   OTP.
+
+3.6.5.  Recovery Assurance
 
    TODO - determine whether this can be defined in concrete terms vs.
    abstract terms
