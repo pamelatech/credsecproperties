@@ -158,16 +158,15 @@ TODO define two parts of credential (secret, generated)
 
 # Security Considerations
 
-TODO Security
+This document has no security considerations.
 
 # IANA Considerations
 
 This document has no IANA actions.
-
 
 --- back
 
 # Acknowledgments
 {:numbered="false"}
 
-TODO acknowledge.
+The authors would like to acknowledge the following individuals for their thoughful feedback: George Fletcher, Andrew Hughes, Justin Richer, and the attendees of the Internet Identity Workshop 42 and OAuth Security Workshop 2025.
