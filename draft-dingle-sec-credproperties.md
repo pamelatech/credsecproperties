@@ -169,4 +169,4 @@ This document has no IANA actions.
 # Acknowledgments
 {:numbered="false"}
 
-The authors would like to acknowledge the following individuals for their thoughful feedback: George Fletcher, Andrew Hughes, Justin Richer, and the attendees of the Internet Identity Workshop 42 and OAuth Security Workshop 2025 for their feedback and ideas.
+The authors would like to acknowledge the following individuals for their thoughful feedback: George Fletcher, Andrew Hughes, Justin Richer, and the attendees of the Internet Identity Workshop 42 and OAuth Security Workshop 2025.
