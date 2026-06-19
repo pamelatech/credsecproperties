@@ -1,21 +1,22 @@
-# Dingle Test Draft
+<!-- regenerate: on (set to off if you edit this file) -->
 
-This is the working area for the individual Internet-Draft, "Dingle Test Draft".
+# Credential Management Security properties
 
-* [Editor's Copy](https://pamelatech.github.io/credsecproperties/#go.draft-dingle-test.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-dingle-test)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-dingle-test)
-* [Compare Editor's Copy to Individual Draft](https://pamelatech.github.io/credsecproperties/#go.draft-dingle-test.diff)
+This is the working area for the individual Internet-Draft, "Credential Management Security properties".
+
+* [Editor's Copy](https://pamelatech.github.io/credsecproperties/#go.draft-dingle-sec-credproperties.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-dingle-sec-credproperties)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-dingle-sec-credproperties)
+* [Compare Editor's Copy to Individual Draft](https://pamelatech.github.io/credsecproperties/#go.draft-dingle-sec-credproperties.diff)
 
 
 ## Contributing
 
 See the
-[guidelines for contributions](https://github.com/pamelatech/credsecproperties/blob//CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/pamelatech/credsecproperties/blob/main/CONTRIBUTING.md).
 
-Contributions can be made by creating pull requests.
-The GitHub interface supports creating pull requests using the Edit (✏) button.
-
+The contributing file also has tips on how to make contributions, if you
+don't already know how to do that.
 
 ## Command Line Usage
 
