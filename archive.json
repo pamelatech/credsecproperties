@@ -1,0 +1,813 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2026-06-21T03:35:37.279138+00:00",
+  "repo": "pamelatech/credsecproperties",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 1,
+      "id": "I_kwDON4ikis70RmcW",
+      "title": "Prep draft for IETF126 in Vienna",
+      "url": "https://github.com/pamelatech/credsecproperties/issues/1",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Rough due date is the first week in July.",
+      "createdAt": "2026-03-18T23:20:36Z",
+      "updatedAt": "2026-03-18T23:20:36Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 2,
+      "id": "I_kwDON4ikis70Rmug",
+      "title": "Authenticate 2026 - CFP",
+      "url": "https://github.com/pamelatech/credsecproperties/issues/2",
+      "state": "CLOSED",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Due end of March 2026.",
+      "createdAt": "2026-03-18T23:20:57Z",
+      "updatedAt": "2026-04-08T21:07:36Z",
+      "closedAt": "2026-04-08T21:07:36Z",
+      "comments": [
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Past CFP:\n\n**Stop Counting Factors... Start Describing Authentication Events**\nWe began deploying multi-factor authentication because passwords provided insufficient security. More factors equals more\nsecurity, right? Yes, but we continue to see authentication attacks such as credential stuffing and phishing! The identity industry needs to stop thinking in the quantity of authentication factors, and start thinking about the properties of the authentication event. As we transition into the era of passkeys, it is time to consider how we describe the properties of our authentication event.\n\nIn this talk, we\u2019ll demonstrate how identity providers and relying parties can communicate a consistent, composable collection\nof authentication properties. To raise the security bar and provide accountability, these properties must communicate not only\nabout the authentication event, but about the security primitives underlying the event itself. These properties can be used to drive authentication and authorization decisions in standalone and federated environments, enabling clear, consistent application of security controls.\n\nDean Saxe, Principal Engineer, Office of the CTO, Beyond Identity\nPamela Dingle, Director of Identity Standards, Microsoft",
+          "createdAt": "2026-03-18T23:35:45Z",
+          "updatedAt": "2026-03-18T23:35:45Z"
+        },
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "**Stop Counting Factors, Part Deux**\n\nTwo years ago, we stood on this stage and argued that the identity industry needed to stop counting authentication factors and start reasoning about the properties of the authentication event. The response from the community confirmed we had struck a nerve.\n\nSince then, we have taken that argument from conference stage to standards body. We explored the idea further at IETF121 and OAuth Security Workshop 2025, and have since co-authored an IETF draft to formalize the terminology. We seek to develop a precise, interoperable vocabulary for describing what actually happened during authentication events.\n\nIn this talk, we will walk through the terminology the draft defines: what the terms mean, why the distinctions matter, and how identity providers and relying parties can use them today to drive clearer authentication and authorization decisions. \n\nWe are not here to present a finished standard. We are here because standards development requires the identity community's input. If you have deployed passkeys, built policy engines on top of authentication context, or struggled to describe authentication events consistently across federated systems, your experience is directly relevant to this work.",
+          "createdAt": "2026-03-18T23:53:19Z",
+          "updatedAt": "2026-03-18T23:53:19Z"
+        },
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "**Stop Counting Factors: Part Deux**\n\nTwo years ago, we stood on this stage and argued that the identity industry needed to stop counting authentication factors and start reasoning about the properties of the authentication event. The response from the community confirmed we had struck a nerve.\n\nSince then, we have taken that argument from conference stage to standards body. We explored the idea further at IETF121 and OAuth Security Workshop 2025, and have since co-authored an IETF draft to formalize the terminology. We seek to develop a precise, interoperable vocabulary for describing what actually happened during authentication events.\n\nIn this talk, we will walk through the terminology the draft defines: what the terms mean, why the distinctions matter, and how identity providers and relying parties can use them today to drive clearer authentication and authorization decisions.\n\nWe are not here to present a finished standard. We are here because standards development requires the identity community's input. If you have deployed passkeys, built policy engines on top of authentication context, or struggled to describe authentication events consistently across federated systems, your experience is directly relevant to this work.\n\nFollowing the talk, let's continue with the \"Hallway Con\". Talk to us! What did we get right?  What did we get wrong? What are we missing?  ",
+          "createdAt": "2026-03-23T20:23:27Z",
+          "updatedAt": "2026-03-23T20:23:27Z"
+        },
+        {
+          "author": "pamelatech",
+          "authorAssociation": "OWNER",
+          "body": "Credential Security Properties: Progress Report\n\nTwo years ago, Pamela Dingle & Dean Saxe argued that the identity industry needed to stop counting authentication factors and start reasoning about the properties of the authentication event. The response from the community was strong. Since then, their work has moved from conference stage to standards body resulting in an IETF draft formalizing terminology with a goal to develop a precise, interoperable vocabulary for describing what actually happened during authentication events.\n\nIn this talk, Dean & Pamela walk through the terminology the draft defines: what the terms mean, why the distinctions matter, and how identity providers and relying parties can use them today to drive clearer authentication and authorization decisions.\n\nStandardization of credential security properties requires the identity community's input. If you have deployed passkeys, built policy engines on top of authentication context, or struggled to describe authentication events consistently across federated systems, your experience is directly relevant to this work.\n\n\n",
+          "createdAt": "2026-03-31T21:31:44Z",
+          "updatedAt": "2026-03-31T21:31:44Z"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "I_kwDON4ikis70RwUm",
+      "title": "Determine which IETF stream to submit the draft to",
+      "url": "https://github.com/pamelatech/credsecproperties/issues/3",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-18T23:33:14Z",
+      "updatedAt": "2026-03-18T23:33:14Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 11,
+      "id": "I_kwDON4ikis8AAAABCZQ8zg",
+      "title": "Boundary and Containment are too overlappy",
+      "url": "https://github.com/pamelatech/credsecproperties/issues/11",
+      "state": "OPEN",
+      "author": "pamelatech",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "They are too easy to conflate with each other.  Maybe there is a better word than Boundary",
+      "createdAt": "2026-05-15T17:14:25Z",
+      "updatedAt": "2026-06-15T16:22:57Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Overlappy is a good description - let's merge.",
+          "createdAt": "2026-05-27T06:23:40Z",
+          "updatedAt": "2026-05-27T06:23:40Z"
+        },
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Containment is the \"at rest\" state (including in motion in a sync fabric).\n- Password in a vault is contained (unless I know the password)\n- password in my head is uncontained\n- TOTP is contained \n\nUnlock takes an at rest credential and makes it available for use (may be bounded by an unlock persistence)\n\nBoundary focuses on a real-time generation of an assertion dynamically generated at runtime\n- SAML assertions are not contained, but the private key used to sign the assertion MAY be contained and MAY be unlocked and MAY have unlock persistence\n- the boundary of the SAML assertion is the expected channel where the assertion is shared\n\n\nIncomplete thoughts from breakfast...",
+          "createdAt": "2026-05-27T06:40:34Z",
+          "updatedAt": "2026-05-27T06:40:34Z"
+        },
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "WIth this merge, can I close the issue @pamelatech?",
+          "createdAt": "2026-06-15T16:22:57Z",
+          "updatedAt": "2026-06-15T16:22:57Z"
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "id": "I_kwDON4ikis8AAAABGDq1cg",
+      "title": "Ensure IIW Feedback is added to the draft",
+      "url": "https://github.com/pamelatech/credsecproperties/issues/19",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "IIW42 book of proceedings page 209: https://drive.google.com/file/d/1Fs46JqT3Vf5voBwXd-Ex6F7_yz7YpzSA/view?mc_cid=15bc146c03",
+      "createdAt": "2026-06-19T14:29:50Z",
+      "updatedAt": "2026-06-19T14:29:50Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": [
+    {
+      "number": 4,
+      "id": "PR_kwDON4ikis7RiUXh",
+      "title": "Create research-report.md",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/4",
+      "state": "MERGED",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This is a research report compiled by Dean and Claude.  This is to prompt our thinking and help us make progress.  The data in here MUST be scrutinized and the language MUST NOT move wholesale into the IETF draft.",
+      "createdAt": "2026-04-10T18:25:54Z",
+      "updatedAt": "2026-04-20T22:23:48Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "10e50729fb0ac5f5e04d020d9892a428a98cc618",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "deansaxe-research-report",
+      "headRefOid": "efdb22be6ae41c60157f71b9fd5d04123a314d1f",
+      "closedAt": "2026-04-20T22:23:48Z",
+      "mergedAt": "2026-04-20T22:23:48Z",
+      "mergedBy": "pamelatech",
+      "mergeCommit": {
+        "oid": "2bc38a7ad3a13d50cbd6f65e93f3a1bc1984136b"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 5,
+      "id": "PR_kwDON4ikis7UHold",
+      "title": "Adding lost edits from OSW 2025",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/5",
+      "state": "MERGED",
+      "author": "pamelatech",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Updated the introduction and various sections to improve clarity and precision regarding credential management security properties.",
+      "createdAt": "2026-04-20T22:31:15Z",
+      "updatedAt": "2026-04-20T22:34:21Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "update-draft-credproperties",
+      "baseRefOid": "2bc38a7ad3a13d50cbd6f65e93f3a1bc1984136b",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "pamelatech-patch-1",
+      "headRefOid": "b4343fea71f26b53b851497a7c19523634b222ad",
+      "closedAt": "2026-04-20T22:34:21Z",
+      "mergedAt": "2026-04-20T22:34:21Z",
+      "mergedBy": "deansaxe",
+      "mergeCommit": {
+        "oid": "3841a28c3c8ca8e171cee52074e9c42977fdcd6e"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDON4ikis72_x-C",
+          "commit": {
+            "abbreviatedOid": "b4343fe"
+          },
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-04-20T22:33:47Z",
+          "updatedAt": "2026-04-20T22:33:47Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "id": "PR_kwDON4ikis7UH3_p",
+      "title": "Adding lost edits from OSW 2025",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/6",
+      "state": "MERGED",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Updated the introduction and various sections to improve clarity and precision regarding credential management security properties.",
+      "createdAt": "2026-04-20T22:51:50Z",
+      "updatedAt": "2026-04-20T22:52:01Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "2bc38a7ad3a13d50cbd6f65e93f3a1bc1984136b",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "pamelatech-patch-1",
+      "headRefOid": "b4343fea71f26b53b851497a7c19523634b222ad",
+      "closedAt": "2026-04-20T22:52:01Z",
+      "mergedAt": "2026-04-20T22:52:01Z",
+      "mergedBy": "deansaxe",
+      "mergeCommit": {
+        "oid": "22d9298f1fd39ebc38a537e30ccc553d705ffcbc"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 7,
+      "id": "PR_kwDON4ikis7ULLcG",
+      "title": "Research Report",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/7",
+      "state": "MERGED",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Claude assisted development of a research report based upon our past public presentation (transcript + slides).",
+      "createdAt": "2026-04-21T03:57:50Z",
+      "updatedAt": "2026-04-21T03:58:36Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "deansaxe-research-report",
+      "baseRefOid": "efdb22be6ae41c60157f71b9fd5d04123a314d1f",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "main",
+      "headRefOid": "22d9298f1fd39ebc38a537e30ccc553d705ffcbc",
+      "closedAt": "2026-04-21T03:58:36Z",
+      "mergedAt": "2026-04-21T03:58:36Z",
+      "mergedBy": "deansaxe",
+      "mergeCommit": {
+        "oid": "c39a1ea977100afd809ddc4779238788b67e31c0"
+      },
+      "comments": [
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merging this since it does not impact the core doc",
+          "createdAt": "2026-04-21T03:58:31Z",
+          "updatedAt": "2026-04-21T03:58:31Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 8,
+      "id": "PR_kwDON4ikis7ULMcw",
+      "title": "Merge pull request #7 from pamelatech/main",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/8",
+      "state": "MERGED",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Research Report",
+      "createdAt": "2026-04-21T03:59:15Z",
+      "updatedAt": "2026-04-21T03:59:23Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "22d9298f1fd39ebc38a537e30ccc553d705ffcbc",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "deansaxe-research-report",
+      "headRefOid": "c39a1ea977100afd809ddc4779238788b67e31c0",
+      "closedAt": "2026-04-21T03:59:23Z",
+      "mergedAt": "2026-04-21T03:59:23Z",
+      "mergedBy": "deansaxe",
+      "mergeCommit": {
+        "oid": "b012e9248831f73c5386801c6823742bcd71e679"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 9,
+      "id": "PR_kwDON4ikis7ULnAF",
+      "title": "First set of updates",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/9",
+      "state": "MERGED",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixed typos, email addresses, did some language edits and added additional properties.",
+      "createdAt": "2026-04-21T04:38:06Z",
+      "updatedAt": "2026-05-11T17:03:47Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "b012e9248831f73c5386801c6823742bcd71e679",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "deansaxe-properties-updates",
+      "headRefOid": "f974f246d970dc571d4ce5dd35ae78818fb9439e",
+      "closedAt": "2026-05-11T17:03:47Z",
+      "mergedAt": "2026-05-11T17:03:47Z",
+      "mergedBy": "pamelatech",
+      "mergeCommit": {
+        "oid": "de90757339b5045d8234dbb0753ec7b0cce2249a"
+      },
+      "comments": [
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Take a look when you have a chance.  I'm working through the research report notes to take anything useful from them to create the framework of content. ",
+          "createdAt": "2026-04-21T04:39:12Z",
+          "updatedAt": "2026-04-21T04:39:12Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDON4ikis74p6H7",
+          "commit": {
+            "abbreviatedOid": "81ddc3b"
+          },
+          "author": "deans-remitly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-24T15:46:50Z",
+          "updatedAt": "2026-04-24T15:46:50Z",
+          "comments": [
+            {
+              "originalPosition": 48,
+              "body": "are we unlocking the device? the container?  What is the scope of the unlock event here?  We have not defined it well.",
+              "createdAt": "2026-04-24T15:46:50Z",
+              "updatedAt": "2026-04-24T15:46:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDON4ikis74p82e",
+          "commit": {
+            "abbreviatedOid": "81ddc3b"
+          },
+          "author": "deans-remitly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-24T15:48:55Z",
+          "updatedAt": "2026-04-24T15:48:55Z",
+          "comments": [
+            {
+              "originalPosition": 48,
+              "body": "\"container unlock conditions\" - HW key needs posession, PIN (possibly), and a valid RPid\n\nMaster password is a container unlock, not a device unlock.",
+              "createdAt": "2026-04-24T15:48:55Z",
+              "updatedAt": "2026-04-24T15:48:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDON4ikis74p9zg",
+          "commit": {
+            "abbreviatedOid": "81ddc3b"
+          },
+          "author": "deans-remitly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-24T15:49:35Z",
+          "updatedAt": "2026-04-24T15:49:35Z",
+          "comments": [
+            {
+              "originalPosition": 55,
+              "body": "remove the second header",
+              "createdAt": "2026-04-24T15:49:35Z",
+              "updatedAt": "2026-04-24T15:49:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDON4ikis74qDx4",
+          "commit": {
+            "abbreviatedOid": "81ddc3b"
+          },
+          "author": "deans-remitly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-24T15:53:43Z",
+          "updatedAt": "2026-04-24T15:53:44Z",
+          "comments": [
+            {
+              "originalPosition": 58,
+              "body": "describes the exchange - what did I trade with the issuer to get the new credential?  \nis this token exchange?  Is token exchange an enrollment event?  or something unique?\nTOFU is an exchange with low assurance data in an situation that is acceptable \n\nAre we missing a credential enrichment property?  We enrich it over time with context and additional data to improve the quality of the credential/anchoring to a human\n\n",
+              "createdAt": "2026-04-24T15:53:44Z",
+              "updatedAt": "2026-04-24T15:53:44Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDON4ikis74qFCi",
+          "commit": {
+            "abbreviatedOid": "81ddc3b"
+          },
+          "author": "deans-remitly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-24T15:54:22Z",
+          "updatedAt": "2026-04-24T15:54:23Z",
+          "comments": [
+            {
+              "originalPosition": 58,
+              "body": "Is enrollment a use-case specific term?  Do we need another one?",
+              "createdAt": "2026-04-24T15:54:22Z",
+              "updatedAt": "2026-04-24T15:54:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDON4ikis74qHis",
+          "commit": {
+            "abbreviatedOid": "81ddc3b"
+          },
+          "author": "deans-remitly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-24T15:55:41Z",
+          "updatedAt": "2026-04-24T15:55:41Z",
+          "comments": [
+            {
+              "originalPosition": 58,
+              "body": "can we differentiate enrollment and exchange in a material way?",
+              "createdAt": "2026-04-24T15:55:41Z",
+              "updatedAt": "2026-04-24T15:55:41Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "id": "PR_kwDON4ikis7b_yXV",
+      "title": "Replace Credential Provider Trustworthiness",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/10",
+      "state": "MERGED",
+      "author": "pamelatech",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Removed the credential provider trustworthiness and replaced with a Substantiation section.  ",
+      "createdAt": "2026-05-15T16:50:09Z",
+      "updatedAt": "2026-05-27T06:21:52Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "de90757339b5045d8234dbb0753ec7b0cce2249a",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "credential-authority-change-1",
+      "headRefOid": "4282f8b2bd2e9db9daa2333c4af631410d93e555",
+      "closedAt": "2026-05-27T06:21:52Z",
+      "mergedAt": "2026-05-27T06:21:52Z",
+      "mergedBy": "deansaxe",
+      "mergeCommit": {
+        "oid": "e893d848927c730c23037722c27c683d0d8d9d52"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDON4ikis8AAAABBHb6kg",
+          "commit": {
+            "abbreviatedOid": "4282f8b"
+          },
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "lgtm",
+          "createdAt": "2026-05-27T06:21:18Z",
+          "updatedAt": "2026-05-27T06:21:18Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "id": "PR_kwDON4ikis7gOhOj",
+      "title": "Update draft-dingle-sec-credproperties.md",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/12",
+      "state": "MERGED",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "first stab at fixing overlappyness.  See #11.",
+      "createdAt": "2026-05-28T12:19:18Z",
+      "updatedAt": "2026-06-08T02:36:42Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "e893d848927c730c23037722c27c683d0d8d9d52",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "deansaxe-overlappy-properties",
+      "headRefOid": "71d84d1b9abcb3efc9b53b62a65fdfbd831bfc79",
+      "closedAt": "2026-06-08T02:36:41Z",
+      "mergedAt": "2026-06-08T02:36:41Z",
+      "mergedBy": "pamelatech",
+      "mergeCommit": {
+        "oid": "14fdb8ddfb4e1b76a145399a26c3c88a5c594bae"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 13,
+      "id": "PR_kwDON4ikis7mod_i",
+      "title": "Fix linting issues",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/13",
+      "state": "MERGED",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix linting issues caused by trailing spaces.",
+      "createdAt": "2026-06-15T16:30:11Z",
+      "updatedAt": "2026-06-15T16:45:09Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "14fdb8ddfb4e1b76a145399a26c3c88a5c594bae",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "deansaxe-fix-linting",
+      "headRefOid": "a779d58ce9ec2b69500a127fceff979126d14ba3",
+      "closedAt": "2026-06-15T16:45:09Z",
+      "mergedAt": "2026-06-15T16:45:09Z",
+      "mergedBy": "deansaxe",
+      "mergeCommit": {
+        "oid": "b82c5b7feb45e295871f1a2f5dc88c9920709ff6"
+      },
+      "comments": [
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merging the lint fixes to main\r\n",
+          "createdAt": "2026-06-15T16:45:04Z",
+          "updatedAt": "2026-06-15T16:45:04Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 14,
+      "id": "PR_kwDON4ikis7mo5dS",
+      "title": "Rename draft-dingle-test.md to dingle-test-OLD.md",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/14",
+      "state": "MERGED",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Renaming to clean up the repo",
+      "createdAt": "2026-06-15T16:47:51Z",
+      "updatedAt": "2026-06-15T16:48:45Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "b82c5b7feb45e295871f1a2f5dc88c9920709ff6",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "deansaxe-cleanup-1",
+      "headRefOid": "3bbcf6139020da4fde7485fd0339feae1078ee08",
+      "closedAt": "2026-06-15T16:48:45Z",
+      "mergedAt": "2026-06-15T16:48:45Z",
+      "mergedBy": "deansaxe",
+      "mergeCommit": {
+        "oid": "384fab27089d9003ba3a9354402ceef7d768bb43"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 15,
+      "id": "PR_kwDON4ikis7mpNWZ",
+      "title": "Regenerate README and template files via update-files",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/15",
+      "state": "CLOSED",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix remaining build issues.",
+      "createdAt": "2026-06-15T17:01:28Z",
+      "updatedAt": "2026-06-15T17:07:09Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "384fab27089d9003ba3a9354402ceef7d768bb43",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "deansaxe-regen-readme",
+      "headRefOid": "384fab27089d9003ba3a9354402ceef7d768bb43",
+      "closedAt": "2026-06-15T17:07:09Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 16,
+      "id": "PR_kwDON4ikis7mpaLG",
+      "title": "Regenerate README and template files",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/16",
+      "state": "MERGED",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Regenerates the template-managed files now that `draft-dingle-sec-credproperties.md` builds and the test scaffold no longer matches `draft-*.md`.\n\nRan `make update-files` via the upstream `i-d-template-action` Docker image locally \u2014 the `Update Generated Files` workflow itself was failing with a 403 on `git push` because the workflow's GITHUB_TOKEN lacked write scope. That's fixed in this PR (see workflow updates below) so the next regen can run from the Actions tab directly.\n\n## What changed\n- **README.md** \u2014 title, link block, and CONTRIBUTING link now reflect `draft-dingle-sec-credproperties`\n- **.github/workflows/update.yml** \u2014 adds `permissions: contents: write`, bumps `actions/checkout` to v6\n- **.github/workflows/ghpages.yml, publish.yml, archive.yml** \u2014 equivalent upstream sync\n- **Makefile, .github/CODEOWNERS, .gitignore** \u2014 resync with upstream template\n\nHistory is 8 commits (one per file) \u2014 that's how `update-files` works. Feel free to squash-merge if you prefer a tidy main.\n\n## Note\nPR prepared by Claude on Dean's behalf.",
+      "createdAt": "2026-06-15T17:10:05Z",
+      "updatedAt": "2026-06-19T15:48:11Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "384fab27089d9003ba3a9354402ceef7d768bb43",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "deansaxe-regen-readme",
+      "headRefOid": "08b0ae9812e7486af9e169a4ef2ac2c1a70f4ef3",
+      "closedAt": "2026-06-19T15:48:11Z",
+      "mergedAt": "2026-06-19T15:48:11Z",
+      "mergedBy": "pamelatech",
+      "mergeCommit": {
+        "oid": "1d7c0ed188bdac3413f9fecf6807e9faf67e0137"
+      },
+      "comments": [
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@pamelatech Once this merges, the regenerated README links point at pamelatech.github.io/credsecproperties/.  Pages isn't enabled on the repo yet, this won't resolve until you enable it. Settings \u2192 Pages \u2192 Source: \"Deploy from a branch\" \u2192 gh-pages \u2192 / (root). The gh-pages branch is already populated and the workflow keeps it current.\r\n\r\nThanks!",
+          "createdAt": "2026-06-15T17:15:00Z",
+          "updatedAt": "2026-06-15T17:15:00Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 17,
+      "id": "PR_kwDON4ikis7oaKOE",
+      "title": "Update account recovery",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/17",
+      "state": "MERGED",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fleshed out the account recovery properties",
+      "createdAt": "2026-06-19T14:23:03Z",
+      "updatedAt": "2026-06-19T15:57:51Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "384fab27089d9003ba3a9354402ceef7d768bb43",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "deansaxe-recovery",
+      "headRefOid": "9229daaa31a1517b04ff3397e336aa353b6c67c1",
+      "closedAt": "2026-06-19T15:57:34Z",
+      "mergedAt": "2026-06-19T15:57:34Z",
+      "mergedBy": "pamelatech",
+      "mergeCommit": {
+        "oid": "d033ed9565eb608b90f152e491ae8272f981583b"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDON4ikis8AAAABDkABeQ",
+          "commit": {
+            "abbreviatedOid": "9229daa"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-19T15:55:59Z",
+          "updatedAt": "2026-06-19T15:55:59Z",
+          "comments": [
+            {
+              "originalPosition": 16,
+              "body": "````suggestion\nRecovery mechanism describes the processes that enables recovery of a credential.  Example mechanisms may include SMS OTP, remote identity proofing, in-person identity proofing with a trusted referee, vouching, etc.\n````",
+              "createdAt": "2026-06-19T15:55:59Z",
+              "updatedAt": "2026-06-19T15:55:59Z"
+            },
+            {
+              "originalPosition": 5,
+              "body": "````suggestion\nCredential Recovery properties describe limitations of who can reset a credential or how a credential can be reset.\n````",
+              "createdAt": "2026-06-19T15:55:59Z",
+              "updatedAt": "2026-06-19T15:55:59Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "id": "PR_kwDON4ikis7oaS6T",
+      "title": "Administrivia",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/18",
+      "state": "MERGED",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Minor updates to the security considerations and acknowledgements.",
+      "createdAt": "2026-06-19T14:28:50Z",
+      "updatedAt": "2026-06-19T15:52:41Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "384fab27089d9003ba3a9354402ceef7d768bb43",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "deansaxe-administrivia",
+      "headRefOid": "be4296a80d38fc65fd0266ce72e551bff9bce3bc",
+      "closedAt": "2026-06-19T15:52:30Z",
+      "mergedAt": "2026-06-19T15:52:30Z",
+      "mergedBy": "pamelatech",
+      "mergeCommit": {
+        "oid": "f264661044675c5358f3a0b1647a73c107c10d3c"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 20,
+      "id": "PR_kwDON4ikis7ocPnp",
+      "title": "Fix trailing whitespace lint error from #17",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/20",
+      "state": "MERGED",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "## Summary\n\nThe `Update Editor's Copy` workflow was failing on `main` after the **Update account recovery (#17)** merge. The `lint-whitespace` check in the i-d-template build flagged trailing whitespace:\n\n```\ndraft-dingle-sec-credproperties.md contains trailing whitespace\n  139: Credential Recovery properties describe...\n  148: Recovery mechanism describes the processes...\n```\n\nBoth lines end a paragraph (followed by a blank line), so the trailing two spaces were meaningless. This strips them, matching the rest of the file.\n\n## Verification\n\n- `grep -n ' $' draft-dingle-sec-credproperties.md` now returns no matches.\n- Diff is limited to the two flagged lines (2 insertions, 2 deletions).\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)",
+      "createdAt": "2026-06-19T16:02:14Z",
+      "updatedAt": "2026-06-19T16:09:07Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "d033ed9565eb608b90f152e491ae8272f981583b",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "claude/vibrant-babbage-de3e09",
+      "headRefOid": "f5cc9e10e5156961af1abea209f8c65309328180",
+      "closedAt": "2026-06-19T16:09:03Z",
+      "mergedAt": "2026-06-19T16:09:03Z",
+      "mergedBy": "deansaxe",
+      "mergeCommit": {
+        "oid": "6dbc42491cb8ddd3d99bfc1e5ab58ad10977a5f7"
+      },
+      "comments": [],
+      "reviews": []
+    }
+  ]
+}
