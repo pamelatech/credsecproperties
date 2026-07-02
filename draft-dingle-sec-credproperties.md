@@ -61,6 +61,11 @@ A credential becomes invalid after a specified number of successful presentation
 ### Validity Window
 A credential becomes invalid outside of a specified time boundary.  An example would be a SAML assertion or a TOTP.
 
+### Replayability
+Credentials are replayable when they can be captured by an adversary and represented to an authentication service resulting in successful authentication. Credentials that are presented directly, such as shared secrets (passwords) or bearer tokens, are the canonical example of replayable credentials.  Challenge response protocols are considered non-replayable.
+
+OTPs represent an interesting class of crentials when describing replayability.  Deployed at a global scale, there is a small window of opportunity to present a HOTP or TOTP multiple times within its validity window.  Therefore, replayability is not a strictly binary scale.  
+
 ### Selective Disclosure
 A mechanism by which some or all of the contents within a credential are unavailable at presentation time. Example is an SD-JWT or a ZKP.
 
