@@ -173,32 +173,32 @@ This document has no IANA actions.
 
 This appendix illustrates how the properties defined in this document apply to several common credential types, to validate that the property set is expressive enough to differentiate them:
 
-- **Password** — the same analysis applies to API keys and client credentials, which are likewise static shared secrets.
-- **Synced passkey - consumer** — a FIDO2/WebAuthn credential synchronized across devices by a credential manager. Consumer focused use case.
-- **Device-bound passkey (hardware key) - enterprise** — a FIDO2/WebAuthn credential generated on and bound to a hardware security key.  Enterprise focused use case.
-- **SPIFFE X.509-SVID** — an X.509 certificate presented over mTLS.
+- **Password** — A shared secret.  
+- **Synced passkey - consumer** — a FIDO2/WebAuthn credential synchronized across devices by a credential manager such as 1Password or BitWarden. Consumer focused use case.
+- **Device-bound passkey (hardware key) - enterprise** — a FIDO2/WebAuthn credential generated on and bound to a hardware security key managed by an enterprise.
+- **SPIFFE X.509-SVID** — A workload identity and credentials issued as an X.509 certificate to the workload following attestation of the state of the workload. Credential is presented via mTLS to downstream services.  
 
 ## Presentation Limits
 
 | Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
 | --- | --- | --- | --- | --- |
 | Validity Count | | | | |
-| Validity Window | | | | |
-| Selective Disclosure | | | | |
-| Audience Restriction | No | Yes (FIDO origin binding) | Yes (FIDO origin binding) | No|
+| Validity Window | | | | Short term validity, SVIDs are rotated every 5 minutes.|
+| Selective Disclosure | No | No | No | No |
+| Audience Restriction | No | Yes (FIDO origin binding) | Yes (FIDO origin binding) | Yes (services within the trust domain or federated trust domains)|
 
 ## Credential Containment & Unlock
 
 | Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
 | --- | --- | --- | --- | --- |
-| Containment | Uncontained | Partially Contained | | |
-| Boundary Binding | Unbounded | Bound to the passkey provider.  Specifics are dependent upon the provider. | | |
-| Boundary Enforcement | Reactive (identification in prior breaches, identified in clear text) | Managed by the passkey provider. | | |
-| Transference | Yes | Within boundary via passkey provider sharing. Mechanisms depend on provider.  Export to another passkey provider via credential exchange protocol may be available. | | |
-| Dynamism | None (static shared secret) | Dynamic (challenge-response) | Dynamic (challenge-response) | |
-| Activation | No | Yes (biometric gesture or password/passphrase unlock) | Yes (PIN/biometric gesture) | |
-| Unlock Scope | N/A | All users on a shared device.   | | |
-| Unlock Persistence | N/A | Configurable by passkey provider. | Per-operation (unlock once) | |
+| Containment | Uncontained | Partially Contained | Contained | Contained when bound to a TPM |
+| Boundary Binding | Unbounded | Bound to the passkey provider.  Specifics are dependent upon the provider. | Bound to the hardware key | Bound to a TPM |
+| Boundary Enforcement | Reactive (identification in prior breaches, identified in clear text) | Managed by the passkey provider. | Enforced by hardware. | Enforced by hardware. |
+| Transference | Yes | Within boundary via passkey provider sharing. Mechanisms depend on provider.  Export to another passkey provider via credential exchange protocol may be available. | None | None |
+| Dynamism | None (static shared secret) | Dynamic (challenge-response) | Dynamic (challenge-response) | Dynamic (TLS) |
+| Activation | No | Yes (biometric gesture or password/passphrase unlock) | Yes (PIN/biometric gesture) | No |
+| Unlock Scope | N/A | All users on a shared device. |  | Workload |
+| Unlock Persistence | N/A | Configurable by passkey provider. | Per-operation (unlock once) | Life of the workload |
 
 ## Credential Enrollment
 
