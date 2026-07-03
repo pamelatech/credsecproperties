@@ -5,8 +5,8 @@
 Network Working Group                                          P. Dingle
 Internet-Draft                                                 Microsoft
 Intended status: Informational                                D. H. Saxe
-Expires: 3 January 2027                                          Remitly
-                                                             2 July 2026
+Expires: 4 January 2027                                          Remitly
+                                                             3 July 2026
 
 
                Credential Management Security properties
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 January 2027.
+   This Internet-Draft will expire on 4 January 2027.
 
 Copyright Notice
 
@@ -235,8 +235,8 @@ Table of Contents
    on the stored credential such that what is sent over the wire is
    different than what is stored (e.g. a challenge response protocol
    like FIDO).  Credentials that do not exhibit dynamism, such as shared
-   secrets, are definitionally not able to be contained and exhibit
-   replayability.
+   secrets, usually exhibit replayability and are definitionally not
+   able to be contained.
 
 3.2.6.  Activation
 
