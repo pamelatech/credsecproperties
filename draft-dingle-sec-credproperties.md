@@ -176,7 +176,7 @@ This appendix illustrates how the properties defined in this document apply to s
 - **Password** — A shared secret.  
 - **Synced passkey - consumer** — a FIDO2/WebAuthn credential synchronized across devices by a credential manager such as 1Password or BitWarden. Consumer focused use case.
 - **Device-bound passkey (hardware key) - enterprise** — a FIDO2/WebAuthn credential generated on and bound to a hardware security key managed by an enterprise.
-- **SPIFFE X.509-SVID** — A workload identity and credentials issued as an X.509 certificate to the workload following attestation of the state of the workload. Credential is presented via mTLS to downstream services.  
+- **SPIFFE X.509-SVID** — A workload identity and credentials issued as an X.509 certificate to the workload following attestation of the state of the workload. Credential is presented via mTLS to downstream services.
 
 ## Presentation Limits
 
