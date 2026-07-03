@@ -29,7 +29,7 @@
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.33.1
-    wcwidth 0.8.1
+    wcwidth 0.8.2
 -->
 <link href="draft-dingle-sec-credproperties.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1655,16 +1655,16 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
 <p id="appendix-A-1">This appendix illustrates how the properties defined in this document apply to several common credential types, to validate that the property set is expressive enough to differentiate them:<a href="#appendix-A-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-A-2.1">
-          <p id="appendix-A-2.1.1"><strong>Password</strong> — the same analysis applies to API keys and client credentials, which are likewise static shared secrets.<a href="#appendix-A-2.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-2.1.1"><strong>Password</strong> — A shared secret.<a href="#appendix-A-2.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-2.2">
-          <p id="appendix-A-2.2.1"><strong>Synced passkey - consumer</strong> — a FIDO2/WebAuthn credential synchronized across devices by a credential manager. Consumer focused use case.<a href="#appendix-A-2.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-2.2.1"><strong>Synced passkey - consumer</strong> — a FIDO2/WebAuthn credential synchronized across devices by a credential manager such as 1Password or BitWarden. Consumer focused use case.<a href="#appendix-A-2.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-2.3">
-          <p id="appendix-A-2.3.1"><strong>Device-bound passkey (hardware key) - enterprise</strong> — a FIDO2/WebAuthn credential generated on and bound to a hardware security key.  Enterprise focused use case.<a href="#appendix-A-2.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-2.3.1"><strong>Device-bound passkey (hardware key) - enterprise</strong> — a FIDO2/WebAuthn credential generated on and bound to a hardware security key managed by an enterprise.<a href="#appendix-A-2.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-2.4">
-          <p id="appendix-A-2.4.1"><strong>SPIFFE X.509-SVID</strong> — an X.509 certificate presented over mTLS.<a href="#appendix-A-2.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-2.4.1"><strong>SPIFFE X.509-SVID</strong> — A workload identity and credentials issued as an X.509 certificate to the workload following attestation of the state of the workload. Credential is presented via mTLS to downstream services.<a href="#appendix-A-2.4.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <div id="presentation-limits-1">
@@ -1696,21 +1696,21 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1"> </td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">Short term validity, SVIDs are rotated every 5 minutes.</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Selective Disclosure</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Audience Restriction</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">Yes (FIDO origin binding)</td>
               <td class="text-left" rowspan="1" colspan="1">Yes (FIDO origin binding)</td>
-              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes (services within the trust domain or federated trust domains)</td>
             </tr>
           </tbody>
         </table>
@@ -1737,57 +1737,57 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Containment</td>
               <td class="text-left" rowspan="1" colspan="1">Uncontained</td>
               <td class="text-left" rowspan="1" colspan="1">Partially Contained</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">Contained</td>
+              <td class="text-left" rowspan="1" colspan="1">Contained when bound to a TPM</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Boundary Binding</td>
               <td class="text-left" rowspan="1" colspan="1">Unbounded</td>
               <td class="text-left" rowspan="1" colspan="1">Bound to the passkey provider.  Specifics are dependent upon the provider.</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">Bound to the hardware key</td>
+              <td class="text-left" rowspan="1" colspan="1">Bound to a TPM</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Boundary Enforcement</td>
               <td class="text-left" rowspan="1" colspan="1">Reactive (identification in prior breaches, identified in clear text)</td>
               <td class="text-left" rowspan="1" colspan="1">Managed by the passkey provider.</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">Enforced by hardware.</td>
+              <td class="text-left" rowspan="1" colspan="1">Enforced by hardware.</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Transference</td>
               <td class="text-left" rowspan="1" colspan="1">Yes</td>
               <td class="text-left" rowspan="1" colspan="1">Within boundary via passkey provider sharing. Mechanisms depend on provider.  Export to another passkey provider via credential exchange protocol may be available.</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">None</td>
+              <td class="text-left" rowspan="1" colspan="1">None</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Dynamism</td>
               <td class="text-left" rowspan="1" colspan="1">None (static shared secret)</td>
               <td class="text-left" rowspan="1" colspan="1">Dynamic (challenge-response)</td>
               <td class="text-left" rowspan="1" colspan="1">Dynamic (challenge-response)</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">Dynamic (TLS)</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Activation</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">Yes (biometric gesture or password/passphrase unlock)</td>
               <td class="text-left" rowspan="1" colspan="1">Yes (PIN/biometric gesture)</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Unlock Scope</td>
               <td class="text-left" rowspan="1" colspan="1">N/A</td>
               <td class="text-left" rowspan="1" colspan="1">All users on a shared device.</td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">Workload</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Unlock Persistence</td>
               <td class="text-left" rowspan="1" colspan="1">N/A</td>
               <td class="text-left" rowspan="1" colspan="1">Configurable by passkey provider.</td>
               <td class="text-left" rowspan="1" colspan="1">Per-operation (unlock once)</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">Life of the workload</td>
             </tr>
           </tbody>
         </table>

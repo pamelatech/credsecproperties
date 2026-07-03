@@ -410,41 +410,51 @@ Appendix A.  Applying the Properties to Common Credential Types
    apply to several common credential types, to validate that the
    property set is expressive enough to differentiate them:
 
-   *  *Password* — the same analysis applies to API keys and client
-      credentials, which are likewise static shared secrets.
+   *  *Password* — A shared secret.
 
    *  *Synced passkey - consumer* — a FIDO2/WebAuthn credential
-      synchronized across devices by a credential manager.  Consumer
-      focused use case.
+      synchronized across devices by a credential manager such as
+      1Password or BitWarden.  Consumer focused use case.
 
    *  *Device-bound passkey (hardware key) - enterprise* — a FIDO2/
       WebAuthn credential generated on and bound to a hardware security
-      key.  Enterprise focused use case.
+      key managed by an enterprise.
 
-   *  *SPIFFE X.509-SVID* — an X.509 certificate presented over mTLS.
+   *  *SPIFFE X.509-SVID* — A workload identity and credentials issued
+      as an X.509 certificate to the workload following attestation of
+      the state of the workload.  Credential is presented via mTLS to
+      downstream services.
 
 A.1.  Presentation Limits
 
-    +=============+============+==========+==============+============+
-    | Property    | Password / | Synced   | Device-bound | SPIFFE     |
-    |             | API key /  | passkey  | passkey      | X.509-SVID |
-    |             | client     |          | (hardware    |            |
-    |             | credential |          | key)         |            |
-    +=============+============+==========+==============+============+
-    | Validity    |            |          |              |            |
-    | Count       |            |          |              |            |
-    +-------------+------------+----------+--------------+------------+
-    | Validity    |            |          |              |            |
-    | Window      |            |          |              |            |
-    +-------------+------------+----------+--------------+------------+
-    | Selective   |            |          |              |            |
-    | Disclosure  |            |          |              |            |
-    +-------------+------------+----------+--------------+------------+
-    | Audience    | No         | Yes      | Yes (FIDO    | No         |
-    | Restriction |            | (FIDO    | origin       |            |
-    |             |            | origin   | binding)     |            |
-    |             |            | binding) |              |            |
-    +-------------+------------+----------+--------------+------------+
+   +=============+============+==========+==============+==============+
+   | Property    | Password / | Synced   | Device-bound | SPIFFE       |
+   |             | API key /  | passkey  | passkey      | X.509-SVID   |
+   |             | client     |          | (hardware    |              |
+   |             | credential |          | key)         |              |
+   +=============+============+==========+==============+==============+
+   | Validity    |            |          |              |              |
+   | Count       |            |          |              |              |
+   +-------------+------------+----------+--------------+--------------+
+   | Validity    |            |          |              | Short term   |
+   | Window      |            |          |              | validity,    |
+   |             |            |          |              | SVIDs are    |
+   |             |            |          |              | rotated      |
+   |             |            |          |              | every 5      |
+   |             |            |          |              | minutes.     |
+   +-------------+------------+----------+--------------+--------------+
+   | Selective   | No         | No       | No           | No           |
+   | Disclosure  |            |          |              |              |
+   +-------------+------------+----------+--------------+--------------+
+   | Audience    | No         | Yes      | Yes (FIDO    | Yes          |
+   | Restriction |            | (FIDO    | origin       | (services    |
+   |             |            | origin   | binding)     | within the   |
+   |             |            | binding) |              | trust        |
+   |             |            |          |              | domain or    |
+   |             |            |          |              | federated    |
+   |             |            |          |              | trust        |
+   |             |            |          |              | domains)     |
+   +-------------+------------+----------+--------------+--------------+
 
                                   Table 1
 
@@ -457,26 +467,27 @@ A.2.  Credential Containment & Unlock
    |            |                 |             |(hardware  |          |
    |            |                 |             |key)       |          |
    +============+=================+=============+===========+==========+
-   |Containment | Uncontained     |Partially    |           |          |
-   |            |                 |Contained    |           |          |
+   |Containment | Uncontained     |Partially    |Contained  |Contained |
+   |            |                 |Contained    |           |when bound|
+   |            |                 |             |           |to a TPM  |
    +------------+-----------------+-------------+-----------+----------+
-   |Boundary    | Unbounded       |Bound to the |           |          |
-   |Binding     |                 |passkey      |           |          |
-   |            |                 |provider.    |           |          |
-   |            |                 |Specifics    |           |          |
+   |Boundary    | Unbounded       |Bound to the |Bound to   |Bound to a|
+   |Binding     |                 |passkey      |the        |TPM       |
+   |            |                 |provider.    |hardware   |          |
+   |            |                 |Specifics    |key        |          |
    |            |                 |are          |           |          |
    |            |                 |dependent    |           |          |
    |            |                 |upon the     |           |          |
    |            |                 |provider.    |           |          |
    +------------+-----------------+-------------+-----------+----------+
-   |Boundary    | Reactive        |Managed by   |           |          |
-   |Enforcement | (identification |the passkey  |           |          |
-   |            | in prior        |provider.    |           |          |
+   |Boundary    | Reactive        |Managed by   |Enforced by|Enforced  |
+   |Enforcement | (identification |the passkey  |hardware.  |by        |
+   |            | in prior        |provider.    |           |hardware. |
    |            | breaches,       |             |           |          |
    |            | identified in   |             |           |          |
    |            | clear text)     |             |           |          |
    +------------+-----------------+-------------+-----------+----------+
-   |Transference| Yes             |Within       |           |          |
+   |Transference| Yes             |Within       |None       |None      |
    |            |                 |boundary via |           |          |
    |            |                 |passkey      |           |          |
    |            |                 |provider     |           |          |
@@ -494,24 +505,24 @@ A.2.  Credential Containment & Unlock
    |            |                 |be           |           |          |
    |            |                 |available.   |           |          |
    +------------+-----------------+-------------+-----------+----------+
-   |Dynamism    | None (static    |Dynamic      |Dynamic    |          |
-   |            | shared secret)  |(challenge-  |(challenge-|          |
+   |Dynamism    | None (static    |Dynamic      |Dynamic    |Dynamic   |
+   |            | shared secret)  |(challenge-  |(challenge-|(TLS)     |
    |            |                 |response)    |response)  |          |
    +------------+-----------------+-------------+-----------+----------+
-   |Activation  | No              |Yes          |Yes (PIN/  |          |
+   |Activation  | No              |Yes          |Yes (PIN/  |No        |
    |            |                 |(biometric   |biometric  |          |
    |            |                 |gesture or   |gesture)   |          |
    |            |                 |password/    |           |          |
    |            |                 |passphrase   |           |          |
    |            |                 |unlock)      |           |          |
    +------------+-----------------+-------------+-----------+----------+
-   |Unlock Scope| N/A             |All users on |           |          |
+   |Unlock Scope| N/A             |All users on |           |Workload  |
    |            |                 |a shared     |           |          |
    |            |                 |device.      |           |          |
    +------------+-----------------+-------------+-----------+----------+
-   |Unlock      | N/A             |Configurable |Per-       |          |
-   |Persistence |                 |by passkey   |operation  |          |
-   |            |                 |provider.    |(unlock    |          |
+   |Unlock      | N/A             |Configurable |Per-       |Life of   |
+   |Persistence |                 |by passkey   |operation  |the       |
+   |            |                 |provider.    |(unlock    |workload  |
    |            |                 |             |once)      |          |
    +------------+-----------------+-------------+-----------+----------+
 
