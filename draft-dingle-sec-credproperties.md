@@ -169,6 +169,72 @@ This document has no IANA actions.
 
 --- back
 
+# Applying the Properties to Common Credential Types
+
+This appendix illustrates how the properties defined in this document apply to several common credential types, to validate that the property set is expressive enough to differentiate them:
+
+- **Password** — the same analysis applies to API keys and client credentials, which are likewise static shared secrets.
+- **Synced passkey** — a FIDO2/WebAuthn credential synchronized across devices by a credential manager.
+- **Device-bound passkey** — a FIDO2/WebAuthn credential generated on and bound to a hardware security key.
+- **SPIFFE X.509-SVID** — an X.509 certificate presented over mTLS.
+
+## Presentation Limits
+
+| Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
+| --- | --- | --- | --- | --- |
+| Validity Count | | | | |
+| Validity Window | | | | |
+| Selective Disclosure | | | | |
+| Audience Restriction | | Yes (FIDO origin binding) | Yes (FIDO origin binding) | |
+
+## Credential Containment & Unlock
+
+| Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
+| --- | --- | --- | --- | --- |
+| Containment | Uncontained | | | |
+| Boundary Binding | Unbounded | | | |
+| Boundary Enforcement | | | | |
+| Transference | Yes, outside boundary | Yes, within boundary | | |
+| Dynamism | None (static shared secret) | Dynamic (challenge-response) | Dynamic (challenge-response) | |
+| Activation | | | Yes (PIN/biometric gesture) | |
+| Unlock Scope | | | | |
+| Unlock Persistence | | | Per-operation (unlock once) | |
+
+## Credential Enrollment
+
+| Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
+| --- | --- | --- | --- | --- |
+| Enrollment Assurance | | | | |
+| Vouching | | | | |
+| Enrollment Binding | | | | |
+
+## Substantiation
+
+| Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
+| --- | --- | --- | --- | --- |
+| Identifier Binding | | | | Yes (SPIFFE ID bound in X.509) |
+| Integrity | | | | |
+| Authoritative Relationship | | | | |
+| Chainability | | | | |
+
+## Credential Compliance
+
+| Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
+| --- | --- | --- | --- | --- |
+| Composition Rules | | | | |
+| Lifecycle Rules | | | | |
+| Regulatory Framework | | | | |
+
+## Credential Recovery
+
+| Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
+| --- | --- | --- | --- | --- |
+| Recoverability | | | | |
+| Recovery Agent | | | | |
+| Recovery Mechanism | | | | |
+| Recovery Artifact | | | | |
+| Recovery Assurance | | | | |
+
 # Acknowledgments
 {:numbered="false"}
 
