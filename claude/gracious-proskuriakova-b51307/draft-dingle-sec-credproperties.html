@@ -1658,10 +1658,10 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
           <p id="appendix-A-2.1.1"><strong>Password</strong> — the same analysis applies to API keys and client credentials, which are likewise static shared secrets.<a href="#appendix-A-2.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-2.2">
-          <p id="appendix-A-2.2.1"><strong>Synced passkey</strong> — a FIDO2/WebAuthn credential synchronized across devices by a credential manager.<a href="#appendix-A-2.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-2.2.1"><strong>Synced passkey - consumer</strong> — a FIDO2/WebAuthn credential synchronized across devices by a credential manager. Consumer focused use case.<a href="#appendix-A-2.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-2.3">
-          <p id="appendix-A-2.3.1"><strong>Device-bound passkey</strong> — a FIDO2/WebAuthn credential generated on and bound to a hardware security key.<a href="#appendix-A-2.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-2.3.1"><strong>Device-bound passkey (hardware key) - enterprise</strong> — a FIDO2/WebAuthn credential generated on and bound to a hardware security key.  Enterprise focused use case.<a href="#appendix-A-2.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-2.4">
           <p id="appendix-A-2.4.1"><strong>SPIFFE X.509-SVID</strong> — an X.509 certificate presented over mTLS.<a href="#appendix-A-2.4.1" class="pilcrow">¶</a></p>
@@ -1707,10 +1707,10 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Audience Restriction</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">Yes (FIDO origin binding)</td>
               <td class="text-left" rowspan="1" colspan="1">Yes (FIDO origin binding)</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
             </tr>
           </tbody>
         </table>
@@ -1736,28 +1736,28 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Containment</td>
               <td class="text-left" rowspan="1" colspan="1">Uncontained</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">Partially Contained</td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Boundary Binding</td>
               <td class="text-left" rowspan="1" colspan="1">Unbounded</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">Bound to the passkey provider.  Specifics are dependent upon the provider.</td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Boundary Enforcement</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">Reactive (identification in prior breaches, identified in clear text)</td>
+              <td class="text-left" rowspan="1" colspan="1">Managed by the passkey provider.</td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Transference</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes, outside boundary</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes, within boundary</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes</td>
+              <td class="text-left" rowspan="1" colspan="1">Within boundary via passkey provider sharing. Mechanisms depend on provider.  Export to another passkey provider via credential exchange protocol may be available.</td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
             </tr>
@@ -1770,22 +1770,22 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Activation</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes (biometric gesture or password/passphrase unlock)</td>
               <td class="text-left" rowspan="1" colspan="1">Yes (PIN/biometric gesture)</td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Unlock Scope</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+              <td class="text-left" rowspan="1" colspan="1">All users on a shared device.</td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Unlock Persistence</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+              <td class="text-left" rowspan="1" colspan="1">Configurable by passkey provider.</td>
               <td class="text-left" rowspan="1" colspan="1">Per-operation (unlock once)</td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
             </tr>
@@ -1903,21 +1903,21 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
           <tbody>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Composition Rules</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">Length &amp; composition may be enforced</td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Lifecycle Rules</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">May be enforced</td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Regulatory Framework</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">PCI, NIST SP800-63rev4 Part B</td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
