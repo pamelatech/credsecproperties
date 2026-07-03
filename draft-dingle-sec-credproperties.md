@@ -174,8 +174,8 @@ This document has no IANA actions.
 This appendix illustrates how the properties defined in this document apply to several common credential types, to validate that the property set is expressive enough to differentiate them:
 
 - **Password** — the same analysis applies to API keys and client credentials, which are likewise static shared secrets.
-- **Synced passkey** — a FIDO2/WebAuthn credential synchronized across devices by a credential manager.
-- **Device-bound passkey** — a FIDO2/WebAuthn credential generated on and bound to a hardware security key.
+- **Synced passkey - consumer** — a FIDO2/WebAuthn credential synchronized across devices by a credential manager. Consumer focused use case.
+- **Device-bound passkey (hardware key) - enterprise** — a FIDO2/WebAuthn credential generated on and bound to a hardware security key.  Enterprise focused use case.
 - **SPIFFE X.509-SVID** — an X.509 certificate presented over mTLS.
 
 ## Presentation Limits
@@ -185,20 +185,20 @@ This appendix illustrates how the properties defined in this document apply to s
 | Validity Count | | | | |
 | Validity Window | | | | |
 | Selective Disclosure | | | | |
-| Audience Restriction | | Yes (FIDO origin binding) | Yes (FIDO origin binding) | |
+| Audience Restriction | No | Yes (FIDO origin binding) | Yes (FIDO origin binding) | No|
 
 ## Credential Containment & Unlock
 
 | Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
 | --- | --- | --- | --- | --- |
-| Containment | Uncontained | | | |
-| Boundary Binding | Unbounded | | | |
-| Boundary Enforcement | | | | |
-| Transference | Yes, outside boundary | Yes, within boundary | | |
+| Containment | Uncontained | Partially Contained | | |
+| Boundary Binding | Unbounded | Bound to the passkey provider.  Specifics are dependent upon the provider. | | |
+| Boundary Enforcement | Reactive (identification in prior breaches, identified in clear text) | Managed by the passkey provider. | | |
+| Transference | Yes | Within boundary via passkey provider sharing. Mechanisms depend on provider.  Export to another passkey provider via credential exchange protocol may be available. | | |
 | Dynamism | None (static shared secret) | Dynamic (challenge-response) | Dynamic (challenge-response) | |
-| Activation | | | Yes (PIN/biometric gesture) | |
-| Unlock Scope | | | | |
-| Unlock Persistence | | | Per-operation (unlock once) | |
+| Activation | No | Yes (biometric gesture or password/passphrase unlock) | Yes (PIN/biometric gesture) | |
+| Unlock Scope | N/A | All users on a shared device.   | | |
+| Unlock Persistence | N/A | Configurable by passkey provider. | Per-operation (unlock once) | |
 
 ## Credential Enrollment
 
@@ -221,9 +221,9 @@ This appendix illustrates how the properties defined in this document apply to s
 
 | Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
 | --- | --- | --- | --- | --- |
-| Composition Rules | | | | |
-| Lifecycle Rules | | | | |
-| Regulatory Framework | | | | |
+| Composition Rules | Length & composition may be enforced | | | |
+| Lifecycle Rules | May be enforced | | | |
+| Regulatory Framework | PCI, NIST SP800-63rev4 Part B | | | |
 
 ## Credential Recovery
 
