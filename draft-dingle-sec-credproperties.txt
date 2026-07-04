@@ -5,8 +5,8 @@
 Network Working Group                                          P. Dingle
 Internet-Draft                                                 Microsoft
 Intended status: Informational                                D. H. Saxe
-Expires: 21 December 2026                                        Remitly
-                                                            19 June 2026
+Expires: 5 January 2027                                          Remitly
+                                                             4 July 2026
 
 
                Credential Management Security properties
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 December 2026.
+   This Internet-Draft will expire on 5 January 2027.
 
 Copyright Notice
 
@@ -70,8 +70,9 @@ Table of Contents
      3.1.  Presentation Limits
        3.1.1.  Validity Count
        3.1.2.  Validity Window
-       3.1.3.  Selective Disclosure
-       3.1.4.  Audience Restriction
+       3.1.3.  Replayability
+       3.1.4.  Selective Disclosure
+       3.1.5.  Audience Restriction
      3.2.  Credential Containment & Unlock
        3.2.1.  Containment (TODO: see FIDO security requirements for
                sync fabric)
@@ -148,12 +149,27 @@ Table of Contents
    A credential becomes invalid outside of a specified time boundary.
    An example would be a SAML assertion or a TOTP.
 
-3.1.3.  Selective Disclosure
+3.1.3.  Replayability
+
+   Credentials are replayable when they can be captured by an adversary
+   and represented to an authentication service resulting in successful
+   authentication.  Credentials that are presented directly, such as
+   shared secrets (passwords) or bearer tokens, are the canonical
+   example of replayable credentials.  Challenge response protocols are
+   considered non-replayable.
+
+   OTPs represent an interesting class of crentials when describing
+   replayability.  Deployed at a global scale, there is a small window
+   of opportunity to present a HOTP or TOTP multiple times within its
+   validity window.  Therefore, replayability is not a strictly binary
+   scale.
+
+3.1.4.  Selective Disclosure
 
    A mechanism by which some or all of the contents within a credential
    are unavailable at presentation time.  Example is an SD-JWT or a ZKP.
 
-3.1.4.  Audience Restriction
+3.1.5.  Audience Restriction
 
    A mechanism that specifies which destination consumers of the
    credential are valid.  Examples include id_tokens or origin bindings
@@ -219,7 +235,8 @@ Table of Contents
    on the stored credential such that what is sent over the wire is
    different than what is stored (e.g. a challenge response protocol
    like FIDO).  Credentials that do not exhibit dynamism, such as shared
-   secrets, are definitionally not able to be contained.
+   secrets, usually exhibit replayability and are definitionally not
+   able to be contained.
 
 3.2.6.  Activation
 
