@@ -106,6 +106,13 @@ Table of Contents
    5.  Security Considerations
    6.  IANA Considerations
    7.  Normative References
+   Appendix A.  Applying the Properties to Common Credential Types
+     A.1.  Presentation Limits
+     A.2.  Credential Containment & Unlock
+     A.3.  Credential Enrollment
+     A.4.  Substantiation
+     A.5.  Credential Compliance
+     A.6.  Credential Recovery
    Acknowledgments
    Authors' Addresses
 
@@ -413,6 +420,219 @@ Table of Contents
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+Appendix A.  Applying the Properties to Common Credential Types
+
+   This appendix illustrates how the properties defined in this document
+   apply to several common credential types, to validate that the
+   property set is expressive enough to differentiate them:
+
+   *  *Password* — A shared secret.
+
+   *  *Synced passkey - consumer* — a FIDO2/WebAuthn credential
+      synchronized across devices by a credential manager such as
+      1Password or BitWarden.  Consumer focused use case.
+
+   *  *Device-bound passkey (hardware key) - enterprise* — a FIDO2/
+      WebAuthn credential generated on and bound to a hardware security
+      key managed by an enterprise.
+
+   *  *SPIFFE X.509-SVID* — A workload identity and credentials issued
+      as an X.509 certificate to the workload following attestation of
+      the state of the workload.  Credential is presented via mTLS to
+      downstream services.
+
+A.1.  Presentation Limits
+
+   +=============+============+==========+==============+==============+
+   | Property    | Password / | Synced   | Device-bound | SPIFFE       |
+   |             | API key /  | passkey  | passkey      | X.509-SVID   |
+   |             | client     |          | (hardware    |              |
+   |             | credential |          | key)         |              |
+   +=============+============+==========+==============+==============+
+   | Validity    |            |          |              |              |
+   | Count       |            |          |              |              |
+   +-------------+------------+----------+--------------+--------------+
+   | Validity    |            |          |              | Short term   |
+   | Window      |            |          |              | validity,    |
+   |             |            |          |              | SVIDs are    |
+   |             |            |          |              | rotated      |
+   |             |            |          |              | every 5      |
+   |             |            |          |              | minutes.     |
+   +-------------+------------+----------+--------------+--------------+
+   | Selective   | No         | No       | No           | No           |
+   | Disclosure  |            |          |              |              |
+   +-------------+------------+----------+--------------+--------------+
+   | Audience    | No         | Yes      | Yes (FIDO    | Yes          |
+   | Restriction |            | (FIDO    | origin       | (services    |
+   |             |            | origin   | binding)     | within the   |
+   |             |            | binding) |              | trust        |
+   |             |            |          |              | domain or    |
+   |             |            |          |              | federated    |
+   |             |            |          |              | trust        |
+   |             |            |          |              | domains)     |
+   +-------------+------------+----------+--------------+--------------+
+
+                                  Table 1
+
+A.2.  Credential Containment & Unlock
+
+   +============+=================+=============+===========+==========+
+   |Property    | Password / API  |Synced       |Device-    |SPIFFE    |
+   |            | key / client    |passkey      |bound      |X.509-SVID|
+   |            | credential      |             |passkey    |          |
+   |            |                 |             |(hardware  |          |
+   |            |                 |             |key)       |          |
+   +============+=================+=============+===========+==========+
+   |Containment | Uncontained     |Partially    |Contained  |Contained |
+   |            |                 |Contained    |           |when bound|
+   |            |                 |             |           |to a TPM  |
+   +------------+-----------------+-------------+-----------+----------+
+   |Boundary    | Unbounded       |Bound to the |Bound to   |Bound to a|
+   |Binding     |                 |passkey      |the        |TPM       |
+   |            |                 |provider.    |hardware   |          |
+   |            |                 |Specifics    |key        |          |
+   |            |                 |are          |           |          |
+   |            |                 |dependent    |           |          |
+   |            |                 |upon the     |           |          |
+   |            |                 |provider.    |           |          |
+   +------------+-----------------+-------------+-----------+----------+
+   |Boundary    | Reactive        |Managed by   |Enforced by|Enforced  |
+   |Enforcement | (identification |the passkey  |hardware.  |by        |
+   |            | in prior        |provider.    |           |hardware. |
+   |            | breaches,       |             |           |          |
+   |            | identified in   |             |           |          |
+   |            | clear text)     |             |           |          |
+   +------------+-----------------+-------------+-----------+----------+
+   |Transference| Yes             |Within       |None       |None      |
+   |            |                 |boundary via |           |          |
+   |            |                 |passkey      |           |          |
+   |            |                 |provider     |           |          |
+   |            |                 |sharing.     |           |          |
+   |            |                 |Mechanisms   |           |          |
+   |            |                 |depend on    |           |          |
+   |            |                 |provider.    |           |          |
+   |            |                 |Export to    |           |          |
+   |            |                 |another      |           |          |
+   |            |                 |passkey      |           |          |
+   |            |                 |provider via |           |          |
+   |            |                 |credential   |           |          |
+   |            |                 |exchange     |           |          |
+   |            |                 |protocol may |           |          |
+   |            |                 |be           |           |          |
+   |            |                 |available.   |           |          |
+   +------------+-----------------+-------------+-----------+----------+
+   |Dynamism    | None (static    |Dynamic      |Dynamic    |Dynamic   |
+   |            | shared secret)  |(challenge-  |(challenge-|(TLS)     |
+   |            |                 |response)    |response)  |          |
+   +------------+-----------------+-------------+-----------+----------+
+   |Activation  | No              |Yes          |Yes (PIN/  |No        |
+   |            |                 |(biometric   |biometric  |          |
+   |            |                 |gesture or   |gesture)   |          |
+   |            |                 |password/    |           |          |
+   |            |                 |passphrase   |           |          |
+   |            |                 |unlock)      |           |          |
+   +------------+-----------------+-------------+-----------+----------+
+   |Unlock Scope| N/A             |All users on |           |Workload  |
+   |            |                 |a shared     |           |          |
+   |            |                 |device.      |           |          |
+   +------------+-----------------+-------------+-----------+----------+
+   |Unlock      | N/A             |Configurable |Per-       |Life of   |
+   |Persistence |                 |by passkey   |operation  |the       |
+   |            |                 |provider.    |(unlock    |workload  |
+   |            |                 |             |once)      |          |
+   +------------+-----------------+-------------+-----------+----------+
+
+                                  Table 2
+
+A.3.  Credential Enrollment
+
+   +============+================+=========+==============+============+
+   | Property   | Password /     | Synced  | Device-bound | SPIFFE     |
+   |            | API key /      | passkey | passkey      | X.509-SVID |
+   |            | client         |         | (hardware    |            |
+   |            | credential     |         | key)         |            |
+   +============+================+=========+==============+============+
+   | Enrollment |                |         |              |            |
+   | Assurance  |                |         |              |            |
+   +------------+----------------+---------+--------------+------------+
+   | Vouching   |                |         |              |            |
+   +------------+----------------+---------+--------------+------------+
+   | Enrollment |                |         |              |            |
+   | Binding    |                |         |              |            |
+   +------------+----------------+---------+--------------+------------+
+
+                                  Table 3
+
+A.4.  Substantiation
+
+   +===============+============+=========+==============+============+
+   | Property      | Password / | Synced  | Device-bound | SPIFFE     |
+   |               | API key /  | passkey | passkey      | X.509-SVID |
+   |               | client     |         | (hardware    |            |
+   |               | credential |         | key)         |            |
+   +===============+============+=========+==============+============+
+   | Identifier    |            |         |              | Yes        |
+   | Binding       |            |         |              | (SPIFFE ID |
+   |               |            |         |              | bound in   |
+   |               |            |         |              | X.509)     |
+   +---------------+------------+---------+--------------+------------+
+   | Integrity     |            |         |              |            |
+   +---------------+------------+---------+--------------+------------+
+   | Authoritative |            |         |              |            |
+   | Relationship  |            |         |              |            |
+   +---------------+------------+---------+--------------+------------+
+   | Chainability  |            |         |              |            |
+   +---------------+------------+---------+--------------+------------+
+
+                                 Table 4
+
+A.5.  Credential Compliance
+
+   +=============+==============+=========+==============+============+
+   | Property    | Password /   | Synced  | Device-bound | SPIFFE     |
+   |             | API key /    | passkey | passkey      | X.509-SVID |
+   |             | client       |         | (hardware    |            |
+   |             | credential   |         | key)         |            |
+   +=============+==============+=========+==============+============+
+   | Composition | Length &     |         |              |            |
+   | Rules       | composition  |         |              |            |
+   |             | may be       |         |              |            |
+   |             | enforced     |         |              |            |
+   +-------------+--------------+---------+--------------+------------+
+   | Lifecycle   | May be       |         |              |            |
+   | Rules       | enforced     |         |              |            |
+   +-------------+--------------+---------+--------------+------------+
+   | Regulatory  | PCI, NIST    |         |              |            |
+   | Framework   | SP800-63rev4 |         |              |            |
+   |             | Part B       |         |              |            |
+   +-------------+--------------+---------+--------------+------------+
+
+                                 Table 5
+
+A.6.  Credential Recovery
+
+    +================+============+=======+==============+============+
+    | Property       | Password / |Synced | Device-bound | SPIFFE     |
+    |                | API key /  |passkey| passkey      | X.509-SVID |
+    |                | client     |       | (hardware    |            |
+    |                | credential |       | key)         |            |
+    +================+============+=======+==============+============+
+    | Recoverability |            |       |              |            |
+    +----------------+------------+-------+--------------+------------+
+    | Recovery Agent |            |       |              |            |
+    +----------------+------------+-------+--------------+------------+
+    | Recovery       |            |       |              |            |
+    | Mechanism      |            |       |              |            |
+    +----------------+------------+-------+--------------+------------+
+    | Recovery       |            |       |              |            |
+    | Artifact       |            |       |              |            |
+    +----------------+------------+-------+--------------+------------+
+    | Recovery       |            |       |              |            |
+    | Assurance      |            |       |              |            |
+    +----------------+------------+-------+--------------+------------+
+
+                                  Table 6
 
 Acknowledgments
 
