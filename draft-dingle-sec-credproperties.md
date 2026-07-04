@@ -61,6 +61,11 @@ A credential becomes invalid after a specified number of successful presentation
 ### Validity Window
 A credential becomes invalid outside of a specified time boundary.  An example would be a SAML assertion or a TOTP.
 
+### Replayability
+Credentials are replayable when they can be captured by an adversary and represented to an authentication service resulting in successful authentication. Credentials that are presented directly, such as shared secrets (passwords) or bearer tokens, are the canonical example of replayable credentials.  Challenge response protocols are considered non-replayable.
+
+OTPs represent an interesting class of crentials when describing replayability.  Deployed at a global scale, there is a small window of opportunity to present a HOTP or TOTP multiple times within its validity window.  Therefore, replayability is not a strictly binary scale.
+
 ### Selective Disclosure
 A mechanism by which some or all of the contents within a credential are unavailable at presentation time. Example is an SD-JWT or a ZKP.
 
@@ -83,7 +88,7 @@ The boundary enforcement property describes the mechanisms which ensure that ope
 Transference is the ability for an end user to give the credential away to another user such that durable ongoing use is possible by two different entities.  This transference may be within the enforced boundary (e.g. sharing a synced passkey via a credential manager) or outside of the boundary (e.g. user copies a password from a credential manager to a file which is emailed to another user).
 
 ### Dynamism
-Dynamism describes a credential whose stored and active forms are different. Credentials with no dynamism (or dynamic genarativity) such as passwords exibit no difference between the stored (in memory, in a password manager, etc.) and the credential sent to the verifier. Dynamic generativity indicates that some function is used to operate on the stored credential such that what is sent over the wire is different than what is stored (e.g. a challenge response protocol like FIDO).  Credentials that do not exhibit dynamism, such as shared secrets, are definitionally not able to be contained.
+Dynamism describes a credential whose stored and active forms are different. Credentials with no dynamism (or dynamic genarativity) such as passwords exibit no difference between the stored (in memory, in a password manager, etc.) and the credential sent to the verifier. Dynamic generativity indicates that some function is used to operate on the stored credential such that what is sent over the wire is different than what is stored (e.g. a challenge response protocol like FIDO).  Credentials that do not exhibit dynamism, such as shared secrets, usually exhibit replayability and are definitionally not able to be contained.
 
 ### Activation
 A credential becomes available for an operation only when a local user gesture is performed. This user gesture may also be called an activation factor (see 800-63-4). Only a credential that is contained can be activated. A FIDO2 private key on a hardware security device that requires a PIN is an example of an activated credential. A biometric that unlocks a TPM on a laptop is another example of an activated credential.  Presence Activation is a case where locality is required but confirmation of a secret or biometric is not required. Individual Activation is a case where only one human can trigger the container to unlock.
