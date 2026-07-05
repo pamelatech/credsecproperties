@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-21T03:35:37.279138+00:00",
+  "timestamp": "2026-07-05T02:35:51.432860+00:00",
   "repo": "pamelatech/credsecproperties",
   "labels": [
     {
@@ -62,9 +62,17 @@
       "labels": [],
       "body": "Rough due date is the first week in July.",
       "createdAt": "2026-03-18T23:20:36Z",
-      "updatedAt": "2026-03-18T23:20:36Z",
+      "updatedAt": "2026-07-02T21:49:11Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Due by 23:59 UTC July 6, 2026.\n\nWe need to make the repo public and stand up the github.io site for an editors copy before Monday.",
+          "createdAt": "2026-07-02T21:49:11Z",
+          "updatedAt": "2026-07-02T21:49:11Z"
+        }
+      ]
     },
     {
       "number": 2,
@@ -178,6 +186,185 @@
       "body": "IIW42 book of proceedings page 209: https://drive.google.com/file/d/1Fs46JqT3Vf5voBwXd-Ex6F7_yz7YpzSA/view?mc_cid=15bc146c03",
       "createdAt": "2026-06-19T14:29:50Z",
       "updatedAt": "2026-06-19T14:29:50Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 21,
+      "id": "I_kwDON4ikis8AAAABHgI5cw",
+      "title": "Is Key Protection a new class?",
+      "url": "https://github.com/pamelatech/credsecproperties/issues/21",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "As suggest at IIW in Spring 2026.  Determine whether to add this as a class.",
+      "createdAt": "2026-07-02T21:51:29Z",
+      "updatedAt": "2026-07-02T21:51:29Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 22,
+      "id": "I_kwDON4ikis8AAAABHgJ5ZA",
+      "title": "Who is authoritative for the claims in the credential?",
+      "url": "https://github.com/pamelatech/credsecproperties/issues/22",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Do we need a mechanism to describe the authority behind the claims?  This comes from IIW Spring 2026.\n\nMy immediate feedback is that this is contained within a credential (e.g. a VC), so it should not be repeated in these descriptors.  However, whether the authority of the claims can be validated when the credential is presented is a property that we can describe.",
+      "createdAt": "2026-07-02T21:54:57Z",
+      "updatedAt": "2026-07-02T21:54:57Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 23,
+      "id": "I_kwDON4ikis8AAAABHgKgow",
+      "title": "How do we handle single use credentials (e.g. OTPs) which may not be single use in some conditions",
+      "url": "https://github.com/pamelatech/credsecproperties/issues/23",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "As described at IIW in Spring 2026, single use credentials such as OTPs may actually not be single use in practice due to global scale cache management issues.  How do we capture this nuance?",
+      "createdAt": "2026-07-02T21:57:09Z",
+      "updatedAt": "2026-07-02T21:57:09Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 24,
+      "id": "I_kwDON4ikis8AAAABHgLLMg",
+      "title": "Words to describe actions against a credential",
+      "url": "https://github.com/pamelatech/credsecproperties/issues/24",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From IIW in Spring 2026, these words were used to describe specific actions against a credential.  Examine how these may be described in the draft.  (Movement, for example, is already in the draft.). Need to ask the originator of the comment to explain more about the first two lines.\n\n\u2022 Forced\n\u2022 Inbound/rebound\n\u2022 Replayed\n\u2022 Modified\n\u2022 Moved to another place\n\u2022 Correlated\n\u2022 Examined directly\n\u2022 Used for secondary purpose",
+      "createdAt": "2026-07-02T21:59:25Z",
+      "updatedAt": "2026-07-04T16:37:48Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Added replayability in #26.\n\nMovement is covered in the draft already.",
+          "createdAt": "2026-07-02T22:20:35Z",
+          "updatedAt": "2026-07-02T22:20:35Z"
+        },
+        {
+          "author": "pamelatech",
+          "authorAssociation": "OWNER",
+          "body": "As per discussion on July 4 -  we will try describing \"operational\" vs \"inherent\" security properties and see how that looks",
+          "createdAt": "2026-07-04T16:37:48Z",
+          "updatedAt": "2026-07-04T16:37:48Z"
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "id": "I_kwDON4ikis8AAAABHgLerw",
+      "title": "Possible additional descriptors from IIW Spring 2026",
+      "url": "https://github.com/pamelatech/credsecproperties/issues/25",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "\u2022 Account Takeover Resistance\n\u2022 Forward safety / future proofing?\n\u2022 Forward secrecy, quantum safety\n\u2022 Applicability/deployability",
+      "createdAt": "2026-07-02T22:00:19Z",
+      "updatedAt": "2026-07-02T22:00:19Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 28,
+      "id": "I_kwDON4ikis8AAAABHh8Pqw",
+      "title": "Credential Recovery",
+      "url": "https://github.com/pamelatech/credsecproperties/issues/28",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Reviewing this doc, it appears that credential recovery is more about the system that creates/manages the lifecycle of a credential, than a specific type of credential.\n\nDo we need to address the fact that this is going to be implementation specific and not an inherent property of the credential?  This feels like a slippery slope to defining the implementation characteristics.",
+      "createdAt": "2026-07-03T04:18:05Z",
+      "updatedAt": "2026-07-04T16:33:53Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Pam during our call on 7.3.2026 - this is a property of the account and it contributes to resistance of account takeover.\n\nShould we define the properties of **accounts** in a similar pattern?",
+          "createdAt": "2026-07-03T15:39:29Z",
+          "updatedAt": "2026-07-03T15:39:29Z"
+        },
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Synced passkeys are unique in that we can recover the credential - e.g. bootstrap the passkey provider on a new device - without access to the account or service which the account is created on.",
+          "createdAt": "2026-07-03T15:54:53Z",
+          "updatedAt": "2026-07-03T15:54:53Z"
+        },
+        {
+          "author": "pamelatech",
+          "authorAssociation": "OWNER",
+          "body": "Agree that Account Security Properties should be a separate and useful output.   We (and the industry) should be able to differentiate between account recovery and credential recovery, they are different in important ways",
+          "createdAt": "2026-07-04T15:26:50Z",
+          "updatedAt": "2026-07-04T15:26:50Z"
+        },
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "By this definition, a password, an OTP, or an API key stored in a credential manager is recoverable.  So there is an operational consideration for credentials that are ALLEGEDLY (yes, I did that) in a credential manager.",
+          "createdAt": "2026-07-04T15:37:56Z",
+          "updatedAt": "2026-07-04T15:37:56Z"
+        },
+        {
+          "author": "pamelatech",
+          "authorAssociation": "OWNER",
+          "body": "After discussing today (July 4) I propose changing the recovery property to be a descriptor rather than a binary, will create a PR to explore this option.  We discussed 3 different types of recovery: 1) issuer-driven, 2) recovery-driven and 3) container-driven.   We also discussed that this is an operational security property rather than an inherent security property.",
+          "createdAt": "2026-07-04T16:33:53Z",
+          "updatedAt": "2026-07-04T16:33:53Z"
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "id": "I_kwDON4ikis8AAAABHq9ROw",
+      "title": "Crypto Agility",
+      "url": "https://github.com/pamelatech/credsecproperties/issues/29",
+      "state": "OPEN",
+      "author": "pamelatech",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "As discussed July 4, crypto-agility should be a security property,  question is - is it operational or inherent?    I would argue that it is inherent, in that the standards that sit behind the credential need to be capable of supporting quantum-safe algorithms.  The question is, is it crypto agility that is the property or quantum safety or both?",
+      "createdAt": "2026-07-04T16:36:35Z",
+      "updatedAt": "2026-07-04T16:36:35Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 30,
+      "id": "I_kwDON4ikis8AAAABHq9uwg",
+      "title": "Super Category Symmetry",
+      "url": "https://github.com/pamelatech/credsecproperties/issues/30",
+      "state": "OPEN",
+      "author": "pamelatech",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "as per July 4 description, update to have 4 categories, all similarly named:\n\n- Credential Containment & Unlock\n- Credential Dynamism\n- Credential Substantiation\n- Credential Presentation ",
+      "createdAt": "2026-07-04T16:39:11Z",
+      "updatedAt": "2026-07-04T16:39:11Z",
       "closedAt": null,
       "comments": []
     }
@@ -808,6 +995,138 @@
       },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 26,
+      "id": "PR_kwDON4ikis7tVYcq",
+      "title": "Added Replayability as a property",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/26",
+      "state": "MERGED",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Following #24 and the feedback from IIW, added replayability.",
+      "createdAt": "2026-07-02T22:19:47Z",
+      "updatedAt": "2026-07-04T15:23:55Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "6dbc42491cb8ddd3d99bfc1e5ab58ad10977a5f7",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "replayability",
+      "headRefOid": "d8ef2efe066c3e5eb55347783064dcd0a3ca6c97",
+      "closedAt": "2026-07-04T15:23:55Z",
+      "mergedAt": "2026-07-04T15:23:55Z",
+      "mergedBy": "pamelatech",
+      "mergeCommit": {
+        "oid": "f46f8e46173dd84d084f120985ebd68a679874f2"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDON4ikis8AAAABE3Zhyw",
+          "commit": {
+            "abbreviatedOid": "f6bf989"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-02T22:20:23Z",
+          "updatedAt": "2026-07-02T22:20:23Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "````suggestion\nOTPs represent an interesting class of crentials when describing replayability.  Deployed at a global scale, there is a small window of opportunity to present a HOTP or TOTP multiple times within its validity window.  Therefore, replayability is not a strictly binary scale.\n````",
+              "createdAt": "2026-07-02T22:20:23Z",
+              "updatedAt": "2026-07-02T22:20:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDON4ikis8AAAABE3cHtw",
+          "commit": {
+            "abbreviatedOid": "5554e0e"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-02T22:29:28Z",
+          "updatedAt": "2026-07-02T22:29:28Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "````suggestion\nOTPs represent an interesting class of crentials when describing replayability.  Deployed at a global scale, there is a small window of opportunity to present a HOTP or TOTP multiple times within its validity window.  Therefore, replayability is not a strictly binary scale.\n````",
+              "createdAt": "2026-07-02T22:29:28Z",
+              "updatedAt": "2026-07-02T22:29:28Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "id": "PR_kwDON4ikis7tXRn1",
+      "title": "Add appendix mapping credential types to security properties",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/27",
+      "state": "MERGED",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "## What changed\n\nAdds a new back-matter appendix, **\"Applying the Properties to Common Credential Types\"**, to `draft-dingle-sec-credproperties.md`. It maps four credential types across all 27 properties, grouped into six tables (one per security class):\n\n- **Password** (also covers API keys and client credentials)\n- **Synced passkey**\n- **Device-bound passkey** (hardware security token)\n- **SPIFFE X.509-SVID** (mTLS certificate)\n\n## Why\n\nProvides worked examples to validate that the property set is expressive enough to differentiate real-world credential types.\n\n## Reviewer notes\n\n- Cells are pre-filled **only** where the document body already determines the value for that credential type \u2014 either by naming the type explicitly or using an unambiguous instance of it as an example (e.g. Containment=Uncontained for passwords, Dynamism=Dynamic for FIDO passkeys, Identifier Binding for the X.509-SVID). Every other cell is intentionally left blank for the authors to complete manually.\n- No changes to normative text or existing sections; this is additive only.\n- Deliberately conservative judgment calls (left blank rather than inferred) are worth a look: e.g. Validity Count for passwords (the doc's example is a *temporary* password), and Containment/Boundary Binding for the device-bound passkey (the doc's examples use a different credential type).\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)\n",
+      "createdAt": "2026-07-03T00:43:58Z",
+      "updatedAt": "2026-07-04T15:25:05Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "6dbc42491cb8ddd3d99bfc1e5ab58ad10977a5f7",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "claude/gracious-proskuriakova-b51307",
+      "headRefOid": "13c1f9b9059e347cbfed2f42ef4b37e0ad9e7040",
+      "closedAt": "2026-07-04T15:25:05Z",
+      "mergedAt": "2026-07-04T15:25:05Z",
+      "mergedBy": "pamelatech",
+      "mergeCommit": {
+        "oid": "77ae455482200860ddf34c84256a482da871b49b"
+      },
+      "comments": [
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Claude was used to create the initial pass at filling in details based upon the current state of the draft.  Next step is for me to review and update.  I already see a mistake about device bound passkeys.",
+          "createdAt": "2026-07-03T00:45:27Z",
+          "updatedAt": "2026-07-03T00:45:27Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDON4ikis8AAAABE8XEOQ",
+          "commit": {
+            "abbreviatedOid": "6014877"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-03T15:00:44Z",
+          "updatedAt": "2026-07-03T15:00:45Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "````suggestion\n- **SPIFFE X.509-SVID** \u2014 A workload identity and credentials issued as an X.509 certificate to the workload following attestation of the state of the workload. Credential is presented via mTLS to downstream services.\n````",
+              "createdAt": "2026-07-03T15:00:44Z",
+              "updatedAt": "2026-07-03T15:00:45Z"
+            },
+            {
+              "originalPosition": 8,
+              "body": "````suggestion\n- **Password** \u2014 A shared secret.\n````",
+              "createdAt": "2026-07-03T15:00:45Z",
+              "updatedAt": "2026-07-03T15:00:45Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
