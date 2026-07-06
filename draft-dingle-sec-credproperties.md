@@ -144,19 +144,10 @@ Regulatory framework describes which regulatory framework or frameworks impose r
 Credential Recovery properties describe limitations of who can reset a credential or how a credential can be reset.
 
 ### Recoverability
-Recoverability is a binary property that describes whether access to a valid credential can be restored after loss.  Not all systems support recoverability.
-
-### Recovery Agent
-Recovery agent describes the entity, such as the user or an administrator, that can initiate and execute the recovery process.  A recovery agent MAY be null, e.g. when _Recoverability_ is "no".  Multiple recovery agents MAY be supported, e.g. when both the user and an administrator are required for recovery.
-
-### Recovery Mechanism
-Recovery mechanism describes the processes that enables recovery of a credential.  Example mechanisms may include SMS OTP, remote identity proofing, in-person identity proofing with a trusted referee, vouching, etc.
-
-### Recovery Artifact
-Recovery artifacts are items used as part of the recovery mechanism. For example, a remote identity proofing session may be dependent upon an identity document such as a passport and a selfie video. Not all recovery mechanisms will use recovery artifacts, e.g. SMS or email OTP.
-
-### Recovery Assurance
-TODO - determine whether this can be defined in concrete terms vs. abstract terms
+Recoverability describes remediation capabilities that enable or re-enable access to a valid credential after loss or compromise. Values can be: issuer-driven, container-driven,or account-driven. 
+ * Issuer-driven: remediation is enabled by a direct party to the creation of the credential. Examples include credentials with multiple configured signing certificates, synced passkeys protected by a consumer trust layer, or hardware keys created with matching/derived seed values. 
+ * Container-driven: remediation enabled by a direct party to containment or unlock of the credential with pre-established administrative trust. Examples include PAM (privileged access management) systems or corporate password managers.
+ * Account-driven: the credential cannot be restored, it can only be removed and replaced, often through a process that requires presentation of an unrelated alternate credential. 
 
 # Conventions and Definitions
 
