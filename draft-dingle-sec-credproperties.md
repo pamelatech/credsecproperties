@@ -1,8 +1,9 @@
+---
 title: "Credential Management Security properties"
 abbrev: "credproperties"
 category: info
 
-docname: draft-dingle-sec-credproperties
+docname: draft-dingle-sec-credproperties-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
@@ -39,7 +40,7 @@ informative:
 
 --- abstract
 
-This document defines a set of properties which explain and differentiate unique security characteristics of an authentication method. 
+This document defines a set of properties which explain and differentiate unique security characteristics of an authentication method.
 
 --- middle
 
@@ -52,13 +53,13 @@ Properties are organized into areas of scrutiny, with each class containing the 
 # Credential Management Security Properties
 
 ## Credential Boundary
-Credential boundary properties describe ways in which limits are placed on the storage location of a credential in its intended use. 
+Credential boundary properties describe ways in which limits are placed on the storage location of a credential in its intended use.
 ### Boundary Binding
-Boundary bindings describe the operational rules or limitations that limit where the secret portion of a credential could be stored. 
+Boundary bindings describe the operational rules or limitations that limit where the secret portion of a credential could be stored.
 ### Boundary Enforcement
 The boundary enforcement property describes the mechanisms which ensure that operational rules are followed. Boundary enforcements can be proactive or reactive.  An example of a proactive boundary enforcement include binding the credential to the device. An example of a reactive boundary enforcement includes credential scanning of source code repositories.
 ### Exportability
-Exportability is the ability for the end user to move the credential secret to a new operational boundary. 
+Exportability is the ability for the end user to move the credential secret to a new operational boundary.
 ### Transference
 Transference is the ability for an end user to give the credential away to another user such that durable ongoing use is possible by two different entities.
 ### Dynamism
@@ -106,7 +107,7 @@ A vouched credential is one whose enrollment was enabled by the subject first au
 Enrollment binding describes the mechanism that binds the credential to the enrolled identity.
 
 ## Substantiation
-Substantiation describes how a credential might derive security properties from an authority or other third party entity such as an issuer, provenance chain, or cryptographic signature. 
+Substantiation describes how a credential might derive security properties from an authority or other third party entity such as an issuer, provenance chain, or cryptographic signature.
 
 ### Identifier Binding
 The primary content of a credential is cryptographically bound to an identifier. Examples of credentials that include bound identifiers include SAML assertions, JSON Web Tokens (jwts), X.509 certificates, ISO 18013 mobile drivers license objects and verifiable credentials
@@ -135,11 +136,11 @@ Regulatory framework describes which regulatory framework or frameworks impose r
 
 
 ## Credential Recovery
-Credential Recovery properties describe limitations of who can reset a credential or how a credential can be reset.  
+Credential Recovery properties describe limitations of who can reset a credential or how a credential can be reset.
 
 ### Recoverability
-Recoverability describes remediation capabilities that enable or re-enable access to a valid credential after loss or compromise. Values can be: issuer-driven, container-driven,or account-driven. 
- * Issuer-driven: remediation is enabled by a direct party to the creation of the credential. Examples include credentials with multiple configured signing certificates, synced passkeys protected by a consumer trust layer, or hardware keys created with matching/derived seed values. 
+Recoverability describes remediation capabilities that enable or re-enable access to a valid credential after loss or compromise. Values can be: issuer-driven, container-driven,or account-driven.
+ * Issuer-driven: remediation is enabled by a direct party to the creation of the credential. Examples include credentials with multiple configured signing certificates, synced passkeys protected by a consumer trust layer, or hardware keys created with matching/derived seed values.
  * Container-driven: remediation enabled by a direct party to containment or unlock of the credential with pre-established administrative trust. Examples include PAM (privileged access management) systems or corporate password managers.
  * Account-driven: the credential cannot be restored, it can only be removed and replaced, often through a process that requires presentation of an unrelated alternate credential.
 
