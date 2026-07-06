@@ -1,9 +1,8 @@
----
 title: "Credential Management Security properties"
 abbrev: "credproperties"
 category: info
 
-docname: draft-dingle-sec-credproperties-latest
+docname: draft-dingle-sec-credproperties
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
@@ -40,7 +39,7 @@ informative:
 
 --- abstract
 
-This document defines a set of properties which explain and differentiate unique security characteristics of an authentication method.
+This document defines a set of properties which explain and differentiate unique security characteristics of an authentication method. 
 
 --- middle
 
@@ -52,19 +51,26 @@ Properties are organized into areas of scrutiny, with each class containing the 
 
 # Credential Management Security Properties
 
+## Credential Boundary
+Credential boundary properties describe ways in which limits are placed on the storage location of a credential in its intended use. 
+### Boundary Binding
+Boundary bindings describe the operational rules or limitations that limit where the secret portion of a credential could be stored. 
+### Boundary Enforcement
+The boundary enforcement property describes the mechanisms which ensure that operational rules are followed. Boundary enforcements can be proactive or reactive.  An example of a proactive boundary enforcement include binding the credential to the device. An example of a reactive boundary enforcement includes credential scanning of source code repositories. 
+### Exportability
+Exportability is the ability for the end user to move the credential secret to a new operational boundary. 
+### Transference
+Transference is the ability for an end user to give the credential away to another user such that durable ongoing use is possible by two different entities.
+### Dynamism
+Dynamism describes a credential whose stored and active forms are different. Credentials with no dynamism (or dynamic genarativity) such as passwords exibit no difference between the stored (in memory, in a password manager, etc.) and the credential sent to the verifier. Dynamic generativity indicates that some function is used to operate on the stored credential such that what is sent over the wire is different than what is stored (e.g a challenge response protocol like FIDO.
+
 ## Presentation Limits
 Credential reuse properties describe ways in which the use of a credential is functionally restricted.
-
 ### Validity Count
 A credential becomes invalid after a specified number of successful presentations. An example would be a temporary password that can only be used 5 times, or a one-time password.
 
 ### Validity Window
 A credential becomes invalid outside of a specified time boundary.  An example would be a SAML assertion or a TOTP.
-
-### Replayability
-Credentials are replayable when they can be captured by an adversary and represented to an authentication service resulting in successful authentication. Credentials that are presented directly, such as shared secrets (passwords) or bearer tokens, are the canonical example of replayable credentials.  Challenge response protocols are considered non-replayable.
-
-OTPs represent an interesting class of crentials when describing replayability.  Deployed at a global scale, there is a small window of opportunity to present a HOTP or TOTP multiple times within its validity window.  Therefore, replayability is not a strictly binary scale.
 
 ### Selective Disclosure
 A mechanism by which some or all of the contents within a credential are unavailable at presentation time. Example is an SD-JWT or a ZKP.
@@ -73,37 +79,25 @@ A mechanism by which some or all of the contents within a credential are unavail
 A mechanism that specifies which destination consumers of the credential are valid.  Examples include `id_tokens` or origin bindings of FIDO tokens.
 
 ## Credential Containment & Unlock
-Credential containment describes the at-rest state of a credential and its storage location(s). Unlock properties describe how the contained credential is made available for use at runtime and how the containment facility, if any, can play a security role in an observable way at operation time.
+Credential containment and unlock properties describe ways in which a secure element, TPM, or other secure storage facility could play a security role in an observable way at operation time.
 
-### Containment (TODO: see FIDO security requirements for sync fabric)
-Describes how the creation, storage, and usage of a credential is managed. At one extreme, containment be within the boundary of a cryptographically supervised service or hardware element, e.g. an SSH private key stored in an HSM.  At the other extreme, the credential may be uncontained, e.g. a manually generated password.  A SSH private key stored on volatile media sits between these extremes, it is contained by access to the media on which it resides but it is not permanently bound to the media (see Boundary Binding, below).
-
-### Boundary Binding
-Boundary bindings describe the operational rules or limitations that limit where the secret portion of a credential could be stored. In the prior examples, the HSM bound SSH private key may not be extractable from the HSM, the HSM provides the boundary binding.  The password is unbounded, there are no limits on how the password may be moved or shared. The SSH key stored on volatile media is also unbound, since it may be copied and moved freely, e.g. it is exportable.
-
-### Boundary Enforcement
-The boundary enforcement property describes the mechanisms which ensure that operational rules are followed. Boundary enforcements can be proactive or reactive.  An example of a proactive boundary enforcement include binding the credential to the device, e.g. the SSH key generated and stored in an HSM. An example of a reactive boundary enforcement includes credential scanning of source code repositories.
-
-### Transference
-Transference is the ability for an end user to give the credential away to another user such that durable ongoing use is possible by two different entities.  This transference may be within the enforced boundary (e.g. sharing a synced passkey via a credential manager) or outside of the boundary (e.g. user copies a password from a credential manager to a file which is emailed to another user).
-
-### Dynamism
-Dynamism describes a credential whose stored and active forms are different. Credentials with no dynamism (or dynamic genarativity) such as passwords exibit no difference between the stored (in memory, in a password manager, etc.) and the credential sent to the verifier. Dynamic generativity indicates that some function is used to operate on the stored credential such that what is sent over the wire is different than what is stored (e.g. a challenge response protocol like FIDO).  Credentials that do not exhibit dynamism, such as shared secrets, usually exhibit replayability and are definitionally not able to be contained.
+### Containment (see FIDO security requirements for sync fabric)
+The creation or generation of a credential or signature occurs within the boundary of a cryptographically supervised service or hardware element.  An SSH private key stored in an HSM would exhibit the containment property, while an SSH private key stored on a disk drive would not.
 
 ### Activation
-A credential becomes available for an operation only when a local user gesture is performed. This user gesture may also be called an activation factor (see 800-63-4). Only a credential that is contained can be activated. A FIDO2 private key on a hardware security device that requires a PIN is an example of an activated credential. A biometric that unlocks a TPM on a laptop is another example of an activated credential.  Presence Activation is a case where locality is required but confirmation of a secret or biometric is not required. Individual Activation is a case where only one human can trigger the container to unlock.
+A credential becomes available for an operation only when a local user gesture is performed. This user gesture may also be called an activation factor (see 800-63-4). Only a credential that is contained can be activated. A FIDO2 private key on a hardware security device that requires a PIN is an example of an activated credential. A biometric that unlocks a TPM on a laptop is another example of an activated credential.  Presence Activation is a case where locality is required but confirmation of a secret or biometric is not required. Individual Activation is a case where only one human can trigger the container to unlock.  
 
 ### Unlock Scope
 A credential may be unlocked by different parties which defines the scope of which entities can unlock credential for use.  The owner of a credential is always expected to be able to unlock their own credential. Credentials on shared devices may be unlocked by all users sharing the device. Similarly, credentials in a shared enterprise vault may be unlocked by a vault administrator.  Unlock scope is related to an instance of a credential and is distinct from the Credential Management Security Properties.
 
 ### Unlock Persistence
-Credentials may be unlocked once with an activation factor (e.g. using a hardware security key), or the activation factor may be presented seconds to minutes before use (e.g. a credential vault remains unlocked for 5 minutes after use).
+Credentials may be unlocked once with an activation factor (e.g. using a hardware security key), or the activation factor may be presented seconds to minutes before use (e.g. a credential vault remains unlocked for 5 minutes after use).  
 
 ## Credential Enrollment
 Credential enrollment properties describe requirements required to be met before a credential is created.
 
 ### Enrollment Assurance
-Enrollment assurance describes the identity verification assurance level (todo, this feels like it points at NIST!) at the time the credential was created.
+Enrollment assurance describes the identity verification assurance level (todo, this feels like it points at NIST!) at the time the credential was created. 
 
 ### Vouching
 A vouched credential is one whose enrollment was enabled by the subject first authenticating with a separate, pre-existing credential. The prior credential acts as a gate on the enrollment event but does not contribute its key material to the new credential. After enrollment, the vouched credential is fully independent.  A user may present a passport as a proof of citizenship to be granted a state digital identity.
@@ -112,7 +106,7 @@ A vouched credential is one whose enrollment was enabled by the subject first au
 Enrollment binding describes the mechanism that binds the credential to the enrolled identity.
 
 ## Substantiation
-Substantiation describes how a credential might derive security properties from an authority or other third party entity such as an issuer, provenance chain, or cryptographic signature.
+Substantiation describes how a credential might derive security properties from an authority or other third party entity such as an issuer, provenance chain, or cryptographic signature. 
 
 ### Identifier Binding
 The primary content of a credential is cryptographically bound to an identifier. Examples of credentials that include bound identifiers include SAML assertions, JSON Web Tokens (jwts), X.509 certificates, ISO 18013 mobile drivers license objects and verifiable credentials
@@ -141,22 +135,13 @@ Regulatory framework describes which regulatory framework or frameworks impose r
 
 
 ## Credential Recovery
-Credential Recovery properties describe limitations of who can reset a credential or how a credential can be reset.
+Credential Recovery properties describe limitations of who can reset a credential or how a credential can be reset.  
 
 ### Recoverability
-Recoverability is a binary property that describes whether access to a valid credential can be restored after loss.  Not all systems support recoverability.
-
-### Recovery Agent
-Recovery agent describes the entity, such as the user or an administrator, that can initiate and execute the recovery process.  A recovery agent MAY be null, e.g. when _Recoverability_ is "no".  Multiple recovery agents MAY be supported, e.g. when both the user and an administrator are required for recovery.
-
-### Recovery Mechanism
-Recovery mechanism describes the processes that enables recovery of a credential.  Example mechanisms may include SMS OTP, remote identity proofing, in-person identity proofing with a trusted referee, vouching, etc.
-
-### Recovery Artifact
-Recovery artifacts are items used as part of the recovery mechanism. For example, a remote identity proofing session may be dependent upon an identity document such as a passport and a selfie video. Not all recovery mechanisms will use recovery artifacts, e.g. SMS or email OTP.
-
-### Recovery Assurance
-TODO - determine whether this can be defined in concrete terms vs. abstract terms
+Recoverability describes remediation capabilities that enable or re-enable access to a valid credential after loss or compromise. Values can be: issuer-driven, container-driven,or account-driven. 
+ * Issuer-driven: remediation is enabled by a direct party to the creation of the credential. Examples include credentials with multiple configured signing certificates, synced passkeys protected by a consumer trust layer, or hardware keys created with matching/derived seed values. 
+ * Container-driven: remediation enabled by a direct party to containment or unlock of the credential with pre-established administrative trust. Examples include PAM (privileged access management) systems or corporate password managers.
+ * Account-driven: the credential cannot be restored, it can only be removed and replaced, often through a process that requires presentation of an unrelated alternate credential. 
 
 # Conventions and Definitions
 
@@ -166,81 +151,16 @@ TODO define two parts of credential (secret, generated)
 
 # Security Considerations
 
-This document has no security considerations.
+TODO Security
 
 # IANA Considerations
 
 This document has no IANA actions.
 
+
 --- back
-
-# Applying the Properties to Common Credential Types
-
-This appendix illustrates how the properties defined in this document apply to several common credential types, to validate that the property set is expressive enough to differentiate them:
-
-- **Password** — A shared secret.
-- **Synced passkey - consumer** — a FIDO2/WebAuthn credential synchronized across devices by a credential manager such as 1Password or BitWarden. Consumer focused use case.
-- **Device-bound passkey (hardware key) - enterprise** — a FIDO2/WebAuthn credential generated on and bound to a hardware security key managed by an enterprise.
-- **SPIFFE X.509-SVID** — A workload identity and credentials issued as an X.509 certificate to the workload following attestation of the state of the workload. Credential is presented via mTLS to downstream services.
-
-## Presentation Limits
-
-| Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
-| --- | --- | --- | --- | --- |
-| Validity Count | | | | |
-| Validity Window | | | | Short term validity, SVIDs are rotated every 5 minutes.|
-| Selective Disclosure | No | No | No | No |
-| Audience Restriction | No | Yes (FIDO origin binding) | Yes (FIDO origin binding) | Yes (services within the trust domain or federated trust domains)|
-
-## Credential Containment & Unlock
-
-| Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
-| --- | --- | --- | --- | --- |
-| Containment | Uncontained | Partially Contained | Contained | Contained when bound to a TPM |
-| Boundary Binding | Unbounded | Bound to the passkey provider.  Specifics are dependent upon the provider. | Bound to the hardware key | Bound to a TPM |
-| Boundary Enforcement | Reactive (identification in prior breaches, identified in clear text) | Managed by the passkey provider. | Enforced by hardware. | Enforced by hardware. |
-| Transference | Yes | Within boundary via passkey provider sharing. Mechanisms depend on provider.  Export to another passkey provider via credential exchange protocol may be available. | None | None |
-| Dynamism | None (static shared secret) | Dynamic (challenge-response) | Dynamic (challenge-response) | Dynamic (TLS) |
-| Activation | No | Yes (biometric gesture or password/passphrase unlock) | Yes (PIN/biometric gesture) | No |
-| Unlock Scope | N/A | All users on a shared device. |  | Workload |
-| Unlock Persistence | N/A | Configurable by passkey provider. | Per-operation (unlock once) | Life of the workload |
-
-## Credential Enrollment
-
-| Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
-| --- | --- | --- | --- | --- |
-| Enrollment Assurance | | | | |
-| Vouching | | | | |
-| Enrollment Binding | | | | |
-
-## Substantiation
-
-| Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
-| --- | --- | --- | --- | --- |
-| Identifier Binding | | | | Yes (SPIFFE ID bound in X.509) |
-| Integrity | | | | |
-| Authoritative Relationship | | | | |
-| Chainability | | | | |
-
-## Credential Compliance
-
-| Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
-| --- | --- | --- | --- | --- |
-| Composition Rules | Length & composition may be enforced | | | |
-| Lifecycle Rules | May be enforced | | | |
-| Regulatory Framework | PCI, NIST SP800-63rev4 Part B | | | |
-
-## Credential Recovery
-
-| Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
-| --- | --- | --- | --- | --- |
-| Recoverability | | | | |
-| Recovery Agent | | | | |
-| Recovery Mechanism | | | | |
-| Recovery Artifact | | | | |
-| Recovery Assurance | | | | |
 
 # Acknowledgments
 {:numbered="false"}
 
-The authors would like to acknowledge the following individuals for their thoughful feedback: George Fletcher, Andrew Hughes, Justin Richer, and the attendees of the Internet Identity Workshop 42 and OAuth Security Workshop 2025.
+TODO acknowledge.
