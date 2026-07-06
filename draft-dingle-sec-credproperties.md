@@ -97,7 +97,7 @@ Credentials may be unlocked once with an activation factor (e.g. using a hardwar
 Credential enrollment properties describe requirements required to be met before a credential is created.
 
 ### Enrollment Assurance
-Enrollment assurance describes the identity verification assurance level (todo, this feels like it points at NIST!) at the time the credential was created. 
+Enrollment assurance describes the identity verification assurance level (todo, this feels like it points at NIST!) at the time the credential was created.
 
 ### Vouching
 A vouched credential is one whose enrollment was enabled by the subject first authenticating with a separate, pre-existing credential. The prior credential acts as a gate on the enrollment event but does not contribute its key material to the new credential. After enrollment, the vouched credential is fully independent.  A user may present a passport as a proof of citizenship to be granted a state digital identity.
