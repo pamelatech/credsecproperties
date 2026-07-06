@@ -56,7 +56,7 @@ Credential boundary properties describe ways in which limits are placed on the s
 ### Boundary Binding
 Boundary bindings describe the operational rules or limitations that limit where the secret portion of a credential could be stored. 
 ### Boundary Enforcement
-The boundary enforcement property describes the mechanisms which ensure that operational rules are followed. Boundary enforcements can be proactive or reactive.  An example of a proactive boundary enforcement include binding the credential to the device. An example of a reactive boundary enforcement includes credential scanning of source code repositories. 
+The boundary enforcement property describes the mechanisms which ensure that operational rules are followed. Boundary enforcements can be proactive or reactive.  An example of a proactive boundary enforcement include binding the credential to the device. An example of a reactive boundary enforcement includes credential scanning of source code repositories.
 ### Exportability
 Exportability is the ability for the end user to move the credential secret to a new operational boundary. 
 ### Transference
