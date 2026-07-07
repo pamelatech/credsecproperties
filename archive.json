@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-05T02:35:51.432860+00:00",
+  "timestamp": "2026-07-07T02:36:15.531774+00:00",
   "repo": "pamelatech/credsecproperties",
   "labels": [
     {
@@ -1123,6 +1123,411 @@
               "body": "````suggestion\n- **Password** \u2014 A shared secret.\n````",
               "createdAt": "2026-07-03T15:00:45Z",
               "updatedAt": "2026-07-03T15:00:45Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 31,
+      "id": "PR_kwDON4ikis7ukXhD",
+      "title": "Collapsing recoverability into one property.",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/31",
+      "state": "OPEN",
+      "author": "pamelatech",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "First attempt to collapse the recovery section into one property.  Hopefully fixes issue #28.",
+      "createdAt": "2026-07-06T22:20:33Z",
+      "updatedAt": "2026-07-06T23:17:08Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "77ae455482200860ddf34c84256a482da871b49b",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "28-credential-recovery",
+      "headRefOid": "951949b39b620630f5ddd32df13d4b75924ec572",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "pamelatech",
+          "authorAssociation": "OWNER",
+          "body": "I don't know what I did but this PR is messed up.  Consider this obsoleted and needing of deletion.",
+          "createdAt": "2026-07-06T23:17:08Z",
+          "updatedAt": "2026-07-06T23:17:08Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDON4ikis8AAAABFJNaAA",
+          "commit": {
+            "abbreviatedOid": "9892498"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T22:20:57Z",
+          "updatedAt": "2026-07-06T22:20:58Z",
+          "comments": [
+            {
+              "originalPosition": 131,
+              "body": "````suggestion\n * Account-driven: the credential cannot be restored, it can only be removed and replaced, often through a process that requires presentation of an unrelated alternate credential.\n````",
+              "createdAt": "2026-07-06T22:20:57Z",
+              "updatedAt": "2026-07-06T22:20:58Z"
+            },
+            {
+              "originalPosition": 129,
+              "body": "````suggestion\nRecoverability describes remediation capabilities that enable or re-enable access to a valid credential after loss or compromise. Values can be: issuer-driven, container-driven,or account-driven.\n * Issuer-driven: remediation is enabled by a direct party to the creation of the credential. Examples include credentials with multiple configured signing certificates, synced passkeys protected by a consumer trust layer, or hardware keys created with matching/derived seed values.\n````",
+              "createdAt": "2026-07-06T22:20:57Z",
+              "updatedAt": "2026-07-06T22:20:58Z"
+            },
+            {
+              "originalPosition": 112,
+              "body": "````suggestion\nCredential Recovery properties describe limitations of who can reset a credential or how a credential can be reset.\n````",
+              "createdAt": "2026-07-06T22:20:58Z",
+              "updatedAt": "2026-07-06T22:20:58Z"
+            },
+            {
+              "originalPosition": 103,
+              "body": "````suggestion\nSubstantiation describes how a credential might derive security properties from an authority or other third party entity such as an issuer, provenance chain, or cryptographic signature.\n````",
+              "createdAt": "2026-07-06T22:20:58Z",
+              "updatedAt": "2026-07-06T22:20:58Z"
+            },
+            {
+              "originalPosition": 94,
+              "body": "````suggestion\nEnrollment assurance describes the identity verification assurance level (todo, this feels like it points at NIST!) at the time the credential was created.\n````",
+              "createdAt": "2026-07-06T22:20:58Z",
+              "updatedAt": "2026-07-06T22:20:58Z"
+            },
+            {
+              "originalPosition": 87,
+              "body": "````suggestion\nCredentials may be unlocked once with an activation factor (e.g. using a hardware security key), or the activation factor may be presented seconds to minutes before use (e.g. a credential vault remains unlocked for 5 minutes after use).\n````",
+              "createdAt": "2026-07-06T22:20:58Z",
+              "updatedAt": "2026-07-06T22:20:58Z"
+            },
+            {
+              "originalPosition": 80,
+              "body": "````suggestion\nA credential becomes available for an operation only when a local user gesture is performed. This user gesture may also be called an activation factor (see 800-63-4). Only a credential that is contained can be activated. A FIDO2 private key on a hardware security device that requires a PIN is an example of an activated credential. A biometric that unlocks a TPM on a laptop is another example of an activated credential.  Presence Activation is a case where locality is required but confirmation of a secret or biometric is not required. Individual Activation is a case where only one human can trigger the container to unlock.\n````",
+              "createdAt": "2026-07-06T22:20:58Z",
+              "updatedAt": "2026-07-06T22:20:58Z"
+            },
+            {
+              "originalPosition": 31,
+              "body": "````suggestion\nExportability is the ability for the end user to move the credential secret to a new operational boundary.\n````",
+              "createdAt": "2026-07-06T22:20:58Z",
+              "updatedAt": "2026-07-06T22:20:58Z"
+            },
+            {
+              "originalPosition": 29,
+              "body": "````suggestion\nThe boundary enforcement property describes the mechanisms which ensure that operational rules are followed. Boundary enforcements can be proactive or reactive.  An example of a proactive boundary enforcement include binding the credential to the device. An example of a reactive boundary enforcement includes credential scanning of source code repositories.\n````",
+              "createdAt": "2026-07-06T22:20:58Z",
+              "updatedAt": "2026-07-06T22:20:58Z"
+            },
+            {
+              "originalPosition": 27,
+              "body": "````suggestion\nBoundary bindings describe the operational rules or limitations that limit where the secret portion of a credential could be stored.\n````",
+              "createdAt": "2026-07-06T22:20:58Z",
+              "updatedAt": "2026-07-06T22:20:58Z"
+            },
+            {
+              "originalPosition": 25,
+              "body": "````suggestion\nCredential boundary properties describe ways in which limits are placed on the storage location of a credential in its intended use.\n````",
+              "createdAt": "2026-07-06T22:20:58Z",
+              "updatedAt": "2026-07-06T22:20:58Z"
+            },
+            {
+              "originalPosition": 16,
+              "body": "````suggestion\nThis document defines a set of properties which explain and differentiate unique security characteristics of an authentication method.\n````",
+              "createdAt": "2026-07-06T22:20:58Z",
+              "updatedAt": "2026-07-06T22:20:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDON4ikis8AAAABFJOulA",
+          "commit": {
+            "abbreviatedOid": "f882fec"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T22:24:37Z",
+          "updatedAt": "2026-07-06T22:24:38Z",
+          "comments": [
+            {
+              "originalPosition": 120,
+              "body": "````suggestion\nRecoverability describes remediation capabilities that enable or re-enable access to a valid credential after loss or compromise. Values can be: issuer-driven, container-driven,or account-driven.\n * Issuer-driven: remediation is enabled by a direct party to the creation of the credential. Examples include credentials with multiple configured signing certificates, synced passkeys protected by a consumer trust layer, or hardware keys created with matching/derived seed values.\n````",
+              "createdAt": "2026-07-06T22:24:37Z",
+              "updatedAt": "2026-07-06T22:24:38Z"
+            },
+            {
+              "originalPosition": 103,
+              "body": "````suggestion\nCredential Recovery properties describe limitations of who can reset a credential or how a credential can be reset.\n````",
+              "createdAt": "2026-07-06T22:24:38Z",
+              "updatedAt": "2026-07-06T22:24:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDON4ikis8AAAABFJO3YQ",
+          "commit": {
+            "abbreviatedOid": "240991d"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T22:25:00Z",
+          "updatedAt": "2026-07-06T22:25:01Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "````suggestion\nExportability is the ability for the end user to move the credential secret to a new operational boundary.\n````",
+              "createdAt": "2026-07-06T22:25:00Z",
+              "updatedAt": "2026-07-06T22:25:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDON4ikis8AAAABFJO60w",
+          "commit": {
+            "abbreviatedOid": "811cc5c"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T22:25:12Z",
+          "updatedAt": "2026-07-06T22:25:13Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "````suggestion\nExportability is the ability for the end user to move the credential secret to a new operational boundary.\n````",
+              "createdAt": "2026-07-06T22:25:12Z",
+              "updatedAt": "2026-07-06T22:25:13Z"
+            },
+            {
+              "originalPosition": 20,
+              "body": "````suggestion\nThe boundary enforcement property describes the mechanisms which ensure that operational rules are followed. Boundary enforcements can be proactive or reactive.  An example of a proactive boundary enforcement include binding the credential to the device. An example of a reactive boundary enforcement includes credential scanning of source code repositories.\n````",
+              "createdAt": "2026-07-06T22:25:12Z",
+              "updatedAt": "2026-07-06T22:25:13Z"
+            },
+            {
+              "originalPosition": 18,
+              "body": "````suggestion\nBoundary bindings describe the operational rules or limitations that limit where the secret portion of a credential could be stored.\n````",
+              "createdAt": "2026-07-06T22:25:12Z",
+              "updatedAt": "2026-07-06T22:25:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDON4ikis8AAAABFJPAaA",
+          "commit": {
+            "abbreviatedOid": "0759a9c"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T22:25:29Z",
+          "updatedAt": "2026-07-06T22:25:29Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "````suggestion\nBoundary bindings describe the operational rules or limitations that limit where the secret portion of a credential could be stored.\n````",
+              "createdAt": "2026-07-06T22:25:29Z",
+              "updatedAt": "2026-07-06T22:25:29Z"
+            },
+            {
+              "originalPosition": 16,
+              "body": "````suggestion\nCredential boundary properties describe ways in which limits are placed on the storage location of a credential in its intended use.\n````",
+              "createdAt": "2026-07-06T22:25:29Z",
+              "updatedAt": "2026-07-06T22:25:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDON4ikis8AAAABFJT6NQ",
+          "commit": {
+            "abbreviatedOid": "8cf1817"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T22:44:56Z",
+          "updatedAt": "2026-07-06T22:44:56Z",
+          "comments": [
+            {
+              "originalPosition": 131,
+              "body": "````suggestion\n * Account-driven: the credential cannot be restored, it can only be removed and replaced, often through a process that requires presentation of an unrelated alternate credential.\n````",
+              "createdAt": "2026-07-06T22:44:56Z",
+              "updatedAt": "2026-07-06T22:44:56Z"
+            },
+            {
+              "originalPosition": 94,
+              "body": "````suggestion\nEnrollment assurance describes the identity verification assurance level (todo, this feels like it points at NIST!) at the time the credential was created.\n````",
+              "createdAt": "2026-07-06T22:44:56Z",
+              "updatedAt": "2026-07-06T22:44:56Z"
+            },
+            {
+              "originalPosition": 29,
+              "body": "````suggestion\nThe boundary enforcement property describes the mechanisms which ensure that operational rules are followed. Boundary enforcements can be proactive or reactive.  An example of a proactive boundary enforcement include binding the credential to the device. An example of a reactive boundary enforcement includes credential scanning of source code repositories.\n````",
+              "createdAt": "2026-07-06T22:44:56Z",
+              "updatedAt": "2026-07-06T22:44:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDON4ikis8AAAABFJUW1w",
+          "commit": {
+            "abbreviatedOid": "1baba53"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T22:46:53Z",
+          "updatedAt": "2026-07-06T22:46:53Z",
+          "comments": [
+            {
+              "originalPosition": 29,
+              "body": "````suggestion\nThe boundary enforcement property describes the mechanisms which ensure that operational rules are followed. Boundary enforcements can be proactive or reactive.  An example of a proactive boundary enforcement include binding the credential to the device. An example of a reactive boundary enforcement includes credential scanning of source code repositories.\n````",
+              "createdAt": "2026-07-06T22:46:53Z",
+              "updatedAt": "2026-07-06T22:46:53Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 32,
+      "id": "PR_kwDON4ikis7ulQof",
+      "title": "collapsed recovery section to one property",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/32",
+      "state": "MERGED",
+      "author": "pamelatech",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Took out the proposed 4 properties and altered to be a single property with strawman text.  Hopefully this one is a step forward for #28 ",
+      "createdAt": "2026-07-06T23:13:25Z",
+      "updatedAt": "2026-07-06T23:15:53Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "77ae455482200860ddf34c84256a482da871b49b",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "cred-recovery-29",
+      "headRefOid": "76c94bf766398036d630b5ef45feb94cd67a8661",
+      "closedAt": "2026-07-06T23:15:45Z",
+      "mergedAt": "2026-07-06T23:15:45Z",
+      "mergedBy": "pamelatech",
+      "mergeCommit": {
+        "oid": "31ff9e86ac69561b6f1430fdc81846fbce986a87"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDON4ikis8AAAABFJbSZg",
+          "commit": {
+            "abbreviatedOid": "f00578b"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T23:13:53Z",
+          "updatedAt": "2026-07-06T23:13:53Z",
+          "comments": [
+            {
+              "originalPosition": 20,
+              "body": "````suggestion\n * Account-driven: the credential cannot be restored, it can only be removed and replaced, often through a process that requires presentation of an unrelated alternate credential.\n````",
+              "createdAt": "2026-07-06T23:13:53Z",
+              "updatedAt": "2026-07-06T23:13:53Z"
+            },
+            {
+              "originalPosition": 18,
+              "body": "````suggestion\nRecoverability describes remediation capabilities that enable or re-enable access to a valid credential after loss or compromise. Values can be: issuer-driven, container-driven,or account-driven.\n * Issuer-driven: remediation is enabled by a direct party to the creation of the credential. Examples include credentials with multiple configured signing certificates, synced passkeys protected by a consumer trust layer, or hardware keys created with matching/derived seed values.\n````",
+              "createdAt": "2026-07-06T23:13:53Z",
+              "updatedAt": "2026-07-06T23:13:53Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDON4ikis8AAAABFJbfVA",
+          "commit": {
+            "abbreviatedOid": "0dc238b"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T23:14:46Z",
+          "updatedAt": "2026-07-06T23:14:46Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "````suggestion\nRecoverability describes remediation capabilities that enable or re-enable access to a valid credential after loss or compromise. Values can be: issuer-driven, container-driven,or account-driven.\n * Issuer-driven: remediation is enabled by a direct party to the creation of the credential. Examples include credentials with multiple configured signing certificates, synced passkeys protected by a consumer trust layer, or hardware keys created with matching/derived seed values.\n````",
+              "createdAt": "2026-07-06T23:14:46Z",
+              "updatedAt": "2026-07-06T23:14:46Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 33,
+      "id": "PR_kwDON4ikis7umWR4",
+      "title": "Changes to order and high level subtitles",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/33",
+      "state": "OPEN",
+      "author": "pamelatech",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "created the credential construction properties section and moved subtantiation under that header as well as validity window and any other property tied to the content of the credential",
+      "createdAt": "2026-07-07T00:24:40Z",
+      "updatedAt": "2026-07-07T00:25:06Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "31ff9e86ac69561b6f1430fdc81846fbce986a87",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "30-super-category-symmetry",
+      "headRefOid": "f32e9ea06abbd634c199cb37b8680c11d0bd78b5",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDON4ikis8AAAABFJsflg",
+          "commit": {
+            "abbreviatedOid": "f32e9ea"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-07T00:25:05Z",
+          "updatedAt": "2026-07-07T00:25:06Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "````suggestion\nThe credential is capable of including links to or content of other credentials.\n````",
+              "createdAt": "2026-07-07T00:25:05Z",
+              "updatedAt": "2026-07-07T00:25:06Z"
+            },
+            {
+              "originalPosition": 8,
+              "body": "````suggestion\nSubstantiation describes credentials containing mechanisms for authoritative statements that can be externally validated. Examples of substantiated credentials include attestations such as SAML assertions or X.509 certificates.\n````",
+              "createdAt": "2026-07-07T00:25:05Z",
+              "updatedAt": "2026-07-07T00:25:06Z"
             }
           ]
         }
