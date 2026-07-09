@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-07T02:36:15.531774+00:00",
+  "timestamp": "2026-07-09T02:28:23.150096+00:00",
   "repo": "pamelatech/credsecproperties",
   "labels": [
     {
@@ -1133,21 +1133,21 @@
       "id": "PR_kwDON4ikis7ukXhD",
       "title": "Collapsing recoverability into one property.",
       "url": "https://github.com/pamelatech/credsecproperties/pull/31",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "pamelatech",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "First attempt to collapse the recovery section into one property.  Hopefully fixes issue #28.",
       "createdAt": "2026-07-06T22:20:33Z",
-      "updatedAt": "2026-07-06T23:17:08Z",
+      "updatedAt": "2026-07-07T15:10:25Z",
       "baseRepository": "pamelatech/credsecproperties",
       "baseRefName": "main",
       "baseRefOid": "77ae455482200860ddf34c84256a482da871b49b",
       "headRepository": "pamelatech/credsecproperties",
       "headRefName": "28-credential-recovery",
       "headRefOid": "951949b39b620630f5ddd32df13d4b75924ec572",
-      "closedAt": null,
+      "closedAt": "2026-07-07T15:10:24Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -1158,6 +1158,13 @@
           "body": "I don't know what I did but this PR is messed up.  Consider this obsoleted and needing of deletion.",
           "createdAt": "2026-07-06T23:17:08Z",
           "updatedAt": "2026-07-06T23:17:08Z"
+        },
+        {
+          "author": "pamelatech",
+          "authorAssociation": "OWNER",
+          "body": "Closing this without merging.  ",
+          "createdAt": "2026-07-07T15:10:24Z",
+          "updatedAt": "2026-07-07T15:10:24Z"
         }
       ],
       "reviews": [
