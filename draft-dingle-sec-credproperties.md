@@ -66,7 +66,7 @@ The primary content of a credential is cryptographically bound to an identifier.
 A mechanism for credential integrity is built into the credential ensuring that the data within the credential is verifiably unchanged by external parties.
 
 ### Chainability
-The credential is capable of including links to or content of other credentials. 
+The credential is capable of including links to or content of other credentials.
 
 ### Audience Restriction
 A mechanism that specifies which destination consumers of the credential are valid.  Examples include `id_tokens` or origin bindings of FIDO tokens.
