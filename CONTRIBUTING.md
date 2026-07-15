@@ -31,3 +31,29 @@ technical issues needs to occur on the mailing list.
 
 You might also like to familiarize yourself with other
 [Area documents](https://datatracker.ietf.org/area/sec/documents/).
+
+
+## Local Setup
+
+### Pre-commit hook (whitespace)
+
+CI builds the draft with `make`, whose `lint-whitespace` step fails the entire
+build on any trailing whitespace. To catch this before you push, enable the
+repository's pre-commit hook once per clone:
+
+```sh
+git config core.hooksPath .githooks
+```
+
+The hook strips trailing whitespace from staged `*.md`, `*.xml`, and `*.org`
+files (matching `.editorconfig`) and re-stages them automatically.
+
+### Building the draft locally
+
+Building the text/HTML editor's copy requires the IETF toolchain:
+
+```sh
+pipx install xml2rfc          # or: pip install xml2rfc
+gem install kramdown-rfc      # add --user-install if using the system Ruby
+make                          # builds draft-dingle-sec-credproperties.{txt,html}
+```

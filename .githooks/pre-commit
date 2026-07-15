@@ -1,0 +1,53 @@
+#!/bin/sh
+#
+# Pre-commit hook: keep trailing whitespace out of text sources.
+#
+# The CI "Update Editor's Copy" workflow runs `make lint`, whose
+# `lint-whitespace` step fails the whole build on ANY trailing whitespace.
+# This hook enforces the same rule locally (and matches the repository's
+# .editorconfig `trim_trailing_whitespace = true`) so the failure is caught
+# before it reaches CI.
+#
+# Enable once per clone with:
+#     git config core.hooksPath .githooks
+#
+# Behavior: for each staged text file (*.md, *.xml, *.org) it strips trailing
+# whitespace and re-stages the file. If a file also has UNSTAGED changes it is
+# not modified (that would stage unrelated edits) and the commit is blocked
+# with instructions instead.
+
+set -eu
+
+# Staged, still-present files matching the .editorconfig text globs.
+files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(md|xml|org)$' || true)
+[ -z "$files" ] && exit 0
+
+status=0
+fixed=""
+blocked=""
+
+for f in $files; do
+	[ -f "$f" ] || continue
+	# Does the staged content have trailing whitespace?
+	if git show ":$f" | grep -qE '[ \t]+$'; then
+		if git diff --quiet -- "$f"; then
+			# No unstaged changes: safe to auto-fix and re-stage.
+			perl -i -pe 's/[ \t]+$//' "$f"
+			git add -- "$f"
+			fixed="$fixed $f"
+		else
+			# Mixed staged/unstaged: don't touch it, block instead.
+			blocked="$blocked $f"
+			status=1
+		fi
+	fi
+done
+
+[ -n "$fixed" ] && printf 'pre-commit: stripped trailing whitespace and re-staged:%s\n' "$fixed"
+
+if [ -n "$blocked" ]; then
+	printf 'pre-commit: trailing whitespace in files with unstaged changes:%s\n' "$blocked" >&2
+	printf 'pre-commit: fix with `perl -i -pe '\''s/[ \\t]+$//'\'' <file>` then re-stage, or stage the whole file.\n' >&2
+fi
+
+exit $status
