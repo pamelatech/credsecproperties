@@ -5,8 +5,8 @@
 Network Working Group                                          P. Dingle
 Internet-Draft                                                 Microsoft
 Intended status: Informational                                D. H. Saxe
-Expires: 7 January 2027                                          Remitly
-                                                             6 July 2026
+Expires: 16 January 2027                                         Remitly
+                                                            15 July 2026
 
 
                Credential Management Security properties
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 January 2027.
+   This Internet-Draft will expire on 16 January 2027.
 
 Copyright Notice
 
@@ -67,31 +67,30 @@ Table of Contents
    1.  Introduction
    2.  Credential Management Security Classes
    3.  Credential Management Security Properties
-     3.1.  Presentation Limits
-       3.1.1.  Validity Count
-       3.1.2.  Validity Window
-       3.1.3.  Replayability
-       3.1.4.  Selective Disclosure
+     3.1.  Credential Construction Properties
+       3.1.1.  Dynamism
+       3.1.2.  Identifier Binding
+       3.1.3.  Tamper Proofness
+       3.1.4.  Chainability
        3.1.5.  Audience Restriction
-     3.2.  Credential Containment & Unlock
-       3.2.1.  Containment (TODO: see FIDO security requirements for
+       3.1.6.  Validity Window
+       3.1.7.  Selective Disclosure
+     3.2.  Credential Presentation Properties
+       3.2.1.  Validity Count
+       3.2.2.  Replayability
+     3.3.  Credential Containment & Unlock Properties
+       3.3.1.  Containment (TODO: see FIDO security requirements for
                sync fabric)
-       3.2.2.  Boundary Binding
-       3.2.3.  Boundary Enforcement
-       3.2.4.  Transference
-       3.2.5.  Dynamism
-       3.2.6.  Activation
-       3.2.7.  Unlock Scope
-       3.2.8.  Unlock Persistence
-     3.3.  Credential Enrollment
-       3.3.1.  Enrollment Assurance
-       3.3.2.  Vouching
-       3.3.3.  Enrollment Binding
-     3.4.  Substantiation
-       3.4.1.  Identifier Binding
-       3.4.2.  Integrity
-       3.4.3.  Authoritative Relationship
-       3.4.4.  Chainability
+       3.3.2.  Boundary Binding
+       3.3.3.  Boundary Enforcement
+       3.3.4.  Transference
+       3.3.5.  Activation
+       3.3.6.  Unlock Scope
+       3.3.7.  Unlock Persistence
+     3.4.  Credential Enrollment
+       3.4.1.  Enrollment Assurance
+       3.4.2.  Vouching
+       3.4.3.  Enrollment Binding
      3.5.  Credential Compliance
        3.5.1.  Composition Rules
        3.5.2.  Lifecycle Rules
@@ -136,23 +135,73 @@ Table of Contents
 
 3.  Credential Management Security Properties
 
-3.1.  Presentation Limits
+3.1.  Credential Construction Properties
+
+   ### Substantiation Substantiation describes credentials containing
+   mechanisms for authoritative statements that can be externally
+   validated.  Examples of substantiated credentials include
+   attestations such as SAML assertions or X.509 certificates.
+
+3.1.1.  Dynamism
+
+   Dynamism describes a credential whose stored and active forms are
+   different.  Credentials with no dynamism (or dynamic genarativity)
+   such as passwords exibit no difference between the stored (in memory,
+   in a password manager, etc.) and the credential sent to the verifier.
+   Dynamic generatvity indicates that some function is used to operate
+   on the stored credential such that what is sent over the wire is
+   different than what is stored (e.g. a challenge response protocol
+   like FIDO).  Credentials that do not exhibit dynamism, such as shared
+   secrets, usually exhibit replayability and are definitionally not
+   able to be contained.
+
+3.1.2.  Identifier Binding
+
+   The primary content of a credential is cryptographically bound to an
+   identifier.  Examples of credentials that include bound identifiers
+   include SAML assertions, JSON Web Tokens (jwts), X.509 certificates,
+   ISO 18013 mobile drivers license objects and verifiable credentials
+
+3.1.3.  Tamper Proofness
+
+   A mechanism for credential integrity is built into the credential
+   ensuring that the data within the credential is verifiably unchanged
+   by external parties.
+
+3.1.4.  Chainability
+
+   The credential is capable of including links to or content of other
+   credentials.
+
+3.1.5.  Audience Restriction
+
+   A mechanism that specifies which destination consumers of the
+   credential are valid.  Examples include id_tokens or origin bindings
+   of FIDO tokens.
+
+3.1.6.  Validity Window
+
+   A credential becomes invalid outside of a specified time boundary.
+   An example would be a SAML assertion or a TOTP.
+
+3.1.7.  Selective Disclosure
+
+   A mechanism by which some or all of the contents within a credential
+   can be made available or unavailable under circumstances determined
+   at presentation time.  Example is an SD-JWT or a ZKP.
+
+3.2.  Credential Presentation Properties
 
    Credential reuse properties describe ways in which the use of a
    credential is functionally restricted.
 
-3.1.1.  Validity Count
+3.2.1.  Validity Count
 
    A credential becomes invalid after a specified number of successful
    presentations.  An example would be a temporary password that can
    only be used 5 times, or a one-time password.
 
-3.1.2.  Validity Window
-
-   A credential becomes invalid outside of a specified time boundary.
-   An example would be a SAML assertion or a TOTP.
-
-3.1.3.  Replayability
+3.2.2.  Replayability
 
    Credentials are replayable when they can be captured by an adversary
    and represented to an authentication service resulting in successful
@@ -167,18 +216,7 @@ Table of Contents
    validity window.  Therefore, replayability is not a strictly binary
    scale.
 
-3.1.4.  Selective Disclosure
-
-   A mechanism by which some or all of the contents within a credential
-   are unavailable at presentation time.  Example is an SD-JWT or a ZKP.
-
-3.1.5.  Audience Restriction
-
-   A mechanism that specifies which destination consumers of the
-   credential are valid.  Examples include id_tokens or origin bindings
-   of FIDO tokens.
-
-3.2.  Credential Containment & Unlock
+3.3.  Credential Containment & Unlock Properties
 
    Credential containment describes the at-rest state of a credential
    and its storage location(s).  Unlock properties describe how the
@@ -186,7 +224,7 @@ Table of Contents
    containment facility, if any, can play a security role in an
    observable way at operation time.
 
-3.2.1.  Containment (TODO: see FIDO security requirements for sync
+3.3.1.  Containment (TODO: see FIDO security requirements for sync
         fabric)
 
    Describes how the creation, storage, and usage of a credential is
@@ -198,7 +236,7 @@ Table of Contents
    is contained by access to the media on which it resides but it is not
    permanently bound to the media (see Boundary Binding, below).
 
-3.2.2.  Boundary Binding
+3.3.2.  Boundary Binding
 
    Boundary bindings describe the operational rules or limitations that
    limit where the secret portion of a credential could be stored.  In
@@ -209,7 +247,7 @@ Table of Contents
    unbound, since it may be copied and moved freely, e.g. it is
    exportable.
 
-3.2.3.  Boundary Enforcement
+3.3.3.  Boundary Enforcement
 
    The boundary enforcement property describes the mechanisms which
    ensure that operational rules are followed.  Boundary enforcements
@@ -219,7 +257,7 @@ Table of Contents
    boundary enforcement includes credential scanning of source code
    repositories.
 
-3.2.4.  Transference
+3.3.4.  Transference
 
    Transference is the ability for an end user to give the credential
    away to another user such that durable ongoing use is possible by two
@@ -228,20 +266,7 @@ Table of Contents
    outside of the boundary (e.g. user copies a password from a
    credential manager to a file which is emailed to another user).
 
-3.2.5.  Dynamism
-
-   Dynamism describes a credential whose stored and active forms are
-   different.  Credentials with no dynamism (or dynamic genarativity)
-   such as passwords exibit no difference between the stored (in memory,
-   in a password manager, etc.) and the credential sent to the verifier.
-   Dynamic generativity indicates that some function is used to operate
-   on the stored credential such that what is sent over the wire is
-   different than what is stored (e.g. a challenge response protocol
-   like FIDO).  Credentials that do not exhibit dynamism, such as shared
-   secrets, usually exhibit replayability and are definitionally not
-   able to be contained.
-
-3.2.6.  Activation
+3.3.5.  Activation
 
    A credential becomes available for an operation only when a local
    user gesture is performed.  This user gesture may also be called an
@@ -254,7 +279,7 @@ Table of Contents
    is not required.  Individual Activation is a case where only one
    human can trigger the container to unlock.
 
-3.2.7.  Unlock Scope
+3.3.6.  Unlock Scope
 
    A credential may be unlocked by different parties which defines the
    scope of which entities can unlock credential for use.  The owner of
@@ -265,25 +290,25 @@ Table of Contents
    scope is related to an instance of a credential and is distinct from
    the Credential Management Security Properties.
 
-3.2.8.  Unlock Persistence
+3.3.7.  Unlock Persistence
 
    Credentials may be unlocked once with an activation factor (e.g.
    using a hardware security key), or the activation factor may be
    presented seconds to minutes before use (e.g. a credential vault
    remains unlocked for 5 minutes after use).
 
-3.3.  Credential Enrollment
+3.4.  Credential Enrollment
 
    Credential enrollment properties describe requirements required to be
    met before a credential is created.
 
-3.3.1.  Enrollment Assurance
+3.4.1.  Enrollment Assurance
 
    Enrollment assurance describes the identity verification assurance
    level (todo, this feels like it points at NIST!) at the time the
    credential was created.
 
-3.3.2.  Vouching
+3.4.2.  Vouching
 
    A vouched credential is one whose enrollment was enabled by the
    subject first authenticating with a separate, pre-existing
@@ -293,39 +318,10 @@ Table of Contents
    user may present a passport as a proof of citizenship to be granted a
    state digital identity.
 
-3.3.3.  Enrollment Binding
+3.4.3.  Enrollment Binding
 
    Enrollment binding describes the mechanism that binds the credential
    to the enrolled identity.
-
-3.4.  Substantiation
-
-   Substantiation describes how a credential might derive security
-   properties from an authority or other third party entity such as an
-   issuer, provenance chain, or cryptographic signature.
-
-3.4.1.  Identifier Binding
-
-   The primary content of a credential is cryptographically bound to an
-   identifier.  Examples of credentials that include bound identifiers
-   include SAML assertions, JSON Web Tokens (jwts), X.509 certificates,
-   ISO 18013 mobile drivers license objects and verifiable credentials
-
-3.4.2.  Integrity
-
-   Integrity describes mechanisms built into the credential that ensure
-   that the data within the credential can not be tampered with.
-
-3.4.3.  Authoritative Relationship
-
-   Authority reputation describes any entities that the credential may
-   derive security from, such as issuers, attestation authorities,
-   delegators, or trust frameworks.
-
-3.4.4.  Chainability
-
-   The credential is capable of including links to or content of other
-   credentials.
 
 3.5.  Credential Compliance
 
