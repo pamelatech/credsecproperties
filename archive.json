@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-09T02:28:23.150096+00:00",
+  "timestamp": "2026-07-16T02:05:33.903315+00:00",
   "repo": "pamelatech/credsecproperties",
   "labels": [
     {
@@ -357,15 +357,15 @@
       "id": "I_kwDON4ikis8AAAABHq9uwg",
       "title": "Super Category Symmetry",
       "url": "https://github.com/pamelatech/credsecproperties/issues/30",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "pamelatech",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "as per July 4 description, update to have 4 categories, all similarly named:\n\n- Credential Containment & Unlock\n- Credential Dynamism\n- Credential Substantiation\n- Credential Presentation ",
       "createdAt": "2026-07-04T16:39:11Z",
-      "updatedAt": "2026-07-04T16:39:11Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-15T11:49:14Z",
+      "closedAt": "2026-07-15T11:49:14Z",
       "comments": []
     }
   ],
@@ -1492,24 +1492,26 @@
       "id": "PR_kwDON4ikis7umWR4",
       "title": "Changes to order and high level subtitles",
       "url": "https://github.com/pamelatech/credsecproperties/pull/33",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "pamelatech",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "created the credential construction properties section and moved subtantiation under that header as well as validity window and any other property tied to the content of the credential",
       "createdAt": "2026-07-07T00:24:40Z",
-      "updatedAt": "2026-07-07T00:25:06Z",
+      "updatedAt": "2026-07-15T11:59:03Z",
       "baseRepository": "pamelatech/credsecproperties",
       "baseRefName": "main",
       "baseRefOid": "31ff9e86ac69561b6f1430fdc81846fbce986a87",
       "headRepository": "pamelatech/credsecproperties",
       "headRefName": "30-super-category-symmetry",
-      "headRefOid": "f32e9ea06abbd634c199cb37b8680c11d0bd78b5",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "a76d50209cc7889a9ab59831dad0575d0b998919",
+      "closedAt": "2026-07-15T11:49:13Z",
+      "mergedAt": "2026-07-15T11:49:13Z",
+      "mergedBy": "deansaxe",
+      "mergeCommit": {
+        "oid": "bd7cc0ea5759c4ff736d59df6389b804696cdeea"
+      },
       "comments": [],
       "reviews": [
         {
@@ -1537,8 +1539,74 @@
               "updatedAt": "2026-07-07T00:25:06Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDON4ikis8AAAABGF1sVA",
+          "commit": {
+            "abbreviatedOid": "784643b"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-15T11:47:49Z",
+          "updatedAt": "2026-07-15T11:47:49Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "````suggestion\nSubstantiation describes credentials containing mechanisms for authoritative statements that can be externally validated. Examples of substantiated credentials include attestations such as SAML assertions or X.509 certificates.\n````",
+              "createdAt": "2026-07-15T11:47:49Z",
+              "updatedAt": "2026-07-15T11:47:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDON4ikis8AAAABGF6V0g",
+          "commit": {
+            "abbreviatedOid": "a76d502"
+          },
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-15T11:59:03Z",
+          "updatedAt": "2026-07-15T11:59:03Z",
+          "comments": [
+            {
+              "originalPosition": 75,
+              "body": "Looks like we might have dropped this section from the latest build - was that intentional @pamelatech?",
+              "createdAt": "2026-07-15T11:59:03Z",
+              "updatedAt": "2026-07-15T11:59:03Z"
+            }
+          ]
         }
       ]
+    },
+    {
+      "number": 34,
+      "id": "PR_kwDON4ikis7yAf7T",
+      "title": "Add pre-commit hook to strip trailing whitespace",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/34",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "## What\n\nAdds a tracked pre-commit hook that keeps trailing whitespace out of the draft sources, plus local-setup docs in `CONTRIBUTING.md`.\n\n## Why\n\nThe \"Update Editor's Copy\" CI build runs `make lint`, whose `lint-whitespace` step **fails the entire build on any trailing whitespace**. This has broken the build repeatedly (#27, #33) even though the document itself compiles fine \u2014 the failures were purely trailing whitespace. This hook catches it locally before it reaches CI.\n\n## How it works\n\n- `.githooks/pre-commit` strips trailing whitespace from staged `*.md`, `*.xml`, and `*.org` files and re-stages them (matching the existing `.editorconfig` `trim_trailing_whitespace = true`).\n- If a file has *unstaged* changes too, it is left untouched and the commit is blocked with instructions, to avoid staging unrelated edits.\n- Zero external dependencies \u2014 POSIX `sh` + `perl` (already present on macOS and the CI image).\n\n## Enabling (per clone)\n\nGit does not auto-enable repo-tracked hooks, so each contributor runs once:\n\n```sh\ngit config core.hooksPath .githooks\n```\n\nThis is documented in the new **Local Setup** section of `CONTRIBUTING.md`, alongside instructions for installing the build toolchain (`xml2rfc` + `kramdown-rfc`).\n\n## Testing\n\nVerified locally: a staged file with trailing spaces and trailing tabs is stripped and re-staged, hook exits 0; a clean file is a no-op.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)\n",
+      "createdAt": "2026-07-15T11:59:19Z",
+      "updatedAt": "2026-07-15T11:59:19Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "bd7cc0ea5759c4ff736d59df6389b804696cdeea",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "add-whitespace-precommit-hook",
+      "headRefOid": "ed29992705819cdad62ba4102e8ff7e420c56991",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
