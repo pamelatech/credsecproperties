@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-16T02:05:33.903315+00:00",
+  "timestamp": "2026-08-23T00:59:02.869603+00:00",
   "repo": "pamelatech/credsecproperties",
   "labels": [
     {
@@ -348,9 +348,17 @@
       "labels": [],
       "body": "As discussed July 4, crypto-agility should be a security property,  question is - is it operational or inherent?    I would argue that it is inherent, in that the standards that sit behind the credential need to be capable of supporting quantum-safe algorithms.  The question is, is it crypto agility that is the property or quantum safety or both?",
       "createdAt": "2026-07-04T16:36:35Z",
-      "updatedAt": "2026-07-04T16:36:35Z",
+      "updatedAt": "2026-08-21T15:48:59Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I would argue it is both operational and inherent.  \n\nInherent: The protocol support exists\nOperational: The deployment supports changing key types over time.\n\nThoughts?",
+          "createdAt": "2026-08-21T15:48:59Z",
+          "updatedAt": "2026-08-21T15:48:59Z"
+        }
+      ]
     },
     {
       "number": 30,
