@@ -271,6 +271,14 @@ Table of Contents
 
                                  Table 1
 
+   Examples of delegated referential identity posture would include on-
+   behalf-of (OBO) token interactions.  Examples of impersonated
+   referential identity posture might include privileged access
+   management workflows, where an administrative process sets either the
+   identifier or the credential based on the backing identity.  Examples
+   of a chained referential identity posture would include the IETF ID-
+   JAG specification.
+
 3.3.  Credential Containment & Unlock Properties
 
    Credential containment describes the at-rest state of a credential
