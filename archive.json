@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-23T00:59:02.869603+00:00",
+  "timestamp": "2026-09-01T03:10:16.533112+00:00",
   "repo": "pamelatech/credsecproperties",
   "labels": [
     {
@@ -55,15 +55,15 @@
       "id": "I_kwDON4ikis70RmcW",
       "title": "Prep draft for IETF126 in Vienna",
       "url": "https://github.com/pamelatech/credsecproperties/issues/1",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "deansaxe",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Rough due date is the first week in July.",
       "createdAt": "2026-03-18T23:20:36Z",
-      "updatedAt": "2026-07-02T21:49:11Z",
-      "closedAt": null,
+      "updatedAt": "2026-08-31T14:56:35Z",
+      "closedAt": "2026-08-31T14:56:35Z",
       "comments": [
         {
           "author": "deansaxe",
@@ -71,6 +71,13 @@
           "body": "Due by 23:59 UTC July 6, 2026.\n\nWe need to make the repo public and stand up the github.io site for an editors copy before Monday.",
           "createdAt": "2026-07-02T21:49:11Z",
           "updatedAt": "2026-07-02T21:49:11Z"
+        },
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closing since this is out of date.",
+          "createdAt": "2026-08-31T14:56:35Z",
+          "updatedAt": "2026-08-31T14:56:35Z"
         }
       ]
     },
@@ -124,16 +131,24 @@
       "id": "I_kwDON4ikis70RwUm",
       "title": "Determine which IETF stream to submit the draft to",
       "url": "https://github.com/pamelatech/credsecproperties/issues/3",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "deansaxe",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-03-18T23:33:14Z",
-      "updatedAt": "2026-03-18T23:33:14Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-08-31T14:57:04Z",
+      "closedAt": "2026-08-31T14:57:04Z",
+      "comments": [
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Decided to go through AD sponsorship.  Closing",
+          "createdAt": "2026-08-31T14:57:04Z",
+          "updatedAt": "2026-08-31T14:57:04Z"
+        }
+      ]
     },
     {
       "number": 11,
