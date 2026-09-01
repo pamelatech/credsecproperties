@@ -88,6 +88,19 @@ Credentials are replayable when they can be captured by an adversary and represe
 
 OTPs represent an interesting class of crentials when describing replayability.  Deployed at a global scale, there is a small window of opportunity to present a HOTP or TOTP multiple times within its validity window.  Therefore, replayability is not a strictly binary scale.
 
+### Referential Identity Posture
+Referential Identity Posture describes the nature of any relationship between the subject of an identity transaction and any backing identity that might explicitly or implicitly exist. The following table defines the possible postures.
+
+| Posture | Backing Identity Visibility | Relationship Characteristics |
+|--------------|----------------------------|------------------------------|
+| Direct | Complete | Transaction subject and backing identity are the same entity. |
+| Delegated | Explicit | Transaction subject is distinct from the backing identity, and the relationship is explicitly communicated. |
+| Impersonated | Implicit | Transaction subject is presented as the backing identity; the underlying relationship exists but is external, inferred, or hidden. |
+| Partitioned | Partial | Transaction subject represents a constrained portion or view of a backing identity; the linkage is incomplete or only partially disclosed. |
+| Pseudonymous | Obfuscated | A backing identity exists, but the relationship between the transaction subject and backing identity is intentionally concealed or only recoverable by an authorized authority. |
+| Chained | Recursive | Transaction subject derives from a backing identity through one or more intermediate referential identities, forming a transitive chain of relationships. |
+| Anonymous | None | No backing identity is asserted, communicated, or discoverable within the applicable trust model. |
+
 ## Credential Containment & Unlock Properties
 Credential containment describes the at-rest state of a credential and its storage location(s). Unlock properties describe how the contained credential is made available for use at runtime and how the containment facility, if any, can play a security role in an observable way at operation time.
 
