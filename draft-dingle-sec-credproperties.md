@@ -88,6 +88,21 @@ Credentials are replayable when they can be captured by an adversary and represe
 
 OTPs represent an interesting class of crentials when describing replayability.  Deployed at a global scale, there is a small window of opportunity to present a HOTP or TOTP multiple times within its validity window.  Therefore, replayability is not a strictly binary scale.
 
+### Referential Identity Posture
+Referential Identity Posture describes the nature of the relationship between a claimed identity validated as part of an identity transaction and any backing identity that might explicitly or implicitly exist in a larger security context. That larger context may or may not be known to the party validating the credential and represents environmental detail that could be used in security, risk, or governance activities if known. The following table defines possible postures.
+
+| Posture | Backing Identity Visibility | Relationship Characteristics |
+|--------------|----------------------------|------------------------------|
+| Direct | Explicit | Claimed identity and backing identity are the same entity. |
+| Delegated | Explicit | Claimed identity is distinct from the backing identity, and the relationship is explicitly communicated. |
+| Impersonated | Implicit | Claimed identity is presented as the backing identity; the underlying relationship exists but is external, inferred, or hidden. |
+| Partitioned | Partial | Claimed identity represents a constrained portion or view of a backing identity; the linkage is incomplete or only partially disclosed. |
+| Pseudonymous | Obfuscated | A backing identity exists, but the relationship between the claimed identity and backing identity is intentionally concealed or only recoverable by an authorized authority. |
+| Chained | Recursive | Claimed identity derives from a backing identity through one or more intermediate referential identities, forming a transitive chain of relationships. |
+| Anonymous | Detached | Claimed identity is visibly severed from any backing identity with no opportunity to recover. |
+
+Examples of delegated referential identity posture include on-behalf-of (OBO) token interactions, where both the identity of the end user and client software are communicated. Examples of impersonated referential identity posture might include privileged access management workflows, where an administrative process sets either the identifier or the credential (or both) based on a backing identity. Examples of a partitioned referential identity posture could include openclaw agents acting with separate accounts and email addresses but loosely affiliated to individuals.
+
 ## Credential Containment & Unlock Properties
 Credential containment describes the at-rest state of a credential and its storage location(s). Unlock properties describe how the contained credential is made available for use at runtime and how the containment facility, if any, can play a security role in an observable way at operation time.
 
