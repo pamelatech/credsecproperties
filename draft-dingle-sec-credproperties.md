@@ -101,6 +101,8 @@ Referential Identity Posture describes the nature of the relationship between th
 | Chained | Recursive | Transaction subject derives from a backing identity through one or more intermediate referential identities, forming a transitive chain of relationships. |
 | Anonymous | Intentionally Detached | Transaction subject is visibly severed from any backing identity with no opportunity to recover. |
 
+Examples of delegated referential identity posture would include on-behalf-of (OBO) token interactions. Examples of impersonated referential identity posture might include privileged access management workflows, where an administrative process sets either the identifier or the credential based on the backing identity. Examples of a chained referential identity posture would include the IETF ID-JAG specification.
+
 ## Credential Containment & Unlock Properties
 Credential containment describes the at-rest state of a credential and its storage location(s). Unlock properties describe how the contained credential is made available for use at runtime and how the containment facility, if any, can play a security role in an observable way at operation time.
 
