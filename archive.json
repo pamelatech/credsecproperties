@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-01T03:10:16.533112+00:00",
+  "timestamp": "2026-09-03T02:36:41.035945+00:00",
   "repo": "pamelatech/credsecproperties",
   "labels": [
     {
@@ -1630,6 +1630,75 @@
       "mergeCommit": null,
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 35,
+      "id": "PR_kwDON4ikis8AAAABBzSMVA",
+      "title": "Referential Identity Posture",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/35",
+      "state": "MERGED",
+      "author": "pamelatech",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "After long discussion on how to represent impersonation and delegation, the concept of referential identity posture seems to do the best job.",
+      "createdAt": "2026-09-01T20:04:32Z",
+      "updatedAt": "2026-09-01T22:18:39Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "bd7cc0ea5759c4ff736d59df6389b804696cdeea",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "referential-identity-posture",
+      "headRefOid": "e0b5cb2dd328e34fc277ce5ed084c9b9a805e1b3",
+      "closedAt": "2026-09-01T22:18:29Z",
+      "mergedAt": "2026-09-01T22:18:29Z",
+      "mergedBy": "pamelatech",
+      "mergeCommit": {
+        "oid": "235856b54c4fe053396f10c0abe5a8e9337a02e4"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDON4ikis8AAAABLv1Ngg",
+          "commit": {
+            "abbreviatedOid": "70fc2d8"
+          },
+          "author": "deans-remitly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-01T21:34:06Z",
+          "updatedAt": "2026-09-01T21:34:06Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "this one is hard to read for me.  I need to think this through",
+              "createdAt": "2026-09-01T21:34:06Z",
+              "updatedAt": "2026-09-01T21:34:06Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDON4ikis8AAAABLv2gJw",
+          "commit": {
+            "abbreviatedOid": "70fc2d8"
+          },
+          "author": "deans-remitly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-01T21:37:02Z",
+          "updatedAt": "2026-09-01T21:37:02Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "since anonymity isn't guaranteed, change \"no opportunity to recover\" to \"no opportunity to recover is designed within the system\" to indicate that the design is for anonymity, but it may not achieve it.",
+              "createdAt": "2026-09-01T21:37:02Z",
+              "updatedAt": "2026-09-01T21:37:02Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
