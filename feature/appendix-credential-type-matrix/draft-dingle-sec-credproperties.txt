@@ -345,14 +345,14 @@ Table of Contents
 
    A credential becomes available for an operation only when a local
    user gesture is performed.  This user gesture may also be called an
-   activation factor [SP800-63B].  Only a credential that is contained
-   can be activated.  A FIDO2 private key on a hardware security device
-   that requires a PIN is an example of an activated credential.  A
-   biometric that unlocks a TPM on a laptop is another example of an
-   activated credential.  Presence Activation is a case where locality
-   is required but confirmation of a secret or biometric is not
-   required.  Individual Activation is a case where only one human can
-   trigger the container to unlock.
+   activation factor [SP800-63B-rev4].  Only a credential that is
+   contained can be activated.  A FIDO2 private key on a hardware
+   security device that requires a PIN is an example of an activated
+   credential.  A biometric that unlocks a TPM on a laptop is another
+   example of an activated credential.  Presence Activation is a case
+   where locality is required but confirmation of a secret or biometric
+   is not required.  Individual Activation is a case where only one
+   human can trigger the container to unlock.
 
 3.3.6.  Unlock Scope
 
@@ -380,8 +380,8 @@ Table of Contents
 3.4.1.  Enrollment Assurance
 
    Enrollment assurance describes the identity verification assurance
-   level, such as the identity assurance levels defined in [SP800-63A],
-   at the time the credential was created.
+   level, such as the identity assurance levels defined in
+   [SP800-63A-rev4], at the time the credential was created.
 
 3.4.2.  Vouching
 
@@ -572,13 +572,13 @@ Table of Contents
               <https://docs.oasis-open.org/security/saml/v2.0/saml-core-
               2.0-os.pdf>.
 
-   [SP800-63A]
+   [SP800-63A-rev4]
               National Institute of Standards and Technology, "Digital
               Identity Guidelines: Identity Proofing and Enrollment",
               NIST Special Publication 800-63A-4, July 2025,
               <https://doi.org/10.6028/NIST.SP.800-63A-4>.
 
-   [SP800-63B]
+   [SP800-63B-rev4]
               National Institute of Standards and Technology, "Digital
               Identity Guidelines: Authentication and Authenticator
               Management", NIST Special Publication 800-63B-4, July
