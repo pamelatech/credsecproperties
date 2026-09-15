@@ -376,7 +376,7 @@ The following properties describe containment of the credential at rest.
 | SMS OTP | Uncontained; delivered in clear text and readable from the notification surface | Bound to control of the phone number, not to a device | Reactive; carrier-side controls against SIM swap and port-out |
 | SD-JWT VC | Contained when the Key Binding key is in a secure element; the credential itself is data at rest in the wallet | Bound to the wallet key store when Key Binding is used; unbounded otherwise | Proactive when hardware-backed; otherwise none |
 | ISO mdoc | Contained; DeviceKey resides in the device secure area | Bound to the device secure area | Proactive; enforced by hardware |
-| DBSC | Contained; the session key resides in the TPM or secure enclave | Bound to the device TPM; non-exportable | Proactive; enforced by hardware |
+| DBSC | Contained if the session key resides in the TPM or secure enclave; Partially contained for software based implementations | Boundary enforcement depends on hardware boundedness.  Bound keys reside in TPM or Secure Elements and are non-exportable.  Partially bound keys are software based. | Proactive; enforced by hardware or software |
 
 The following properties describe how a contained credential is released for use.
 
