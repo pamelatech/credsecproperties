@@ -36,6 +36,78 @@ author:
 normative:
 
 informative:
+  RFC4226:
+  RFC5280:
+  RFC6238:
+  RFC6750:
+  RFC7515:
+  RFC7519:
+  RFC8446:
+  RFC8693:
+  RFC9901:
+  I-D.ietf-oauth-sd-jwt-vc:
+  WEBAUTHN:
+    title: "Web Authentication: An API for accessing Public Key Credentials - Level 3"
+    target: https://www.w3.org/TR/webauthn-3/
+    date: 2026-08-25
+    author:
+      - org: World Wide Web Consortium
+    seriesinfo:
+      W3C: Recommendation REC-webauthn-3-20260825
+  CTAP:
+    title: "Client to Authenticator Protocol (CTAP), Version 2.3"
+    target: https://fidoalliance.org/specs/fido-v2.3-ps-20260226/fido-client-to-authenticator-protocol-v2.3-ps-20260226.html
+    date: 2026-02-26
+    author:
+      - org: FIDO Alliance
+    seriesinfo:
+      FIDO Alliance: Proposed Standard
+  DBSC:
+    title: "Device Bound Session Credentials"
+    target: https://www.w3.org/TR/dbsc/
+    date: 2025-08-21
+    author:
+      - org: World Wide Web Consortium
+    seriesinfo:
+      W3C: First Public Working Draft WD-dbsc-1-20250821
+  ISO18013-5:
+    title: "Personal identification - ISO-compliant driving licence - Part 5: Mobile driving licence (mDL) application"
+    target: https://www.iso.org/standard/69084.html
+    date: 2021-09
+    author:
+      - org: International Organization for Standardization
+    seriesinfo:
+      ISO/IEC: 18013-5:2021
+  SP800-63B:
+    title: "Digital Identity Guidelines: Authentication and Authenticator Management"
+    target: https://doi.org/10.6028/NIST.SP.800-63B-4
+    date: 2025-07-31
+    author:
+      - org: National Institute of Standards and Technology
+    seriesinfo:
+      NIST: Special Publication 800-63B-4
+  SPIFFE-X509-SVID:
+    title: "The X.509 SPIFFE Verifiable Identity Document"
+    target: https://github.com/spiffe/spiffe/blob/main/standards/X509-SVID.md
+    author:
+      - org: SPIFFE Project
+  SPIFFE-JWT-SVID:
+    title: "The JWT SPIFFE Verifiable Identity Document"
+    target: https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md
+    author:
+      - org: SPIFFE Project
+  PCI-DSS:
+    title: "Payment Card Industry Data Security Standard: Requirements and Testing Procedures, Version 4.0.1"
+    target: https://www.pcisecuritystandards.org
+    date: 2024-06-11
+    author:
+      - org: PCI Security Standards Council
+  CABF-BR:
+    title: "Baseline Requirements for the Issuance and Management of Publicly-Trusted TLS Server Certificates, Version 2.3.0"
+    target: https://cabforum.org/working-groups/server/baseline-requirements/documents/
+    date: 2026-09-07
+    author:
+      - org: CA/Browser Forum
 
 
 --- abstract
@@ -182,69 +254,162 @@ This document has no IANA actions.
 
 # Applying the Properties to Common Credential Types
 
-This appendix illustrates how the properties defined in this document apply to several common credential types, to validate that the property set is expressive enough to differentiate them:
+This appendix illustrates how the properties defined in this document apply to a range of common credential types, to validate that the property set is expressive enough to differentiate them. Each class of properties defined in {{credential-management-security-properties}} is presented as a table whose rows are credential types and whose columns are the properties of that class.
 
-- **Password** — A shared secret.
-- **Synced passkey - consumer** — a FIDO2/WebAuthn credential synchronized across devices by a credential manager such as 1Password or BitWarden. Consumer focused use case.
-- **Device-bound passkey (hardware key) - enterprise** — a FIDO2/WebAuthn credential generated on and bound to a hardware security key managed by an enterprise.
-- **SPIFFE X.509-SVID** — A workload identity and credentials issued as an X.509 certificate to the workload following attestation of the state of the workload. Credential is presented via mTLS to downstream services.
+The credential types examined are:
 
-## Presentation Limits
+- **Password / API key / client credential** — a shared secret presented directly to the verifier with no transformation.
+- **Synced passkey (consumer)** — a WebAuthn {{WEBAUTHN}} credential synchronized across devices by a consumer credential manager such as a platform provider or password manager.
+- **Device-bound passkey (hardware security key, enterprise)** — a WebAuthn {{WEBAUTHN}} credential generated on and bound to a hardware authenticator implementing CTAP {{CTAP}}, managed by an enterprise.
+- **SPIFFE X.509-SVID** — a workload identity issued as an X.509 certificate {{RFC5280}} following attestation of the workload, presented via mutual TLS {{RFC8446}}. See {{SPIFFE-X509-SVID}}.
+- **SPIFFE JWT-SVID** — the same workload identity expressed as a signed JWT {{RFC7519}} and presented as a bearer token {{RFC6750}} to services that cannot terminate mutual TLS. See {{SPIFFE-JWT-SVID}}.
+- **mTLS certificate** — a client certificate {{RFC5280}} issued by a Web PKI or private CA outside of any SPIFFE trust domain, presented during the TLS handshake {{RFC8446}}.
+- **HOTP** — an HMAC-based counter-derived one-time password {{RFC4226}}.
+- **TOTP** — a time-derived one-time password {{RFC6238}}.
+- **SMS OTP** — a one-time code generated by the verifier and delivered out of band over the public telephone network.
+- **SD-JWT VC** — a verifiable credential expressed as a selectively disclosable JWT {{I-D.ietf-oauth-sd-jwt-vc}}, built on the SD-JWT construction {{RFC9901}}, optionally bound to a holder key.
+- **ISO mdoc** — an ISO/IEC 18013-5 {{ISO18013-5}} mobile document such as a mobile driving licence, comprising an issuer-signed Mobile Security Object and a device-signed response.
+- **DBSC** — Device Bound Session Credentials {{DBSC}}, a browser session credential bound to a non-exportable device key and periodically refreshed by proof of possession.
 
-| Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
+## Credential Construction
+
+The following properties describe how a credential asserts and protects its content.
+
+| Credential Type | Substantiation | Dynamism | Identifier Binding | Tamper Proofness |
 | --- | --- | --- | --- | --- |
-| Validity Count | | | | |
-| Validity Window | | | | Short term validity, SVIDs are rotated every 5 minutes.|
-| Selective Disclosure | No | No | No | No |
-| Audience Restriction | No | Yes (FIDO origin binding) | Yes (FIDO origin binding) | Yes (services within the trust domain or federated trust domains)|
+| Password / API key | No | None; the stored and presented forms are identical | No | No |
+| Synced passkey | No; attestation is typically not conveyed | Dynamic; challenge-response | Yes; credential ID and user handle bound to the key pair | Yes; signed assertion |
+| Device-bound passkey | Yes; attestation statement conveys authenticator provenance | Dynamic; challenge-response | Yes | Yes; signed assertion |
+| SPIFFE X.509-SVID | Yes; CA-signed after workload attestation | Dynamic; the private key is never transmitted | Yes; SPIFFE ID in the SAN URI | Yes; CA signature |
+| SPIFFE JWT-SVID | Yes; signed by the trust domain authority | None; presented verbatim as a bearer token | Yes; SPIFFE ID in `sub` | Yes; JWS signature {{RFC7515}} |
+| mTLS certificate | Yes; CA-signed | Dynamic; the private key is never transmitted | Yes; subject DN or SAN | Yes; CA signature |
+| HOTP | No | Dynamic; counter-based derivation from the stored seed | No; the code carries no identifier, binding is by enrollment record | No |
+| TOTP | No | Dynamic; time-based derivation from the stored seed | No | No |
+| SMS OTP | No | None; the verifier-generated value is presented verbatim | No; bound to a phone number by enrollment record | No |
+| SD-JWT VC | Yes; issuer-signed | None for the issuer-signed JWT; Dynamic when Key Binding is used | Yes; holder key in `cnf` when Key Binding is used | Yes; JWS signature over salted disclosure digests |
+| ISO mdoc | Yes; issuer-signed Mobile Security Object | Dynamic; device signature or MAC over the session transcript | Yes; DeviceKey bound in the MSO | Yes; per-data-element digests in the MSO |
+| DBSC | No | Mixed; the session cookie is static, the refresh proof is challenge-response | Yes; session identifier bound to the device key | No for the cookie; Yes for the signed refresh proof |
+
+The following properties describe how a credential scopes and structures its content.
+
+| Credential Type | Chainability | Audience Restriction | Validity Window | Selective Disclosure |
+| --- | --- | --- | --- | --- |
+| Password / API key | No | No | Policy-imposed only; not carried in the credential | No |
+| Synced passkey | No | Yes; RP ID and origin binding | No; freshness is established by the challenge | No |
+| Device-bound passkey | No | Yes; RP ID and origin binding | No | No |
+| SPIFFE X.509-SVID | Yes; X.509 chain to the trust domain CA | Partial; scoped to the trust domain and federated trust domains rather than a named service | Yes; short-lived and automatically rotated | No |
+| SPIFFE JWT-SVID | No; single signer, no embedded chain | Yes; `aud` names the target service | Yes; short-lived | No |
+| mTLS certificate | Yes; X.509 chain | No; accepted by any relying party trusting the CA | Yes; typically months to years | No |
+| HOTP | No | No | No; valid until the counter advances | No |
+| TOTP | No | No | Yes; one time step plus drift tolerance | No |
+| SMS OTP | No | No | Yes; issuer-set, typically minutes | No |
+| SD-JWT VC | Yes; may reference or embed other credentials | Yes with a Key Binding JWT `aud`; No for the bare issuer-signed credential | Yes; `exp` and `nbf` | Yes; per claim |
+| ISO mdoc | Yes; issuer certificate chain to the IACA | Partial; bound to the reader session transcript rather than a named audience | Yes; MSO `validityInfo` | Yes; per data element |
+| DBSC | No | Yes; scoped to the registrable domain | Yes; short-lived cookie, refreshed on expiry | No |
+
+## Credential Presentation
+
+| Credential Type | Validity Count | Replayability | Referential Identity Posture |
+| --- | --- | --- | --- |
+| Password / API key | Unlimited until rotated | Replayable | Direct |
+| Synced passkey | Unlimited | Not replayable | Direct |
+| Device-bound passkey | Unlimited | Not replayable | Direct |
+| SPIFFE X.509-SVID | Unlimited within the validity window | Not replayable | Direct; Delegated when carrying on-behalf-of context {{RFC8693}} |
+| SPIFFE JWT-SVID | Unlimited within the validity window | Replayable within the validity window | Direct; Delegated when carrying end-user context |
+| mTLS certificate | Unlimited within the validity window | Not replayable | Direct |
+| HOTP | One; the counter advances on acceptance | Bounded; single use, but the code remains valid until the counter advances | Direct |
+| TOTP | One per time step | Bounded; replayable within the time step and drift window | Direct |
+| SMS OTP | One | Bounded; replayable within the issuer's window, and interceptable in transit | Direct |
+| SD-JWT VC | Unlimited unless constrained by the issuer | Replayable without Key Binding; not replayable with a Key Binding JWT | Direct; Partitioned or Pseudonymous depending on the disclosed claim set |
+| ISO mdoc | Unlimited within the validity window | Not replayable; the device signature covers the session transcript | Direct; Partitioned when a subset of data elements is released |
+| DBSC | Unlimited within the cookie lifetime | Bounded; the cookie is replayable within its short lifetime, the device key binding is not | Direct |
 
 ## Credential Containment & Unlock
 
-| Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
+The following properties describe containment of the credential at rest.
+
+| Credential Type | Containment | Boundary Binding | Boundary Enforcement |
+| --- | --- | --- | --- |
+| Password / API key | Uncontained | Unbounded | Reactive; breach corpus matching and secret scanning |
+| Synced passkey | Partially contained by the credential provider | Bound to the passkey provider; specifics depend on the provider | Managed by the passkey provider |
+| Device-bound passkey | Contained | Bound to the hardware authenticator; non-exportable | Proactive; enforced by hardware |
+| SPIFFE X.509-SVID | Contained when the key is TPM-bound; otherwise resident in workload memory | Bound to the TPM when hardware-backed; otherwise to the attested node and workload | Proactive when hardware-backed; otherwise enforced by the node attestor and workload API |
+| SPIFFE JWT-SVID | Uncontained once issued; a bearer token | Unbounded after issuance | Reactive; mitigated by short lifetime |
+| mTLS certificate | Contained in an HSM or TPM; uncontained as a key file | Bound to the HSM or TPM when hardware-backed; unbounded as an exportable file or PKCS#12 | Proactive when hardware-backed; otherwise reactive |
+| HOTP | Contained in a hardware token; uncontained as a soft seed | Bound to the hardware token; unbounded as a soft seed that can be re-enrolled from the provisioning URI | Proactive for hardware tokens; otherwise none |
+| TOTP | Contained in a hardware token; uncontained as a soft seed | Bound to the hardware token; unbounded as a soft seed | Proactive for hardware tokens; otherwise none |
+| SMS OTP | Uncontained; delivered in clear text and readable from the notification surface | Bound to control of the phone number, not to a device | Reactive; carrier-side controls against SIM swap and port-out |
+| SD-JWT VC | Contained when the Key Binding key is in a secure element; the credential itself is data at rest in the wallet | Bound to the wallet key store when Key Binding is used; unbounded otherwise | Proactive when hardware-backed; otherwise none |
+| ISO mdoc | Contained; DeviceKey resides in the device secure area | Bound to the device secure area | Proactive; enforced by hardware |
+| DBSC | Contained; the session key resides in the TPM or secure enclave | Bound to the device TPM; non-exportable | Proactive; enforced by hardware |
+
+The following properties describe how a contained credential is released for use.
+
+| Credential Type | Transference | Activation | Unlock Scope | Unlock Persistence |
 | --- | --- | --- | --- | --- |
-| Containment | Uncontained | Partially Contained | Contained | Contained when bound to a TPM |
-| Boundary Binding | Unbounded | Bound to the passkey provider.  Specifics are dependent upon the provider. | Bound to the hardware key | Bound to a TPM |
-| Boundary Enforcement | Reactive (identification in prior breaches, identified in clear text) | Managed by the passkey provider. | Enforced by hardware. | Enforced by hardware. |
-| Transference | Yes | Within boundary via passkey provider sharing. Mechanisms depend on provider.  Export to another passkey provider via credential exchange protocol may be available. | None | None |
-| Dynamism | None (static shared secret) | Dynamic (challenge-response) | Dynamic (challenge-response) | Dynamic (TLS) |
-| Activation | No | Yes (biometric gesture or password/passphrase unlock) | Yes (PIN/biometric gesture) | No |
-| Unlock Scope | N/A | All users on a shared device. |  | Workload |
-| Unlock Persistence | N/A | Configurable by passkey provider. | Per-operation (unlock once) | Life of the workload |
+| Password / API key | Yes; freely copied | No | N/A | N/A |
+| Synced passkey | Within the boundary via provider sharing; across providers via credential exchange where supported | Yes; biometric gesture or provider unlock | All users of the provider account, on every device the account syncs to | Configurable by the provider |
+| Device-bound passkey | None | Yes; PIN or biometric gesture | The holder who can satisfy the PIN or biometric | Per-operation, or per-session where user verification caching applies |
+| SPIFFE X.509-SVID | None | No | The attested workload | Life of the SVID, then re-issued |
+| SPIFFE JWT-SVID | Yes; any holder can present it | No | Any holder of the token | Life of the token |
+| mTLS certificate | None when hardware-bound; Yes when exportable | Optional; PIN on a smart card or HSM | The holder of the key store | Per-operation for smart cards; life of the process otherwise |
+| HOTP | None for hardware tokens; Yes for soft seeds, which can be enrolled on multiple devices | Button press on some hardware tokens; otherwise No | The holder of the token or seed | N/A |
+| TOTP | None for hardware tokens; Yes for soft seeds | Typically No | The holder of the token or seed | N/A |
+| SMS OTP | Yes; the code can be read aloud or forwarded, which is the mechanism exploited by OTP phishing | No | Anyone with access to the device notification surface or the number | N/A |
+| SD-JWT VC | Yes without Key Binding; None with a hardware-bound Key Binding key | Yes; wallet unlock gesture where required | The holder who can unlock the wallet | Configurable by the wallet |
+| ISO mdoc | None; the DeviceKey is non-exportable | Yes; wallet unlock and per-presentation consent | The holder who can unlock the wallet | Per-presentation |
+| DBSC | None for the key; the short-lived cookie can be copied | No; refresh is automatic with no user gesture | The browser profile on the bound device | Life of the session, with automatic cookie refresh |
 
 ## Credential Enrollment
 
-| Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
-| --- | --- | --- | --- | --- |
-| Enrollment Assurance | | | | |
-| Vouching | | | | |
-| Enrollment Binding | | | | |
-
-## Substantiation
-
-| Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
-| --- | --- | --- | --- | --- |
-| Identifier Binding | | | | Yes (SPIFFE ID bound in X.509) |
-| Integrity | | | | |
-| Authoritative Relationship | | | | |
-| Chainability | | | | |
+| Credential Type | Enrollment Assurance | Vouching | Enrollment Binding |
+| --- | --- | --- | --- |
+| Password / API key | Varies; typically none beyond an existing account context | Sometimes; set during a vouched registration or reset flow | Association with the account record held by the verifier |
+| Synced passkey | Inherits the assurance of the session that created it | Yes; enrollment is gated by a pre-existing credential | WebAuthn registration ceremony binds the public key to the user handle |
+| Device-bound passkey | Enterprise-controlled; may require in-person proofing | Yes; typically gated by an enterprise credential or supervised enrollment | Registration ceremony with attestation binds the key to a specific authenticator model |
+| SPIFFE X.509-SVID | Derived from node and workload attestation rather than human proofing | Yes; node attestation acts as the prior gate | Attestors bind the SPIFFE ID to the attested workload |
+| SPIFFE JWT-SVID | Derived from node and workload attestation | Yes; node attestation acts as the prior gate | Attestors bind the SPIFFE ID to the attested workload |
+| mTLS certificate | Varies by CA policy, from domain validation to in-person proofing | Often; CSR submission is gated by an existing credential | The CA binds the subject and SAN to the public key in the CSR |
+| HOTP | Inherits the assurance of the session that enrolled it | Yes; enrollment is gated by a pre-existing credential | Seed shared between authenticator and verifier and recorded against the account |
+| TOTP | Inherits the assurance of the session that enrolled it | Yes; enrollment is gated by a pre-existing credential | Seed shared between authenticator and verifier and recorded against the account |
+| SMS OTP | Phone number possession only; no identity proofing | Yes; the number is registered during a vouched session | The verifier binds the phone number to the account record |
+| SD-JWT VC | Set by issuer policy; may require high-assurance proofing | Yes; issuance is gated by prior credentials or in-person proofing | The issuer binds claims to the holder's `cnf` key |
+| ISO mdoc | Set by the issuing authority; typically in-person proofing for an mDL | Yes; gated by the underlying document issuance process | The issuer binds the DeviceKey into the signed MSO |
+| DBSC | Inherits the assurance of the sign-in that established the session | Yes; the session is established by a prior authentication | The browser binds the session identifier to a freshly generated device key |
 
 ## Credential Compliance
 
-| Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
-| --- | --- | --- | --- | --- |
-| Composition Rules | Length & composition may be enforced | | | |
-| Lifecycle Rules | May be enforced | | | |
-| Regulatory Framework | PCI, NIST SP800-63rev4 Part B | | | |
+| Credential Type | Composition Rules | Lifecycle Rules | Regulatory Framework |
+| --- | --- | --- | --- |
+| Password / API key | Length and character composition may be enforced | Rotation, expiry, and reuse limits may be enforced | {{SP800-63B}}; {{PCI-DSS}} |
+| Synced passkey | Algorithm set constrained by WebAuthn and COSE | Revocation by deregistration; no rotation concept | NIST SP 800-63B; FIDO Alliance certification |
+| Device-bound passkey | Algorithm set constrained by WebAuthn and COSE; authenticator certification level | Deregistration; key lifetime tied to the authenticator | NIST SP 800-63B at the highest authenticator assurance level; FIDO Alliance certification |
+| SPIFFE X.509-SVID | Certificate profile and algorithms fixed by the SPIFFE X.509-SVID specification | Mandatory short lifetime with automatic rotation | SPIFFE specifications; deployment policy |
+| SPIFFE JWT-SVID | JWS algorithms fixed by the SPIFFE JWT-SVID specification | Short lifetime; expiry only, no revocation | SPIFFE specifications; deployment policy |
+| mTLS certificate | {{CABF-BR}} for the Web PKI; internal policy otherwise | Maximum validity period; revocation via CRL or OCSP | CA/Browser Forum Baseline Requirements; PKI operator policy |
+| HOTP | HMAC algorithm and code length fixed by the HOTP specification | Seed rotation on re-enrollment; counter resynchronization | NIST SP 800-63B; PCI DSS |
+| TOTP | Algorithm, time step, and code length fixed by the TOTP specification | Seed rotation on re-enrollment; time-step policy | NIST SP 800-63B; PCI DSS |
+| SMS OTP | Code length and character set set by the verifier | Short expiry; per-attempt rate limiting | NIST SP 800-63B, which constrains out-of-band authenticators using the public telephone network; PCI DSS |
+| SD-JWT VC | Disclosure construction and algorithms fixed by the SD-JWT specification | Issuer-set expiry; status list revocation | Issuer policy; wallet ecosystem governance frameworks |
+| ISO mdoc | Cryptographic suites fixed by ISO/IEC 18013-5 | Issuer-set validity; MSO update and revocation | ISO/IEC 18013-5; issuing authority policy |
+| DBSC | Key type constrained by the DBSC specification and platform TPM support | Session lifetime and refresh cadence set by the origin | None specific; inherits the session management requirements of the deploying framework |
 
 ## Credential Recovery
 
-| Property | Password / API key / client credential | Synced passkey | Device-bound passkey (hardware key) | SPIFFE X.509-SVID |
-| --- | --- | --- | --- | --- |
-| Recoverability | | | | |
-| Recovery Agent | | | | |
-| Recovery Mechanism | | | | |
-| Recovery Artifact | | | | |
-| Recovery Assurance | | | | |
+| Credential Type | Recoverability |
+| --- | --- |
+| Password / API key | Account-driven; reset via an alternate credential, the prior secret is not restored |
+| Synced passkey | Issuer-driven; the provider's account recovery restores the synced credential |
+| Device-bound passkey | Account-driven; a lost authenticator cannot be restored, a replacement must be enrolled against a backup credential |
+| SPIFFE X.509-SVID | Issuer-driven; re-attestation yields a new SVID, recovery of the prior key is neither needed nor possible |
+| SPIFFE JWT-SVID | Issuer-driven; re-attestation yields a new SVID |
+| mTLS certificate | Issuer-driven where the CA supports key escrow or re-issuance; Account-driven otherwise, by revoking and re-enrolling |
+| HOTP | Container-driven where an authenticator application backup restores the seed; Account-driven otherwise, by enrolling a new seed |
+| TOTP | Container-driven where an authenticator application backup restores the seed; Account-driven otherwise, by enrolling a new seed |
+| SMS OTP | Account-driven; recovery consists of regaining control of the phone number, typically through the carrier |
+| SD-JWT VC | Issuer-driven; the holder re-requests issuance. A wallet backup may restore the credential but not a hardware-bound Key Binding key |
+| ISO mdoc | Issuer-driven; reissuance by the issuing authority, the DeviceKey cannot be recovered |
+| DBSC | Account-driven; the session is re-established by re-authenticating and the device key is regenerated |
 
 # Acknowledgments
 {:numbered="false"}
