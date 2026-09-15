@@ -19,7 +19,9 @@ endif
 # This is a static pattern rule, so its explicit targets take precedence over
 # the generic `%.pdf: %.txt` pattern in lib/main.mk.
 #
-# weasyprint is pulled into lib/.venv by the top-level requirements.txt.
+# weasyprint is an opt-in dependency; see requirements-pdf.txt for why it is
+# not installed automatically and how to install it. This rule is inert until
+# you do, and `make pdf` is never invoked by CI.
 # On macOS it locates Homebrew's pango/cairo via DYLD_FALLBACK_LIBRARY_PATH.
 ifeq (Darwin,$(shell uname -s))
 weasyprint-env := DYLD_FALLBACK_LIBRARY_PATH="$(shell brew --prefix)/lib"

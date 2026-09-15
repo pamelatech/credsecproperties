@@ -1,6 +1,0 @@
-# Extra Python deps for this draft's build, installed into lib/.venv alongside
-# lib/requirements.txt (see REQUIREMENTS_TXT in lib/deps.mk).
-#
-# weasyprint enables `xml2rfc --pdf`, which produces the rich datatracker-style
-# PDF (hyperlinks, bookmarks, real fonts). Without it xml2rfc disables --pdf.
-weasyprint

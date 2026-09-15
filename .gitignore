@@ -23,3 +23,4 @@ draft-dingle-sec-credproperties.xml
 package-lock.json
 report.xml
 !requirements.txt
+!requirements-pdf.txt
