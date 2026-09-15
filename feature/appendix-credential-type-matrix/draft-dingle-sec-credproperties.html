@@ -2215,9 +2215,9 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">DBSC</td>
-              <td class="text-left" rowspan="1" colspan="1">Contained; the session key resides in the TPM or secure enclave</td>
-              <td class="text-left" rowspan="1" colspan="1">Bound to the device TPM; non-exportable</td>
-              <td class="text-left" rowspan="1" colspan="1">Proactive; enforced by hardware</td>
+              <td class="text-left" rowspan="1" colspan="1">Contained if the session key resides in the TPM or secure enclave; Partially contained for software based implementations</td>
+              <td class="text-left" rowspan="1" colspan="1">Boundary enforcement depends on hardware boundedness.  Bound keys reside in TPM or Secure Elements and are non-exportable.  Partially bound keys are software based.</td>
+              <td class="text-left" rowspan="1" colspan="1">Proactive; enforced by hardware or software</td>
             </tr>
           </tbody>
         </table>
@@ -2441,13 +2441,13 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Synced passkey</td>
               <td class="text-left" rowspan="1" colspan="1">Algorithm set constrained by WebAuthn and COSE</td>
               <td class="text-left" rowspan="1" colspan="1">Revocation by deregistration; no rotation concept</td>
-              <td class="text-left" rowspan="1" colspan="1">NIST SP 800-63B; FIDO Alliance certification</td>
+              <td class="text-left" rowspan="1" colspan="1">NIST SP 800-63B</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Device-bound passkey</td>
               <td class="text-left" rowspan="1" colspan="1">Algorithm set constrained by WebAuthn and COSE; authenticator certification level</td>
               <td class="text-left" rowspan="1" colspan="1">Deregistration; key lifetime tied to the authenticator</td>
-              <td class="text-left" rowspan="1" colspan="1">NIST SP 800-63B at the highest authenticator assurance level; FIDO Alliance certification</td>
+              <td class="text-left" rowspan="1" colspan="1">NIST SP 800-63B up to AAL3; FIDO Alliance certification</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">SPIFFE X.509-SVID</td>
