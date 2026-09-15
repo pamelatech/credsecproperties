@@ -1,0 +1,790 @@
+
+
+
+
+Network Working Group                                          P. Dingle
+Internet-Draft                                                 Microsoft
+Intended status: Informational                                D. H. Saxe
+Expires: 19 March 2027                                           Remitly
+                                                       15 September 2026
+
+
+               Credential Management Security properties
+                 draft-dingle-sec-credproperties-latest
+
+Abstract
+
+   This document defines a set of properties which explain and
+   differentiate unique security characteristics of an authentication
+   method.
+
+About This Document
+
+   This note is to be removed before publishing as an RFC.
+
+   The latest revision of this draft can be found at
+   https://pamelatech.github.io/credsecproperties/draft-dingle-sec-
+   credproperties.html.  Status information for this document may be
+   found at https://datatracker.ietf.org/doc/draft-dingle-sec-
+   credproperties/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/pamelatech/credsecproperties.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 19 March 2027.
+
+Copyright Notice
+
+   Copyright (c) 2026 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction
+   2.  Credential Management Security Classes
+   3.  Credential Management Security Properties
+     3.1.  Credential Construction Properties
+       3.1.1.  Dynamism
+       3.1.2.  Identifier Binding
+       3.1.3.  Tamper Proofness
+       3.1.4.  Chainability
+       3.1.5.  Audience Restriction
+       3.1.6.  Validity Window
+       3.1.7.  Selective Disclosure
+     3.2.  Credential Presentation Properties
+       3.2.1.  Validity Count
+       3.2.2.  Replayability
+       3.2.3.  Referential Identity Posture
+     3.3.  Credential Containment & Unlock Properties
+       3.3.1.  Containment (TODO: reconcile with FIDO-SEC-REQ; the
+               FIDO Alliance publishes no sync fabric specific
+               requirements document)
+       3.3.2.  Boundary Binding
+       3.3.3.  Boundary Enforcement
+       3.3.4.  Transference
+       3.3.5.  Activation
+       3.3.6.  Unlock Scope
+       3.3.7.  Unlock Persistence
+     3.4.  Credential Enrollment
+       3.4.1.  Enrollment Assurance
+       3.4.2.  Vouching
+       3.4.3.  Enrollment Binding
+     3.5.  Credential Compliance
+       3.5.1.  Composition Rules
+       3.5.2.  Lifecycle Rules
+       3.5.3.  Regulatory Framework
+     3.6.  Credential Recovery
+       3.6.1.  Recoverability
+   4.  Conventions and Definitions
+   5.  Security Considerations
+   6.  IANA Considerations
+   7.  References
+     7.1.  Normative References
+     7.2.  Informative References
+   Appendix A.  Applying the Properties to Common Credential Types
+     A.1.  Presentation Limits
+     A.2.  Credential Containment & Unlock
+     A.3.  Credential Enrollment
+     A.4.  Substantiation
+     A.5.  Credential Compliance
+     A.6.  Credential Recovery
+   Acknowledgments
+   Authors' Addresses
+
+1.  Introduction
+
+   Every credential used to identify, authenticate, or otherwise
+   validate a subject is different, and yet there is no specific
+   vocabulary that describes exactly what a given credential should be
+   expected to do, or why exactly it can be called "secure".  To address
+   this shortcoming, this document describes categories of secure
+   credential management and within defines _exact_ labels to describe
+   the intended operation of a given credential.  These labels are
+   intended for colloquial use and designed whenever possible to be
+   accessible and intuitive for laypeople.  The specification is scoped
+   only to a credential in its common and expected use; properties for
+   secure administration of credentials are not part of this set.
+   Negative uses (attacks, vulnerabilities) are also not in scope.
+
+2.  Credential Management Security Classes
+
+   Properties are organized into areas of scrutiny, with each class
+   containing the minimum set of properties possible to satisfy
+   differences that have clear security value.  The property must have a
+   security benefit that is inherent to the credential type.
+
+3.  Credential Management Security Properties
+
+3.1.  Credential Construction Properties
+
+   ### Substantiation Substantiation describes credentials containing
+   mechanisms for authoritative statements that can be externally
+   validated.  Examples of substantiated credentials include
+   attestations such as SAML assertions [SAML] or X.509 certificates
+   [RFC5280].
+
+3.1.1.  Dynamism
+
+   Dynamism describes a credential whose stored and active forms are
+   different.  Credentials with no dynamism (or dynamic genarativity)
+   such as passwords exibit no difference between the stored (in memory,
+   in a password manager, etc.) and the credential sent to the verifier.
+   Dynamic generatvity indicates that some function is used to operate
+   on the stored credential such that what is sent over the wire is
+   different than what is stored (e.g. a challenge response protocol
+   like FIDO [WEBAUTHN]).  Credentials that do not exhibit dynamism,
+   such as shared secrets, usually exhibit replayability and are
+   definitionally not able to be contained.
+
+3.1.2.  Identifier Binding
+
+   The primary content of a credential is cryptographically bound to an
+   identifier.  Examples of credentials that include bound identifiers
+   include SAML assertions, JSON Web Tokens (JWTs) [RFC7519], X.509
+   certificates, ISO 18013 mobile driving licence objects [ISO18013-5]
+   and verifiable credentials [VC-DATA-MODEL]
+
+3.1.3.  Tamper Proofness
+
+   A mechanism for credential integrity is built into the credential
+   ensuring that the data within the credential is verifiably unchanged
+   by external parties.
+
+3.1.4.  Chainability
+
+   The credential is capable of including links to or content of other
+   credentials.
+
+3.1.5.  Audience Restriction
+
+   A mechanism that specifies which destination consumers of the
+   credential are valid.  Examples include id_token values [OIDC-CORE]
+   or origin bindings of FIDO tokens.
+
+3.1.6.  Validity Window
+
+   A credential becomes invalid outside of a specified time boundary.
+   An example would be a SAML assertion or a TOTP [RFC6238].
+
+3.1.7.  Selective Disclosure
+
+   A mechanism by which some or all of the contents within a credential
+   can be made available or unavailable under circumstances determined
+   at presentation time.  Example is an SD-JWT [RFC9901] or a ZKP.
+
+3.2.  Credential Presentation Properties
+
+   Credential reuse properties describe ways in which the use of a
+   credential is functionally restricted.
+
+3.2.1.  Validity Count
+
+   A credential becomes invalid after a specified number of successful
+   presentations.  An example would be a temporary password that can
+   only be used 5 times, or a one-time password.
+
+3.2.2.  Replayability
+
+   Credentials are replayable when they can be captured by an adversary
+   and represented to an authentication service resulting in successful
+   authentication.  Credentials that are presented directly, such as
+   shared secrets (passwords) or bearer tokens, are the canonical
+   example of replayable credentials.  Challenge response protocols are
+   considered non-replayable.
+
+   OTPs represent an interesting class of crentials when describing
+   replayability.  Deployed at a global scale, there is a small window
+   of opportunity to present a HOTP [RFC4226] or TOTP multiple times
+   within its validity window.  Therefore, replayability is not a
+   strictly binary scale.
+
+3.2.3.  Referential Identity Posture
+
+   Referential Identity Posture describes the nature of the relationship
+   between a claimed identity validated as part of an identity
+   transaction and any backing identity that might explicitly or
+   implicitly exist in a larger security context.  That larger context
+   may or may not be known to the party validating the credential and
+   represents environmental detail that could be used in security, risk,
+   or governance activities if known.  The following table defines
+   possible postures.
+
+      +==============+============+================================+
+      | Posture      | Backing    | Relationship Characteristics   |
+      |              | Identity   |                                |
+      |              | Visibility |                                |
+      +==============+============+================================+
+      | Direct       | Explicit   | Claimed identity and backing   |
+      |              |            | identity are the same entity.  |
+      +--------------+------------+--------------------------------+
+      | Delegated    | Explicit   | Claimed identity is distinct   |
+      |              |            | from the backing identity, and |
+      |              |            | the relationship is explicitly |
+      |              |            | communicated.                  |
+      +--------------+------------+--------------------------------+
+      | Impersonated | Implicit   | Claimed identity is presented  |
+      |              |            | as the backing identity; the   |
+      |              |            | underlying relationship exists |
+      |              |            | but is external, inferred, or  |
+      |              |            | hidden.                        |
+      +--------------+------------+--------------------------------+
+      | Partitioned  | Partial    | Claimed identity represents a  |
+      |              |            | constrained portion or view of |
+      |              |            | a backing identity; the        |
+      |              |            | linkage is incomplete or only  |
+      |              |            | partially disclosed.           |
+      +--------------+------------+--------------------------------+
+      | Pseudonymous | Obfuscated | A backing identity exists, but |
+      |              |            | the relationship between the   |
+      |              |            | claimed identity and backing   |
+      |              |            | identity is intentionally      |
+      |              |            | concealed or only recoverable  |
+      |              |            | by an authorized authority.    |
+      +--------------+------------+--------------------------------+
+      | Chained      | Recursive  | Claimed identity derives from  |
+      |              |            | a backing identity through one |
+      |              |            | or more intermediate           |
+      |              |            | referential identities,        |
+      |              |            | forming a transitive chain of  |
+      |              |            | relationships.                 |
+      +--------------+------------+--------------------------------+
+      | Anonymous    | Detached   | Claimed identity is visibly    |
+      |              |            | severed from any backing       |
+      |              |            | identity with no opportunity   |
+      |              |            | to recover.                    |
+      +--------------+------------+--------------------------------+
+
+                                 Table 1
+
+   Examples of delegated referential identity posture include on-behalf-
+   of (OBO) token interactions [RFC8693], where both the identity of the
+   end user and client software are communicated.  Examples of
+   impersonated referential identity posture might include privileged
+   access management workflows, where an administrative process sets
+   either the identifier or the credential (or both) based on a backing
+   identity.  Examples of a partitioned referential identity posture
+   could include openclaw agents acting with separate accounts and email
+   addresses but loosely affiliated to individuals.
+
+3.3.  Credential Containment & Unlock Properties
+
+   Credential containment describes the at-rest state of a credential
+   and its storage location(s).  Unlock properties describe how the
+   contained credential is made available for use at runtime and how the
+   containment facility, if any, can play a security role in an
+   observable way at operation time.
+
+3.3.1.  Containment (TODO: reconcile with [FIDO-SEC-REQ]; the FIDO
+        Alliance publishes no sync fabric specific requirements
+        document)
+
+   Describes how the creation, storage, and usage of a credential is
+   managed.  At one extreme, containment be within the boundary of a
+   cryptographically supervised service or hardware element, e.g. an SSH
+   private key [RFC4251] stored in an HSM.  At the other extreme, the
+   credential may be uncontained, e.g. a manually generated password.  A
+   SSH private key stored on volatile media sits between these extremes,
+   it is contained by access to the media on which it resides but it is
+   not permanently bound to the media (see Boundary Binding, below).
+
+3.3.2.  Boundary Binding
+
+   Boundary bindings describe the operational rules or limitations that
+   limit where the secret portion of a credential could be stored.  In
+   the prior examples, the HSM bound SSH private key may not be
+   extractable from the HSM, the HSM provides the boundary binding.  The
+   password is unbounded, there are no limits on how the password may be
+   moved or shared.  The SSH key stored on volatile media is also
+   unbound, since it may be copied and moved freely, e.g. it is
+   exportable.
+
+3.3.3.  Boundary Enforcement
+
+   The boundary enforcement property describes the mechanisms which
+   ensure that operational rules are followed.  Boundary enforcements
+   can be proactive or reactive.  An example of a proactive boundary
+   enforcement include binding the credential to the device, e.g. the
+   SSH key generated and stored in an HSM.  An example of a reactive
+   boundary enforcement includes credential scanning of source code
+   repositories.
+
+3.3.4.  Transference
+
+   Transference is the ability for an end user to give the credential
+   away to another user such that durable ongoing use is possible by two
+   different entities.  This transference may be within the enforced
+   boundary (e.g. sharing a synced passkey via a credential manager) or
+   outside of the boundary (e.g. user copies a password from a
+   credential manager to a file which is emailed to another user).
+
+3.3.5.  Activation
+
+   A credential becomes available for an operation only when a local
+   user gesture is performed.  This user gesture may also be called an
+   activation factor [SP800-63B].  Only a credential that is contained
+   can be activated.  A FIDO2 private key on a hardware security device
+   that requires a PIN is an example of an activated credential.  A
+   biometric that unlocks a TPM on a laptop is another example of an
+   activated credential.  Presence Activation is a case where locality
+   is required but confirmation of a secret or biometric is not
+   required.  Individual Activation is a case where only one human can
+   trigger the container to unlock.
+
+3.3.6.  Unlock Scope
+
+   A credential may be unlocked by different parties which defines the
+   scope of which entities can unlock credential for use.  The owner of
+   a credential is always expected to be able to unlock their own
+   credential.  Credentials on shared devices may be unlocked by all
+   users sharing the device.  Similarly, credentials in a shared
+   enterprise vault may be unlocked by a vault administrator.  Unlock
+   scope is related to an instance of a credential and is distinct from
+   the Credential Management Security Properties.
+
+3.3.7.  Unlock Persistence
+
+   Credentials may be unlocked once with an activation factor (e.g.
+   using a hardware security key), or the activation factor may be
+   presented seconds to minutes before use (e.g. a credential vault
+   remains unlocked for 5 minutes after use).
+
+3.4.  Credential Enrollment
+
+   Credential enrollment properties describe requirements required to be
+   met before a credential is created.
+
+3.4.1.  Enrollment Assurance
+
+   Enrollment assurance describes the identity verification assurance
+   level, such as the identity assurance levels defined in [SP800-63A],
+   at the time the credential was created.
+
+3.4.2.  Vouching
+
+   A vouched credential is one whose enrollment was enabled by the
+   subject first authenticating with a separate, pre-existing
+   credential.  The prior credential acts as a gate on the enrollment
+   event but does not contribute its key material to the new credential.
+   After enrollment, the vouched credential is fully independent.  A
+   user may present a passport as a proof of citizenship to be granted a
+   state digital identity.
+
+3.4.3.  Enrollment Binding
+
+   Enrollment binding describes the mechanism that binds the credential
+   to the enrolled identity.
+
+3.5.  Credential Compliance
+
+   Credential provider compliance properties describe requirements on
+   composition or management dictated by regulatory bodies.
+
+3.5.1.  Composition Rules
+
+   Composition rules describe regulatory or standards-based requirements
+   on how the credential must be constructed such as acceptable
+   cryptographic algorithms.
+
+3.5.2.  Lifecycle Rules
+
+   Lifecycle rules describe regulatory or standards-based requirements
+   on credential rotation, expiry, or revocation.
+
+3.5.3.  Regulatory Framework
+
+   Regulatory framework describes which regulatory framework or
+   frameworks impose requirements on this credential type.  Multiple
+   values may apply simultaneously.
+
+3.6.  Credential Recovery
+
+   Credential Recovery properties describe limitations of who can reset
+   a credential or how a credential can be reset.
+
+3.6.1.  Recoverability
+
+   Recoverability describes remediation capabilities that enable or re-
+   enable access to a valid credential after loss or compromise.  Values
+   can be: issuer-driven, container-driven,or account-driven.  * Issuer-
+   driven: remediation is enabled by a direct party to the creation of
+   the credential.  Examples include credentials with multiple
+   configured signing certificates, synced passkeys protected by a
+   consumer trust layer, or hardware keys created with matching/derived
+   seed values.  * Container-driven: remediation enabled by a direct
+   party to containment or unlock of the credential with pre-established
+   administrative trust.  Examples include PAM (privileged access
+   management) systems or corporate password managers.  * Account-
+   driven: the credential cannot be restored, it can only be removed and
+   replaced, often through a process that requires presentation of an
+   unrelated alternate credential.
+
+4.  Conventions and Definitions
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+   TODO define two parts of credential (secret, generated)
+
+5.  Security Considerations
+
+   This document has no security considerations.
+
+6.  IANA Considerations
+
+   This document has no IANA actions.
+
+7.  References
+
+7.1.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+7.2.  Informative References
+
+   [FIDO-SEC-REQ]
+              FIDO Alliance, "FIDO Authenticator Security and Privacy
+              Requirements, Version 1.6", 12 March 2025,
+              <https://fidoalliance.org/specs/fido-security-
+              requirements/fido-authenticator-security-requirements-
+              v1.6-fd-20250312.html>.
+
+   [ISO18013-5]
+              International Organization for Standardization, "Personal
+              identification - ISO-compliant driving licence - Part 5:
+              Mobile driving licence (mDL) application", ISO/
+              IEC 18013-5:2021, September 2021,
+              <https://www.iso.org/standard/69084.html>.
+
+   [OIDC-CORE]
+              OpenID Foundation, "OpenID Connect Core 1.0 incorporating
+              errata set 2", 15 December 2023,
+              <https://openid.net/specs/openid-connect-core-1_0.html>.
+
+   [RFC4226]  M'Raihi, D., Bellare, M., Hoornaert, F., Naccache, D., and
+              O. Ranen, "HOTP: An HMAC-Based One-Time Password
+              Algorithm", RFC 4226, DOI 10.17487/RFC4226, December 2005,
+              <https://www.rfc-editor.org/rfc/rfc4226>.
+
+   [RFC4251]  Ylonen, T. and C. Lonvick, Ed., "The Secure Shell (SSH)
+              Protocol Architecture", RFC 4251, DOI 10.17487/RFC4251,
+              January 2006, <https://www.rfc-editor.org/rfc/rfc4251>.
+
+   [RFC5280]  Cooper, D., Santesson, S., Farrell, S., Boeyen, S.,
+              Housley, R., and W. Polk, "Internet X.509 Public Key
+              Infrastructure Certificate and Certificate Revocation List
+              (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
+              <https://www.rfc-editor.org/rfc/rfc5280>.
+
+   [RFC6238]  M'Raihi, D., Machani, S., Pei, M., and J. Rydell, "TOTP:
+              Time-Based One-Time Password Algorithm", RFC 6238,
+              DOI 10.17487/RFC6238, May 2011,
+              <https://www.rfc-editor.org/rfc/rfc6238>.
+
+   [RFC7519]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token
+              (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
+              <https://www.rfc-editor.org/rfc/rfc7519>.
+
+   [RFC8693]  Jones, M., Nadalin, A., Campbell, B., Ed., Bradley, J.,
+              and C. Mortimore, "OAuth 2.0 Token Exchange", RFC 8693,
+              DOI 10.17487/RFC8693, January 2020,
+              <https://www.rfc-editor.org/rfc/rfc8693>.
+
+   [RFC9901]  Fett, D., Yasuda, K., and B. Campbell, "Selective
+              Disclosure for JSON Web Tokens", RFC 9901,
+              DOI 10.17487/RFC9901, November 2025,
+              <https://www.rfc-editor.org/rfc/rfc9901>.
+
+   [SAML]     Organization for the Advancement of Structured Information
+              Standards, "Assertions and Protocols for the OASIS
+              Security Assertion Markup Language (SAML) V2.0",
+              OASIS Standard saml-core-2.0-os, 15 March 2005,
+              <https://docs.oasis-open.org/security/saml/v2.0/saml-core-
+              2.0-os.pdf>.
+
+   [SP800-63A]
+              National Institute of Standards and Technology, "Digital
+              Identity Guidelines: Identity Proofing and Enrollment",
+              NIST Special Publication 800-63A-4, July 2025,
+              <https://doi.org/10.6028/NIST.SP.800-63A-4>.
+
+   [SP800-63B]
+              National Institute of Standards and Technology, "Digital
+              Identity Guidelines: Authentication and Authenticator
+              Management", NIST Special Publication 800-63B-4, July
+              2025, <https://doi.org/10.6028/NIST.SP.800-63B-4>.
+
+   [VC-DATA-MODEL]
+              World Wide Web Consortium, "Verifiable Credentials Data
+              Model v2.0", W3C Recommendation REC-vc-data-model-
+              2.0-20250515, 15 May 2025,
+              <https://www.w3.org/TR/vc-data-model-2.0/>.
+
+   [WEBAUTHN] World Wide Web Consortium, "Web Authentication: An API for
+              accessing Public Key Credentials - Level 3",
+              W3C Recommendation REC-webauthn-3-20260825, 25 August
+              2026, <https://www.w3.org/TR/webauthn-3/>.
+
+Appendix A.  Applying the Properties to Common Credential Types
+
+   This appendix illustrates how the properties defined in this document
+   apply to several common credential types, to validate that the
+   property set is expressive enough to differentiate them:
+
+   *  *Password* — A shared secret.
+
+   *  *Synced passkey - consumer* — a FIDO2/WebAuthn credential
+      synchronized across devices by a credential manager such as
+      1Password or BitWarden.  Consumer focused use case.
+
+   *  *Device-bound passkey (hardware key) - enterprise* — a FIDO2/
+      WebAuthn credential generated on and bound to a hardware security
+      key managed by an enterprise.
+
+   *  *SPIFFE X.509-SVID* — A workload identity and credentials issued
+      as an X.509 certificate to the workload following attestation of
+      the state of the workload.  Credential is presented via mTLS to
+      downstream services.
+
+A.1.  Presentation Limits
+
+   +=============+============+==========+==============+==============+
+   | Property    | Password / | Synced   | Device-bound | SPIFFE       |
+   |             | API key /  | passkey  | passkey      | X.509-SVID   |
+   |             | client     |          | (hardware    |              |
+   |             | credential |          | key)         |              |
+   +=============+============+==========+==============+==============+
+   | Validity    |            |          |              |              |
+   | Count       |            |          |              |              |
+   +-------------+------------+----------+--------------+--------------+
+   | Validity    |            |          |              | Short term   |
+   | Window      |            |          |              | validity,    |
+   |             |            |          |              | SVIDs are    |
+   |             |            |          |              | rotated      |
+   |             |            |          |              | every 5      |
+   |             |            |          |              | minutes.     |
+   +-------------+------------+----------+--------------+--------------+
+   | Selective   | No         | No       | No           | No           |
+   | Disclosure  |            |          |              |              |
+   +-------------+------------+----------+--------------+--------------+
+   | Audience    | No         | Yes      | Yes (FIDO    | Yes          |
+   | Restriction |            | (FIDO    | origin       | (services    |
+   |             |            | origin   | binding)     | within the   |
+   |             |            | binding) |              | trust        |
+   |             |            |          |              | domain or    |
+   |             |            |          |              | federated    |
+   |             |            |          |              | trust        |
+   |             |            |          |              | domains)     |
+   +-------------+------------+----------+--------------+--------------+
+
+                                  Table 2
+
+A.2.  Credential Containment & Unlock
+
+   +============+=================+=============+===========+==========+
+   |Property    | Password / API  |Synced       |Device-    |SPIFFE    |
+   |            | key / client    |passkey      |bound      |X.509-SVID|
+   |            | credential      |             |passkey    |          |
+   |            |                 |             |(hardware  |          |
+   |            |                 |             |key)       |          |
+   +============+=================+=============+===========+==========+
+   |Containment | Uncontained     |Partially    |Contained  |Contained |
+   |            |                 |Contained    |           |when bound|
+   |            |                 |             |           |to a TPM  |
+   +------------+-----------------+-------------+-----------+----------+
+   |Boundary    | Unbounded       |Bound to the |Bound to   |Bound to a|
+   |Binding     |                 |passkey      |the        |TPM       |
+   |            |                 |provider.    |hardware   |          |
+   |            |                 |Specifics    |key        |          |
+   |            |                 |are          |           |          |
+   |            |                 |dependent    |           |          |
+   |            |                 |upon the     |           |          |
+   |            |                 |provider.    |           |          |
+   +------------+-----------------+-------------+-----------+----------+
+   |Boundary    | Reactive        |Managed by   |Enforced by|Enforced  |
+   |Enforcement | (identification |the passkey  |hardware.  |by        |
+   |            | in prior        |provider.    |           |hardware. |
+   |            | breaches,       |             |           |          |
+   |            | identified in   |             |           |          |
+   |            | clear text)     |             |           |          |
+   +------------+-----------------+-------------+-----------+----------+
+   |Transference| Yes             |Within       |None       |None      |
+   |            |                 |boundary via |           |          |
+   |            |                 |passkey      |           |          |
+   |            |                 |provider     |           |          |
+   |            |                 |sharing.     |           |          |
+   |            |                 |Mechanisms   |           |          |
+   |            |                 |depend on    |           |          |
+   |            |                 |provider.    |           |          |
+   |            |                 |Export to    |           |          |
+   |            |                 |another      |           |          |
+   |            |                 |passkey      |           |          |
+   |            |                 |provider via |           |          |
+   |            |                 |credential   |           |          |
+   |            |                 |exchange     |           |          |
+   |            |                 |protocol may |           |          |
+   |            |                 |be           |           |          |
+   |            |                 |available.   |           |          |
+   +------------+-----------------+-------------+-----------+----------+
+   |Dynamism    | None (static    |Dynamic      |Dynamic    |Dynamic   |
+   |            | shared secret)  |(challenge-  |(challenge-|(TLS)     |
+   |            |                 |response)    |response)  |          |
+   +------------+-----------------+-------------+-----------+----------+
+   |Activation  | No              |Yes          |Yes (PIN/  |No        |
+   |            |                 |(biometric   |biometric  |          |
+   |            |                 |gesture or   |gesture)   |          |
+   |            |                 |password/    |           |          |
+   |            |                 |passphrase   |           |          |
+   |            |                 |unlock)      |           |          |
+   +------------+-----------------+-------------+-----------+----------+
+   |Unlock Scope| N/A             |All users on |           |Workload  |
+   |            |                 |a shared     |           |          |
+   |            |                 |device.      |           |          |
+   +------------+-----------------+-------------+-----------+----------+
+   |Unlock      | N/A             |Configurable |Per-       |Life of   |
+   |Persistence |                 |by passkey   |operation  |the       |
+   |            |                 |provider.    |(unlock    |workload  |
+   |            |                 |             |once)      |          |
+   +------------+-----------------+-------------+-----------+----------+
+
+                                  Table 3
+
+A.3.  Credential Enrollment
+
+   +============+================+=========+==============+============+
+   | Property   | Password /     | Synced  | Device-bound | SPIFFE     |
+   |            | API key /      | passkey | passkey      | X.509-SVID |
+   |            | client         |         | (hardware    |            |
+   |            | credential     |         | key)         |            |
+   +============+================+=========+==============+============+
+   | Enrollment |                |         |              |            |
+   | Assurance  |                |         |              |            |
+   +------------+----------------+---------+--------------+------------+
+   | Vouching   |                |         |              |            |
+   +------------+----------------+---------+--------------+------------+
+   | Enrollment |                |         |              |            |
+   | Binding    |                |         |              |            |
+   +------------+----------------+---------+--------------+------------+
+
+                                  Table 4
+
+A.4.  Substantiation
+
+   +===============+============+=========+==============+============+
+   | Property      | Password / | Synced  | Device-bound | SPIFFE     |
+   |               | API key /  | passkey | passkey      | X.509-SVID |
+   |               | client     |         | (hardware    |            |
+   |               | credential |         | key)         |            |
+   +===============+============+=========+==============+============+
+   | Identifier    |            |         |              | Yes        |
+   | Binding       |            |         |              | (SPIFFE ID |
+   |               |            |         |              | bound in   |
+   |               |            |         |              | X.509)     |
+   +---------------+------------+---------+--------------+------------+
+   | Integrity     |            |         |              |            |
+   +---------------+------------+---------+--------------+------------+
+   | Authoritative |            |         |              |            |
+   | Relationship  |            |         |              |            |
+   +---------------+------------+---------+--------------+------------+
+   | Chainability  |            |         |              |            |
+   +---------------+------------+---------+--------------+------------+
+
+                                 Table 5
+
+A.5.  Credential Compliance
+
+   +=============+==============+=========+==============+============+
+   | Property    | Password /   | Synced  | Device-bound | SPIFFE     |
+   |             | API key /    | passkey | passkey      | X.509-SVID |
+   |             | client       |         | (hardware    |            |
+   |             | credential   |         | key)         |            |
+   +=============+==============+=========+==============+============+
+   | Composition | Length &     |         |              |            |
+   | Rules       | composition  |         |              |            |
+   |             | may be       |         |              |            |
+   |             | enforced     |         |              |            |
+   +-------------+--------------+---------+--------------+------------+
+   | Lifecycle   | May be       |         |              |            |
+   | Rules       | enforced     |         |              |            |
+   +-------------+--------------+---------+--------------+------------+
+   | Regulatory  | PCI, NIST    |         |              |            |
+   | Framework   | SP800-63rev4 |         |              |            |
+   |             | Part B       |         |              |            |
+   +-------------+--------------+---------+--------------+------------+
+
+                                 Table 6
+
+A.6.  Credential Recovery
+
+    +================+============+=======+==============+============+
+    | Property       | Password / |Synced | Device-bound | SPIFFE     |
+    |                | API key /  |passkey| passkey      | X.509-SVID |
+    |                | client     |       | (hardware    |            |
+    |                | credential |       | key)         |            |
+    +================+============+=======+==============+============+
+    | Recoverability |            |       |              |            |
+    +----------------+------------+-------+--------------+------------+
+    | Recovery Agent |            |       |              |            |
+    +----------------+------------+-------+--------------+------------+
+    | Recovery       |            |       |              |            |
+    | Mechanism      |            |       |              |            |
+    +----------------+------------+-------+--------------+------------+
+    | Recovery       |            |       |              |            |
+    | Artifact       |            |       |              |            |
+    +----------------+------------+-------+--------------+------------+
+    | Recovery       |            |       |              |            |
+    | Assurance      |            |       |              |            |
+    +----------------+------------+-------+--------------+------------+
+
+                                  Table 7
+
+Acknowledgments
+
+   The authors would like to acknowledge the following individuals for
+   their thoughful feedback: George Fletcher, Andrew Hughes, Justin
+   Richer, and the attendees of the Internet Identity Workshop 42 and
+   OAuth Security Workshop 2025.
+
+Authors' Addresses
+
+   Pamela Dingle
+   Microsoft
+   Email: pamela.dingle@microsoft.com
+
+
+   Dean H. Saxe
+   Remitly
+   Email: deans@remitly.com
