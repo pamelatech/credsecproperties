@@ -87,7 +87,7 @@ informative:
     date: 2025-03-12
     author:
       - org: FIDO Alliance
-  SP800-63A:
+  SP800-63A-rev4:
     title: "Digital Identity Guidelines: Identity Proofing and Enrollment"
     target: https://doi.org/10.6028/NIST.SP.800-63A-4
     date: 2025-07
@@ -95,7 +95,7 @@ informative:
       - org: National Institute of Standards and Technology
     seriesinfo:
       NIST: Special Publication 800-63A-4
-  SP800-63B:
+  SP800-63B-rev4:
     title: "Digital Identity Guidelines: Authentication and Authenticator Management"
     target: https://doi.org/10.6028/NIST.SP.800-63B-4
     date: 2025-07
@@ -226,7 +226,7 @@ The boundary enforcement property describes the mechanisms which ensure that ope
 Transference is the ability for an end user to give the credential away to another user such that durable ongoing use is possible by two different entities.  This transference may be within the enforced boundary (e.g. sharing a synced passkey via a credential manager) or outside of the boundary (e.g. user copies a password from a credential manager to a file which is emailed to another user).
 
 ### Activation
-A credential becomes available for an operation only when a local user gesture is performed. This user gesture may also be called an activation factor {{SP800-63B}}. Only a credential that is contained can be activated. A FIDO2 private key on a hardware security device that requires a PIN is an example of an activated credential. A biometric that unlocks a TPM on a laptop is another example of an activated credential.  Presence Activation is a case where locality is required but confirmation of a secret or biometric is not required. Individual Activation is a case where only one human can trigger the container to unlock.
+A credential becomes available for an operation only when a local user gesture is performed. This user gesture may also be called an activation factor {{SP800-63B-rev4}}. Only a credential that is contained can be activated. A FIDO2 private key on a hardware security device that requires a PIN is an example of an activated credential. A biometric that unlocks a TPM on a laptop is another example of an activated credential.  Presence Activation is a case where locality is required but confirmation of a secret or biometric is not required. Individual Activation is a case where only one human can trigger the container to unlock.
 
 ### Unlock Scope
 A credential may be unlocked by different parties which defines the scope of which entities can unlock credential for use.  The owner of a credential is always expected to be able to unlock their own credential. Credentials on shared devices may be unlocked by all users sharing the device. Similarly, credentials in a shared enterprise vault may be unlocked by a vault administrator.  Unlock scope is related to an instance of a credential and is distinct from the Credential Management Security Properties.
@@ -238,7 +238,7 @@ Credentials may be unlocked once with an activation factor (e.g. using a hardwar
 Credential enrollment properties describe requirements required to be met before a credential is created.
 
 ### Enrollment Assurance
-Enrollment assurance describes the identity verification assurance level, such as the identity assurance levels defined in {{SP800-63A}}, at the time the credential was created.
+Enrollment assurance describes the identity verification assurance level, such as the identity assurance levels defined in {{SP800-63A-rev4}}, at the time the credential was created.
 
 ### Vouching
 A vouched credential is one whose enrollment was enabled by the subject first authenticating with a separate, pre-existing credential. The prior credential acts as a gate on the enrollment event but does not contribute its key material to the new credential. After enrollment, the vouched credential is fully independent.  A user may present a passport as a proof of citizenship to be granted a state digital identity.
