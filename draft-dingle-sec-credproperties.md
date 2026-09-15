@@ -295,7 +295,7 @@ The credential types examined are:
 
 - **Password / API key / client credential** — a shared secret presented directly to the verifier with no transformation.
 - **Synced passkey (consumer)** — a WebAuthn credential synchronized across devices by a consumer credential manager such as a platform provider or password manager.
-- **Device-bound passkey (hardware security key, enterprise)** — a WebAuthn credential generated on and bound to a hardware authenticator implementing CTAP {{CTAP}}, managed by an enterprise.
+- **Device-bound passkey on FIDO L2 Certified security key** — a WebAuthn credential generated on and bound to a hardware authenticator implementing CTAP {{CTAP}} and certified at FIDO L2 or above.
 - **SPIFFE X.509-SVID** — a workload identity issued as an X.509 certificate following attestation of the workload, presented via mutual TLS. See {{SPIFFE-X509-SVID}}.
 - **SPIFFE JWT-SVID** — the same workload identity expressed as a signed JWT and presented as a bearer token {{RFC6750}} to services that cannot terminate mutual TLS. See {{SPIFFE-JWT-SVID}}.
 - **mTLS certificate** — a client certificate issued by a Web PKI or private CA outside of any SPIFFE trust domain, presented during the TLS handshake.
