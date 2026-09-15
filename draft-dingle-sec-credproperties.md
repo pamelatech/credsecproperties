@@ -80,12 +80,6 @@ informative:
       - org: International Organization for Standardization
     seriesinfo:
       ISO/IEC: 18013-5:2021
-  FIDO-SEC-REQ:
-    title: "FIDO Authenticator Security and Privacy Requirements, Version 1.6"
-    target: https://fidoalliance.org/specs/fido-security-requirements/fido-authenticator-security-requirements-v1.6-fd-20250312.html
-    date: 2025-03-12
-    author:
-      - org: FIDO Alliance
   SP800-63A-rev4:
     title: "Digital Identity Guidelines: Identity Proofing and Enrollment"
     target: https://doi.org/10.6028/NIST.SP.800-63A-4
