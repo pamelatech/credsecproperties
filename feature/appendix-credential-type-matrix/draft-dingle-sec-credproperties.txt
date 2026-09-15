@@ -1128,13 +1128,13 @@ A.4.  Credential Enrollment
    |            |                        |              |the user      |
    |            |                        |              |handle        |
    +------------+------------------------+--------------+--------------+
-   |Device-bound| Enterprise-controlled; |Yes; typically|Registration  |
-   |passkey     | may require in-person  |gated by an   |ceremony with |
-   |            | proofing               |enterprise    |attestation   |
-   |            |                        |credential or |binds the key |
-   |            |                        |supervised    |to a specific |
-   |            |                        |enrollment    |authenticator |
-   |            |                        |              |model         |
+   |Device-bound| Enterprise-controlled; |Yes; typically|WebAuthn      |
+   |passkey     | may require in-person  |gated by an   |registration  |
+   |            | proofing               |enterprise    |ceremony      |
+   |            |                        |credential or |binds the     |
+   |            |                        |supervised    |public key to |
+   |            |                        |enrollment    |the user      |
+   |            |                        |              |handle        |
    +------------+------------------------+--------------+--------------+
    |SPIFFE      | Derived from node and  |Yes; node     |Attestors     |
    |X.509-SVID  | workload attestation   |attestation   |bind the      |
