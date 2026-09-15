@@ -31,8 +31,7 @@ author:
     email: pamela.dingle@microsoft.com
  -
     fullname: Dean H. Saxe
-    organization: Remitly
-    email: deans@remitly.com
+    email: dean@thesax.es
 normative:
 
 informative:
@@ -173,7 +172,7 @@ Examples of delegated referential identity posture include on-behalf-of (OBO) to
 ## Credential Containment & Unlock Properties
 Credential containment describes the at-rest state of a credential and its storage location(s). Unlock properties describe how the contained credential is made available for use at runtime and how the containment facility, if any, can play a security role in an observable way at operation time.
 
-### Containment (TODO: reconcile with {{FIDO-SEC-REQ}}; the FIDO Alliance publishes no sync fabric specific requirements document)
+### Containment
 Describes how the creation, storage, and usage of a credential is managed. At one extreme, containment be within the boundary of a cryptographically supervised service or hardware element, e.g. an SSH private key {{RFC4251}} stored in an HSM.  At the other extreme, the credential may be uncontained, e.g. a manually generated password.  A SSH private key stored on volatile media sits between these extremes, it is contained by access to the media on which it resides but it is not permanently bound to the media (see Boundary Binding, below).
 
 ### Boundary Binding
@@ -206,9 +205,6 @@ A vouched credential is one whose enrollment was enabled by the subject first au
 ### Enrollment Binding
 Enrollment binding describes the mechanism that binds the credential to the enrolled identity.
 
-
-
-
 ## Credential Compliance
 Credential provider compliance properties describe requirements on composition or management dictated by regulatory bodies.
 
@@ -220,7 +216,6 @@ Lifecycle rules describe regulatory or standards-based requirements on credentia
 
 ### Regulatory Framework
 Regulatory framework describes which regulatory framework or frameworks impose requirements on this credential type. Multiple values may apply simultaneously.
-
 
 ## Credential Recovery
 Credential Recovery properties describe limitations of who can reset a credential or how a credential can be reset.
