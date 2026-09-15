@@ -665,95 +665,100 @@ A.1.  Credential Construction
    The following properties describe how a credential asserts and
    protects its content.
 
-   +===========+================+===========+==============+==========+
-   |Credential | Substantiation |Dynamism   | Identifier   |Tamper    |
-   |Type       |                |           | Binding      |Proofness |
-   +===========+================+===========+==============+==========+
-   |Password / | No             |None; the  | No           |No        |
-   |API key    |                |stored and |              |          |
-   |           |                |presented  |              |          |
-   |           |                |forms are  |              |          |
-   |           |                |identical  |              |          |
-   +-----------+----------------+-----------+--------------+----------+
-   |Synced     | No;            |Dynamic;   | Yes;         |Yes;      |
-   |passkey    | attestation is |challenge- | credential   |signed    |
-   |           | typically not  |response   | ID and user  |assertion |
-   |           | conveyed       |           | handle bound |          |
-   |           |                |           | to the key   |          |
-   |           |                |           | pair         |          |
-   +-----------+----------------+-----------+--------------+----------+
-   |Device-    | Yes;           |Dynamic;   | Yes          |Yes;      |
-   |bound      | attestation    |challenge- |              |signed    |
-   |passkey    | statement      |response   |              |assertion |
-   |           | conveys        |           |              |          |
-   |           | authenticator  |           |              |          |
-   |           | provenance     |           |              |          |
-   +-----------+----------------+-----------+--------------+----------+
-   |SPIFFE     | Yes; CA-signed |Dynamic;   | Yes; SPIFFE  |Yes; CA   |
-   |X.509-SVID | after workload |the private| ID in the    |signature |
-   |           | attestation    |key is     | SAN URI      |          |
-   |           |                |never      |              |          |
-   |           |                |transmitted|              |          |
-   +-----------+----------------+-----------+--------------+----------+
-   |SPIFFE JWT-| Yes; signed by |None;      | Yes; SPIFFE  |Yes; JWS  |
-   |SVID       | the trust      |presented  | ID in sub    |signature |
-   |           | domain         |verbatim as|              |[RFC7515] |
-   |           | authority      |a bearer   |              |          |
-   |           |                |token      |              |          |
-   +-----------+----------------+-----------+--------------+----------+
-   |mTLS       | Yes; CA-signed |Dynamic;   | Yes; subject |Yes; CA   |
-   |certificate|                |the private| DN or SAN    |signature |
-   |           |                |key is     |              |          |
-   |           |                |never      |              |          |
-   |           |                |transmitted|              |          |
-   +-----------+----------------+-----------+--------------+----------+
-   |HOTP       | No             |Dynamic;   | No; the code |No        |
-   |           |                |counter-   | carries no   |          |
-   |           |                |based      | identifier,  |          |
-   |           |                |derivation | binding is   |          |
-   |           |                |from the   | by           |          |
-   |           |                |stored seed| enrollment   |          |
-   |           |                |           | record       |          |
-   +-----------+----------------+-----------+--------------+----------+
-   |TOTP       | No             |Dynamic;   | No           |No        |
-   |           |                |time-based |              |          |
-   |           |                |derivation |              |          |
-   |           |                |from the   |              |          |
-   |           |                |stored seed|              |          |
-   +-----------+----------------+-----------+--------------+----------+
-   |SMS OTP    | No             |None; the  | No; bound to |No        |
-   |           |                |verifier-  | a phone      |          |
-   |           |                |generated  | number by    |          |
-   |           |                |value is   | enrollment   |          |
-   |           |                |presented  | record       |          |
-   |           |                |verbatim   |              |          |
-   +-----------+----------------+-----------+--------------+----------+
-   |SD-JWT VC  | Yes; issuer-   |None for   | Yes; holder  |Yes; JWS  |
-   |           | signed         |the issuer-| key in cnf   |signature |
-   |           |                |signed JWT;| when Key     |over      |
-   |           |                |Dynamic    | Binding is   |salted    |
-   |           |                |when Key   | used         |disclosure|
-   |           |                |Binding is |              |digests   |
-   |           |                |used       |              |          |
-   +-----------+----------------+-----------+--------------+----------+
-   |ISO mdoc   | Yes; issuer-   |Dynamic;   | Yes;         |Yes; per- |
-   |           | signed Mobile  |device     | DeviceKey    |data-     |
-   |           | Security       |signature  | bound in the |element   |
-   |           | Object         |or MAC over| MSO          |digests in|
-   |           |                |the session|              |the MSO   |
-   |           |                |transcript |              |          |
-   +-----------+----------------+-----------+--------------+----------+
-   |DBSC       | No             |Mixed; the | Yes; session |No for the|
-   |           |                |session    | identifier   |cookie;   |
-   |           |                |cookie is  | bound to the |Yes for   |
-   |           |                |static, the| device key   |the signed|
-   |           |                |refresh    |              |refresh   |
-   |           |                |proof is   |              |proof     |
-   |           |                |challenge- |              |          |
-   |           |                |response   |              |          |
-   +-----------+----------------+-----------+--------------+----------+
+   +===========+==================+===========+=============+==========+
+   |Credential | Substantiation   |Dynamism   | Identifier  |Tamper    |
+   |Type       |                  |           | Binding     |Proofness |
+   +===========+==================+===========+=============+==========+
+   |Password / | No               |None; the  | No          |No        |
+   |API key    |                  |stored and |             |          |
+   |           |                  |presented  |             |          |
+   |           |                  |forms are  |             |          |
+   |           |                  |identical  |             |          |
+   +-----------+------------------+-----------+-------------+----------+
+   |Synced     | No;              |Dynamic;   | Yes;        |Yes;      |
+   |passkey    | attestation is   |challenge- | credential  |signed    |
+   |           | typically not    |response   | ID and user |assertion |
+   |           | conveyed         |           | handle      |          |
+   |           |                  |           | bound to    |          |
+   |           |                  |           | the key     |          |
+   |           |                  |           | pair        |          |
+   +-----------+------------------+-----------+-------------+----------+
+   |Device-    | Yes;             |Dynamic;   | Yes         |Yes;      |
+   |bound      | attestation      |challenge- |             |signed    |
+   |passkey    | statement        |response   |             |assertion |
+   |           | conveys          |           |             |          |
+   |           | authenticator    |           |             |          |
+   |           | provenance if    |           |             |          |
+   |           | requested &      |           |             |          |
+   |           | validated by     |           |             |          |
+   |           | the RP           |           |             |          |
+   +-----------+------------------+-----------+-------------+----------+
+   |SPIFFE     | Yes; CA-signed   |Dynamic;   | Yes; SPIFFE |Yes; CA   |
+   |X.509-SVID | after workload   |the private| ID in the   |signature |
+   |           | attestation      |key is     | SAN URI     |          |
+   |           |                  |never      |             |          |
+   |           |                  |transmitted|             |          |
+   +-----------+------------------+-----------+-------------+----------+
+   |SPIFFE JWT-| Yes; signed by   |None;      | Yes; SPIFFE |Yes; JWS  |
+   |SVID       | the trust        |presented  | ID in sub   |signature |
+   |           | domain           |verbatim as|             |[RFC7515] |
+   |           | authority        |a bearer   |             |          |
+   |           |                  |token      |             |          |
+   +-----------+------------------+-----------+-------------+----------+
+   |mTLS       | Yes; CA-signed   |Dynamic;   | Yes;        |Yes; CA   |
+   |certificate|                  |the private| subject DN  |signature |
+   |           |                  |key is     | or SAN      |          |
+   |           |                  |never      |             |          |
+   |           |                  |transmitted|             |          |
+   +-----------+------------------+-----------+-------------+----------+
+   |HOTP       | No               |Dynamic;   | No; the     |No        |
+   |           |                  |counter-   | code        |          |
+   |           |                  |based      | carries no  |          |
+   |           |                  |derivation | identifier, |          |
+   |           |                  |from the   | binding is  |          |
+   |           |                  |stored seed| by          |          |
+   |           |                  |           | enrollment  |          |
+   |           |                  |           | record      |          |
+   +-----------+------------------+-----------+-------------+----------+
+   |TOTP       | No               |Dynamic;   | No          |No        |
+   |           |                  |time-based |             |          |
+   |           |                  |derivation |             |          |
+   |           |                  |from the   |             |          |
+   |           |                  |stored seed|             |          |
+   +-----------+------------------+-----------+-------------+----------+
+   |SMS OTP    | No               |None; the  | No; bound   |No        |
+   |           |                  |verifier-  | to a phone  |          |
+   |           |                  |generated  | number by   |          |
+   |           |                  |value is   | enrollment  |          |
+   |           |                  |presented  | record      |          |
+   |           |                  |verbatim   |             |          |
+   +-----------+------------------+-----------+-------------+----------+
+   |SD-JWT VC  | Yes; issuer-     |None for   | Yes; holder |Yes; JWS  |
+   |           | signed           |the issuer-| key in cnf  |signature |
+   |           |                  |signed JWT;| when Key    |over      |
+   |           |                  |Dynamic    | Binding is  |salted    |
+   |           |                  |when Key   | used        |disclosure|
+   |           |                  |Binding is |             |digests   |
+   |           |                  |used       |             |          |
+   +-----------+------------------+-----------+-------------+----------+
+   |ISO mdoc   | Yes; issuer-     |Dynamic;   | Yes;        |Yes; per- |
+   |           | signed Mobile    |device     | DeviceKey   |data-     |
+   |           | Security         |signature  | bound in    |element   |
+   |           | Object           |or MAC over| the MSO     |digests in|
+   |           |                  |the session|             |the MSO   |
+   |           |                  |transcript |             |          |
+   +-----------+------------------+-----------+-------------+----------+
+   |DBSC       | No               |Mixed; the | Yes;        |No for the|
+   |           |                  |session    | session     |cookie;   |
+   |           |                  |cookie is  | identifier  |Yes for   |
+   |           |                  |static, the| bound to    |the signed|
+   |           |                  |refresh    | the device  |refresh   |
+   |           |                  |proof is   | key         |proof     |
+   |           |                  |challenge- |             |          |
+   |           |                  |response   |             |          |
+   +-----------+------------------+-----------+-------------+----------+
 
-                                 Table 2
+                                  Table 2
 
    The following properties describe how a credential scopes and
    structures its content.
