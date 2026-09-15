@@ -67,7 +67,7 @@ Table of Contents
    1.  Introduction
    2.  Credential Management Security Classes
    3.  Credential Management Security Properties
-     3.1.  Credential Construction Properties
+     3.1.  Credential Construction
        3.1.1.  Dynamism
        3.1.2.  Identifier Binding
        3.1.3.  Tamper Proofness
@@ -75,13 +75,14 @@ Table of Contents
        3.1.5.  Audience Restriction
        3.1.6.  Validity Window
        3.1.7.  Selective Disclosure
-     3.2.  Credential Presentation Properties
+     3.2.  Credential Presentation
        3.2.1.  Validity Count
        3.2.2.  Replayability
        3.2.3.  Referential Identity Posture
-     3.3.  Credential Containment & Unlock Properties
-       3.3.1.  Containment (TODO: see FIDO security requirements for
-               sync fabric)
+     3.3.  Credential Containment & Unlock
+       3.3.1.  Containment (TODO: reconcile with FIDO-SEC-REQ; the
+               FIDO Alliance publishes no sync fabric specific
+               requirements document)
        3.3.2.  Boundary Binding
        3.3.3.  Boundary Enforcement
        3.3.4.  Transference
@@ -138,12 +139,13 @@ Table of Contents
 
 3.  Credential Management Security Properties
 
-3.1.  Credential Construction Properties
+3.1.  Credential Construction
 
    ### Substantiation Substantiation describes credentials containing
    mechanisms for authoritative statements that can be externally
    validated.  Examples of substantiated credentials include
-   attestations such as SAML assertions or X.509 certificates.
+   attestations such as SAML assertions [SAML] or X.509 certificates
+   [RFC5280].
 
 3.1.1.  Dynamism
 
@@ -154,16 +156,17 @@ Table of Contents
    Dynamic generatvity indicates that some function is used to operate
    on the stored credential such that what is sent over the wire is
    different than what is stored (e.g. a challenge response protocol
-   like FIDO).  Credentials that do not exhibit dynamism, such as shared
-   secrets, usually exhibit replayability and are definitionally not
-   able to be contained.
+   like FIDO [WEBAUTHN]).  Credentials that do not exhibit dynamism,
+   such as shared secrets, usually exhibit replayability and are
+   definitionally not able to be contained.
 
 3.1.2.  Identifier Binding
 
    The primary content of a credential is cryptographically bound to an
    identifier.  Examples of credentials that include bound identifiers
-   include SAML assertions, JSON Web Tokens (jwts), X.509 certificates,
-   ISO 18013 mobile drivers license objects and verifiable credentials
+   include SAML assertions, JSON Web Tokens (JWTs) [RFC7519], X.509
+   certificates, ISO 18013 mobile driving licence objects [ISO18013-5]
+   and verifiable credentials [VC-DATA-MODEL]
 
 3.1.3.  Tamper Proofness
 
@@ -179,21 +182,21 @@ Table of Contents
 3.1.5.  Audience Restriction
 
    A mechanism that specifies which destination consumers of the
-   credential are valid.  Examples include id_tokens or origin bindings
-   of FIDO tokens.
+   credential are valid.  Examples include id_token values [OIDC-CORE]
+   or origin bindings of FIDO tokens.
 
 3.1.6.  Validity Window
 
    A credential becomes invalid outside of a specified time boundary.
-   An example would be a SAML assertion or a TOTP.
+   An example would be a SAML assertion or a TOTP [RFC6238].
 
 3.1.7.  Selective Disclosure
 
    A mechanism by which some or all of the contents within a credential
    can be made available or unavailable under circumstances determined
-   at presentation time.  Example is an SD-JWT or a ZKP.
+   at presentation time.  Example is an SD-JWT [RFC9901] or a ZKP.
 
-3.2.  Credential Presentation Properties
+3.2.  Credential Presentation
 
    Credential reuse properties describe ways in which the use of a
    credential is functionally restricted.
@@ -215,9 +218,9 @@ Table of Contents
 
    OTPs represent an interesting class of crentials when describing
    replayability.  Deployed at a global scale, there is a small window
-   of opportunity to present a HOTP or TOTP multiple times within its
-   validity window.  Therefore, replayability is not a strictly binary
-   scale.
+   of opportunity to present a HOTP [RFC4226] or TOTP multiple times
+   within its validity window.  Therefore, replayability is not a
+   strictly binary scale.
 
 3.2.3.  Referential Identity Posture
 
@@ -278,16 +281,16 @@ Table of Contents
                                  Table 1
 
    Examples of delegated referential identity posture include on-behalf-
-   of (OBO) token interactions, where both the identity of the end user
-   and client software are communicated.  Examples of impersonated
-   referential identity posture might include privileged access
-   management workflows, where an administrative process sets either the
-   identifier or the credential (or both) based on a backing identity.
-   Examples of a partitioned referential identity posture could include
-   openclaw agents acting with separate accounts and email addresses but
-   loosely affiliated to individuals.
+   of (OBO) token interactions [RFC8693], where both the identity of the
+   end user and client software are communicated.  Examples of
+   impersonated referential identity posture might include privileged
+   access management workflows, where an administrative process sets
+   either the identifier or the credential (or both) based on a backing
+   identity.  Examples of a partitioned referential identity posture
+   could include openclaw agents acting with separate accounts and email
+   addresses but loosely affiliated to individuals.
 
-3.3.  Credential Containment & Unlock Properties
+3.3.  Credential Containment & Unlock
 
    Credential containment describes the at-rest state of a credential
    and its storage location(s).  Unlock properties describe how the
@@ -295,17 +298,18 @@ Table of Contents
    containment facility, if any, can play a security role in an
    observable way at operation time.
 
-3.3.1.  Containment (TODO: see FIDO security requirements for sync
-        fabric)
+3.3.1.  Containment (TODO: reconcile with [FIDO-SEC-REQ]; the FIDO
+        Alliance publishes no sync fabric specific requirements
+        document)
 
    Describes how the creation, storage, and usage of a credential is
    managed.  At one extreme, containment be within the boundary of a
    cryptographically supervised service or hardware element, e.g. an SSH
-   private key stored in an HSM.  At the other extreme, the credential
-   may be uncontained, e.g. a manually generated password.  A SSH
-   private key stored on volatile media sits between these extremes, it
-   is contained by access to the media on which it resides but it is not
-   permanently bound to the media (see Boundary Binding, below).
+   private key [RFC4251] stored in an HSM.  At the other extreme, the
+   credential may be uncontained, e.g. a manually generated password.  A
+   SSH private key stored on volatile media sits between these extremes,
+   it is contained by access to the media on which it resides but it is
+   not permanently bound to the media (see Boundary Binding, below).
 
 3.3.2.  Boundary Binding
 
@@ -341,14 +345,14 @@ Table of Contents
 
    A credential becomes available for an operation only when a local
    user gesture is performed.  This user gesture may also be called an
-   activation factor (see 800-63-4).  Only a credential that is
-   contained can be activated.  A FIDO2 private key on a hardware
-   security device that requires a PIN is an example of an activated
-   credential.  A biometric that unlocks a TPM on a laptop is another
-   example of an activated credential.  Presence Activation is a case
-   where locality is required but confirmation of a secret or biometric
-   is not required.  Individual Activation is a case where only one
-   human can trigger the container to unlock.
+   activation factor [SP800-63B].  Only a credential that is contained
+   can be activated.  A FIDO2 private key on a hardware security device
+   that requires a PIN is an example of an activated credential.  A
+   biometric that unlocks a TPM on a laptop is another example of an
+   activated credential.  Presence Activation is a case where locality
+   is required but confirmation of a secret or biometric is not
+   required.  Individual Activation is a case where only one human can
+   trigger the container to unlock.
 
 3.3.6.  Unlock Scope
 
@@ -376,8 +380,8 @@ Table of Contents
 3.4.1.  Enrollment Assurance
 
    Enrollment assurance describes the identity verification assurance
-   level (todo, this feels like it points at NIST!) at the time the
-   credential was created.
+   level, such as the identity assurance levels defined in [SP800-63A],
+   at the time the credential was created.
 
 3.4.2.  Vouching
 
@@ -487,6 +491,13 @@ Table of Contents
               Credentials", W3C First Public Working Draft WD-dbsc-
               1-20250821, 21 August 2025, <https://www.w3.org/TR/dbsc/>.
 
+   [FIDO-SEC-REQ]
+              FIDO Alliance, "FIDO Authenticator Security and Privacy
+              Requirements, Version 1.6", 12 March 2025,
+              <https://fidoalliance.org/specs/fido-security-
+              requirements/fido-authenticator-security-requirements-
+              v1.6-fd-20250312.html>.
+
    [I-D.ietf-oauth-sd-jwt-vc]
               Terbu, O., Fett, D., and B. Campbell, "SD-JWT-based
               Verifiable Digital Credentials (SD-JWT VC)", Work in
@@ -494,10 +505,42 @@ Table of Contents
               31 August 2026, <https://datatracker.ietf.org/doc/html/
               draft-ietf-oauth-sd-jwt-vc-19>.
 
+   [ISO18013-5]
+              International Organization for Standardization, "Personal
+              identification - ISO-compliant driving licence - Part 5:
+              Mobile driving licence (mDL) application", ISO/
+              IEC 18013-5:2021, September 2021,
+              <https://www.iso.org/standard/69084.html>.
+
+   [OIDC-CORE]
+              OpenID Foundation, "OpenID Connect Core 1.0 incorporating
+              errata set 2", 15 December 2023,
+              <https://openid.net/specs/openid-connect-core-1_0.html>.
+
    [PCI-DSS]  PCI Security Standards Council, "Payment Card Industry
               Data Security Standard: Requirements and Testing
               Procedures, Version 4.0.1", 11 June 2024,
               <https://www.pcisecuritystandards.org>.
+
+   [RFC4226]  M'Raihi, D., Bellare, M., Hoornaert, F., Naccache, D., and
+              O. Ranen, "HOTP: An HMAC-Based One-Time Password
+              Algorithm", RFC 4226, DOI 10.17487/RFC4226, December 2005,
+              <https://www.rfc-editor.org/rfc/rfc4226>.
+
+   [RFC4251]  Ylonen, T. and C. Lonvick, Ed., "The Secure Shell (SSH)
+              Protocol Architecture", RFC 4251, DOI 10.17487/RFC4251,
+              January 2006, <https://www.rfc-editor.org/rfc/rfc4251>.
+
+   [RFC5280]  Cooper, D., Santesson, S., Farrell, S., Boeyen, S.,
+              Housley, R., and W. Polk, "Internet X.509 Public Key
+              Infrastructure Certificate and Certificate Revocation List
+              (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
+              <https://www.rfc-editor.org/rfc/rfc5280>.
+
+   [RFC6238]  M'Raihi, D., Machani, S., Pei, M., and J. Rydell, "TOTP:
+              Time-Based One-Time Password Algorithm", RFC 6238,
+              DOI 10.17487/RFC6238, May 2011,
+              <https://www.rfc-editor.org/rfc/rfc6238>.
 
    [RFC6750]  Jones, M. and D. Hardt, "The OAuth 2.0 Authorization
               Framework: Bearer Token Usage", RFC 6750,
@@ -507,6 +550,39 @@ Table of Contents
    [RFC7515]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web
               Signature (JWS)", RFC 7515, DOI 10.17487/RFC7515, May
               2015, <https://www.rfc-editor.org/rfc/rfc7515>.
+
+   [RFC7519]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token
+              (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
+              <https://www.rfc-editor.org/rfc/rfc7519>.
+
+   [RFC8693]  Jones, M., Nadalin, A., Campbell, B., Ed., Bradley, J.,
+              and C. Mortimore, "OAuth 2.0 Token Exchange", RFC 8693,
+              DOI 10.17487/RFC8693, January 2020,
+              <https://www.rfc-editor.org/rfc/rfc8693>.
+
+   [RFC9901]  Fett, D., Yasuda, K., and B. Campbell, "Selective
+              Disclosure for JSON Web Tokens", RFC 9901,
+              DOI 10.17487/RFC9901, November 2025,
+              <https://www.rfc-editor.org/rfc/rfc9901>.
+
+   [SAML]     Organization for the Advancement of Structured Information
+              Standards, "Assertions and Protocols for the OASIS
+              Security Assertion Markup Language (SAML) V2.0",
+              OASIS Standard saml-core-2.0-os, 15 March 2005,
+              <https://docs.oasis-open.org/security/saml/v2.0/saml-core-
+              2.0-os.pdf>.
+
+   [SP800-63A]
+              National Institute of Standards and Technology, "Digital
+              Identity Guidelines: Identity Proofing and Enrollment",
+              NIST Special Publication 800-63A-4, July 2025,
+              <https://doi.org/10.6028/NIST.SP.800-63A-4>.
+
+   [SP800-63B]
+              National Institute of Standards and Technology, "Digital
+              Identity Guidelines: Authentication and Authenticator
+              Management", NIST Special Publication 800-63B-4, July
+              2025, <https://doi.org/10.6028/NIST.SP.800-63B-4>.
 
    [SPIFFE-JWT-SVID]
               SPIFFE Project, "The JWT SPIFFE Verifiable Identity
@@ -519,6 +595,17 @@ Table of Contents
               Document", n.d.,
               <https://github.com/spiffe/spiffe/blob/main/standards/
               X509-SVID.md>.
+
+   [VC-DATA-MODEL]
+              World Wide Web Consortium, "Verifiable Credentials Data
+              Model v2.0", W3C Recommendation REC-vc-data-model-
+              2.0-20250515, 15 May 2025,
+              <https://www.w3.org/TR/vc-data-model-2.0/>.
+
+   [WEBAUTHN] World Wide Web Consortium, "Web Authentication: An API for
+              accessing Public Key Credentials - Level 3",
+              W3C Recommendation REC-webauthn-3-20260825, 25 August
+              2026, <https://www.w3.org/TR/webauthn-3/>.
 
 Appendix A.  Applying the Properties to Common Credential Types
 
