@@ -113,6 +113,7 @@ Properties are organized into areas of scrutiny, with each class containing the 
 # Credential Management Security Properties
 
 ## Credential Construction Properties
+
 ### Substantiation
 Substantiation describes credentials containing mechanisms for authoritative statements that can be externally validated. Examples of substantiated credentials include attestations such as SAML assertions {{SAML}} or X.509 certificates {{RFC5280}}.
 
