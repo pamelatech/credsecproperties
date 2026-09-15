@@ -367,7 +367,7 @@ The following properties describe containment of the credential at rest.
 | --- | --- | --- | --- |
 | Password / API key | Uncontained | Unbounded | Reactive; breach corpus matching and secret scanning |
 | Synced passkey | Partially contained by the credential provider | Bound to the passkey provider; specifics depend on the provider | Managed by the passkey provider |
-| Device-bound passkey | Contained | Bound to the hardware authenticator; non-exportable | Proactive; enforced by hardware |
+| Device-bound passkey | Contained | Bound to the hardware authenticator; non-exportable; verifiable through attestation at registration | Proactive; enforced by hardware |
 | SPIFFE X.509-SVID | Contained when the key is TPM-bound; otherwise resident in workload memory | Bound to the TPM when hardware-backed; otherwise to the attested node and workload | Proactive when hardware-backed; otherwise enforced by the node attestor and workload API |
 | SPIFFE JWT-SVID | Uncontained once issued; a bearer token | Unbounded after issuance | Reactive; mitigated by short lifetime |
 | mTLS certificate | Contained in an HSM or TPM; uncontained as a key file | Bound to the HSM or TPM when hardware-backed; unbounded as an exportable file or PKCS#12 | Proactive when hardware-backed; otherwise reactive |
