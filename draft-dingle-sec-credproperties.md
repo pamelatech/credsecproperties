@@ -36,6 +36,73 @@ author:
 normative:
 
 informative:
+  RFC4226:
+  RFC4251:
+  RFC5280:
+  RFC6238:
+  RFC7519:
+  RFC8693:
+  RFC9901:
+  SAML:
+    title: "Assertions and Protocols for the OASIS Security Assertion Markup Language (SAML) V2.0"
+    target: https://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf
+    date: 2005-03-15
+    author:
+      - org: Organization for the Advancement of Structured Information Standards
+    seriesinfo:
+      OASIS: Standard saml-core-2.0-os
+  OIDC-CORE:
+    title: "OpenID Connect Core 1.0 incorporating errata set 2"
+    target: https://openid.net/specs/openid-connect-core-1_0.html
+    date: 2023-12-15
+    author:
+      - org: OpenID Foundation
+  WEBAUTHN:
+    title: "Web Authentication: An API for accessing Public Key Credentials - Level 3"
+    target: https://www.w3.org/TR/webauthn-3/
+    date: 2026-08-25
+    author:
+      - org: World Wide Web Consortium
+    seriesinfo:
+      W3C: Recommendation REC-webauthn-3-20260825
+  VC-DATA-MODEL:
+    title: "Verifiable Credentials Data Model v2.0"
+    target: https://www.w3.org/TR/vc-data-model-2.0/
+    date: 2025-05-15
+    author:
+      - org: World Wide Web Consortium
+    seriesinfo:
+      W3C: Recommendation REC-vc-data-model-2.0-20250515
+  ISO18013-5:
+    title: "Personal identification - ISO-compliant driving licence - Part 5: Mobile driving licence (mDL) application"
+    target: https://www.iso.org/standard/69084.html
+    date: 2021-09
+    author:
+      - org: International Organization for Standardization
+    seriesinfo:
+      ISO/IEC: 18013-5:2021
+  FIDO-SEC-REQ:
+    title: "FIDO Authenticator Security and Privacy Requirements, Version 1.6"
+    target: https://fidoalliance.org/specs/fido-security-requirements/fido-authenticator-security-requirements-v1.6-fd-20250312.html
+    date: 2025-03-12
+    author:
+      - org: FIDO Alliance
+  SP800-63A:
+    title: "Digital Identity Guidelines: Identity Proofing and Enrollment"
+    target: https://doi.org/10.6028/NIST.SP.800-63A-4
+    date: 2025-07
+    author:
+      - org: National Institute of Standards and Technology
+    seriesinfo:
+      NIST: Special Publication 800-63A-4
+  SP800-63B:
+    title: "Digital Identity Guidelines: Authentication and Authenticator Management"
+    target: https://doi.org/10.6028/NIST.SP.800-63B-4
+    date: 2025-07
+    author:
+      - org: National Institute of Standards and Technology
+    seriesinfo:
+      NIST: Special Publication 800-63B-4
 
 
 --- abstract
@@ -54,13 +121,13 @@ Properties are organized into areas of scrutiny, with each class containing the 
 
 ## Credential Construction Properties
 ### Substantiation
-Substantiation describes credentials containing mechanisms for authoritative statements that can be externally validated. Examples of substantiated credentials include attestations such as SAML assertions or X.509 certificates.
+Substantiation describes credentials containing mechanisms for authoritative statements that can be externally validated. Examples of substantiated credentials include attestations such as SAML assertions {{SAML}} or X.509 certificates {{RFC5280}}.
 
 ### Dynamism
-Dynamism describes a credential whose stored and active forms are different. Credentials with no dynamism (or dynamic genarativity) such as passwords exibit no difference between the stored (in memory, in a password manager, etc.) and the credential sent to the verifier. Dynamic generatvity indicates that some function is used to operate on the stored credential such that what is sent over the wire is different than what is stored (e.g. a challenge response protocol like FIDO).  Credentials that do not exhibit dynamism, such as shared secrets, usually exhibit replayability and are definitionally not able to be contained.
+Dynamism describes a credential whose stored and active forms are different. Credentials with no dynamism (or dynamic genarativity) such as passwords exibit no difference between the stored (in memory, in a password manager, etc.) and the credential sent to the verifier. Dynamic generatvity indicates that some function is used to operate on the stored credential such that what is sent over the wire is different than what is stored (e.g. a challenge response protocol like FIDO {{WEBAUTHN}}).  Credentials that do not exhibit dynamism, such as shared secrets, usually exhibit replayability and are definitionally not able to be contained.
 
 ### Identifier Binding
-The primary content of a credential is cryptographically bound to an identifier. Examples of credentials that include bound identifiers include SAML assertions, JSON Web Tokens (jwts), X.509 certificates, ISO 18013 mobile drivers license objects and verifiable credentials
+The primary content of a credential is cryptographically bound to an identifier. Examples of credentials that include bound identifiers include SAML assertions, JSON Web Tokens (JWTs) {{RFC7519}}, X.509 certificates, ISO 18013 mobile driving licence objects {{ISO18013-5}} and verifiable credentials {{VC-DATA-MODEL}}
 
 ### Tamper Proofness
 A mechanism for credential integrity is built into the credential ensuring that the data within the credential is verifiably unchanged by external parties.
@@ -69,13 +136,13 @@ A mechanism for credential integrity is built into the credential ensuring that 
 The credential is capable of including links to or content of other credentials.
 
 ### Audience Restriction
-A mechanism that specifies which destination consumers of the credential are valid.  Examples include `id_tokens` or origin bindings of FIDO tokens.
+A mechanism that specifies which destination consumers of the credential are valid.  Examples include `id_token` values {{OIDC-CORE}} or origin bindings of FIDO tokens.
 
 ### Validity Window
-A credential becomes invalid outside of a specified time boundary.  An example would be a SAML assertion or a TOTP.
+A credential becomes invalid outside of a specified time boundary.  An example would be a SAML assertion or a TOTP {{RFC6238}}.
 
 ### Selective Disclosure
-A mechanism by which some or all of the contents within a credential can be made available or unavailable under circumstances determined at presentation time. Example is an SD-JWT or a ZKP.
+A mechanism by which some or all of the contents within a credential can be made available or unavailable under circumstances determined at presentation time. Example is an SD-JWT {{RFC9901}} or a ZKP.
 
 ## Credential Presentation Properties
 Credential reuse properties describe ways in which the use of a credential is functionally restricted.
@@ -86,7 +153,7 @@ A credential becomes invalid after a specified number of successful presentation
 ### Replayability
 Credentials are replayable when they can be captured by an adversary and represented to an authentication service resulting in successful authentication. Credentials that are presented directly, such as shared secrets (passwords) or bearer tokens, are the canonical example of replayable credentials.  Challenge response protocols are considered non-replayable.
 
-OTPs represent an interesting class of crentials when describing replayability.  Deployed at a global scale, there is a small window of opportunity to present a HOTP or TOTP multiple times within its validity window.  Therefore, replayability is not a strictly binary scale.
+OTPs represent an interesting class of crentials when describing replayability.  Deployed at a global scale, there is a small window of opportunity to present a HOTP {{RFC4226}} or TOTP multiple times within its validity window.  Therefore, replayability is not a strictly binary scale.
 
 ### Referential Identity Posture
 Referential Identity Posture describes the nature of the relationship between a claimed identity validated as part of an identity transaction and any backing identity that might explicitly or implicitly exist in a larger security context. That larger context may or may not be known to the party validating the credential and represents environmental detail that could be used in security, risk, or governance activities if known. The following table defines possible postures.
@@ -101,13 +168,13 @@ Referential Identity Posture describes the nature of the relationship between a 
 | Chained | Recursive | Claimed identity derives from a backing identity through one or more intermediate referential identities, forming a transitive chain of relationships. |
 | Anonymous | Detached | Claimed identity is visibly severed from any backing identity with no opportunity to recover. |
 
-Examples of delegated referential identity posture include on-behalf-of (OBO) token interactions, where both the identity of the end user and client software are communicated. Examples of impersonated referential identity posture might include privileged access management workflows, where an administrative process sets either the identifier or the credential (or both) based on a backing identity. Examples of a partitioned referential identity posture could include openclaw agents acting with separate accounts and email addresses but loosely affiliated to individuals.
+Examples of delegated referential identity posture include on-behalf-of (OBO) token interactions {{RFC8693}}, where both the identity of the end user and client software are communicated. Examples of impersonated referential identity posture might include privileged access management workflows, where an administrative process sets either the identifier or the credential (or both) based on a backing identity. Examples of a partitioned referential identity posture could include openclaw agents acting with separate accounts and email addresses but loosely affiliated to individuals.
 
 ## Credential Containment & Unlock Properties
 Credential containment describes the at-rest state of a credential and its storage location(s). Unlock properties describe how the contained credential is made available for use at runtime and how the containment facility, if any, can play a security role in an observable way at operation time.
 
-### Containment (TODO: see FIDO security requirements for sync fabric)
-Describes how the creation, storage, and usage of a credential is managed. At one extreme, containment be within the boundary of a cryptographically supervised service or hardware element, e.g. an SSH private key stored in an HSM.  At the other extreme, the credential may be uncontained, e.g. a manually generated password.  A SSH private key stored on volatile media sits between these extremes, it is contained by access to the media on which it resides but it is not permanently bound to the media (see Boundary Binding, below).
+### Containment (TODO: reconcile with {{FIDO-SEC-REQ}}; the FIDO Alliance publishes no sync fabric specific requirements document)
+Describes how the creation, storage, and usage of a credential is managed. At one extreme, containment be within the boundary of a cryptographically supervised service or hardware element, e.g. an SSH private key {{RFC4251}} stored in an HSM.  At the other extreme, the credential may be uncontained, e.g. a manually generated password.  A SSH private key stored on volatile media sits between these extremes, it is contained by access to the media on which it resides but it is not permanently bound to the media (see Boundary Binding, below).
 
 ### Boundary Binding
 Boundary bindings describe the operational rules or limitations that limit where the secret portion of a credential could be stored. In the prior examples, the HSM bound SSH private key may not be extractable from the HSM, the HSM provides the boundary binding.  The password is unbounded, there are no limits on how the password may be moved or shared. The SSH key stored on volatile media is also unbound, since it may be copied and moved freely, e.g. it is exportable.
@@ -119,7 +186,7 @@ The boundary enforcement property describes the mechanisms which ensure that ope
 Transference is the ability for an end user to give the credential away to another user such that durable ongoing use is possible by two different entities.  This transference may be within the enforced boundary (e.g. sharing a synced passkey via a credential manager) or outside of the boundary (e.g. user copies a password from a credential manager to a file which is emailed to another user).
 
 ### Activation
-A credential becomes available for an operation only when a local user gesture is performed. This user gesture may also be called an activation factor (see 800-63-4). Only a credential that is contained can be activated. A FIDO2 private key on a hardware security device that requires a PIN is an example of an activated credential. A biometric that unlocks a TPM on a laptop is another example of an activated credential.  Presence Activation is a case where locality is required but confirmation of a secret or biometric is not required. Individual Activation is a case where only one human can trigger the container to unlock.
+A credential becomes available for an operation only when a local user gesture is performed. This user gesture may also be called an activation factor {{SP800-63B}}. Only a credential that is contained can be activated. A FIDO2 private key on a hardware security device that requires a PIN is an example of an activated credential. A biometric that unlocks a TPM on a laptop is another example of an activated credential.  Presence Activation is a case where locality is required but confirmation of a secret or biometric is not required. Individual Activation is a case where only one human can trigger the container to unlock.
 
 ### Unlock Scope
 A credential may be unlocked by different parties which defines the scope of which entities can unlock credential for use.  The owner of a credential is always expected to be able to unlock their own credential. Credentials on shared devices may be unlocked by all users sharing the device. Similarly, credentials in a shared enterprise vault may be unlocked by a vault administrator.  Unlock scope is related to an instance of a credential and is distinct from the Credential Management Security Properties.
@@ -131,7 +198,7 @@ Credentials may be unlocked once with an activation factor (e.g. using a hardwar
 Credential enrollment properties describe requirements required to be met before a credential is created.
 
 ### Enrollment Assurance
-Enrollment assurance describes the identity verification assurance level (todo, this feels like it points at NIST!) at the time the credential was created.
+Enrollment assurance describes the identity verification assurance level, such as the identity assurance levels defined in {{SP800-63A}}, at the time the credential was created.
 
 ### Vouching
 A vouched credential is one whose enrollment was enabled by the subject first authenticating with a separate, pre-existing credential. The prior credential acts as a gate on the enrollment event but does not contribute its key material to the new credential. After enrollment, the vouched credential is fully independent.  A user may present a passport as a proof of citizenship to be granted a state digital identity.
