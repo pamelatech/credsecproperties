@@ -159,7 +159,7 @@ Properties are organized into areas of scrutiny, with each class containing the 
 
 # Credential Management Security Properties
 
-## Credential Construction Properties
+## Credential Construction
 ### Substantiation
 Substantiation describes credentials containing mechanisms for authoritative statements that can be externally validated. Examples of substantiated credentials include attestations such as SAML assertions {{SAML}} or X.509 certificates {{RFC5280}}.
 
@@ -184,7 +184,7 @@ A credential becomes invalid outside of a specified time boundary.  An example w
 ### Selective Disclosure
 A mechanism by which some or all of the contents within a credential can be made available or unavailable under circumstances determined at presentation time. Example is an SD-JWT {{RFC9901}} or a ZKP.
 
-## Credential Presentation Properties
+## Credential Presentation
 Credential reuse properties describe ways in which the use of a credential is functionally restricted.
 
 ### Validity Count
@@ -210,7 +210,7 @@ Referential Identity Posture describes the nature of the relationship between a 
 
 Examples of delegated referential identity posture include on-behalf-of (OBO) token interactions {{RFC8693}}, where both the identity of the end user and client software are communicated. Examples of impersonated referential identity posture might include privileged access management workflows, where an administrative process sets either the identifier or the credential (or both) based on a backing identity. Examples of a partitioned referential identity posture could include openclaw agents acting with separate accounts and email addresses but loosely affiliated to individuals.
 
-## Credential Containment & Unlock Properties
+## Credential Containment & Unlock
 Credential containment describes the at-rest state of a credential and its storage location(s). Unlock properties describe how the contained credential is made available for use at runtime and how the containment facility, if any, can play a security role in an observable way at operation time.
 
 ### Containment (TODO: reconcile with {{FIDO-SEC-REQ}}; the FIDO Alliance publishes no sync fabric specific requirements document)
