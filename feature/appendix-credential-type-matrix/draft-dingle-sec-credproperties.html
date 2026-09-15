@@ -1731,6 +1731,10 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
         <dd>
 <span class="refAuthor">M'Raihi, D.</span>, <span class="refAuthor">Machani, S.</span>, <span class="refAuthor">Pei, M.</span>, and <span class="refAuthor">J. Rydell</span>, <span class="refTitle">"TOTP: Time-Based One-Time Password Algorithm"</span>, <span class="seriesInfo">RFC 6238</span>, <span class="seriesInfo">DOI 10.17487/RFC6238</span>, <time datetime="2011-05" class="refDate">May 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6238">https://www.rfc-editor.org/rfc/rfc6238</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC6749">[RFC6749]</dt>
+        <dd>
+<span class="refAuthor">Hardt, D., Ed.</span>, <span class="refTitle">"The OAuth 2.0 Authorization Framework"</span>, <span class="seriesInfo">RFC 6749</span>, <span class="seriesInfo">DOI 10.17487/RFC6749</span>, <time datetime="2012-10" class="refDate">October 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6749">https://www.rfc-editor.org/rfc/rfc6749</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC6750">[RFC6750]</dt>
         <dd>
 <span class="refAuthor">Jones, M.</span> and <span class="refAuthor">D. Hardt</span>, <span class="refTitle">"The OAuth 2.0 Authorization Framework: Bearer Token Usage"</span>, <span class="seriesInfo">RFC 6750</span>, <span class="seriesInfo">DOI 10.17487/RFC6750</span>, <time datetime="2012-10" class="refDate">October 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6750">https://www.rfc-editor.org/rfc/rfc6750</a>&gt;</span>. </dd>
@@ -1746,6 +1750,14 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
 <dt id="RFC8693">[RFC8693]</dt>
         <dd>
 <span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Nadalin, A.</span>, <span class="refAuthor">Campbell, B., Ed.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">C. Mortimore</span>, <span class="refTitle">"OAuth 2.0 Token Exchange"</span>, <span class="seriesInfo">RFC 8693</span>, <span class="seriesInfo">DOI 10.17487/RFC8693</span>, <time datetime="2020-01" class="refDate">January 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8693">https://www.rfc-editor.org/rfc/rfc8693</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8705">[RFC8705]</dt>
+        <dd>
+<span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Sakimura, N.</span>, and <span class="refAuthor">T. Lodderstedt</span>, <span class="refTitle">"OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens"</span>, <span class="seriesInfo">RFC 8705</span>, <span class="seriesInfo">DOI 10.17487/RFC8705</span>, <time datetime="2020-02" class="refDate">February 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8705">https://www.rfc-editor.org/rfc/rfc8705</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9449">[RFC9449]</dt>
+        <dd>
+<span class="refAuthor">Fett, D.</span>, <span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Lodderstedt, T.</span>, <span class="refAuthor">Jones, M.</span>, and <span class="refAuthor">D. Waite</span>, <span class="refTitle">"OAuth 2.0 Demonstrating Proof of Possession (DPoP)"</span>, <span class="seriesInfo">RFC 9449</span>, <span class="seriesInfo">DOI 10.17487/RFC9449</span>, <time datetime="2023-09" class="refDate">September 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9449">https://www.rfc-editor.org/rfc/rfc9449</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9901">[RFC9901]</dt>
         <dd>
@@ -1811,22 +1823,28 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
           <p id="appendix-A-3.6.1"><strong>mTLS certificate</strong> — a client certificate issued by a Web PKI or private CA outside of any SPIFFE trust domain, presented during the TLS handshake.<a href="#appendix-A-3.6.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.7">
-          <p id="appendix-A-3.7.1"><strong>HOTP</strong> — an HMAC-based counter-derived one-time password.<a href="#appendix-A-3.7.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.7.1"><strong>OAuth bearer access token</strong> — an access token <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> presented to a resource server as a bearer credential, either as a signed JWT or as an opaque handle the resource server validates by introspection.<a href="#appendix-A-3.7.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.8">
-          <p id="appendix-A-3.8.1"><strong>TOTP</strong> — a time-derived one-time password.<a href="#appendix-A-3.8.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.8.1"><strong>Sender-constrained access token</strong> — the same access token bound to a client key, so that presentation additionally requires proof of possession of that key, whether by DPoP <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span> or by mutual TLS certificate binding <span>[<a href="#RFC8705" class="cite xref">RFC8705</a>]</span>.<a href="#appendix-A-3.8.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.9">
-          <p id="appendix-A-3.9.1"><strong>SMS OTP</strong> — a one-time code generated by the verifier and delivered out of band over the public telephone network.<a href="#appendix-A-3.9.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.9.1"><strong>HOTP</strong> — an HMAC-based counter-derived one-time password.<a href="#appendix-A-3.9.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.10">
-          <p id="appendix-A-3.10.1"><strong>SD-JWT VC</strong> — a verifiable credential expressed as a selectively disclosable JWT <span>[<a href="#I-D.ietf-oauth-sd-jwt-vc" class="cite xref">I-D.ietf-oauth-sd-jwt-vc</a>]</span>, built on the SD-JWT construction, optionally bound to a holder key.<a href="#appendix-A-3.10.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.10.1"><strong>TOTP</strong> — a time-derived one-time password.<a href="#appendix-A-3.10.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.11">
-          <p id="appendix-A-3.11.1"><strong>ISO mdoc</strong> — an ISO/IEC 18013-5 mobile document such as a mobile driving licence, comprising an issuer-signed Mobile Security Object and a device-signed response.<a href="#appendix-A-3.11.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.11.1"><strong>SMS OTP</strong> — a one-time code generated by the verifier and delivered out of band over the public telephone network.<a href="#appendix-A-3.11.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.12">
-          <p id="appendix-A-3.12.1"><strong>DBSC</strong> — Device Bound Session Credentials <span>[<a href="#DBSC" class="cite xref">DBSC</a>]</span>, a browser session credential bound to a non-exportable device key and periodically refreshed by proof of possession.<a href="#appendix-A-3.12.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.12.1"><strong>SD-JWT VC</strong> — a verifiable credential expressed as a selectively disclosable JWT <span>[<a href="#I-D.ietf-oauth-sd-jwt-vc" class="cite xref">I-D.ietf-oauth-sd-jwt-vc</a>]</span>, built on the SD-JWT construction, optionally bound to a holder key.<a href="#appendix-A-3.12.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-3.13">
+          <p id="appendix-A-3.13.1"><strong>ISO mdoc</strong> — an ISO/IEC 18013-5 mobile document such as a mobile driving licence, comprising an issuer-signed Mobile Security Object and a device-signed response.<a href="#appendix-A-3.13.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-3.14">
+          <p id="appendix-A-3.14.1"><strong>DBSC</strong> — Device Bound Session Credentials <span>[<a href="#DBSC" class="cite xref">DBSC</a>]</span>, a browser session credential bound to a non-exportable device key and periodically refreshed by proof of possession.<a href="#appendix-A-3.14.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <div id="credential-construction-1">
@@ -1890,6 +1908,20 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Dynamic; the private key is never transmitted</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; subject DN or SAN</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; CA signature</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">OAuth bearer access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes when the token is a JWT signed by the authorization server; No for an opaque token, which the resource server validates by introspection</td>
+              <td class="text-left" rowspan="1" colspan="1">None; presented verbatim</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes for a JWT, which carries subject and client identifiers; established by introspection for an opaque token</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes for a signed JWT; for an opaque token integrity rests on the issuer datastore rather than on the credential</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Sender-constrained access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuer-signed</td>
+              <td class="text-left" rowspan="1" colspan="1">Dynamic; the token is static but each presentation requires a freshly signed proof of possession or the bound TLS client certificate</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; a confirmation claim binds the token to the client key alongside the subject</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; signed by the authorization server</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
@@ -1988,6 +2020,20 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Yes; X.509 chain</td>
               <td class="text-left" rowspan="1" colspan="1">No; accepted by any relying party trusting the CA</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; typically months to years</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">OAuth bearer access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; token exchange derives a token from a subject token and can record intermediate actors</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; the audience names the resource server</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; typically minutes to hours</td>
+              <td class="text-left" rowspan="1" colspan="1">No; scope constrains authorization rather than disclosure of credential content</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Sender-constrained access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; token exchange applies, with the bound key re-established for the derived token</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; the audience names the resource server</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; typically minutes to hours</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
             </tr>
             <tr>
@@ -2091,6 +2137,18 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Direct</td>
             </tr>
             <tr>
+              <td class="text-left" rowspan="1" colspan="1">OAuth bearer access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Unlimited within the validity window</td>
+              <td class="text-left" rowspan="1" colspan="1">Replayable; any party that captures the token can present it</td>
+              <td class="text-left" rowspan="1" colspan="1">Delegated when the token conveys both client and resource owner; Impersonated when it conveys only the resource owner</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Sender-constrained access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Unlimited within the validity window</td>
+              <td class="text-left" rowspan="1" colspan="1">Not replayable; a captured token is unusable without the bound private key</td>
+              <td class="text-left" rowspan="1" colspan="1">Delegated; the client is identified by its bound key alongside the resource owner</td>
+            </tr>
+            <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
               <td class="text-left" rowspan="1" colspan="1">One; the counter advances on acceptance</td>
               <td class="text-left" rowspan="1" colspan="1">Bounded; single use, but the code remains valid until the counter advances</td>
@@ -2184,6 +2242,18 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Proactive when hardware-backed; otherwise reactive</td>
             </tr>
             <tr>
+              <td class="text-left" rowspan="1" colspan="1">OAuth bearer access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Uncontained; a bearer string held in client memory, logs and intermediaries</td>
+              <td class="text-left" rowspan="1" colspan="1">Unbounded</td>
+              <td class="text-left" rowspan="1" colspan="1">Reactive; short lifetime, revocation and anomaly detection</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Sender-constrained access token</td>
+              <td class="text-left" rowspan="1" colspan="1">The token is uncontained but unusable alone; the bound private key is contained and may be hardware-backed</td>
+              <td class="text-left" rowspan="1" colspan="1">Bound to the client proof-of-possession key</td>
+              <td class="text-left" rowspan="1" colspan="1">Proactive; the resource server rejects any presentation lacking a valid proof of possession</td>
+            </tr>
+            <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
               <td class="text-left" rowspan="1" colspan="1">Contained in a hardware token; uncontained as a soft seed</td>
               <td class="text-left" rowspan="1" colspan="1">Bound to the hardware token; unbounded as a soft seed that can be re-enrolled from the provisioning URI</td>
@@ -2275,6 +2345,20 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Optional; PIN on a smart card or HSM</td>
               <td class="text-left" rowspan="1" colspan="1">The holder of the key store</td>
               <td class="text-left" rowspan="1" colspan="1">Per-operation for smart cards; life of the process otherwise</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">OAuth bearer access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; the token is usable by any bearer</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">Any holder of the token</td>
+              <td class="text-left" rowspan="1" colspan="1">Life of the token</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Sender-constrained access token</td>
+              <td class="text-left" rowspan="1" colspan="1">None unless the bound private key is transferred with the token</td>
+              <td class="text-left" rowspan="1" colspan="1">No; presentation is automated and requires no user gesture</td>
+              <td class="text-left" rowspan="1" colspan="1">The client that holds the bound private key</td>
+              <td class="text-left" rowspan="1" colspan="1">Life of the token; the bound key persists independently</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
@@ -2375,6 +2459,18 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">The CA binds the subject and SAN to the public key in the CSR</td>
             </tr>
             <tr>
+              <td class="text-left" rowspan="1" colspan="1">OAuth bearer access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Inherits the assurance of the authorization grant and of the resource owner authentication behind it</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuance is gated by an authorization grant, itself gated by a pre-existing credential</td>
+              <td class="text-left" rowspan="1" colspan="1">The authorization server binds the token to client, resource owner, scope and audience at issuance</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Sender-constrained access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Inherits the assurance of the authorization grant and of the resource owner authentication behind it</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuance is gated by an authorization grant, itself gated by a pre-existing credential</td>
+              <td class="text-left" rowspan="1" colspan="1">As for a bearer token, and additionally binds the client proof-of-possession key into the token</td>
+            </tr>
+            <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
               <td class="text-left" rowspan="1" colspan="1">Inherits the assurance of the session that enrolled it</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; enrollment is gated by a pre-existing credential</td>
@@ -2469,6 +2565,18 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">CA/Browser Forum Baseline Requirements; PKI operator policy</td>
             </tr>
             <tr>
+              <td class="text-left" rowspan="1" colspan="1">OAuth bearer access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Format unconstrained by OAuth itself; the JWT profile applies where used</td>
+              <td class="text-left" rowspan="1" colspan="1">Short expiry; renewal and revocation controlled by the authorization server</td>
+              <td class="text-left" rowspan="1" colspan="1">Deployment policy; sector profiles may impose additional constraints</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Sender-constrained access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Proof-of-possession mechanism fixed by the binding profile in use</td>
+              <td class="text-left" rowspan="1" colspan="1">Short expiry; the bound key rotates independently of token lifetime</td>
+              <td class="text-left" rowspan="1" colspan="1">Deployment policy; financial-grade profiles require sender-constrained tokens</td>
+            </tr>
+            <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
               <td class="text-left" rowspan="1" colspan="1">HMAC algorithm and code length fixed by the HOTP specification</td>
               <td class="text-left" rowspan="1" colspan="1">Seed rotation on re-enrollment; counter resynchronization</td>
@@ -2545,6 +2653,14 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
             <tr>
               <td class="text-left" rowspan="1" colspan="1">mTLS certificate</td>
               <td class="text-left" rowspan="1" colspan="1">Issuer-driven where the CA supports key escrow or re-issuance; Account-driven otherwise, by revoking and re-enrolling</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">OAuth bearer access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Issuer-driven; a new token is requested with a refresh token or a fresh authorization grant. The token itself is never recovered</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Sender-constrained access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Issuer-driven; a new token is requested and bound to a current key. Loss of the bound key requires a new key and a new token</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>

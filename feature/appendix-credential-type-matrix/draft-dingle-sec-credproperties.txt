@@ -542,6 +542,10 @@ Table of Contents
               DOI 10.17487/RFC6238, May 2011,
               <https://www.rfc-editor.org/rfc/rfc6238>.
 
+   [RFC6749]  Hardt, D., Ed., "The OAuth 2.0 Authorization Framework",
+              RFC 6749, DOI 10.17487/RFC6749, October 2012,
+              <https://www.rfc-editor.org/rfc/rfc6749>.
+
    [RFC6750]  Jones, M. and D. Hardt, "The OAuth 2.0 Authorization
               Framework: Bearer Token Usage", RFC 6750,
               DOI 10.17487/RFC6750, October 2012,
@@ -559,6 +563,17 @@ Table of Contents
               and C. Mortimore, "OAuth 2.0 Token Exchange", RFC 8693,
               DOI 10.17487/RFC8693, January 2020,
               <https://www.rfc-editor.org/rfc/rfc8693>.
+
+   [RFC8705]  Campbell, B., Bradley, J., Sakimura, N., and T.
+              Lodderstedt, "OAuth 2.0 Mutual-TLS Client Authentication
+              and Certificate-Bound Access Tokens", RFC 8705,
+              DOI 10.17487/RFC8705, February 2020,
+              <https://www.rfc-editor.org/rfc/rfc8705>.
+
+   [RFC9449]  Fett, D., Campbell, B., Bradley, J., Lodderstedt, T.,
+              Jones, M., and D. Waite, "OAuth 2.0 Demonstrating Proof of
+              Possession (DPoP)", RFC 9449, DOI 10.17487/RFC9449,
+              September 2023, <https://www.rfc-editor.org/rfc/rfc9449>.
 
    [RFC9901]  Fett, D., Yasuda, K., and B. Campbell, "Selective
               Disclosure for JSON Web Tokens", RFC 9901,
@@ -642,6 +657,16 @@ Appendix A.  Applying the Properties to Common Credential Types
       private CA outside of any SPIFFE trust domain, presented during
       the TLS handshake.
 
+   *  *OAuth bearer access token* — an access token [RFC6749] presented
+      to a resource server as a bearer credential, either as a signed
+      JWT or as an opaque handle the resource server validates by
+      introspection.
+
+   *  *Sender-constrained access token* — the same access token bound to
+      a client key, so that presentation additionally requires proof of
+      possession of that key, whether by DPoP [RFC9449] or by mutual TLS
+      certificate binding [RFC8705].
+
    *  *HOTP* — an HMAC-based counter-derived one-time password.
 
    *  *TOTP* — a time-derived one-time password.
@@ -666,691 +691,856 @@ A.1.  Credential Construction
    The following properties describe how a credential asserts and
    protects its content.
 
-   +===========+==================+===========+=============+==========+
-   |Credential | Substantiation   |Dynamism   | Identifier  |Tamper    |
-   |Type       |                  |           | Binding     |Proofness |
-   +===========+==================+===========+=============+==========+
-   |Password / | No               |None; the  | No          |No        |
-   |API key    |                  |stored and |             |          |
-   |           |                  |presented  |             |          |
-   |           |                  |forms are  |             |          |
-   |           |                  |identical  |             |          |
-   +-----------+------------------+-----------+-------------+----------+
-   |Synced     | No;              |Dynamic;   | Yes;        |Yes;      |
-   |passkey    | attestation is   |challenge- | credential  |signed    |
-   |           | typically not    |response   | ID and user |assertion |
-   |           | conveyed         |           | handle      |          |
-   |           |                  |           | bound to    |          |
-   |           |                  |           | the key     |          |
-   |           |                  |           | pair        |          |
-   +-----------+------------------+-----------+-------------+----------+
-   |Device-    | Yes;             |Dynamic;   | Yes         |Yes;      |
-   |bound      | attestation      |challenge- |             |signed    |
-   |passkey    | statement        |response   |             |assertion |
-   |           | conveys          |           |             |          |
-   |           | authenticator    |           |             |          |
-   |           | provenance if    |           |             |          |
-   |           | requested &      |           |             |          |
-   |           | validated by     |           |             |          |
-   |           | the RP           |           |             |          |
-   +-----------+------------------+-----------+-------------+----------+
-   |SPIFFE     | Yes; CA-signed   |Dynamic;   | Yes; SPIFFE |Yes; CA   |
-   |X.509-SVID | after workload   |the private| ID in the   |signature |
-   |           | attestation      |key is     | SAN URI     |          |
-   |           |                  |never      |             |          |
-   |           |                  |transmitted|             |          |
-   +-----------+------------------+-----------+-------------+----------+
-   |SPIFFE JWT-| Yes; signed by   |None;      | Yes; SPIFFE |Yes; JWS  |
-   |SVID       | the trust        |presented  | ID in sub   |signature |
-   |           | domain           |verbatim as|             |[RFC7515] |
-   |           | authority        |a bearer   |             |          |
-   |           |                  |token      |             |          |
-   +-----------+------------------+-----------+-------------+----------+
-   |mTLS       | Yes; CA-signed   |Dynamic;   | Yes;        |Yes; CA   |
-   |certificate|                  |the private| subject DN  |signature |
-   |           |                  |key is     | or SAN      |          |
-   |           |                  |never      |             |          |
-   |           |                  |transmitted|             |          |
-   +-----------+------------------+-----------+-------------+----------+
-   |HOTP       | No               |Dynamic;   | No; the     |No        |
-   |           |                  |counter-   | code        |          |
-   |           |                  |based      | carries no  |          |
-   |           |                  |derivation | identifier, |          |
-   |           |                  |from the   | binding is  |          |
-   |           |                  |stored seed| by          |          |
-   |           |                  |           | enrollment  |          |
-   |           |                  |           | record      |          |
-   +-----------+------------------+-----------+-------------+----------+
-   |TOTP       | No               |Dynamic;   | No          |No        |
-   |           |                  |time-based |             |          |
-   |           |                  |derivation |             |          |
-   |           |                  |from the   |             |          |
-   |           |                  |stored seed|             |          |
-   +-----------+------------------+-----------+-------------+----------+
-   |SMS OTP    | No               |None; the  | No; bound   |No        |
-   |           |                  |verifier-  | to a phone  |          |
-   |           |                  |generated  | number by   |          |
-   |           |                  |value is   | enrollment  |          |
-   |           |                  |presented  | record      |          |
-   |           |                  |verbatim   |             |          |
-   +-----------+------------------+-----------+-------------+----------+
-   |SD-JWT VC  | Yes; issuer-     |None for   | Yes; holder |Yes; JWS  |
-   |           | signed           |the issuer-| key in cnf  |signature |
-   |           |                  |signed JWT;| when Key    |over      |
-   |           |                  |Dynamic    | Binding is  |salted    |
-   |           |                  |when Key   | used        |disclosure|
-   |           |                  |Binding is |             |digests   |
-   |           |                  |used       |             |          |
-   +-----------+------------------+-----------+-------------+----------+
-   |ISO mdoc   | Yes; issuer-     |Dynamic;   | Yes;        |Yes; per- |
-   |           | signed Mobile    |device     | DeviceKey   |data-     |
-   |           | Security         |signature  | bound in    |element   |
-   |           | Object           |or MAC over| the MSO     |digests in|
-   |           |                  |the session|             |the MSO   |
-   |           |                  |transcript |             |          |
-   +-----------+------------------+-----------+-------------+----------+
-   |DBSC       | No               |Mixed; the | Yes;        |No for the|
-   |           |                  |session    | session     |cookie;   |
-   |           |                  |cookie is  | identifier  |Yes for   |
-   |           |                  |static, the| bound to    |the signed|
-   |           |                  |refresh    | the device  |refresh   |
-   |           |                  |proof is   | key         |proof     |
-   |           |                  |challenge- |             |          |
-   |           |                  |response   |             |          |
-   +-----------+------------------+-----------+-------------+----------+
+   +===========+==============+============+=============+=============+
+   |Credential |Substantiation|Dynamism    |Identifier   |Tamper       |
+   |Type       |              |            |Binding      |Proofness    |
+   +===========+==============+============+=============+=============+
+   |Password / |No            |None; the   |No           |No           |
+   |API key    |              |stored and  |             |             |
+   |           |              |presented   |             |             |
+   |           |              |forms are   |             |             |
+   |           |              |identical   |             |             |
+   +-----------+--------------+------------+-------------+-------------+
+   |Synced     |No;           |Dynamic;    |Yes;         |Yes; signed  |
+   |passkey    |attestation is|challenge-  |credential ID|assertion    |
+   |           |typically not |response    |and user     |             |
+   |           |conveyed      |            |handle bound |             |
+   |           |              |            |to the key   |             |
+   |           |              |            |pair         |             |
+   +-----------+--------------+------------+-------------+-------------+
+   |Device-    |Yes;          |Dynamic;    |Yes          |Yes; signed  |
+   |bound      |attestation   |challenge-  |             |assertion    |
+   |passkey    |statement     |response    |             |             |
+   |           |conveys       |            |             |             |
+   |           |authenticator |            |             |             |
+   |           |provenance if |            |             |             |
+   |           |requested &   |            |             |             |
+   |           |validated by  |            |             |             |
+   |           |the RP        |            |             |             |
+   +-----------+--------------+------------+-------------+-------------+
+   |SPIFFE     |Yes; CA-signed|Dynamic; the|Yes; SPIFFE  |Yes; CA      |
+   |X.509-SVID |after workload|private key |ID in the SAN|signature    |
+   |           |attestation   |is never    |URI          |             |
+   |           |              |transmitted |             |             |
+   +-----------+--------------+------------+-------------+-------------+
+   |SPIFFE JWT-|Yes; signed by|None;       |Yes; SPIFFE  |Yes; JWS     |
+   |SVID       |the trust     |presented   |ID in sub    |signature    |
+   |           |domain        |verbatim as |             |[RFC7515]    |
+   |           |authority     |a bearer    |             |             |
+   |           |              |token       |             |             |
+   +-----------+--------------+------------+-------------+-------------+
+   |mTLS       |Yes; CA-signed|Dynamic; the|Yes; subject |Yes; CA      |
+   |certificate|              |private key |DN or SAN    |signature    |
+   |           |              |is never    |             |             |
+   |           |              |transmitted |             |             |
+   +-----------+--------------+------------+-------------+-------------+
+   |OAuth      |Yes when the  |None;       |Yes for a    |Yes for a    |
+   |bearer     |token is a JWT|presented   |JWT, which   |signed JWT;  |
+   |access     |signed by the |verbatim    |carries      |for an opaque|
+   |token      |authorization |            |subject and  |token        |
+   |           |server; No for|            |client       |integrity    |
+   |           |an opaque     |            |identifiers; |rests on the |
+   |           |token, which  |            |established  |issuer       |
+   |           |the resource  |            |by           |datastore    |
+   |           |server        |            |introspection|rather than  |
+   |           |validates by  |            |for an opaque|on the       |
+   |           |introspection |            |token        |credential   |
+   +-----------+--------------+------------+-------------+-------------+
+   |Sender-    |Yes; issuer-  |Dynamic; the|Yes; a       |Yes; signed  |
+   |constrained|signed        |token is    |confirmation |by the       |
+   |access     |              |static but  |claim binds  |authorization|
+   |token      |              |each        |the token to |server       |
+   |           |              |presentation|the client   |             |
+   |           |              |requires a  |key alongside|             |
+   |           |              |freshly     |the subject  |             |
+   |           |              |signed proof|             |             |
+   |           |              |of          |             |             |
+   |           |              |possession  |             |             |
+   |           |              |or the bound|             |             |
+   |           |              |TLS client  |             |             |
+   |           |              |certificate |             |             |
+   +-----------+--------------+------------+-------------+-------------+
+   |HOTP       |No            |Dynamic;    |No; the code |No           |
+   |           |              |counter-    |carries no   |             |
+   |           |              |based       |identifier,  |             |
+   |           |              |derivation  |binding is by|             |
+   |           |              |from the    |enrollment   |             |
+   |           |              |stored seed |record       |             |
+   +-----------+--------------+------------+-------------+-------------+
+   |TOTP       |No            |Dynamic;    |No           |No           |
+   |           |              |time-based  |             |             |
+   |           |              |derivation  |             |             |
+   |           |              |from the    |             |             |
+   |           |              |stored seed |             |             |
+   +-----------+--------------+------------+-------------+-------------+
+   |SMS OTP    |No            |None; the   |No; bound to |No           |
+   |           |              |verifier-   |a phone      |             |
+   |           |              |generated   |number by    |             |
+   |           |              |value is    |enrollment   |             |
+   |           |              |presented   |record       |             |
+   |           |              |verbatim    |             |             |
+   +-----------+--------------+------------+-------------+-------------+
+   |SD-JWT VC  |Yes; issuer-  |None for the|Yes; holder  |Yes; JWS     |
+   |           |signed        |issuer-     |key in cnf   |signature    |
+   |           |              |signed JWT; |when Key     |over salted  |
+   |           |              |Dynamic when|Binding is   |disclosure   |
+   |           |              |Key Binding |used         |digests      |
+   |           |              |is used     |             |             |
+   +-----------+--------------+------------+-------------+-------------+
+   |ISO mdoc   |Yes; issuer-  |Dynamic;    |Yes;         |Yes; per-    |
+   |           |signed Mobile |device      |DeviceKey    |data-element |
+   |           |Security      |signature or|bound in the |digests in   |
+   |           |Object        |MAC over the|MSO          |the MSO      |
+   |           |              |session     |             |             |
+   |           |              |transcript  |             |             |
+   +-----------+--------------+------------+-------------+-------------+
+   |DBSC       |No            |Mixed; the  |Yes; session |No for the   |
+   |           |              |session     |identifier   |cookie; Yes  |
+   |           |              |cookie is   |bound to the |for the      |
+   |           |              |static, the |device key   |signed       |
+   |           |              |refresh     |             |refresh proof|
+   |           |              |proof is    |             |             |
+   |           |              |challenge-  |             |             |
+   |           |              |response    |             |             |
+   +-----------+--------------+------------+-------------+-------------+
 
                                   Table 2
 
    The following properties describe how a credential scopes and
    structures its content.
 
-   +============+============+==============+==============+==========+
-   |Credential  |Chainability|Audience      |Validity      |Selective |
-   |Type        |            |Restriction   |Window        |Disclosure|
-   +============+============+==============+==============+==========+
-   |Password /  |No          |No            |Policy-imposed|No        |
-   |API key     |            |              |only; not     |          |
-   |            |            |              |carried in the|          |
-   |            |            |              |credential    |          |
-   +------------+------------+--------------+--------------+----------+
-   |Synced      |No          |Yes; RP ID and|No; freshness |No        |
-   |passkey     |            |origin binding|is established|          |
-   |            |            |              |by the        |          |
-   |            |            |              |challenge     |          |
-   +------------+------------+--------------+--------------+----------+
-   |Device-bound|No          |Yes; RP ID and|No; freshness |No        |
-   |passkey     |            |origin binding|is established|          |
-   |            |            |              |by the        |          |
-   |            |            |              |challenge     |          |
-   +------------+------------+--------------+--------------+----------+
-   |SPIFFE      |Yes; X.509  |Partial;      |Yes; short-   |No        |
-   |X.509-SVID  |chain to the|scoped to the |lived and     |          |
-   |            |trust domain|trust domain  |automatically |          |
-   |            |CA          |and federated |rotated       |          |
-   |            |            |trust domains |              |          |
-   |            |            |rather than a |              |          |
-   |            |            |named service |              |          |
-   +------------+------------+--------------+--------------+----------+
-   |SPIFFE JWT- |No; single  |Yes; aud names|Yes; short-   |No        |
-   |SVID        |signer, no  |the target    |lived         |          |
-   |            |embedded    |service       |              |          |
-   |            |chain       |              |              |          |
-   +------------+------------+--------------+--------------+----------+
-   |mTLS        |Yes; X.509  |No; accepted  |Yes; typically|No        |
-   |certificate |chain       |by any relying|months to     |          |
-   |            |            |party trusting|years         |          |
-   |            |            |the CA        |              |          |
-   +------------+------------+--------------+--------------+----------+
-   |HOTP        |No          |No            |No; valid     |No        |
-   |            |            |              |until the     |          |
-   |            |            |              |counter       |          |
-   |            |            |              |advances      |          |
-   +------------+------------+--------------+--------------+----------+
-   |TOTP        |No          |No            |Yes; one time |No        |
-   |            |            |              |step plus     |          |
-   |            |            |              |drift         |          |
-   |            |            |              |tolerance     |          |
-   +------------+------------+--------------+--------------+----------+
-   |SMS OTP     |No          |No            |Yes; issuer-  |No        |
-   |            |            |              |set, typically|          |
-   |            |            |              |minutes       |          |
-   +------------+------------+--------------+--------------+----------+
-   |SD-JWT VC   |Yes; may    |Yes with a Key|Yes; exp and  |Yes; per  |
-   |            |reference or|Binding JWT   |nbf           |claim     |
-   |            |embed other |aud; No for   |              |          |
-   |            |credentials |the bare      |              |          |
-   |            |            |issuer-signed |              |          |
-   |            |            |credential    |              |          |
-   +------------+------------+--------------+--------------+----------+
-   |ISO mdoc    |Yes; issuer |Partial; bound|Yes; MSO      |Yes; per  |
-   |            |certificate |to the reader |validityInfo  |data      |
-   |            |chain to the|session       |              |element   |
-   |            |IACA        |transcript    |              |          |
-   |            |            |rather than a |              |          |
-   |            |            |named audience|              |          |
-   +------------+------------+--------------+--------------+----------+
-   |DBSC        |No          |Yes; scoped to|Yes; short-   |No        |
-   |            |            |the           |lived cookie, |          |
-   |            |            |registrable   |refreshed on  |          |
-   |            |            |domain        |expiry        |          |
-   +------------+------------+--------------+--------------+----------+
+   +===========+============+===========+=============+===============+
+   |Credential |Chainability|Audience   |Validity     | Selective     |
+   |Type       |            |Restriction|Window       | Disclosure    |
+   +===========+============+===========+=============+===============+
+   |Password / |No          |No         |Policy-      | No            |
+   |API key    |            |           |imposed only;|               |
+   |           |            |           |not carried  |               |
+   |           |            |           |in the       |               |
+   |           |            |           |credential   |               |
+   +-----------+------------+-----------+-------------+---------------+
+   |Synced     |No          |Yes; RP ID |No; freshness| No            |
+   |passkey    |            |and origin |is           |               |
+   |           |            |binding    |established  |               |
+   |           |            |           |by the       |               |
+   |           |            |           |challenge    |               |
+   +-----------+------------+-----------+-------------+---------------+
+   |Device-    |No          |Yes; RP ID |No; freshness| No            |
+   |bound      |            |and origin |is           |               |
+   |passkey    |            |binding    |established  |               |
+   |           |            |           |by the       |               |
+   |           |            |           |challenge    |               |
+   +-----------+------------+-----------+-------------+---------------+
+   |SPIFFE     |Yes; X.509  |Partial;   |Yes; short-  | No            |
+   |X.509-SVID |chain to the|scoped to  |lived and    |               |
+   |           |trust domain|the trust  |automatically|               |
+   |           |CA          |domain and |rotated      |               |
+   |           |            |federated  |             |               |
+   |           |            |trust      |             |               |
+   |           |            |domains    |             |               |
+   |           |            |rather than|             |               |
+   |           |            |a named    |             |               |
+   |           |            |service    |             |               |
+   +-----------+------------+-----------+-------------+---------------+
+   |SPIFFE JWT-|No; single  |Yes; aud   |Yes; short-  | No            |
+   |SVID       |signer, no  |names the  |lived        |               |
+   |           |embedded    |target     |             |               |
+   |           |chain       |service    |             |               |
+   +-----------+------------+-----------+-------------+---------------+
+   |mTLS       |Yes; X.509  |No;        |Yes;         | No            |
+   |certificate|chain       |accepted by|typically    |               |
+   |           |            |any relying|months to    |               |
+   |           |            |party      |years        |               |
+   |           |            |trusting   |             |               |
+   |           |            |the CA     |             |               |
+   +-----------+------------+-----------+-------------+---------------+
+   |OAuth      |Yes; token  |Yes; the   |Yes;         | No; scope     |
+   |bearer     |exchange    |audience   |typically    | constrains    |
+   |access     |derives a   |names the  |minutes to   | authorization |
+   |token      |token from a|resource   |hours        | rather than   |
+   |           |subject     |server     |             | disclosure of |
+   |           |token and   |           |             | credential    |
+   |           |can record  |           |             | content       |
+   |           |intermediate|           |             |               |
+   |           |actors      |           |             |               |
+   +-----------+------------+-----------+-------------+---------------+
+   |Sender-    |Yes; token  |Yes; the   |Yes;         | No            |
+   |constrained|exchange    |audience   |typically    |               |
+   |access     |applies,    |names the  |minutes to   |               |
+   |token      |with the    |resource   |hours        |               |
+   |           |bound key   |server     |             |               |
+   |           |re-         |           |             |               |
+   |           |established |           |             |               |
+   |           |for the     |           |             |               |
+   |           |derived     |           |             |               |
+   |           |token       |           |             |               |
+   +-----------+------------+-----------+-------------+---------------+
+   |HOTP       |No          |No         |No; valid    | No            |
+   |           |            |           |until the    |               |
+   |           |            |           |counter      |               |
+   |           |            |           |advances     |               |
+   +-----------+------------+-----------+-------------+---------------+
+   |TOTP       |No          |No         |Yes; one time| No            |
+   |           |            |           |step plus    |               |
+   |           |            |           |drift        |               |
+   |           |            |           |tolerance    |               |
+   +-----------+------------+-----------+-------------+---------------+
+   |SMS OTP    |No          |No         |Yes; issuer- | No            |
+   |           |            |           |set,         |               |
+   |           |            |           |typically    |               |
+   |           |            |           |minutes      |               |
+   +-----------+------------+-----------+-------------+---------------+
+   |SD-JWT VC  |Yes; may    |Yes with a |Yes; exp and | Yes; per      |
+   |           |reference or|Key Binding|nbf          | claim         |
+   |           |embed other |JWT aud; No|             |               |
+   |           |credentials |for the    |             |               |
+   |           |            |bare       |             |               |
+   |           |            |issuer-    |             |               |
+   |           |            |signed     |             |               |
+   |           |            |credential |             |               |
+   +-----------+------------+-----------+-------------+---------------+
+   |ISO mdoc   |Yes; issuer |Partial;   |Yes; MSO     | Yes; per data |
+   |           |certificate |bound to   |validityInfo | element       |
+   |           |chain to the|the reader |             |               |
+   |           |IACA        |session    |             |               |
+   |           |            |transcript |             |               |
+   |           |            |rather than|             |               |
+   |           |            |a named    |             |               |
+   |           |            |audience   |             |               |
+   +-----------+------------+-----------+-------------+---------------+
+   |DBSC       |No          |Yes; scoped|Yes; short-  | No            |
+   |           |            |to the     |lived cookie,|               |
+   |           |            |registrable|refreshed on |               |
+   |           |            |domain     |expiry       |               |
+   +-----------+------------+-----------+-------------+---------------+
 
                                  Table 3
 
 A.2.  Credential Presentation
 
-   +==============+=============+=====================+================+
-   | Credential   | Validity    | Replayability       | Referential    |
-   | Type         | Count       |                     | Identity       |
-   |              |             |                     | Posture        |
-   +==============+=============+=====================+================+
-   | Password /   | Unlimited   | Replayable          | Direct         |
-   | API key      | until       |                     |                |
-   |              | rotated     |                     |                |
-   +--------------+-------------+---------------------+----------------+
-   | Synced       | Unlimited   | Not replayable      | Direct         |
-   | passkey      |             |                     |                |
-   +--------------+-------------+---------------------+----------------+
-   | Device-bound | Unlimited   | Not replayable      | Direct         |
-   | passkey      |             |                     |                |
-   +--------------+-------------+---------------------+----------------+
-   | SPIFFE       | Unlimited   | Not replayable      | Direct;        |
-   | X.509-SVID   | within the  |                     | Delegated when |
-   |              | validity    |                     | carrying on-   |
-   |              | window      |                     | behalf-of      |
-   |              |             |                     | context        |
-   +--------------+-------------+---------------------+----------------+
-   | SPIFFE JWT-  | Unlimited   | Replayable within   | Direct;        |
-   | SVID         | within the  | the validity        | Delegated when |
-   |              | validity    | window              | carrying end-  |
-   |              | window      |                     | user context   |
-   +--------------+-------------+---------------------+----------------+
-   | mTLS         | Unlimited   | Not replayable      | Direct         |
-   | certificate  | within the  |                     |                |
-   |              | validity    |                     |                |
-   |              | window      |                     |                |
-   +--------------+-------------+---------------------+----------------+
-   | HOTP         | One; the    | Bounded; single     | Direct         |
-   |              | counter     | use, but the code   |                |
-   |              | advances on | remains valid       |                |
-   |              | acceptance  | until the counter   |                |
-   |              |             | advances            |                |
-   +--------------+-------------+---------------------+----------------+
-   | TOTP         | One per     | Bounded;            | Direct         |
-   |              | time step   | replayable within   |                |
-   |              |             | the time step and   |                |
-   |              |             | drift window        |                |
-   +--------------+-------------+---------------------+----------------+
-   | SMS OTP      | One         | Bounded;            | Direct         |
-   |              |             | replayable within   |                |
-   |              |             | the issuer's        |                |
-   |              |             | window, and         |                |
-   |              |             | interceptable in    |                |
-   |              |             | transit             |                |
-   +--------------+-------------+---------------------+----------------+
-   | SD-JWT VC    | Unlimited   | Replayable          | Direct;        |
-   |              | unless      | without Key         | Partitioned or |
-   |              | constrained | Binding; not        | Pseudonymous   |
-   |              | by the      | replayable with a   | depending on   |
-   |              | issuer      | Key Binding JWT     | the disclosed  |
-   |              |             |                     | claim set      |
-   +--------------+-------------+---------------------+----------------+
-   | ISO mdoc     | Unlimited   | Not replayable;     | Direct;        |
-   |              | within the  | the device          | Partitioned    |
-   |              | validity    | signature covers    | when a subset  |
-   |              | window      | the session         | of data        |
-   |              |             | transcript          | elements is    |
-   |              |             |                     | released       |
-   +--------------+-------------+---------------------+----------------+
-   | DBSC         | Unlimited   | Bounded; the        | Direct         |
-   |              | within the  | cookie is           |                |
-   |              | cookie      | replayable within   |                |
-   |              | lifetime    | its short           |                |
-   |              |             | lifetime, the       |                |
-   |              |             | device key          |                |
-   |              |             | binding is not      |                |
-   +--------------+-------------+---------------------+----------------+
+   +====================+=============+===============+===============+
+   | Credential Type    | Validity    | Replayability | Referential   |
+   |                    | Count       |               | Identity      |
+   |                    |             |               | Posture       |
+   +====================+=============+===============+===============+
+   | Password / API key | Unlimited   | Replayable    | Direct        |
+   |                    | until       |               |               |
+   |                    | rotated     |               |               |
+   +--------------------+-------------+---------------+---------------+
+   | Synced passkey     | Unlimited   | Not           | Direct        |
+   |                    |             | replayable    |               |
+   +--------------------+-------------+---------------+---------------+
+   | Device-bound       | Unlimited   | Not           | Direct        |
+   | passkey            |             | replayable    |               |
+   +--------------------+-------------+---------------+---------------+
+   | SPIFFE X.509-SVID  | Unlimited   | Not           | Direct;       |
+   |                    | within the  | replayable    | Delegated     |
+   |                    | validity    |               | when carrying |
+   |                    | window      |               | on-behalf-of  |
+   |                    |             |               | context       |
+   +--------------------+-------------+---------------+---------------+
+   | SPIFFE JWT-SVID    | Unlimited   | Replayable    | Direct;       |
+   |                    | within the  | within the    | Delegated     |
+   |                    | validity    | validity      | when carrying |
+   |                    | window      | window        | end-user      |
+   |                    |             |               | context       |
+   +--------------------+-------------+---------------+---------------+
+   | mTLS certificate   | Unlimited   | Not           | Direct        |
+   |                    | within the  | replayable    |               |
+   |                    | validity    |               |               |
+   |                    | window      |               |               |
+   +--------------------+-------------+---------------+---------------+
+   | OAuth bearer       | Unlimited   | Replayable;   | Delegated     |
+   | access token       | within the  | any party     | when the      |
+   |                    | validity    | that captures | token conveys |
+   |                    | window      | the token can | both client   |
+   |                    |             | present it    | and resource  |
+   |                    |             |               | owner;        |
+   |                    |             |               | Impersonated  |
+   |                    |             |               | when it       |
+   |                    |             |               | conveys only  |
+   |                    |             |               | the resource  |
+   |                    |             |               | owner         |
+   +--------------------+-------------+---------------+---------------+
+   | Sender-constrained | Unlimited   | Not           | Delegated;    |
+   | access token       | within the  | replayable; a | the client is |
+   |                    | validity    | captured      | identified by |
+   |                    | window      | token is      | its bound key |
+   |                    |             | unusable      | alongside the |
+   |                    |             | without the   | resource      |
+   |                    |             | bound private | owner         |
+   |                    |             | key           |               |
+   +--------------------+-------------+---------------+---------------+
+   | HOTP               | One; the    | Bounded;      | Direct        |
+   |                    | counter     | single use,   |               |
+   |                    | advances on | but the code  |               |
+   |                    | acceptance  | remains valid |               |
+   |                    |             | until the     |               |
+   |                    |             | counter       |               |
+   |                    |             | advances      |               |
+   +--------------------+-------------+---------------+---------------+
+   | TOTP               | One per     | Bounded;      | Direct        |
+   |                    | time step   | replayable    |               |
+   |                    |             | within the    |               |
+   |                    |             | time step and |               |
+   |                    |             | drift window  |               |
+   +--------------------+-------------+---------------+---------------+
+   | SMS OTP            | One         | Bounded;      | Direct        |
+   |                    |             | replayable    |               |
+   |                    |             | within the    |               |
+   |                    |             | issuer's      |               |
+   |                    |             | window, and   |               |
+   |                    |             | interceptable |               |
+   |                    |             | in transit    |               |
+   +--------------------+-------------+---------------+---------------+
+   | SD-JWT VC          | Unlimited   | Replayable    | Direct;       |
+   |                    | unless      | without Key   | Partitioned   |
+   |                    | constrained | Binding; not  | or            |
+   |                    | by the      | replayable    | Pseudonymous  |
+   |                    | issuer      | with a Key    | depending on  |
+   |                    |             | Binding JWT   | the disclosed |
+   |                    |             |               | claim set     |
+   +--------------------+-------------+---------------+---------------+
+   | ISO mdoc           | Unlimited   | Not           | Direct;       |
+   |                    | within the  | replayable;   | Partitioned   |
+   |                    | validity    | the device    | when a subset |
+   |                    | window      | signature     | of data       |
+   |                    |             | covers the    | elements is   |
+   |                    |             | session       | released      |
+   |                    |             | transcript    |               |
+   +--------------------+-------------+---------------+---------------+
+   | DBSC               | Unlimited   | Bounded; the  | Direct        |
+   |                    | within the  | cookie is     |               |
+   |                    | cookie      | replayable    |               |
+   |                    | lifetime    | within its    |               |
+   |                    |             | short         |               |
+   |                    |             | lifetime, the |               |
+   |                    |             | device key    |               |
+   |                    |             | binding is    |               |
+   |                    |             | not           |               |
+   +--------------------+-------------+---------------+---------------+
 
-                                  Table 4
+                                 Table 4
 
 A.3.  Credential Containment & Unlock
 
    The following properties describe containment of the credential at
    rest.
 
-   +============+===============+===================+==================+
-   |Credential  |Containment    | Boundary Binding  | Boundary         |
-   |Type        |               |                   | Enforcement      |
-   +============+===============+===================+==================+
-   |Password /  |Uncontained    | Unbounded         | Reactive; breach |
-   |API key     |               |                   | corpus matching  |
-   |            |               |                   | and secret       |
-   |            |               |                   | scanning         |
-   +------------+---------------+-------------------+------------------+
-   |Synced      |Partially      | Bound to the      | Managed by the   |
-   |passkey     |contained by   | passkey           | passkey provider |
-   |            |the credential | provider;         |                  |
-   |            |provider       | specifics depend  |                  |
-   |            |               | on the provider   |                  |
-   +------------+---------------+-------------------+------------------+
-   |Device-bound|Contained      | Bound to the      | Proactive;       |
-   |passkey     |               | hardware          | enforced by      |
-   |            |               | authenticator;    | hardware         |
-   |            |               | non-exportable;   |                  |
-   |            |               | verifiable        |                  |
-   |            |               | through           |                  |
-   |            |               | attestation at    |                  |
-   |            |               | registration      |                  |
-   +------------+---------------+-------------------+------------------+
-   |SPIFFE      |Contained when | Bound to the TPM  | Proactive when   |
-   |X.509-SVID  |the key is TPM-| when hardware-    | hardware-backed; |
-   |            |bound;         | backed;           | otherwise        |
-   |            |otherwise      | otherwise to the  | enforced by the  |
-   |            |resident in    | attested node     | node attestor    |
-   |            |workload memory| and workload      | and workload API |
-   +------------+---------------+-------------------+------------------+
-   |SPIFFE JWT- |Uncontained    | Unbounded after   | Reactive;        |
-   |SVID        |once issued; a | issuance          | mitigated by     |
-   |            |bearer token   |                   | short lifetime   |
-   +------------+---------------+-------------------+------------------+
-   |mTLS        |Contained in an| Bound to the HSM  | Proactive when   |
-   |certificate |HSM or TPM;    | or TPM when       | hardware-backed; |
-   |            |uncontained as | hardware-backed;  | otherwise        |
-   |            |a key file     | unbounded as an   | reactive         |
-   |            |               | exportable file   |                  |
-   |            |               | or PKCS#12        |                  |
-   +------------+---------------+-------------------+------------------+
-   |HOTP        |Contained in a | Bound to the      | Proactive for    |
-   |            |hardware token;| hardware token;   | hardware tokens; |
-   |            |uncontained as | unbounded as a    | otherwise none   |
-   |            |a soft seed    | soft seed that    |                  |
-   |            |               | can be re-        |                  |
-   |            |               | enrolled from     |                  |
-   |            |               | the provisioning  |                  |
-   |            |               | URI               |                  |
-   +------------+---------------+-------------------+------------------+
-   |TOTP        |Contained in a | Bound to the      | Proactive for    |
-   |            |hardware token;| hardware token;   | hardware tokens; |
-   |            |uncontained as | unbounded as a    | otherwise none   |
-   |            |a soft seed    | soft seed         |                  |
-   +------------+---------------+-------------------+------------------+
-   |SMS OTP     |Uncontained;   | Bound to control  | Reactive;        |
-   |            |delivered in   | of the phone      | carrier-side     |
-   |            |clear text and | number, not to a  | controls against |
-   |            |readable from  | device            | SIM swap and     |
-   |            |the            |                   | port-out         |
-   |            |notification   |                   |                  |
-   |            |surface        |                   |                  |
-   +------------+---------------+-------------------+------------------+
-   |SD-JWT VC   |Contained when | Bound to the      | Proactive when   |
-   |            |the Key Binding| wallet key store  | hardware-backed; |
-   |            |key is in a    | when Key Binding  | otherwise none   |
-   |            |secure element;| is used;          |                  |
-   |            |the credential | unbounded         |                  |
-   |            |itself is data | otherwise         |                  |
-   |            |at rest in the |                   |                  |
-   |            |wallet         |                   |                  |
-   +------------+---------------+-------------------+------------------+
-   |ISO mdoc    |Contained;     | Bound to the      | Proactive;       |
-   |            |DeviceKey      | device secure     | enforced by      |
-   |            |resides in the | area              | hardware         |
-   |            |device secure  |                   |                  |
-   |            |area           |                   |                  |
-   +------------+---------------+-------------------+------------------+
-   |DBSC        |Contained if   | Boundary          | Proactive;       |
-   |            |the session key| enforcement       | enforced by      |
-   |            |resides in the | depends on        | hardware or      |
-   |            |TPM or secure  | hardware          | software         |
-   |            |enclave;       | boundedness.      |                  |
-   |            |Partially      | Bound keys        |                  |
-   |            |contained for  | reside in TPM or  |                  |
-   |            |software based | Secure Elements   |                  |
-   |            |implementations| and are non-      |                  |
-   |            |               | exportable.       |                  |
-   |            |               | Partially bound   |                  |
-   |            |               | keys are          |                  |
-   |            |               | software based.   |                  |
-   +------------+---------------+-------------------+------------------+
+   +=============+=================+===================+==============+
+   | Credential  | Containment     | Boundary Binding  | Boundary     |
+   | Type        |                 |                   | Enforcement  |
+   +=============+=================+===================+==============+
+   | Password /  | Uncontained     | Unbounded         | Reactive;    |
+   | API key     |                 |                   | breach       |
+   |             |                 |                   | corpus       |
+   |             |                 |                   | matching and |
+   |             |                 |                   | secret       |
+   |             |                 |                   | scanning     |
+   +-------------+-----------------+-------------------+--------------+
+   | Synced      | Partially       | Bound to the      | Managed by   |
+   | passkey     | contained by    | passkey provider; | the passkey  |
+   |             | the credential  | specifics depend  | provider     |
+   |             | provider        | on the provider   |              |
+   +-------------+-----------------+-------------------+--------------+
+   | Device-     | Contained       | Bound to the      | Proactive;   |
+   | bound       |                 | hardware          | enforced by  |
+   | passkey     |                 | authenticator;    | hardware     |
+   |             |                 | non-exportable;   |              |
+   |             |                 | verifiable        |              |
+   |             |                 | through           |              |
+   |             |                 | attestation at    |              |
+   |             |                 | registration      |              |
+   +-------------+-----------------+-------------------+--------------+
+   | SPIFFE      | Contained when  | Bound to the TPM  | Proactive    |
+   | X.509-SVID  | the key is TPM- | when hardware-    | when         |
+   |             | bound;          | backed; otherwise | hardware-    |
+   |             | otherwise       | to the attested   | backed;      |
+   |             | resident in     | node and workload | otherwise    |
+   |             | workload memory |                   | enforced by  |
+   |             |                 |                   | the node     |
+   |             |                 |                   | attestor and |
+   |             |                 |                   | workload API |
+   +-------------+-----------------+-------------------+--------------+
+   | SPIFFE JWT- | Uncontained     | Unbounded after   | Reactive;    |
+   | SVID        | once issued; a  | issuance          | mitigated by |
+   |             | bearer token    |                   | short        |
+   |             |                 |                   | lifetime     |
+   +-------------+-----------------+-------------------+--------------+
+   | mTLS        | Contained in an | Bound to the HSM  | Proactive    |
+   | certificate | HSM or TPM;     | or TPM when       | when         |
+   |             | uncontained as  | hardware-backed;  | hardware-    |
+   |             | a key file      | unbounded as an   | backed;      |
+   |             |                 | exportable file   | otherwise    |
+   |             |                 | or PKCS#12        | reactive     |
+   +-------------+-----------------+-------------------+--------------+
+   | OAuth       | Uncontained; a  | Unbounded         | Reactive;    |
+   | bearer      | bearer string   |                   | short        |
+   | access      | held in client  |                   | lifetime,    |
+   | token       | memory, logs    |                   | revocation   |
+   |             | and             |                   | and anomaly  |
+   |             | intermediaries  |                   | detection    |
+   +-------------+-----------------+-------------------+--------------+
+   | Sender-     | The token is    | Bound to the      | Proactive;   |
+   | constrained | uncontained but | client proof-of-  | the resource |
+   | access      | unusable alone; | possession key    | server       |
+   | token       | the bound       |                   | rejects any  |
+   |             | private key is  |                   | presentation |
+   |             | contained and   |                   | lacking a    |
+   |             | may be          |                   | valid proof  |
+   |             | hardware-backed |                   | of           |
+   |             |                 |                   | possession   |
+   +-------------+-----------------+-------------------+--------------+
+   | HOTP        | Contained in a  | Bound to the      | Proactive    |
+   |             | hardware token; | hardware token;   | for hardware |
+   |             | uncontained as  | unbounded as a    | tokens;      |
+   |             | a soft seed     | soft seed that    | otherwise    |
+   |             |                 | can be re-        | none         |
+   |             |                 | enrolled from the |              |
+   |             |                 | provisioning URI  |              |
+   +-------------+-----------------+-------------------+--------------+
+   | TOTP        | Contained in a  | Bound to the      | Proactive    |
+   |             | hardware token; | hardware token;   | for hardware |
+   |             | uncontained as  | unbounded as a    | tokens;      |
+   |             | a soft seed     | soft seed         | otherwise    |
+   |             |                 |                   | none         |
+   +-------------+-----------------+-------------------+--------------+
+   | SMS OTP     | Uncontained;    | Bound to control  | Reactive;    |
+   |             | delivered in    | of the phone      | carrier-side |
+   |             | clear text and  | number, not to a  | controls     |
+   |             | readable from   | device            | against SIM  |
+   |             | the             |                   | swap and     |
+   |             | notification    |                   | port-out     |
+   |             | surface         |                   |              |
+   +-------------+-----------------+-------------------+--------------+
+   | SD-JWT VC   | Contained when  | Bound to the      | Proactive    |
+   |             | the Key Binding | wallet key store  | when         |
+   |             | key is in a     | when Key Binding  | hardware-    |
+   |             | secure element; | is used;          | backed;      |
+   |             | the credential  | unbounded         | otherwise    |
+   |             | itself is data  | otherwise         | none         |
+   |             | at rest in the  |                   |              |
+   |             | wallet          |                   |              |
+   +-------------+-----------------+-------------------+--------------+
+   | ISO mdoc    | Contained;      | Bound to the      | Proactive;   |
+   |             | DeviceKey       | device secure     | enforced by  |
+   |             | resides in the  | area              | hardware     |
+   |             | device secure   |                   |              |
+   |             | area            |                   |              |
+   +-------------+-----------------+-------------------+--------------+
+   | DBSC        | Contained if    | Boundary          | Proactive;   |
+   |             | the session key | enforcement       | enforced by  |
+   |             | resides in the  | depends on        | hardware or  |
+   |             | TPM or secure   | hardware          | software     |
+   |             | enclave;        | boundedness.      |              |
+   |             | Partially       | Bound keys reside |              |
+   |             | contained for   | in TPM or Secure  |              |
+   |             | software based  | Elements and are  |              |
+   |             | implementations | non-exportable.   |              |
+   |             |                 | Partially bound   |              |
+   |             |                 | keys are software |              |
+   |             |                 | based.            |              |
+   +-------------+-----------------+-------------------+--------------+
 
-                                  Table 5
+                                 Table 5
 
    The following properties describe how a contained credential is
    released for use.
 
-   +===========+==============+============+============+==============+
-   |Credential |Transference  |Activation  |Unlock Scope| Unlock       |
-   |Type       |              |            |            | Persistence  |
-   +===========+==============+============+============+==============+
-   |Password / |Yes; freely   |No          |N/A         | N/A          |
-   |API key    |copied        |            |            |              |
-   +-----------+--------------+------------+------------+--------------+
-   |Synced     |Within the    |Yes;        |All users of| Configurable |
-   |passkey    |boundary via  |biometric   |the provider| by the       |
-   |           |provider      |gesture or  |account, on | provider     |
-   |           |sharing;      |provider    |every device|              |
-   |           |across        |unlock      |the account |              |
-   |           |providers via |            |syncs to    |              |
-   |           |credential    |            |            |              |
-   |           |exchange      |            |            |              |
-   |           |where         |            |            |              |
-   |           |supported     |            |            |              |
-   +-----------+--------------+------------+------------+--------------+
-   |Device-    |None          |Yes; PIN or |The holder  | Per-         |
-   |bound      |              |biometric   |who can     | operation,   |
-   |passkey    |              |gesture     |satisfy the | or per-      |
-   |           |              |            |PIN or      | session      |
-   |           |              |            |biometric   | where user   |
-   |           |              |            |            | verification |
-   |           |              |            |            | caching      |
-   |           |              |            |            | applies      |
-   +-----------+--------------+------------+------------+--------------+
-   |SPIFFE     |None          |No          |The attested| Life of the  |
-   |X.509-SVID |              |            |workload    | SVID, then   |
-   |           |              |            |            | re-issued    |
-   +-----------+--------------+------------+------------+--------------+
-   |SPIFFE JWT-|Yes; any      |No          |Any holder  | Life of the  |
-   |SVID       |holder can    |            |of the token| token        |
-   |           |present it    |            |            |              |
-   +-----------+--------------+------------+------------+--------------+
-   |mTLS       |None when     |Optional;   |The holder  | Per-         |
-   |certificate|hardware-     |PIN on a    |of the key  | operation    |
-   |           |bound; Yes    |smart card  |store       | for smart    |
-   |           |when          |or HSM      |            | cards; life  |
-   |           |exportable    |            |            | of the       |
-   |           |              |            |            | process      |
-   |           |              |            |            | otherwise    |
-   +-----------+--------------+------------+------------+--------------+
-   |HOTP       |None for      |Button press|The holder  | N/A          |
-   |           |hardware      |on some     |of the token|              |
-   |           |tokens; Yes   |hardware    |or seed     |              |
-   |           |for soft      |tokens;     |            |              |
-   |           |seeds, which  |otherwise No|            |              |
-   |           |can be        |            |            |              |
-   |           |enrolled on   |            |            |              |
-   |           |multiple      |            |            |              |
-   |           |devices       |            |            |              |
-   +-----------+--------------+------------+------------+--------------+
-   |TOTP       |None for      |Typically No|The holder  | N/A          |
-   |           |hardware      |            |of the token|              |
-   |           |tokens; Yes   |            |or seed     |              |
-   |           |for soft      |            |            |              |
-   |           |seeds         |            |            |              |
-   +-----------+--------------+------------+------------+--------------+
-   |SMS OTP    |Yes; the code |No          |Anyone with | N/A          |
-   |           |can be read   |            |access to   |              |
-   |           |aloud or      |            |the device  |              |
-   |           |forwarded,    |            |notification|              |
-   |           |which is the  |            |surface or  |              |
-   |           |mechanism     |            |the number  |              |
-   |           |exploited by  |            |            |              |
-   |           |OTP phishing  |            |            |              |
-   +-----------+--------------+------------+------------+--------------+
-   |SD-JWT VC  |Yes without   |Yes; wallet |The holder  | Configurable |
-   |           |Key Binding;  |unlock      |who can     | by the       |
-   |           |None with a   |gesture     |unlock the  | wallet       |
-   |           |hardware-     |where       |wallet      |              |
-   |           |bound Key     |required    |            |              |
-   |           |Binding key   |            |            |              |
-   +-----------+--------------+------------+------------+--------------+
-   |ISO mdoc   |None; the     |Yes; wallet |The holder  | Per-         |
-   |           |DeviceKey is  |unlock and  |who can     | presentation |
-   |           |non-          |per-        |unlock the  |              |
-   |           |exportable    |presentation|wallet      |              |
-   |           |              |consent     |            |              |
-   +-----------+--------------+------------+------------+--------------+
-   |DBSC       |None for the  |No; refresh |The browser | Life of the  |
-   |           |key; the      |is automatic|profile on  | session,     |
-   |           |short-lived   |with no user|the bound   | with         |
-   |           |cookie can be |gesture     |device      | automatic    |
-   |           |copied        |            |            | cookie       |
-   |           |              |            |            | refresh      |
-   +-----------+--------------+------------+------------+--------------+
+   +===========+=============+============+============+===============+
+   |Credential |Transference |Activation  |Unlock Scope| Unlock        |
+   |Type       |             |            |            | Persistence   |
+   +===========+=============+============+============+===============+
+   |Password / |Yes; freely  |No          |N/A         | N/A           |
+   |API key    |copied       |            |            |               |
+   +-----------+-------------+------------+------------+---------------+
+   |Synced     |Within the   |Yes;        |All users of| Configurable  |
+   |passkey    |boundary via |biometric   |the provider| by the        |
+   |           |provider     |gesture or  |account, on | provider      |
+   |           |sharing;     |provider    |every device|               |
+   |           |across       |unlock      |the account |               |
+   |           |providers    |            |syncs to    |               |
+   |           |via          |            |            |               |
+   |           |credential   |            |            |               |
+   |           |exchange     |            |            |               |
+   |           |where        |            |            |               |
+   |           |supported    |            |            |               |
+   +-----------+-------------+------------+------------+---------------+
+   |Device-    |None         |Yes; PIN or |The holder  | Per-          |
+   |bound      |             |biometric   |who can     | operation, or |
+   |passkey    |             |gesture     |satisfy the | per-session   |
+   |           |             |            |PIN or      | where user    |
+   |           |             |            |biometric   | verification  |
+   |           |             |            |            | caching       |
+   |           |             |            |            | applies       |
+   +-----------+-------------+------------+------------+---------------+
+   |SPIFFE     |None         |No          |The attested| Life of the   |
+   |X.509-SVID |             |            |workload    | SVID, then    |
+   |           |             |            |            | re-issued     |
+   +-----------+-------------+------------+------------+---------------+
+   |SPIFFE JWT-|Yes; any     |No          |Any holder  | Life of the   |
+   |SVID       |holder can   |            |of the token| token         |
+   |           |present it   |            |            |               |
+   +-----------+-------------+------------+------------+---------------+
+   |mTLS       |None when    |Optional;   |The holder  | Per-operation |
+   |certificate|hardware-    |PIN on a    |of the key  | for smart     |
+   |           |bound; Yes   |smart card  |store       | cards; life   |
+   |           |when         |or HSM      |            | of the        |
+   |           |exportable   |            |            | process       |
+   |           |             |            |            | otherwise     |
+   +-----------+-------------+------------+------------+---------------+
+   |OAuth      |Yes; the     |No          |Any holder  | Life of the   |
+   |bearer     |token is     |            |of the token| token         |
+   |access     |usable by    |            |            |               |
+   |token      |any bearer   |            |            |               |
+   +-----------+-------------+------------+------------+---------------+
+   |Sender-    |None unless  |No;         |The client  | Life of the   |
+   |constrained|the bound    |presentation|that holds  | token; the    |
+   |access     |private key  |is automated|the bound   | bound key     |
+   |token      |is           |and requires|private key | persists      |
+   |           |transferred  |no user     |            | independently |
+   |           |with the     |gesture     |            |               |
+   |           |token        |            |            |               |
+   +-----------+-------------+------------+------------+---------------+
+   |HOTP       |None for     |Button press|The holder  | N/A           |
+   |           |hardware     |on some     |of the token|               |
+   |           |tokens; Yes  |hardware    |or seed     |               |
+   |           |for soft     |tokens;     |            |               |
+   |           |seeds, which |otherwise No|            |               |
+   |           |can be       |            |            |               |
+   |           |enrolled on  |            |            |               |
+   |           |multiple     |            |            |               |
+   |           |devices      |            |            |               |
+   +-----------+-------------+------------+------------+---------------+
+   |TOTP       |None for     |Typically No|The holder  | N/A           |
+   |           |hardware     |            |of the token|               |
+   |           |tokens; Yes  |            |or seed     |               |
+   |           |for soft     |            |            |               |
+   |           |seeds        |            |            |               |
+   +-----------+-------------+------------+------------+---------------+
+   |SMS OTP    |Yes; the     |No          |Anyone with | N/A           |
+   |           |code can be  |            |access to   |               |
+   |           |read aloud   |            |the device  |               |
+   |           |or           |            |notification|               |
+   |           |forwarded,   |            |surface or  |               |
+   |           |which is the |            |the number  |               |
+   |           |mechanism    |            |            |               |
+   |           |exploited by |            |            |               |
+   |           |OTP phishing |            |            |               |
+   +-----------+-------------+------------+------------+---------------+
+   |SD-JWT VC  |Yes without  |Yes; wallet |The holder  | Configurable  |
+   |           |Key Binding; |unlock      |who can     | by the wallet |
+   |           |None with a  |gesture     |unlock the  |               |
+   |           |hardware-    |where       |wallet      |               |
+   |           |bound Key    |required    |            |               |
+   |           |Binding key  |            |            |               |
+   +-----------+-------------+------------+------------+---------------+
+   |ISO mdoc   |None; the    |Yes; wallet |The holder  | Per-          |
+   |           |DeviceKey is |unlock and  |who can     | presentation  |
+   |           |non-         |per-        |unlock the  |               |
+   |           |exportable   |presentation|wallet      |               |
+   |           |             |consent     |            |               |
+   +-----------+-------------+------------+------------+---------------+
+   |DBSC       |None for the |No; refresh |The browser | Life of the   |
+   |           |key; the     |is automatic|profile on  | session, with |
+   |           |short-lived  |with no user|the bound   | automatic     |
+   |           |cookie can   |gesture     |device      | cookie        |
+   |           |be copied    |            |            | refresh       |
+   +-----------+-------------+------------+------------+---------------+
 
                                   Table 6
 
 A.4.  Credential Enrollment
 
-   +============+========================+==============+==============+
-   |Credential  | Enrollment Assurance   |Vouching      |Enrollment    |
-   |Type        |                        |              |Binding       |
-   +============+========================+==============+==============+
-   |Password /  | Varies; typically none |Sometimes; set|Association   |
-   |API key     | beyond an existing     |during a      |with the      |
-   |            | account context        |vouched       |account       |
-   |            |                        |registration  |record held   |
-   |            |                        |or reset flow |by the        |
-   |            |                        |              |verifier      |
-   +------------+------------------------+--------------+--------------+
-   |Synced      | Inherits the assurance |Yes;          |WebAuthn      |
-   |passkey     | of the session that    |enrollment is |registration  |
-   |            | created it             |gated by a    |ceremony      |
-   |            |                        |pre-existing  |binds the     |
-   |            |                        |credential    |public key to |
-   |            |                        |              |the user      |
-   |            |                        |              |handle        |
-   +------------+------------------------+--------------+--------------+
-   |Device-bound| Enterprise-controlled; |Yes; typically|WebAuthn      |
-   |passkey     | may require in-person  |gated by an   |registration  |
-   |            | proofing               |enterprise    |ceremony      |
-   |            |                        |credential or |binds the     |
-   |            |                        |supervised    |public key to |
-   |            |                        |enrollment    |the user      |
-   |            |                        |              |handle        |
-   +------------+------------------------+--------------+--------------+
-   |SPIFFE      | Derived from node and  |Yes; node     |Attestors     |
-   |X.509-SVID  | workload attestation   |attestation   |bind the      |
-   |            | rather than human      |acts as the   |SPIFFE ID to  |
-   |            | proofing               |prior gate    |the attested  |
-   |            |                        |              |workload      |
-   +------------+------------------------+--------------+--------------+
-   |SPIFFE JWT- | Derived from node and  |Yes; node     |Attestors     |
-   |SVID        | workload attestation   |attestation   |bind the      |
-   |            |                        |acts as the   |SPIFFE ID to  |
-   |            |                        |prior gate    |the attested  |
-   |            |                        |              |workload      |
-   +------------+------------------------+--------------+--------------+
-   |mTLS        | Varies by CA policy,   |Often; CSR    |The CA binds  |
-   |certificate | from domain validation |submission is |the subject   |
-   |            | to in-person proofing  |gated by an   |and SAN to    |
-   |            |                        |existing      |the public    |
-   |            |                        |credential    |key in the    |
-   |            |                        |              |CSR           |
-   +------------+------------------------+--------------+--------------+
-   |HOTP        | Inherits the assurance |Yes;          |Seed shared   |
-   |            | of the session that    |enrollment is |between       |
-   |            | enrolled it            |gated by a    |authenticator |
-   |            |                        |pre-existing  |and verifier  |
-   |            |                        |credential    |and recorded  |
-   |            |                        |              |against the   |
-   |            |                        |              |account       |
-   +------------+------------------------+--------------+--------------+
-   |TOTP        | Inherits the assurance |Yes;          |Seed shared   |
-   |            | of the session that    |enrollment is |between       |
-   |            | enrolled it            |gated by a    |authenticator |
-   |            |                        |pre-existing  |and verifier  |
-   |            |                        |credential    |and recorded  |
-   |            |                        |              |against the   |
-   |            |                        |              |account       |
-   +------------+------------------------+--------------+--------------+
-   |SMS OTP     | Phone number           |Yes; the      |The verifier  |
-   |            | possession only; no    |number is     |binds the     |
-   |            | identity proofing      |registered    |phone number  |
-   |            |                        |during a      |to the        |
-   |            |                        |vouched       |account       |
-   |            |                        |session       |record        |
-   +------------+------------------------+--------------+--------------+
-   |SD-JWT VC   | Set by issuer policy;  |Yes; issuance |The issuer    |
-   |            | may require high-      |is gated by   |binds claims  |
-   |            | assurance proofing     |prior         |to the        |
-   |            |                        |credentials or|holder's cnf  |
-   |            |                        |in-person     |key           |
-   |            |                        |proofing      |              |
-   +------------+------------------------+--------------+--------------+
-   |ISO mdoc    | Set by the issuing     |Yes; gated by |The issuer    |
-   |            | authority; typically   |the underlying|binds the     |
-   |            | in-person proofing for |document      |DeviceKey     |
-   |            | an mDL                 |issuance      |into the      |
-   |            |                        |process       |signed MSO    |
-   +------------+------------------------+--------------+--------------+
-   |DBSC        | Inherits the assurance |Yes; the      |The browser   |
-   |            | of the sign-in that    |session is    |binds the     |
-   |            | established the        |established by|session       |
-   |            | session                |a prior       |identifier to |
-   |            |                        |authentication|a freshly     |
-   |            |                        |              |generated     |
-   |            |                        |              |device key    |
-   +------------+------------------------+--------------+--------------+
+    +=============+==================+================+===============+
+    | Credential  | Enrollment       | Vouching       | Enrollment    |
+    | Type        | Assurance        |                | Binding       |
+    +=============+==================+================+===============+
+    | Password /  | Varies;          | Sometimes; set | Association   |
+    | API key     | typically none   | during a       | with the      |
+    |             | beyond an        | vouched        | account       |
+    |             | existing account | registration   | record held   |
+    |             | context          | or reset flow  | by the        |
+    |             |                  |                | verifier      |
+    +-------------+------------------+----------------+---------------+
+    | Synced      | Inherits the     | Yes;           | WebAuthn      |
+    | passkey     | assurance of the | enrollment is  | registration  |
+    |             | session that     | gated by a     | ceremony      |
+    |             | created it       | pre-existing   | binds the     |
+    |             |                  | credential     | public key to |
+    |             |                  |                | the user      |
+    |             |                  |                | handle        |
+    +-------------+------------------+----------------+---------------+
+    | Device-     | Enterprise-      | Yes; typically | WebAuthn      |
+    | bound       | controlled; may  | gated by an    | registration  |
+    | passkey     | require in-      | enterprise     | ceremony      |
+    |             | person proofing  | credential or  | binds the     |
+    |             |                  | supervised     | public key to |
+    |             |                  | enrollment     | the user      |
+    |             |                  |                | handle        |
+    +-------------+------------------+----------------+---------------+
+    | SPIFFE      | Derived from     | Yes; node      | Attestors     |
+    | X.509-SVID  | node and         | attestation    | bind the      |
+    |             | workload         | acts as the    | SPIFFE ID to  |
+    |             | attestation      | prior gate     | the attested  |
+    |             | rather than      |                | workload      |
+    |             | human proofing   |                |               |
+    +-------------+------------------+----------------+---------------+
+    | SPIFFE JWT- | Derived from     | Yes; node      | Attestors     |
+    | SVID        | node and         | attestation    | bind the      |
+    |             | workload         | acts as the    | SPIFFE ID to  |
+    |             | attestation      | prior gate     | the attested  |
+    |             |                  |                | workload      |
+    +-------------+------------------+----------------+---------------+
+    | mTLS        | Varies by CA     | Often; CSR     | The CA binds  |
+    | certificate | policy, from     | submission is  | the subject   |
+    |             | domain           | gated by an    | and SAN to    |
+    |             | validation to    | existing       | the public    |
+    |             | in-person        | credential     | key in the    |
+    |             | proofing         |                | CSR           |
+    +-------------+------------------+----------------+---------------+
+    | OAuth       | Inherits the     | Yes; issuance  | The           |
+    | bearer      | assurance of the | is gated by an | authorization |
+    | access      | authorization    | authorization  | server binds  |
+    | token       | grant and of the | grant, itself  | the token to  |
+    |             | resource owner   | gated by a     | client,       |
+    |             | authentication   | pre-existing   | resource      |
+    |             | behind it        | credential     | owner, scope  |
+    |             |                  |                | and audience  |
+    |             |                  |                | at issuance   |
+    +-------------+------------------+----------------+---------------+
+    | Sender-     | Inherits the     | Yes; issuance  | As for a      |
+    | constrained | assurance of the | is gated by an | bearer token, |
+    | access      | authorization    | authorization  | and           |
+    | token       | grant and of the | grant, itself  | additionally  |
+    |             | resource owner   | gated by a     | binds the     |
+    |             | authentication   | pre-existing   | client proof- |
+    |             | behind it        | credential     | of-possession |
+    |             |                  |                | key into the  |
+    |             |                  |                | token         |
+    +-------------+------------------+----------------+---------------+
+    | HOTP        | Inherits the     | Yes;           | Seed shared   |
+    |             | assurance of the | enrollment is  | between       |
+    |             | session that     | gated by a     | authenticator |
+    |             | enrolled it      | pre-existing   | and verifier  |
+    |             |                  | credential     | and recorded  |
+    |             |                  |                | against the   |
+    |             |                  |                | account       |
+    +-------------+------------------+----------------+---------------+
+    | TOTP        | Inherits the     | Yes;           | Seed shared   |
+    |             | assurance of the | enrollment is  | between       |
+    |             | session that     | gated by a     | authenticator |
+    |             | enrolled it      | pre-existing   | and verifier  |
+    |             |                  | credential     | and recorded  |
+    |             |                  |                | against the   |
+    |             |                  |                | account       |
+    +-------------+------------------+----------------+---------------+
+    | SMS OTP     | Phone number     | Yes; the       | The verifier  |
+    |             | possession only; | number is      | binds the     |
+    |             | no identity      | registered     | phone number  |
+    |             | proofing         | during a       | to the        |
+    |             |                  | vouched        | account       |
+    |             |                  | session        | record        |
+    +-------------+------------------+----------------+---------------+
+    | SD-JWT VC   | Set by issuer    | Yes; issuance  | The issuer    |
+    |             | policy; may      | is gated by    | binds claims  |
+    |             | require high-    | prior          | to the        |
+    |             | assurance        | credentials or | holder's cnf  |
+    |             | proofing         | in-person      | key           |
+    |             |                  | proofing       |               |
+    +-------------+------------------+----------------+---------------+
+    | ISO mdoc    | Set by the       | Yes; gated by  | The issuer    |
+    |             | issuing          | the underlying | binds the     |
+    |             | authority;       | document       | DeviceKey     |
+    |             | typically in-    | issuance       | into the      |
+    |             | person proofing  | process        | signed MSO    |
+    |             | for an mDL       |                |               |
+    +-------------+------------------+----------------+---------------+
+    | DBSC        | Inherits the     | Yes; the       | The browser   |
+    |             | assurance of the | session is     | binds the     |
+    |             | sign-in that     | established by | session       |
+    |             | established the  | a prior        | identifier to |
+    |             | session          | authentication | a freshly     |
+    |             |                  |                | generated     |
+    |             |                  |                | device key    |
+    +-------------+------------------+----------------+---------------+
 
                                   Table 7
 
 A.5.  Credential Compliance
 
-   +============+===============+===================+==================+
-   |Credential  | Composition   | Lifecycle Rules   | Regulatory       |
-   |Type        | Rules         |                   | Framework        |
-   +============+===============+===================+==================+
-   |Password /  | Length and    | Rotation, expiry, | ; [PCI-DSS]      |
-   |API key     | character     | and reuse limits  |                  |
-   |            | composition   | may be enforced   |                  |
-   |            | may be        |                   |                  |
-   |            | enforced      |                   |                  |
-   +------------+---------------+-------------------+------------------+
-   |Synced      | Algorithm set | Revocation by     | NIST SP 800-63B  |
-   |passkey     | constrained   | deregistration;   |                  |
-   |            | by WebAuthn   | no rotation       |                  |
-   |            | and COSE      | concept           |                  |
-   +------------+---------------+-------------------+------------------+
-   |Device-bound| Algorithm set | Deregistration;   | NIST SP 800-63B  |
-   |passkey     | constrained   | key lifetime tied | up to AAL3;      |
-   |            | by WebAuthn   | to the            | FIDO Alliance    |
-   |            | and COSE;     | authenticator     | certification    |
-   |            | authenticator |                   |                  |
-   |            | certification |                   |                  |
-   |            | level         |                   |                  |
-   +------------+---------------+-------------------+------------------+
-   |SPIFFE      | Certificate   | Mandatory short   | SPIFFE           |
-   |X.509-SVID  | profile and   | lifetime with     | specifications;  |
-   |            | algorithms    | automatic         | deployment       |
-   |            | fixed by the  | rotation          | policy           |
-   |            | SPIFFE        |                   |                  |
-   |            | X.509-SVID    |                   |                  |
-   |            | specification |                   |                  |
-   +------------+---------------+-------------------+------------------+
-   |SPIFFE JWT- | JWS           | Short lifetime;   | SPIFFE           |
-   |SVID        | algorithms    | expiry only, no   | specifications;  |
-   |            | fixed by the  | revocation        | deployment       |
-   |            | SPIFFE JWT-   |                   | policy           |
-   |            | SVID          |                   |                  |
-   |            | specification |                   |                  |
-   +------------+---------------+-------------------+------------------+
-   |mTLS        | [CABF-BR] for | Maximum validity  | CA/Browser       |
-   |certificate | the Web PKI;  | period;           | Forum Baseline   |
-   |            | internal      | revocation via    | Requirements;    |
-   |            | policy        | CRL or OCSP       | PKI operator     |
-   |            | otherwise     |                   | policy           |
-   +------------+---------------+-------------------+------------------+
-   |HOTP        | HMAC          | Seed rotation on  | NIST SP          |
-   |            | algorithm and | re-enrollment;    | 800-63B; PCI     |
-   |            | code length   | counter           | DSS              |
-   |            | fixed by the  | resynchronization |                  |
-   |            | HOTP          |                   |                  |
-   |            | specification |                   |                  |
-   +------------+---------------+-------------------+------------------+
-   |TOTP        | Algorithm,    | Seed rotation on  | NIST SP          |
-   |            | time step,    | re-enrollment;    | 800-63B; PCI     |
-   |            | and code      | time-step policy  | DSS              |
-   |            | length fixed  |                   |                  |
-   |            | by the TOTP   |                   |                  |
-   |            | specification |                   |                  |
-   +------------+---------------+-------------------+------------------+
-   |SMS OTP     | Code length   | Short expiry;     | NIST SP          |
-   |            | and character | per-attempt rate  | 800-63B, which   |
-   |            | set set by    | limiting          | constrains out-  |
-   |            | the verifier  |                   | of-band          |
-   |            |               |                   | authenticators   |
-   |            |               |                   | using the        |
-   |            |               |                   | public           |
-   |            |               |                   | telephone        |
-   |            |               |                   | network; PCI     |
-   |            |               |                   | DSS              |
-   +------------+---------------+-------------------+------------------+
-   |SD-JWT VC   | Disclosure    | Issuer-set        | Issuer policy;   |
-   |            | construction  | expiry; status    | wallet           |
-   |            | and           | list revocation   | ecosystem        |
-   |            | algorithms    |                   | governance       |
-   |            | fixed by the  |                   | frameworks       |
-   |            | SD-JWT        |                   |                  |
-   |            | specification |                   |                  |
-   +------------+---------------+-------------------+------------------+
-   |ISO mdoc    | Cryptographic | Issuer-set        | ISO/IEC          |
-   |            | suites fixed  | validity; MSO     | 18013-5;         |
-   |            | by ISO/IEC    | update and        | issuing          |
-   |            | 18013-5       | revocation        | authority        |
-   |            |               |                   | policy           |
-   +------------+---------------+-------------------+------------------+
-   |DBSC        | Key type      | Session lifetime  | None specific;   |
-   |            | constrained   | and refresh       | inherits the     |
-   |            | by the DBSC   | cadence set by    | session          |
-   |            | specification | the origin        | management       |
-   |            | and platform  |                   | requirements of  |
-   |            | TPM support   |                   | the deploying    |
-   |            |               |                   | framework        |
-   +------------+---------------+-------------------+------------------+
+   +===========+===============+===================+==================+
+   |Credential | Composition   | Lifecycle Rules   | Regulatory       |
+   |Type       | Rules         |                   | Framework        |
+   +===========+===============+===================+==================+
+   |Password / | Length and    | Rotation, expiry, | ; [PCI-DSS]      |
+   |API key    | character     | and reuse limits  |                  |
+   |           | composition   | may be enforced   |                  |
+   |           | may be        |                   |                  |
+   |           | enforced      |                   |                  |
+   +-----------+---------------+-------------------+------------------+
+   |Synced     | Algorithm set | Revocation by     | NIST SP 800-63B  |
+   |passkey    | constrained   | deregistration;   |                  |
+   |           | by WebAuthn   | no rotation       |                  |
+   |           | and COSE      | concept           |                  |
+   +-----------+---------------+-------------------+------------------+
+   |Device-    | Algorithm set | Deregistration;   | NIST SP 800-63B  |
+   |bound      | constrained   | key lifetime tied | up to AAL3; FIDO |
+   |passkey    | by WebAuthn   | to the            | Alliance         |
+   |           | and COSE;     | authenticator     | certification    |
+   |           | authenticator |                   |                  |
+   |           | certification |                   |                  |
+   |           | level         |                   |                  |
+   +-----------+---------------+-------------------+------------------+
+   |SPIFFE     | Certificate   | Mandatory short   | SPIFFE           |
+   |X.509-SVID | profile and   | lifetime with     | specifications;  |
+   |           | algorithms    | automatic         | deployment       |
+   |           | fixed by the  | rotation          | policy           |
+   |           | SPIFFE        |                   |                  |
+   |           | X.509-SVID    |                   |                  |
+   |           | specification |                   |                  |
+   +-----------+---------------+-------------------+------------------+
+   |SPIFFE JWT-| JWS           | Short lifetime;   | SPIFFE           |
+   |SVID       | algorithms    | expiry only, no   | specifications;  |
+   |           | fixed by the  | revocation        | deployment       |
+   |           | SPIFFE JWT-   |                   | policy           |
+   |           | SVID          |                   |                  |
+   |           | specification |                   |                  |
+   +-----------+---------------+-------------------+------------------+
+   |mTLS       | [CABF-BR] for | Maximum validity  | CA/Browser Forum |
+   |certificate| the Web PKI;  | period;           | Baseline         |
+   |           | internal      | revocation via    | Requirements;    |
+   |           | policy        | CRL or OCSP       | PKI operator     |
+   |           | otherwise     |                   | policy           |
+   +-----------+---------------+-------------------+------------------+
+   |OAuth      | Format        | Short expiry;     | Deployment       |
+   |bearer     | unconstrained | renewal and       | policy; sector   |
+   |access     | by OAuth      | revocation        | profiles may     |
+   |token      | itself; the   | controlled by the | impose           |
+   |           | JWT profile   | authorization     | additional       |
+   |           | applies where | server            | constraints      |
+   |           | used          |                   |                  |
+   +-----------+---------------+-------------------+------------------+
+   |Sender-    | Proof-of-     | Short expiry; the | Deployment       |
+   |constrained| possession    | bound key rotates | policy;          |
+   |access     | mechanism     | independently of  | financial-grade  |
+   |token      | fixed by the  | token lifetime    | profiles require |
+   |           | binding       |                   | sender-          |
+   |           | profile in    |                   | constrained      |
+   |           | use           |                   | tokens           |
+   +-----------+---------------+-------------------+------------------+
+   |HOTP       | HMAC          | Seed rotation on  | NIST SP 800-63B; |
+   |           | algorithm and | re-enrollment;    | PCI DSS          |
+   |           | code length   | counter           |                  |
+   |           | fixed by the  | resynchronization |                  |
+   |           | HOTP          |                   |                  |
+   |           | specification |                   |                  |
+   +-----------+---------------+-------------------+------------------+
+   |TOTP       | Algorithm,    | Seed rotation on  | NIST SP 800-63B; |
+   |           | time step,    | re-enrollment;    | PCI DSS          |
+   |           | and code      | time-step policy  |                  |
+   |           | length fixed  |                   |                  |
+   |           | by the TOTP   |                   |                  |
+   |           | specification |                   |                  |
+   +-----------+---------------+-------------------+------------------+
+   |SMS OTP    | Code length   | Short expiry;     | NIST SP 800-63B, |
+   |           | and character | per-attempt rate  | which constrains |
+   |           | set set by    | limiting          | out-of-band      |
+   |           | the verifier  |                   | authenticators   |
+   |           |               |                   | using the public |
+   |           |               |                   | telephone        |
+   |           |               |                   | network; PCI DSS |
+   +-----------+---------------+-------------------+------------------+
+   |SD-JWT VC  | Disclosure    | Issuer-set        | Issuer policy;   |
+   |           | construction  | expiry; status    | wallet ecosystem |
+   |           | and           | list revocation   | governance       |
+   |           | algorithms    |                   | frameworks       |
+   |           | fixed by the  |                   |                  |
+   |           | SD-JWT        |                   |                  |
+   |           | specification |                   |                  |
+   +-----------+---------------+-------------------+------------------+
+   |ISO mdoc   | Cryptographic | Issuer-set        | ISO/IEC 18013-5; |
+   |           | suites fixed  | validity; MSO     | issuing          |
+   |           | by ISO/IEC    | update and        | authority policy |
+   |           | 18013-5       | revocation        |                  |
+   +-----------+---------------+-------------------+------------------+
+   |DBSC       | Key type      | Session lifetime  | None specific;   |
+   |           | constrained   | and refresh       | inherits the     |
+   |           | by the DBSC   | cadence set by    | session          |
+   |           | specification | the origin        | management       |
+   |           | and platform  |                   | requirements of  |
+   |           | TPM support   |                   | the deploying    |
+   |           |               |                   | framework        |
+   +-----------+---------------+-------------------+------------------+
 
-                                  Table 8
+                                 Table 8
 
 A.6.  Credential Recovery
 
-    +==============+=================================================+
-    | Credential   | Recoverability                                  |
-    | Type         |                                                 |
-    +==============+=================================================+
-    | Password /   | Account-driven; reset via an alternate          |
-    | API key      | credential, the prior secret is not restored    |
-    +--------------+-------------------------------------------------+
-    | Synced       | Issuer-driven; the provider's account recovery  |
-    | passkey      | restores the synced credential                  |
-    +--------------+-------------------------------------------------+
-    | Device-bound | Account-driven; a lost authenticator cannot be  |
-    | passkey      | restored, a replacement must be enrolled        |
-    |              | against a backup credential                     |
-    +--------------+-------------------------------------------------+
-    | SPIFFE       | Issuer-driven; re-attestation yields a new      |
-    | X.509-SVID   | SVID, recovery of the prior key is neither      |
-    |              | needed nor possible                             |
-    +--------------+-------------------------------------------------+
-    | SPIFFE JWT-  | Issuer-driven; re-attestation yields a new SVID |
-    | SVID         |                                                 |
-    +--------------+-------------------------------------------------+
-    | mTLS         | Issuer-driven where the CA supports key escrow  |
-    | certificate  | or re-issuance; Account-driven otherwise, by    |
-    |              | revoking and re-enrolling                       |
-    +--------------+-------------------------------------------------+
-    | HOTP         | Container-driven where an authenticator         |
-    |              | application backup restores the seed; Account-  |
-    |              | driven otherwise, by enrolling a new seed       |
-    +--------------+-------------------------------------------------+
-    | TOTP         | Container-driven where an authenticator         |
-    |              | application backup restores the seed; Account-  |
-    |              | driven otherwise, by enrolling a new seed       |
-    +--------------+-------------------------------------------------+
-    | SMS OTP      | Account-driven; recovery consists of regaining  |
-    |              | control of the phone number, typically through  |
-    |              | the carrier                                     |
-    +--------------+-------------------------------------------------+
-    | SD-JWT VC    | Issuer-driven; the holder re-requests issuance. |
-    |              | A wallet backup may restore the credential but  |
-    |              | not a hardware-bound Key Binding key            |
-    +--------------+-------------------------------------------------+
-    | ISO mdoc     | Issuer-driven; reissuance by the issuing        |
-    |              | authority, the DeviceKey cannot be recovered    |
-    +--------------+-------------------------------------------------+
-    | DBSC         | Account-driven; the session is re-established   |
-    |              | by re-authenticating and the device key is      |
-    |              | regenerated                                     |
-    +--------------+-------------------------------------------------+
+   +====================+==============================================+
+   | Credential Type    | Recoverability                               |
+   +====================+==============================================+
+   | Password / API key | Account-driven; reset via an alternate       |
+   |                    | credential, the prior secret is not          |
+   |                    | restored                                     |
+   +--------------------+----------------------------------------------+
+   | Synced passkey     | Issuer-driven; the provider's account        |
+   |                    | recovery restores the synced credential      |
+   +--------------------+----------------------------------------------+
+   | Device-bound       | Account-driven; a lost authenticator         |
+   | passkey            | cannot be restored, a replacement must       |
+   |                    | be enrolled against a backup credential      |
+   +--------------------+----------------------------------------------+
+   | SPIFFE X.509-SVID  | Issuer-driven; re-attestation yields a       |
+   |                    | new SVID, recovery of the prior key is       |
+   |                    | neither needed nor possible                  |
+   +--------------------+----------------------------------------------+
+   | SPIFFE JWT-SVID    | Issuer-driven; re-attestation yields a       |
+   |                    | new SVID                                     |
+   +--------------------+----------------------------------------------+
+   | mTLS certificate   | Issuer-driven where the CA supports key      |
+   |                    | escrow or re-issuance; Account-driven        |
+   |                    | otherwise, by revoking and re-enrolling      |
+   +--------------------+----------------------------------------------+
+   | OAuth bearer       | Issuer-driven; a new token is requested      |
+   | access token       | with a refresh token or a fresh              |
+   |                    | authorization grant.  The token itself       |
+   |                    | is never recovered                           |
+   +--------------------+----------------------------------------------+
+   | Sender-constrained | Issuer-driven; a new token is requested      |
+   | access token       | and bound to a current key.  Loss of         |
+   |                    | the bound key requires a new key and a       |
+   |                    | new token                                    |
+   +--------------------+----------------------------------------------+
+   | HOTP               | Container-driven where an authenticator      |
+   |                    | application backup restores the seed;        |
+   |                    | Account-driven otherwise, by enrolling       |
+   |                    | a new seed                                   |
+   +--------------------+----------------------------------------------+
+   | TOTP               | Container-driven where an authenticator      |
+   |                    | application backup restores the seed;        |
+   |                    | Account-driven otherwise, by enrolling       |
+   |                    | a new seed                                   |
+   +--------------------+----------------------------------------------+
+   | SMS OTP            | Account-driven; recovery consists of         |
+   |                    | regaining control of the phone number,       |
+   |                    | typically through the carrier                |
+   +--------------------+----------------------------------------------+
+   | SD-JWT VC          | Issuer-driven; the holder re-requests        |
+   |                    | issuance.  A wallet backup may restore       |
+   |                    | the credential but not a hardware-bound      |
+   |                    | Key Binding key                              |
+   +--------------------+----------------------------------------------+
+   | ISO mdoc           | Issuer-driven; reissuance by the             |
+   |                    | issuing authority, the DeviceKey cannot      |
+   |                    | be recovered                                 |
+   +--------------------+----------------------------------------------+
+   | DBSC               | Account-driven; the session is re-           |
+   |                    | established by re-authenticating and         |
+   |                    | the device key is regenerated                |
+   +--------------------+----------------------------------------------+
 
-                                 Table 9
+                                  Table 9
 
 Acknowledgments
 
