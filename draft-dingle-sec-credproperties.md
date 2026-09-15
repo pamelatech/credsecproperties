@@ -87,7 +87,7 @@ informative:
     date: 2025-03-12
     author:
       - org: FIDO Alliance
-  SP800-63A:
+  SP800-63A-rev4:
     title: "Digital Identity Guidelines: Identity Proofing and Enrollment"
     target: https://doi.org/10.6028/NIST.SP.800-63A-4
     date: 2025-07
@@ -95,7 +95,7 @@ informative:
       - org: National Institute of Standards and Technology
     seriesinfo:
       NIST: Special Publication 800-63A-4
-  SP800-63B:
+  SP800-63B-rev4:
     title: "Digital Identity Guidelines: Authentication and Authenticator Management"
     target: https://doi.org/10.6028/NIST.SP.800-63B-4
     date: 2025-07
