@@ -298,7 +298,7 @@ The credential types examined are:
 
 - **Password / API key / client credential** — a shared secret presented directly to the verifier with no transformation.
 - **Synced passkey (consumer)** — a WebAuthn credential synchronized across devices by a consumer credential manager such as a platform provider or password manager.
-- **Device-bound passkey (hardware security key, enterprise)** — a WebAuthn credential generated on and bound to a hardware authenticator implementing CTAP {{CTAP}}, managed by an enterprise.
+- **Device-bound passkey on FIDO L2 Certified security key** — a WebAuthn credential generated on and bound to a hardware authenticator implementing CTAP {{CTAP}} and certified at FIDO L2 or above.
 - **SPIFFE X.509-SVID** — a workload identity issued as an X.509 certificate following attestation of the workload, presented via mutual TLS. See {{SPIFFE-X509-SVID}}.
 - **SPIFFE JWT-SVID** — the same workload identity expressed as a signed JWT and presented as a bearer token {{RFC6750}} to services that cannot terminate mutual TLS. See {{SPIFFE-JWT-SVID}}.
 - **mTLS certificate** — a client certificate issued by a Web PKI or private CA outside of any SPIFFE trust domain, presented during the TLS handshake.
@@ -319,7 +319,7 @@ The following properties describe how a credential asserts and protects its cont
 | --- | --- | --- | --- | --- |
 | Password / API key | No | None; the stored and presented forms are identical | No | No |
 | Synced passkey | No; attestation is typically not conveyed | Dynamic; challenge-response | Yes; credential ID and user handle bound to the key pair | Yes; signed assertion |
-| Device-bound passkey | Yes; attestation statement conveys authenticator provenance | Dynamic; challenge-response | Yes | Yes; signed assertion |
+| Device-bound passkey | Yes; attestation statement conveys authenticator provenance if requested & validated by the RP | Dynamic; challenge-response | Yes | Yes; signed assertion |
 | SPIFFE X.509-SVID | Yes; CA-signed after workload attestation | Dynamic; the private key is never transmitted | Yes; SPIFFE ID in the SAN URI | Yes; CA signature |
 | SPIFFE JWT-SVID | Yes; signed by the trust domain authority | None; presented verbatim as a bearer token | Yes; SPIFFE ID in `sub` | Yes; JWS signature {{RFC7515}} |
 | mTLS certificate | Yes; CA-signed | Dynamic; the private key is never transmitted | Yes; subject DN or SAN | Yes; CA signature |
@@ -338,7 +338,7 @@ The following properties describe how a credential scopes and structures its con
 | --- | --- | --- | --- | --- |
 | Password / API key | No | No | Policy-imposed only; not carried in the credential | No |
 | Synced passkey | No | Yes; RP ID and origin binding | No; freshness is established by the challenge | No |
-| Device-bound passkey | No | Yes; RP ID and origin binding | No | No |
+| Device-bound passkey | No | Yes; RP ID and origin binding | No; freshness is established by the challenge | No |
 | SPIFFE X.509-SVID | Yes; X.509 chain to the trust domain CA | Partial; scoped to the trust domain and federated trust domains rather than a named service | Yes; short-lived and automatically rotated | No |
 | SPIFFE JWT-SVID | No; single signer, no embedded chain | Yes; `aud` names the target service | Yes; short-lived | No |
 | mTLS certificate | Yes; X.509 chain | No; accepted by any relying party trusting the CA | Yes; typically months to years | No |
@@ -378,7 +378,7 @@ The following properties describe containment of the credential at rest.
 | --- | --- | --- | --- |
 | Password / API key | Uncontained | Unbounded | Reactive; breach corpus matching and secret scanning |
 | Synced passkey | Partially contained by the credential provider | Bound to the passkey provider; specifics depend on the provider | Managed by the passkey provider |
-| Device-bound passkey | Contained | Bound to the hardware authenticator; non-exportable | Proactive; enforced by hardware |
+| Device-bound passkey | Contained | Bound to the hardware authenticator; non-exportable; verifiable through attestation at registration | Proactive; enforced by hardware |
 | SPIFFE X.509-SVID | Contained when the key is TPM-bound; otherwise resident in workload memory | Bound to the TPM when hardware-backed; otherwise to the attested node and workload | Proactive when hardware-backed; otherwise enforced by the node attestor and workload API |
 | SPIFFE JWT-SVID | Uncontained once issued; a bearer token | Unbounded after issuance | Reactive; mitigated by short lifetime |
 | mTLS certificate | Contained in an HSM or TPM; uncontained as a key file | Bound to the HSM or TPM when hardware-backed; unbounded as an exportable file or PKCS#12 | Proactive when hardware-backed; otherwise reactive |
@@ -389,7 +389,7 @@ The following properties describe containment of the credential at rest.
 | SMS OTP | Uncontained; delivered in clear text and readable from the notification surface | Bound to control of the phone number, not to a device | Reactive; carrier-side controls against SIM swap and port-out |
 | SD-JWT VC | Contained when the Key Binding key is in a secure element; the credential itself is data at rest in the wallet | Bound to the wallet key store when Key Binding is used; unbounded otherwise | Proactive when hardware-backed; otherwise none |
 | ISO mdoc | Contained; DeviceKey resides in the device secure area | Bound to the device secure area | Proactive; enforced by hardware |
-| DBSC | Contained; the session key resides in the TPM or secure enclave | Bound to the device TPM; non-exportable | Proactive; enforced by hardware |
+| DBSC | Contained if the session key resides in the TPM or secure enclave; Partially contained for software based implementations | Boundary enforcement depends on hardware boundedness.  Bound keys reside in TPM or Secure Elements and are non-exportable.  Partially bound keys are software based. | Proactive; enforced by hardware or software |
 
 The following properties describe how a contained credential is released for use.
 
@@ -416,7 +416,7 @@ The following properties describe how a contained credential is released for use
 | --- | --- | --- | --- |
 | Password / API key | Varies; typically none beyond an existing account context | Sometimes; set during a vouched registration or reset flow | Association with the account record held by the verifier |
 | Synced passkey | Inherits the assurance of the session that created it | Yes; enrollment is gated by a pre-existing credential | WebAuthn registration ceremony binds the public key to the user handle |
-| Device-bound passkey | Enterprise-controlled; may require in-person proofing | Yes; typically gated by an enterprise credential or supervised enrollment | Registration ceremony with attestation binds the key to a specific authenticator model |
+| Device-bound passkey | Enterprise-controlled; may require in-person proofing | Yes; typically gated by an enterprise credential or supervised enrollment | WebAuthn registration ceremony binds the public key to the user handle |
 | SPIFFE X.509-SVID | Derived from node and workload attestation rather than human proofing | Yes; node attestation acts as the prior gate | Attestors bind the SPIFFE ID to the attested workload |
 | SPIFFE JWT-SVID | Derived from node and workload attestation | Yes; node attestation acts as the prior gate | Attestors bind the SPIFFE ID to the attested workload |
 | mTLS certificate | Varies by CA policy, from domain validation to in-person proofing | Often; CSR submission is gated by an existing credential | The CA binds the subject and SAN to the public key in the CSR |
@@ -434,8 +434,8 @@ The following properties describe how a contained credential is released for use
 | Credential Type | Composition Rules | Lifecycle Rules | Regulatory Framework |
 | --- | --- | --- | --- |
 | Password / API key | Length and character composition may be enforced | Rotation, expiry, and reuse limits may be enforced |; {{PCI-DSS}} |
-| Synced passkey | Algorithm set constrained by WebAuthn and COSE | Revocation by deregistration; no rotation concept | NIST SP 800-63B; FIDO Alliance certification |
-| Device-bound passkey | Algorithm set constrained by WebAuthn and COSE; authenticator certification level | Deregistration; key lifetime tied to the authenticator | NIST SP 800-63B at the highest authenticator assurance level; FIDO Alliance certification |
+| Synced passkey | Algorithm set constrained by WebAuthn and COSE | Revocation by deregistration; no rotation concept | NIST SP 800-63B|
+| Device-bound passkey | Algorithm set constrained by WebAuthn and COSE; authenticator certification level | Deregistration; key lifetime tied to the authenticator | NIST SP 800-63B up to AAL3; FIDO Alliance certification |
 | SPIFFE X.509-SVID | Certificate profile and algorithms fixed by the SPIFFE X.509-SVID specification | Mandatory short lifetime with automatic rotation | SPIFFE specifications; deployment policy |
 | SPIFFE JWT-SVID | JWS algorithms fixed by the SPIFFE JWT-SVID specification | Short lifetime; expiry only, no revocation | SPIFFE specifications; deployment policy |
 | mTLS certificate | {{CABF-BR}} for the Web PKI; internal policy otherwise | Maximum validity period; revocation via CRL or OCSP | CA/Browser Forum Baseline Requirements; PKI operator policy |
