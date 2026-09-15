@@ -917,94 +917,99 @@ A.3.  Credential Containment & Unlock
    The following properties describe containment of the credential at
    rest.
 
-   +============+================+==================+==================+
-   |Credential  | Containment    | Boundary Binding | Boundary         |
-   |Type        |                |                  | Enforcement      |
-   +============+================+==================+==================+
-   |Password /  | Uncontained    | Unbounded        | Reactive; breach |
-   |API key     |                |                  | corpus matching  |
-   |            |                |                  | and secret       |
-   |            |                |                  | scanning         |
-   +------------+----------------+------------------+------------------+
-   |Synced      | Partially      | Bound to the     | Managed by the   |
-   |passkey     | contained by   | passkey          | passkey provider |
-   |            | the            | provider;        |                  |
-   |            | credential     | specifics depend |                  |
-   |            | provider       | on the provider  |                  |
-   +------------+----------------+------------------+------------------+
-   |Device-bound| Contained      | Bound to the     | Proactive;       |
-   |passkey     |                | hardware         | enforced by      |
-   |            |                | authenticator;   | hardware         |
-   |            |                | non-exportable   |                  |
-   +------------+----------------+------------------+------------------+
-   |SPIFFE      | Contained      | Bound to the TPM | Proactive when   |
-   |X.509-SVID  | when the key   | when hardware-   | hardware-backed; |
-   |            | is TPM-bound;  | backed;          | otherwise        |
-   |            | otherwise      | otherwise to the | enforced by the  |
-   |            | resident in    | attested node    | node attestor    |
-   |            | workload       | and workload     | and workload API |
-   |            | memory         |                  |                  |
-   +------------+----------------+------------------+------------------+
-   |SPIFFE JWT- | Uncontained    | Unbounded after  | Reactive;        |
-   |SVID        | once issued;   | issuance         | mitigated by     |
-   |            | a bearer       |                  | short lifetime   |
-   |            | token          |                  |                  |
-   +------------+----------------+------------------+------------------+
-   |mTLS        | Contained in   | Bound to the HSM | Proactive when   |
-   |certificate | an HSM or      | or TPM when      | hardware-backed; |
-   |            | TPM;           | hardware-backed; | otherwise        |
-   |            | uncontained    | unbounded as an  | reactive         |
-   |            | as a key file  | exportable file  |                  |
-   |            |                | or PKCS#12       |                  |
-   +------------+----------------+------------------+------------------+
-   |HOTP        | Contained in   | Bound to the     | Proactive for    |
-   |            | a hardware     | hardware token;  | hardware tokens; |
-   |            | token;         | unbounded as a   | otherwise none   |
-   |            | uncontained    | soft seed that   |                  |
-   |            | as a soft      | can be re-       |                  |
-   |            | seed           | enrolled from    |                  |
-   |            |                | the provisioning |                  |
-   |            |                | URI              |                  |
-   +------------+----------------+------------------+------------------+
-   |TOTP        | Contained in   | Bound to the     | Proactive for    |
-   |            | a hardware     | hardware token;  | hardware tokens; |
-   |            | token;         | unbounded as a   | otherwise none   |
-   |            | uncontained    | soft seed        |                  |
-   |            | as a soft      |                  |                  |
-   |            | seed           |                  |                  |
-   +------------+----------------+------------------+------------------+
-   |SMS OTP     | Uncontained;   | Bound to control | Reactive;        |
-   |            | delivered in   | of the phone     | carrier-side     |
-   |            | clear text     | number, not to a | controls against |
-   |            | and readable   | device           | SIM swap and     |
-   |            | from the       |                  | port-out         |
-   |            | notification   |                  |                  |
-   |            | surface        |                  |                  |
-   +------------+----------------+------------------+------------------+
-   |SD-JWT VC   | Contained      | Bound to the     | Proactive when   |
-   |            | when the Key   | wallet key store | hardware-backed; |
-   |            | Binding key    | when Key Binding | otherwise none   |
-   |            | is in a        | is used;         |                  |
-   |            | secure         | unbounded        |                  |
-   |            | element; the   | otherwise        |                  |
-   |            | credential     |                  |                  |
-   |            | itself is      |                  |                  |
-   |            | data at rest   |                  |                  |
-   |            | in the wallet  |                  |                  |
-   +------------+----------------+------------------+------------------+
-   |ISO mdoc    | Contained;     | Bound to the     | Proactive;       |
-   |            | DeviceKey      | device secure    | enforced by      |
-   |            | resides in     | area             | hardware         |
-   |            | the device     |                  |                  |
-   |            | secure area    |                  |                  |
-   +------------+----------------+------------------+------------------+
-   |DBSC        | Contained;     | Bound to the     | Proactive;       |
-   |            | the session    | device TPM; non- | enforced by      |
-   |            | key resides    | exportable       | hardware         |
-   |            | in the TPM or  |                  |                  |
-   |            | secure         |                  |                  |
-   |            | enclave        |                  |                  |
-   +------------+----------------+------------------+------------------+
+   +============+===============+===================+==================+
+   |Credential  |Containment    | Boundary Binding  | Boundary         |
+   |Type        |               |                   | Enforcement      |
+   +============+===============+===================+==================+
+   |Password /  |Uncontained    | Unbounded         | Reactive; breach |
+   |API key     |               |                   | corpus matching  |
+   |            |               |                   | and secret       |
+   |            |               |                   | scanning         |
+   +------------+---------------+-------------------+------------------+
+   |Synced      |Partially      | Bound to the      | Managed by the   |
+   |passkey     |contained by   | passkey           | passkey provider |
+   |            |the credential | provider;         |                  |
+   |            |provider       | specifics depend  |                  |
+   |            |               | on the provider   |                  |
+   +------------+---------------+-------------------+------------------+
+   |Device-bound|Contained      | Bound to the      | Proactive;       |
+   |passkey     |               | hardware          | enforced by      |
+   |            |               | authenticator;    | hardware         |
+   |            |               | non-exportable;   |                  |
+   |            |               | verifiable        |                  |
+   |            |               | through           |                  |
+   |            |               | attestation at    |                  |
+   |            |               | registration      |                  |
+   +------------+---------------+-------------------+------------------+
+   |SPIFFE      |Contained when | Bound to the TPM  | Proactive when   |
+   |X.509-SVID  |the key is TPM-| when hardware-    | hardware-backed; |
+   |            |bound;         | backed;           | otherwise        |
+   |            |otherwise      | otherwise to the  | enforced by the  |
+   |            |resident in    | attested node     | node attestor    |
+   |            |workload memory| and workload      | and workload API |
+   +------------+---------------+-------------------+------------------+
+   |SPIFFE JWT- |Uncontained    | Unbounded after   | Reactive;        |
+   |SVID        |once issued; a | issuance          | mitigated by     |
+   |            |bearer token   |                   | short lifetime   |
+   +------------+---------------+-------------------+------------------+
+   |mTLS        |Contained in an| Bound to the HSM  | Proactive when   |
+   |certificate |HSM or TPM;    | or TPM when       | hardware-backed; |
+   |            |uncontained as | hardware-backed;  | otherwise        |
+   |            |a key file     | unbounded as an   | reactive         |
+   |            |               | exportable file   |                  |
+   |            |               | or PKCS#12        |                  |
+   +------------+---------------+-------------------+------------------+
+   |HOTP        |Contained in a | Bound to the      | Proactive for    |
+   |            |hardware token;| hardware token;   | hardware tokens; |
+   |            |uncontained as | unbounded as a    | otherwise none   |
+   |            |a soft seed    | soft seed that    |                  |
+   |            |               | can be re-        |                  |
+   |            |               | enrolled from     |                  |
+   |            |               | the provisioning  |                  |
+   |            |               | URI               |                  |
+   +------------+---------------+-------------------+------------------+
+   |TOTP        |Contained in a | Bound to the      | Proactive for    |
+   |            |hardware token;| hardware token;   | hardware tokens; |
+   |            |uncontained as | unbounded as a    | otherwise none   |
+   |            |a soft seed    | soft seed         |                  |
+   +------------+---------------+-------------------+------------------+
+   |SMS OTP     |Uncontained;   | Bound to control  | Reactive;        |
+   |            |delivered in   | of the phone      | carrier-side     |
+   |            |clear text and | number, not to a  | controls against |
+   |            |readable from  | device            | SIM swap and     |
+   |            |the            |                   | port-out         |
+   |            |notification   |                   |                  |
+   |            |surface        |                   |                  |
+   +------------+---------------+-------------------+------------------+
+   |SD-JWT VC   |Contained when | Bound to the      | Proactive when   |
+   |            |the Key Binding| wallet key store  | hardware-backed; |
+   |            |key is in a    | when Key Binding  | otherwise none   |
+   |            |secure element;| is used;          |                  |
+   |            |the credential | unbounded         |                  |
+   |            |itself is data | otherwise         |                  |
+   |            |at rest in the |                   |                  |
+   |            |wallet         |                   |                  |
+   +------------+---------------+-------------------+------------------+
+   |ISO mdoc    |Contained;     | Bound to the      | Proactive;       |
+   |            |DeviceKey      | device secure     | enforced by      |
+   |            |resides in the | area              | hardware         |
+   |            |device secure  |                   |                  |
+   |            |area           |                   |                  |
+   +------------+---------------+-------------------+------------------+
+   |DBSC        |Contained if   | Boundary          | Proactive;       |
+   |            |the session key| enforcement       | enforced by      |
+   |            |resides in the | depends on        | hardware or      |
+   |            |TPM or secure  | hardware          | software         |
+   |            |enclave;       | boundedness.      |                  |
+   |            |Partially      | Bound keys        |                  |
+   |            |contained for  | reside in TPM or  |                  |
+   |            |software based | Secure Elements   |                  |
+   |            |implementations| and are non-      |                  |
+   |            |               | exportable.       |                  |
+   |            |               | Partially bound   |                  |
+   |            |               | keys are          |                  |
+   |            |               | software based.   |                  |
+   +------------+---------------+-------------------+------------------+
 
                                   Table 5
 

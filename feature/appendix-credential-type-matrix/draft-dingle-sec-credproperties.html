@@ -2162,7 +2162,7 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Device-bound passkey</td>
               <td class="text-left" rowspan="1" colspan="1">Contained</td>
-              <td class="text-left" rowspan="1" colspan="1">Bound to the hardware authenticator; non-exportable</td>
+              <td class="text-left" rowspan="1" colspan="1">Bound to the hardware authenticator; non-exportable; verifiable through attestation at registration</td>
               <td class="text-left" rowspan="1" colspan="1">Proactive; enforced by hardware</td>
             </tr>
             <tr>
@@ -2215,9 +2215,9 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">DBSC</td>
-              <td class="text-left" rowspan="1" colspan="1">Contained; the session key resides in the TPM or secure enclave</td>
-              <td class="text-left" rowspan="1" colspan="1">Bound to the device TPM; non-exportable</td>
-              <td class="text-left" rowspan="1" colspan="1">Proactive; enforced by hardware</td>
+              <td class="text-left" rowspan="1" colspan="1">Contained if the session key resides in the TPM or secure enclave; Partially contained for software based implementations</td>
+              <td class="text-left" rowspan="1" colspan="1">Boundary enforcement depends on hardware boundedness.  Bound keys reside in TPM or Secure Elements and are non-exportable.  Partially bound keys are software based.</td>
+              <td class="text-left" rowspan="1" colspan="1">Proactive; enforced by hardware or software</td>
             </tr>
           </tbody>
         </table>
