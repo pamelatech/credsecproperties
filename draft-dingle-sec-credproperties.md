@@ -331,7 +331,7 @@ The following properties describe how a credential scopes and structures its con
 | --- | --- | --- | --- | --- |
 | Password / API key | No | No | Policy-imposed only; not carried in the credential | No |
 | Synced passkey | No | Yes; RP ID and origin binding | No; freshness is established by the challenge | No |
-| Device-bound passkey | No | Yes; RP ID and origin binding | No | No |
+| Device-bound passkey | No | Yes; RP ID and origin binding | No; freshness is established by the challenge | No |
 | SPIFFE X.509-SVID | Yes; X.509 chain to the trust domain CA | Partial; scoped to the trust domain and federated trust domains rather than a named service | Yes; short-lived and automatically rotated | No |
 | SPIFFE JWT-SVID | No; single signer, no embedded chain | Yes; `aud` names the target service | Yes; short-lived | No |
 | mTLS certificate | Yes; X.509 chain | No; accepted by any relying party trusting the CA | Yes; typically months to years | No |
