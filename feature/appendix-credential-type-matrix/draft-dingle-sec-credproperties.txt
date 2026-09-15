@@ -625,9 +625,10 @@ Appendix A.  Applying the Properties to Common Credential Types
       across devices by a consumer credential manager such as a platform
       provider or password manager.
 
-   *  *Device-bound passkey (hardware security key, enterprise)* — a
+   *  *Device-bound passkey on FIDO L2 Certified security key* — a
       WebAuthn credential generated on and bound to a hardware
-      authenticator implementing CTAP [CTAP], managed by an enterprise.
+      authenticator implementing CTAP [CTAP] and certified at FIDO L2 or
+      above.
 
    *  *SPIFFE X.509-SVID* — a workload identity issued as an X.509
       certificate following attestation of the workload, presented via
