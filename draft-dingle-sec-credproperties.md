@@ -314,7 +314,7 @@ The following properties describe how a credential asserts and protects its cont
 | --- | --- | --- | --- | --- |
 | Password / API key | No | None; the stored and presented forms are identical | No | No |
 | Synced passkey | No; attestation is typically not conveyed | Dynamic; challenge-response | Yes; credential ID and user handle bound to the key pair | Yes; signed assertion |
-| Device-bound passkey | Yes; attestation statement conveys authenticator provenance | Dynamic; challenge-response | Yes | Yes; signed assertion |
+| Device-bound passkey | Yes; attestation statement conveys authenticator provenance if requested & validated by the RP | Dynamic; challenge-response | Yes | Yes; signed assertion |
 | SPIFFE X.509-SVID | Yes; CA-signed after workload attestation | Dynamic; the private key is never transmitted | Yes; SPIFFE ID in the SAN URI | Yes; CA signature |
 | SPIFFE JWT-SVID | Yes; signed by the trust domain authority | None; presented verbatim as a bearer token | Yes; SPIFFE ID in `sub` | Yes; JWS signature {{RFC7515}} |
 | mTLS certificate | Yes; CA-signed | Dynamic; the private key is never transmitted | Yes; subject DN or SAN | Yes; CA signature |
