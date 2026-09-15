@@ -777,8 +777,10 @@ A.1.  Credential Construction
    |            |            |              |by the        |          |
    |            |            |              |challenge     |          |
    +------------+------------+--------------+--------------+----------+
-   |Device-bound|No          |Yes; RP ID and|No            |No        |
-   |passkey     |            |origin binding|              |          |
+   |Device-bound|No          |Yes; RP ID and|No; freshness |No        |
+   |passkey     |            |origin binding|is established|          |
+   |            |            |              |by the        |          |
+   |            |            |              |challenge     |          |
    +------------+------------+--------------+--------------+----------+
    |SPIFFE      |Yes; X.509  |Partial;      |Yes; short-   |No        |
    |X.509-SVID  |chain to the|scoped to the |lived and     |          |
