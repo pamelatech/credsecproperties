@@ -401,7 +401,7 @@ The following properties describe how a contained credential is released for use
 | --- | --- | --- | --- |
 | Password / API key | Varies; typically none beyond an existing account context | Sometimes; set during a vouched registration or reset flow | Association with the account record held by the verifier |
 | Synced passkey | Inherits the assurance of the session that created it | Yes; enrollment is gated by a pre-existing credential | WebAuthn registration ceremony binds the public key to the user handle |
-| Device-bound passkey | Enterprise-controlled; may require in-person proofing | Yes; typically gated by an enterprise credential or supervised enrollment | Registration ceremony with attestation binds the key to a specific authenticator model |
+| Device-bound passkey | Enterprise-controlled; may require in-person proofing | Yes; typically gated by an enterprise credential or supervised enrollment | WebAuthn registration ceremony binds the public key to the user handle |
 | SPIFFE X.509-SVID | Derived from node and workload attestation rather than human proofing | Yes; node attestation acts as the prior gate | Attestors bind the SPIFFE ID to the attested workload |
 | SPIFFE JWT-SVID | Derived from node and workload attestation | Yes; node attestation acts as the prior gate | Attestors bind the SPIFFE ID to the attested workload |
 | mTLS certificate | Varies by CA policy, from domain validation to in-person proofing | Often; CSR submission is gated by an existing credential | The CA binds the subject and SAN to the public key in the CSR |
