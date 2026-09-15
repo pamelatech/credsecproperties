@@ -505,6 +505,13 @@ Table of Contents
               31 August 2026, <https://datatracker.ietf.org/doc/html/
               draft-ietf-oauth-sd-jwt-vc-19>.
 
+   [I-D.ietf-oauth-v2-1]
+              Hardt, D., Parecki, A., and T. Lodderstedt, "The OAuth 2.1
+              Authorization Framework", Work in Progress, Internet-
+              Draft, draft-ietf-oauth-v2-1-16, 2 September 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
+              v2-1-16>.
+
    [ISO18013-5]
               International Organization for Standardization, "Personal
               identification - ISO-compliant driving licence - Part 5:
@@ -660,7 +667,9 @@ Appendix A.  Applying the Properties to Common Credential Types
    *  *OAuth bearer access token* — an access token [RFC6749] presented
       to a resource server as a bearer credential, either as a signed
       JWT or as an opaque handle the resource server validates by
-      introspection.
+      introspection.  OAuth 2.1 [I-D.ietf-oauth-v2-1] consolidates the
+      OAuth 2.0 core and bearer token specifications and is intended to
+      obsolete both.
 
    *  *Sender-constrained access token* — the same access token bound to
       a client key, so that presentation additionally requires proof of
