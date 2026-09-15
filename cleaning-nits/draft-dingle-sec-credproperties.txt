@@ -470,13 +470,6 @@ Table of Contents
 
 7.2.  Informative References
 
-   [FIDO-SEC-REQ]
-              FIDO Alliance, "FIDO Authenticator Security and Privacy
-              Requirements, Version 1.6", 12 March 2025,
-              <https://fidoalliance.org/specs/fido-security-
-              requirements/fido-authenticator-security-requirements-
-              v1.6-fd-20250312.html>.
-
    [ISO18013-5]
               International Organization for Standardization, "Personal
               identification - ISO-compliant driving licence - Part 5:
