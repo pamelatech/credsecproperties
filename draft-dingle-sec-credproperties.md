@@ -104,6 +104,7 @@ informative:
     seriesinfo:
       NIST: Special Publication 800-63B-4
   RFC6749:
+  I-D.ietf-oauth-v2-1:
   RFC6750:
   RFC7515:
   RFC8705:
@@ -302,7 +303,7 @@ The credential types examined are:
 - **SPIFFE X.509-SVID** — a workload identity issued as an X.509 certificate following attestation of the workload, presented via mutual TLS. See {{SPIFFE-X509-SVID}}.
 - **SPIFFE JWT-SVID** — the same workload identity expressed as a signed JWT and presented as a bearer token {{RFC6750}} to services that cannot terminate mutual TLS. See {{SPIFFE-JWT-SVID}}.
 - **mTLS certificate** — a client certificate issued by a Web PKI or private CA outside of any SPIFFE trust domain, presented during the TLS handshake.
-- **OAuth bearer access token** — an access token {{RFC6749}} presented to a resource server as a bearer credential, either as a signed JWT or as an opaque handle the resource server validates by introspection.
+- **OAuth bearer access token** — an access token {{RFC6749}} presented to a resource server as a bearer credential, either as a signed JWT or as an opaque handle the resource server validates by introspection. OAuth 2.1 {{I-D.ietf-oauth-v2-1}} consolidates the OAuth 2.0 core and bearer token specifications and is intended to obsolete both.
 - **Sender-constrained access token** — the same access token bound to a client key, so that presentation additionally requires proof of possession of that key, whether by DPoP {{RFC9449}} or by mutual TLS certificate binding {{RFC8705}}.
 - **HOTP** — an HMAC-based counter-derived one-time password.
 - **TOTP** — a time-derived one-time password.
