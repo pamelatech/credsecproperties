@@ -418,7 +418,7 @@ The following properties describe how a contained credential is released for use
 | --- | --- | --- | --- |
 | Password / API key | Length and character composition may be enforced | Rotation, expiry, and reuse limits may be enforced |; {{PCI-DSS}} |
 | Synced passkey | Algorithm set constrained by WebAuthn and COSE | Revocation by deregistration; no rotation concept | NIST SP 800-63B|
-| Device-bound passkey | Algorithm set constrained by WebAuthn and COSE; authenticator certification level | Deregistration; key lifetime tied to the authenticator | NIST SP 800-63B at the highest authenticator assurance level; FIDO Alliance certification |
+| Device-bound passkey | Algorithm set constrained by WebAuthn and COSE; authenticator certification level | Deregistration; key lifetime tied to the authenticator | NIST SP 800-63B up to AAL3; FIDO Alliance certification |
 | SPIFFE X.509-SVID | Certificate profile and algorithms fixed by the SPIFFE X.509-SVID specification | Mandatory short lifetime with automatic rotation | SPIFFE specifications; deployment policy |
 | SPIFFE JWT-SVID | JWS algorithms fixed by the SPIFFE JWT-SVID specification | Short lifetime; expiry only, no revocation | SPIFFE specifications; deployment policy |
 | mTLS certificate | {{CABF-BR}} for the Web PKI; internal policy otherwise | Maximum validity period; revocation via CRL or OCSP | CA/Browser Forum Baseline Requirements; PKI operator policy |
