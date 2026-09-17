@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-03T02:36:41.035945+00:00",
+  "timestamp": "2026-09-17T03:00:28.714937+00:00",
   "repo": "pamelatech/credsecproperties",
   "labels": [
     {
@@ -155,15 +155,15 @@
       "id": "I_kwDON4ikis8AAAABCZQ8zg",
       "title": "Boundary and Containment are too overlappy",
       "url": "https://github.com/pamelatech/credsecproperties/issues/11",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "pamelatech",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "They are too easy to conflate with each other.  Maybe there is a better word than Boundary",
       "createdAt": "2026-05-15T17:14:25Z",
-      "updatedAt": "2026-06-15T16:22:57Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-15T23:11:37Z",
+      "closedAt": "2026-09-15T23:11:36Z",
       "comments": [
         {
           "author": "deansaxe",
@@ -185,6 +185,13 @@
           "body": "WIth this merge, can I close the issue @pamelatech?",
           "createdAt": "2026-06-15T16:22:57Z",
           "updatedAt": "2026-06-15T16:22:57Z"
+        },
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closing as complete.",
+          "createdAt": "2026-09-15T23:11:36Z",
+          "updatedAt": "2026-09-15T23:11:36Z"
         }
       ]
     },
@@ -304,15 +311,15 @@
       "id": "I_kwDON4ikis8AAAABHh8Pqw",
       "title": "Credential Recovery",
       "url": "https://github.com/pamelatech/credsecproperties/issues/28",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "deansaxe",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Reviewing this doc, it appears that credential recovery is more about the system that creates/manages the lifecycle of a credential, than a specific type of credential.\n\nDo we need to address the fact that this is going to be implementation specific and not an inherent property of the credential?  This feels like a slippery slope to defining the implementation characteristics.",
       "createdAt": "2026-07-03T04:18:05Z",
-      "updatedAt": "2026-07-04T16:33:53Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-15T23:10:54Z",
+      "closedAt": "2026-09-15T23:10:54Z",
       "comments": [
         {
           "author": "deansaxe",
@@ -348,6 +355,13 @@
           "body": "After discussing today (July 4) I propose changing the recovery property to be a descriptor rather than a binary, will create a PR to explore this option.  We discussed 3 different types of recovery: 1) issuer-driven, 2) recovery-driven and 3) container-driven.   We also discussed that this is an operational security property rather than an inherent security property.",
           "createdAt": "2026-07-04T16:33:53Z",
           "updatedAt": "2026-07-04T16:33:53Z"
+        },
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "closing, the changes have been merged.",
+          "createdAt": "2026-09-15T23:10:54Z",
+          "updatedAt": "2026-09-15T23:10:54Z"
         }
       ]
     },
@@ -1699,6 +1713,358 @@
           ]
         }
       ]
+    },
+    {
+      "number": 36,
+      "id": "PR_kwDON4ikis8AAAABDp0kSA",
+      "title": "Add informative references and cite specifications on first use",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/36",
+      "state": "MERGED",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "**Merge this first.** #37 (appendix matrix) assumes it has landed.\n\nThe draft named roughly a dozen specifications in prose \u2014 SAML, JWT, X.509, ISO 18013, SD-JWT, FIDO, OBO tokens, NIST 800-63 \u2014 but carried **no reference entries and no citations at all**. This adds the reference block and cites each specification at its first use in the body.\n\n### Editorial decisions worth a look\n\n- **Everything is informative.** This is an informational document whose references illustrate the properties being defined rather than impose requirements. The only normative references are RFC 2119 / RFC 8174, added automatically by the BCP 14 boilerplate.\n- **First use only**, per @deansaxe's direction \u2014 each spec is cited once, at the point the body first names it.\n- **NIST dates use month precision** (`2025-07`). csrc.nist.gov and nist.gov/publications disagree on the publication *day* for the Revision 4 volumes, so I did not pick a side.\n\n### TODOs resolved\n\n- \u00a7Enrollment Assurance asked \"*todo, this feels like it points at NIST!*\" \u2014 it does. Now cites SP 800-63A-4 identity assurance levels.\n- \u00a7Activation had a bare prose `(see 800-63-4)` \u2014 now a real citation to SP 800-63B-4, which is where *activation factor* is actually defined.\n\n### TODO narrowed, not resolved \u2014 needs a decision\n\n\u00a7Containment said \"*see FIDO security requirements for sync fabric*\". **No such FIDO Alliance document exists.** The nearest is *FIDO Authenticator Security and Privacy Requirements v1.6* (Mar 2025), now cited, with the TODO reworded to say the sync-fabric-specific document doesn't exist. Someone needs to decide what this section should actually point at.\n\n### Verification\n\n- `make` builds clean to `.txt`\n- 0 lines exceed the 72-column limit\n- 17 references, each appearing exactly twice in the output (citation site + reference list)\n\nAll citation facts were verified against primary sources (Datatracker, rfc-editor.org, w3.org, iso.org, csrc.nist.gov, cabforum.org) rather than recalled. Notably **SD-JWT is now RFC 9901** (Nov 2025), not a draft.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)\n",
+      "createdAt": "2026-09-15T18:07:00Z",
+      "updatedAt": "2026-09-15T21:34:39Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "235856b54c4fe053396f10c0abe5a8e9337a02e4",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "feature/normative-informative-refs",
+      "headRefOid": "17cf45bd65b8a8d5cad047d4415839a7ae8eaaff",
+      "closedAt": "2026-09-15T21:34:38Z",
+      "mergedAt": "2026-09-15T21:34:38Z",
+      "mergedBy": "pamelatech",
+      "mergeCommit": {
+        "oid": "b4d1cbf640edb4f7e5a848be1e70d571f03bc8f2"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDON4ikis8AAAABNsetog",
+          "commit": {
+            "abbreviatedOid": "e67256f"
+          },
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-15T18:11:52Z",
+          "updatedAt": "2026-09-15T18:11:53Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "Manually reviewed all of the edits, references all appear to be correct.  @pamelatech will you please merge the PR to get all of our references in order?",
+              "createdAt": "2026-09-15T18:11:53Z",
+              "updatedAt": "2026-09-15T18:11:53Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 37,
+      "id": "PR_kwDON4ikis8AAAABDp0xlw",
+      "title": "Rewrite appendix as credential-type-to-property matrix",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/37",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "**Merge #36 first.** The second commit here assumes it has landed \u2014 see *Merge order* below.\n\nTransposes the appendix so **credential types are rows and properties are columns**, and reconciles it with the body's reorganized property classes.\n\n### The appendix had drifted further than it looked\n\n| Appendix before | Body today |\n|---|---|\n| \u00a7\"Presentation Limits\" held Validity Window, Selective Disclosure, Audience Restriction | Those moved to **Credential Construction** |\n| \u00a7\"Substantiation\" had rows *Integrity* and *Authoritative Relationship* | Renamed **Tamper Proofness** and **Substantiation** |\n| \u00a7\"Credential Containment & Unlock\" had a *Dynamism* row | Dynamism moved to **Credential Construction** |\n| \u00a7\"Credential Recovery\" had *Recovery Agent / Mechanism / Artifact / Assurance* | **None of these exist in the body anymore**; only Recoverability survives |\n| \u2014 | **Replayability** and **Referential Identity Posture** were defined in the body but missing from the appendix entirely |\n\n### Rows: 4 \u2192 12 credential types\n\nAdded SPIFFE JWT-SVID, mTLS certificate, HOTP, TOTP, SMS OTP, SD-JWT VC, ISO mdoc, and DBSC to the original four.\n\nThe additions are what make the property set testable. With only the original four rows, **Selective Disclosure and Chainability were \"No\" for every row** \u2014 columns that differentiated nothing. SD-JWT VC and ISO mdoc exercise both. DBSC is the only row that is contained but *not* activated, and it demonstrates the bounded-replayability point the body makes about OTPs.\n\n### Substantive correction\n\nThe old appendix claimed SPIFFE X.509-SVIDs are **\"rotated every 5 minutes.\"** That does not verify \u2014 SPIRE's documented default is a **1-hour SVID lifetime rotated at 50% of TTL**. The 5-minute figure appears to be the historical *JWT*-SVID TTL, which changed in SPIRE v0.11.0. I dropped the number rather than restate it.\n\n### Two tables are split\n\nConstruction (8 properties) and Containment & Unlock (7) rendered at **116 and 108 columns** \u2014 well over the 72-column limit and idnits-failing. Each is now two tables under a single heading, so the 1:1 mapping to the body's classes is preserved. The other four classes are single tables and were already within limits.\n\n### Merge order\n\nThe body introduces most of these specifications before the appendix reaches them, so under first-use-only the body owns the citation. Commit 2 here strips those from the appendix, leaving the spec named in plain text, and keeps citations only for what the appendix introduces first (CTAP, SPIFFE, SD-JWT VC, DBSC, PCI DSS, CA/B Forum BR, JWS, Bearer Token Usage).\n\nMerging this **before** #36 would leave those specs uncited. Merging after is clean.\n\nThis branch conflicts with #36 in the YAML reference block. **The resolution is a plain union of the two entry lists** \u2014 git merges the `normative:`/`informative:` headers cleanly and conflicts only on the entries; no judgment required. I verified the merged result builds, has 0 lines over 72 columns, and that all 26 references are still cited exactly once in the text.\n\n### Verification\n\n- `make` builds clean to `.txt`\n- 0 lines exceed the 72-column limit\n- All references resolve\n\nHappy to rebase this onto #36 instead if you'd rather Pam not hit the conflict at merge time.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)",
+      "createdAt": "2026-09-15T18:07:21Z",
+      "updatedAt": "2026-09-15T23:03:59Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "869e2143d3124eb842dedd31f1df2512723d2a02",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "feature/appendix-credential-type-matrix",
+      "headRefOid": "a08f787b1f26eacbbc701048e386dd54f6d3dd38",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Still needs more examples that include referential identity posture.  We should probably add an AT in here too for completeness.",
+          "createdAt": "2026-09-15T22:29:21Z",
+          "updatedAt": "2026-09-15T22:29:21Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDON4ikis8AAAABNshSaw",
+          "commit": {
+            "abbreviatedOid": "00625b8"
+          },
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "@pamelatech I did a rough first pass through this and it looks good.  I need to do a deeper dive on a property-by-property basis before we merge.  Feedback is welcome.",
+          "createdAt": "2026-09-15T18:15:36Z",
+          "updatedAt": "2026-09-15T18:22:49Z",
+          "comments": [
+            {
+              "originalPosition": 64,
+              "body": "```suggestion\n- **Device-bound passkey on FIDO L2 Certified security key** \u2014 a WebAuthn credential generated on and bound to a hardware authenticator implementing CTAP {{CTAP}} and certified at FIDO L2 or above.\n```",
+              "createdAt": "2026-09-15T18:15:36Z",
+              "updatedAt": "2026-09-15T18:22:49Z"
+            },
+            {
+              "originalPosition": 73,
+              "body": "```suggestion\n- **DBSC** \u2014 Device Bound Session Credentials {{DBSC}}, a browser session credential bound to a device key.  The device can may be hardware bound, however, this is not discoverable by the service.\n```",
+              "createdAt": "2026-09-15T18:17:11Z",
+              "updatedAt": "2026-09-15T18:22:50Z"
+            },
+            {
+              "originalPosition": 243,
+              "body": "```suggestion\n| Synced passkey | Issuer-driven; the synced passkey provider allows for restoring the synced passkey through successful authentication to the provider.  If the credential is not recoverable from the provider, it may be reset through an account-driven process similar to a password.|\n```",
+              "createdAt": "2026-09-15T18:21:25Z",
+              "updatedAt": "2026-09-15T18:22:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDON4ikis8AAAABNujPqg",
+          "commit": {
+            "abbreviatedOid": "c3b95b4"
+          },
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-15T21:56:54Z",
+          "updatedAt": "2026-09-15T21:56:54Z",
+          "comments": [
+            {
+              "originalPosition": 127,
+              "body": "```suggestion\n| Device-bound passkey | Yes; attestation statement conveys authenticator provenance if requested & validated by the RP | Dynamic; challenge-response | Yes | Yes; signed assertion |\n```",
+              "createdAt": "2026-09-15T21:56:54Z",
+              "updatedAt": "2026-09-15T21:56:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDON4ikis8AAAABNukw0g",
+          "commit": {
+            "abbreviatedOid": "91f5d53"
+          },
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-15T21:59:19Z",
+          "updatedAt": "2026-09-15T21:59:20Z",
+          "comments": [
+            {
+              "originalPosition": 134,
+              "body": "TODO Look into the key binding statements.",
+              "createdAt": "2026-09-15T21:59:20Z",
+              "updatedAt": "2026-09-15T21:59:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDON4ikis8AAAABNup8jA",
+          "commit": {
+            "abbreviatedOid": "91f5d53"
+          },
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "did a deep dive through everything to ensure I agreed with all of the mapping.  Made selected changes.",
+          "createdAt": "2026-09-15T22:08:34Z",
+          "updatedAt": "2026-09-15T22:24:18Z",
+          "comments": [
+            {
+              "originalPosition": 144,
+              "body": "```suggestion\n| Device-bound passkey | No | Yes; RP ID and origin binding | No; freshness is established by the challenge | No |\n```",
+              "createdAt": "2026-09-15T22:08:34Z",
+              "updatedAt": "2026-09-15T22:24:18Z"
+            },
+            {
+              "originalPosition": 164,
+              "body": "@pamelatech mTLS certificates posture is chained, isn't it?  It's backed by the signature chain to a trusted root authority.  Thoughts?",
+              "createdAt": "2026-09-15T22:12:27Z",
+              "updatedAt": "2026-09-15T22:24:18Z"
+            },
+            {
+              "originalPosition": 182,
+              "body": "```suggestion\n| Device-bound passkey | Contained | Bound to the hardware authenticator; non-exportable; verifiable through attestation at registration | Proactive; enforced by hardware |\n```",
+              "createdAt": "2026-09-15T22:15:21Z",
+              "updatedAt": "2026-09-15T22:24:18Z"
+            },
+            {
+              "originalPosition": 191,
+              "body": "```suggestion\n| DBSC | Contained if the session key resides in the TPM or secure enclave; Partially contained for software based implementations | Boundary enforcement depends on hardware boundedness.  Bound keys reside in TPM or Secure Elements and are non-exportable.  Partially bound keys are software based. | Proactive; enforced by hardware or software |\n```",
+              "createdAt": "2026-09-15T22:18:52Z",
+              "updatedAt": "2026-09-15T22:24:18Z"
+            },
+            {
+              "originalPosition": 226,
+              "body": "```suggestion\n| Device-bound passkey | Enterprise-controlled; may require in-person proofing | Yes; typically gated by an enterprise credential or supervised enrollment | WebAuthn registration ceremony binds the public key to the user handle |\n```",
+              "createdAt": "2026-09-15T22:21:24Z",
+              "updatedAt": "2026-09-15T22:24:18Z"
+            },
+            {
+              "originalPosition": 247,
+              "body": "```suggestion\n| Synced passkey | Algorithm set constrained by WebAuthn and COSE | Revocation by deregistration; no rotation concept | NIST SP 800-63B|\n```",
+              "createdAt": "2026-09-15T22:22:40Z",
+              "updatedAt": "2026-09-15T22:24:18Z"
+            },
+            {
+              "originalPosition": 248,
+              "body": "```suggestion\n| Device-bound passkey | Algorithm set constrained by WebAuthn and COSE; authenticator certification level | Deregistration; key lifetime tied to the authenticator | NIST SP 800-63B up to AAL3; FIDO Alliance certification |\n```",
+              "createdAt": "2026-09-15T22:22:59Z",
+              "updatedAt": "2026-09-15T22:24:18Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 38,
+      "id": "PR_kwDON4ikis8AAAABDrjx-g",
+      "title": "Remove template test draft and ignore .claude/",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/38",
+      "state": "MERGED",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Two cleanups from a pre-publication review of the repository, ahead of making it public and publishing the GitHub Pages site.\r\n\r\nIndependent of #36 and #37 \u2014 this branch touches neither the draft nor the appendix, so it can merge in any order.\r\n\r\n### Remove `dingle-test-OLD.md`\r\n\r\nScaffolding left over from the i-d-template bootstrap (a 68-line \"Dingle Test Draft\"). Nothing references it, and it never matched the `draft-*.md` build glob, so it was never built. It is only clutter for people arriving at a public repo. Verified `make` still builds clean after removal.\r\n\r\n### Ignore `.claude/`\r\n\r\nThe directory was neither tracked nor ignored, so a future `git add -A` could commit local agent configuration. Only `.claude/worktrees/` was excluded, and only via `.git/info/exclude` \u2014 which is local to a single checkout and protects nobody who clones the repo.\r\n\r\nAdded `/.claude/` to the shared `.gitignore`, matching the rooted style already used for `/.idea/`, `/.vscode/` and `/.venv/`.\r\n\r\n### Review context\r\n\r\nThese were the two unambiguous findings from the review. It also checked, and found clean:\r\n\r\n- **No credential material in history.** All 122 commits across every branch scanned for cloud access keys, asymmetric key blocks, vendor API keys, signed tokens, and generic assignment patterns \u2014 zero hits. No credential or secret-bearing file has ever existed in history.\r\n- **Workflows are safe to publish.** `ghpages.yml` uses `pull_request` rather than `pull_request_target`, so fork PRs get a read-only token and no secrets; the auto-lint-fix step is correctly gated on `head.repo.full_name == github.repository`; only `github.token` is used, no personal access tokens.\r\n- **Issue and PR archive is clean.** 13 issues and 22 PRs, roughly 17K characters of discussion, all technical. No contact addresses or non-public material.\r\n- **No local filesystem paths** leaked into any tracked file.\r\n\r\nThree findings were left as judgment calls rather than changes: the author address visible across 49 commits in history, the AI co-authorship line in `research-report.md`, and GitHub Actions pinned to mutable major tags rather than commit SHAs.\r\n\r\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)\r\n",
+      "createdAt": "2026-09-15T22:01:54Z",
+      "updatedAt": "2026-09-15T22:04:56Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "b4d1cbf640edb4f7e5a848be1e70d571f03bc8f2",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "feature/pre-publication-cleanup",
+      "headRefOid": "6ca7f874a28944fefd590441484b988ca4277278",
+      "closedAt": "2026-09-15T22:04:56Z",
+      "mergedAt": "2026-09-15T22:04:56Z",
+      "mergedBy": "deansaxe",
+      "mergeCommit": {
+        "oid": "869e2143d3124eb842dedd31f1df2512723d2a02"
+      },
+      "comments": [
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merging this myself since it just cleans up old docs and fixes git ignore.",
+          "createdAt": "2026-09-15T22:04:50Z",
+          "updatedAt": "2026-09-15T22:04:50Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 39,
+      "id": "PR_kwDON4ikis8AAAABDr2RWA",
+      "title": "Add a chained referential identity example and anchor the postures",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/39",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Carries forward one commit that missed the squash merge of #36. Rebuilt on current `main`.\n\nReferential Identity Posture defines seven postures but illustrated only three \u2014 Delegated, Impersonated and Partitioned. **Chained had no example at all.**\n\n### Chained\n\nCites transaction tokens (`draft-ietf-oauth-transaction-tokens`, OAuth WG, rev 11, WG consensus reached). They preserve the identity of the original caller as a request traverses a call chain of workloads, and \u00a713.15 requires that when a transaction token is replaced, the service **MUST** maintain the chain of workloads that requested the prior token in the newly issued one.\n\nThat is the transitive relationship the posture describes, expressed as a normative requirement rather than an incidental property \u2014 which is what makes it a stronger example than a system that merely happens to produce a chain.\n\nThe text also notes that token exchange encodes the same structure directly through nested `act` claims, where the outermost actor is the current party and each nested actor a prior one.\n\n### Delegated and Impersonated\n\nBoth postures were defined descriptively. RFC 8693 \u00a71.1 already draws the distinction normatively: a delegated actor retains its own identity while acting as an agent for another party, whereas an impersonating actor gains that party's rights and is indistinguishable from it. The definitions are now anchored to that wording.\n\nRFC 8693 is already cited two sentences earlier in the same section, so it is not cited again \u2014 consistent with the first-use-only convention established in #36.\n\n### Verification\n\n- `make` builds clean\n- 0 lines exceed the 72-column limit\n- 18 references, each cited exactly once and listed once\n\n### Note\n\n`draft-ietf-oauth-transaction-tokens` is an active draft targeting IESG submission in December 2026. If it publishes as an RFC before this document does, the citation will need updating \u2014 as will `draft-ietf-oauth-sd-jwt-vc`, referenced in the appendix work.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)\n",
+      "createdAt": "2026-09-15T22:54:08Z",
+      "updatedAt": "2026-09-15T22:54:08Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "869e2143d3124eb842dedd31f1df2512723d2a02",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "feature/chained-identity-example",
+      "headRefOid": "36579072accf849a7e8e73332aa87631a9f5b3de",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 40,
+      "id": "PR_kwDON4ikis8AAAABDr2R8g",
+      "title": "Build the rich PDF via xml2rfc, with weasyprint opt-in",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/40",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Commits the rich PDF build, which until now existed only in one working tree and so worked on exactly one machine.\n\nThe template's default rule (`lib/main.mk:148`) pipes the plain text output through `enscript | ps2pdf`, producing a typewriter-style PDF with no hyperlinks, no bookmarks and no real fonts. This overrides it with `xml2rfc --pdf`, producing the datatracker-style document.\n\n### What CI taught us \u2014 the important part\n\nThe first attempt committed the dependency as `requirements.txt`. **That broke the build outright**, and the failure is worth recording because it is a trap for contributors too:\n\n```\n\"pip3\" install -q --no-user -r requirements.txt          \u2190 succeeded\n...\nFile \"/usr/lib/python3.14/site-packages/xml2rfc/__init__.py\", line 38\n    from weasyprint.text.ffi import pango\nKeyError: 'weasyprint'\nmake[1]: *** [lib/main.mk:98: draft-...xml] Error 1\nmake: *** [lib/main.mk:20: all] Error 2\n```\n\nTwo mechanisms combine:\n\n1. `lib/deps.mk:143` globs the **exact literal** `requirements.txt` and installs it automatically, including in CI.\n2. `xml2rfc` imports weasyprint's FFI layer **at module load** whenever weasyprint is present.\n\nThe container has no pango, so that import raised and `xml2rfc` would not start at all. This took down the `xml`, `txt` and `html` builds \u2014 the PDF target was never even reached, since no workflow invokes it.\n\nSo installing weasyprint where pango is absent does not degrade the PDF build; it destroys the whole toolchain.\n\n### The fix\n\nName the file **`requirements-pdf.txt`**. `deps.mk` does not glob it, so nothing is installed automatically and CI is untouched. Anyone who wants the rich PDF opts in:\n\n```\npip install -r requirements-pdf.txt\n# macOS:          brew install pango\n# Debian/Ubuntu:  apt-get install libpango-1.0-0 libpangoft2-1.0-0\n```\n\nThe file documents this in its own header, so the next person to find it learns why the name matters before they rename it back.\n\n`.gitignore` gains a matching `!requirements-pdf.txt` negation, since `*.txt` on line 5 would otherwise swallow it \u2014 the same reason the template already carries `!requirements.txt`.\n\nThe `Makefile` rule is safe to commit unconditionally: it is a static pattern rule whose explicit targets take precedence over the generic `%.pdf: %.txt` pattern, and it is inert until weasyprint is installed. No workflow calls `make pdf`.\n\n### Verified\n\n| Check | Result |\n|---|---|\n| `make all` \u2014 exactly what CI runs | clean (kramdown-rfc, xml2rfc-txt, xml2rfc-html all OK) |\n| `make pdf` \u2014 with weasyprint installed | 85KB datatracker-style PDF |\n| `deps.mk` auto-install | no longer triggered \u2014 glob is for the literal `requirements.txt` |\n\n### Follow-up worth considering\n\nNothing in CI exercises `make pdf`, so the PDF path stays unverified on Linux. If that matters, a `pdf` step could be added to `ghpages.yml` \u2014 but it would need pango and cairo in the i-d-template container, which is exactly what this PR just demonstrated is missing. Probably better left as a documented local-only build.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)\n",
+      "createdAt": "2026-09-15T22:54:10Z",
+      "updatedAt": "2026-09-15T23:02:59Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "869e2143d3124eb842dedd31f1df2512723d2a02",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "feature/rich-pdf-build",
+      "headRefOid": "5c3cc2357f646493e119dfede62d42920dcf5c74",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 41,
+      "id": "PR_kwDON4ikis8AAAABDr6sXQ",
+      "title": "Delete research-report.md",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/41",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This is no longer needed, we should delete.",
+      "createdAt": "2026-09-15T23:06:09Z",
+      "updatedAt": "2026-09-15T23:06:09Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "869e2143d3124eb842dedd31f1df2512723d2a02",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "remove-research-report",
+      "headRefOid": "9bcfc6033ee5d1bf7a20904bc69255f0d3ef4b61",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 42,
+      "id": "PR_kwDON4ikis8AAAABDr74mg",
+      "title": "Cleaning up nits in the doc",
+      "url": "https://github.com/pamelatech/credsecproperties/pull/42",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Cleaning nits ahead of first publication.",
+      "createdAt": "2026-09-15T23:09:27Z",
+      "updatedAt": "2026-09-15T23:23:08Z",
+      "baseRepository": "pamelatech/credsecproperties",
+      "baseRefName": "main",
+      "baseRefOid": "869e2143d3124eb842dedd31f1df2512723d2a02",
+      "headRepository": "pamelatech/credsecproperties",
+      "headRefName": "cleaning-nits",
+      "headRefOid": "b3a1b9e625ac1263d1421b2a22b7be8afb4997d8",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
