@@ -282,13 +282,25 @@ Table of Contents
 
    Examples of delegated referential identity posture include on-behalf-
    of (OBO) token interactions [RFC8693], where both the identity of the
-   end user and client software are communicated.  Examples of
-   impersonated referential identity posture might include privileged
-   access management workflows, where an administrative process sets
-   either the identifier or the credential (or both) based on a backing
-   identity.  Examples of a partitioned referential identity posture
-   could include openclaw agents acting with separate accounts and email
-   addresses but loosely affiliated to individuals.
+   end user and client software are communicated.  Token exchange draws
+   the same distinction normatively: a delegated actor retains its own
+   identity while acting as an agent for another party, whereas an
+   impersonating actor gains the rights of the party it impersonates and
+   is indistinguishable from it.  Examples of impersonated referential
+   identity posture might include privileged access management
+   workflows, where an administrative process sets either the identifier
+   or the credential (or both) based on a backing identity.  Examples of
+   a partitioned referential identity posture could include openclaw
+   agents acting with separate accounts and email addresses but loosely
+   affiliated to individuals.  Examples of a chained referential
+   identity posture include transaction tokens
+   [I-D.ietf-oauth-transaction-tokens], which preserve the identity of
+   the original caller as a request traverses a call chain of workloads,
+   and which require the chain of workloads that requested a token to be
+   carried forward each time that token is replaced.  Token exchange
+   expresses the same structure directly through nested actor claims,
+   where the outermost actor is the current party and each nested actor
+   a prior one.
 
 3.3.  Credential Containment & Unlock
 
@@ -504,6 +516,13 @@ Table of Contents
               Progress, Internet-Draft, draft-ietf-oauth-sd-jwt-vc-23,
               31 October 2026, <https://datatracker.ietf.org/doc/html/
               draft-ietf-oauth-sd-jwt-vc-23>.
+
+   [I-D.ietf-oauth-transaction-tokens]
+              Tulshibagwale, A., Fletcher, G., and P. Kasselman,
+              "Transaction Tokens", Work in Progress, Internet-Draft,
+              draft-ietf-oauth-transaction-tokens-11, 30 July 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
+              transaction-tokens-11>.
 
    [I-D.ietf-oauth-v2-1]
               Hardt, D., Parecki, A., and T. Lodderstedt, "The OAuth 2.1
