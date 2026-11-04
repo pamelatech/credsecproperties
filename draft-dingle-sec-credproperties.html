@@ -10,26 +10,26 @@
 <meta content="
        This document defines a set of properties which explain and differentiate unique security characteristics of an authentication method. 
     " name="description">
-<meta content="xml2rfc 3.34.0" name="generator">
+<meta content="xml2rfc 3.35.0" name="generator">
 <meta content="credentials" name="keyword">
 <meta content="credential management" name="keyword">
 <meta content="multifactor authentication" name="keyword">
 <meta content="mfa" name="keyword">
 <meta content="draft-dingle-sec-credproperties-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.34.0
-    Python 3.14.7
-    ConfigArgParse 1.7.5
+  xml2rfc 3.35.0
+    Python 3.14.10
+    ConfigArgParse 1.9.0
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
     lxml 6.1.1
     natsort 8.4.0
-    platformdirs 4.11.7
+    platformdirs 4.14.3
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.33.1
-    wcwidth 0.8.3
+    wcwidth 0.9.4
 -->
 <link href="draft-dingle-sec-credproperties.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1045,11 +1045,11 @@ svg {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">credproperties</td>
-<td class="right">September 2026</td>
+<td class="right">November 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Dingle &amp; Saxe</td>
-<td class="center">Expires 19 March 2027</td>
+<td class="center">Expires 8 May 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1062,12 +1062,12 @@ svg {
 <dd class="internet-draft">draft-dingle-sec-credproperties-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-09-15" class="published">15 September 2026</time>
+<time datetime="2026-11-04" class="published">4 November 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-03-19">19 March 2027</time></dd>
+<dd class="expires"><time datetime="2027-05-08">8 May 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1116,7 +1116,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 19 March 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 8 May 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1155,7 +1155,7 @@ svg {
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-credential-management-securi" class="internal xref">Credential Management Security Properties</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
-                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-credential-construction-pro" class="internal xref">Credential Construction Properties</a></p>
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-credential-construction" class="internal xref">Credential Construction</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.1">
                     <p id="section-toc.1-1.3.2.1.2.1.1" class="keepWithNext"><a href="#section-3.1.1" class="auto internal xref">3.1.1</a>.  <a href="#name-dynamism" class="internal xref">Dynamism</a></p>
@@ -1181,7 +1181,7 @@ svg {
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
-                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-credential-presentation-pro" class="internal xref">Credential Presentation Properties</a></p>
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-credential-presentation" class="internal xref">Credential Presentation</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2.2.1">
                     <p id="section-toc.1-1.3.2.2.2.1.1"><a href="#section-3.2.1" class="auto internal xref">3.2.1</a>.  <a href="#name-validity-count" class="internal xref">Validity Count</a></p>
@@ -1195,7 +1195,7 @@ svg {
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
-                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-credential-containment-unlo" class="internal xref">Credential Containment &amp; Unlock Properties</a></p>
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-credential-containment-unlo" class="internal xref">Credential Containment &amp; Unlock</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3.2.1">
                     <p id="section-toc.1-1.3.2.3.2.1.1"><a href="#section-3.3.1" class="auto internal xref">3.3.1</a>.  <a href="#name-containment-todo-reconcile-" class="internal xref">Containment (TODO: reconcile with FIDO-SEC-REQ; the FIDO Alliance publishes no sync fabric specific requirements document)</a></p>
@@ -1282,16 +1282,16 @@ svg {
             <p id="section-toc.1-1.8.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-applying-the-properties-to-" class="internal xref">Applying the Properties to Common Credential Types</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
-                <p id="section-toc.1-1.8.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-presentation-limits" class="internal xref">Presentation Limits</a></p>
+                <p id="section-toc.1-1.8.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-credential-construction-2" class="internal xref">Credential Construction</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
-                <p id="section-toc.1-1.8.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-credential-containment-unloc" class="internal xref">Credential Containment &amp; Unlock</a></p>
+                <p id="section-toc.1-1.8.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-credential-presentation-2" class="internal xref">Credential Presentation</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3">
-                <p id="section-toc.1-1.8.2.3.1"><a href="#appendix-A.3" class="auto internal xref">A.3</a>.  <a href="#name-credential-enrollment-2" class="internal xref">Credential Enrollment</a></p>
+                <p id="section-toc.1-1.8.2.3.1"><a href="#appendix-A.3" class="auto internal xref">A.3</a>.  <a href="#name-credential-containment-unloc" class="internal xref">Credential Containment &amp; Unlock</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.4">
-                <p id="section-toc.1-1.8.2.4.1"><a href="#appendix-A.4" class="auto internal xref">A.4</a>.  <a href="#name-substantiation" class="internal xref">Substantiation</a></p>
+                <p id="section-toc.1-1.8.2.4.1"><a href="#appendix-A.4" class="auto internal xref">A.4</a>.  <a href="#name-credential-enrollment-2" class="internal xref">Credential Enrollment</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.5">
                 <p id="section-toc.1-1.8.2.5.1"><a href="#appendix-A.5" class="auto internal xref">A.5</a>.  <a href="#name-credential-compliance-2" class="internal xref">Credential Compliance</a></p>
@@ -1332,10 +1332,10 @@ svg {
       <h2 id="name-credential-management-securi">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-credential-management-securi" class="section-name selfRef">Credential Management Security Properties</a>
       </h2>
-<div id="credential-construction-properties">
+<div id="credential-construction">
 <section id="section-3.1">
-        <h3 id="name-credential-construction-pro">
-<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-credential-construction-pro" class="section-name selfRef">Credential Construction Properties</a>
+        <h3 id="name-credential-construction">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-credential-construction" class="section-name selfRef">Credential Construction</a>
         </h3>
 <p id="section-3.1-1">### Substantiation
 Substantiation describes credentials containing mechanisms for authoritative statements that can be externally validated. Examples of substantiated credentials include attestations such as SAML assertions <span>[<a href="#SAML" class="cite xref">SAML</a>]</span> or X.509 certificates <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
@@ -1397,10 +1397,10 @@ Substantiation describes credentials containing mechanisms for authoritative sta
 </div>
 </section>
 </div>
-<div id="credential-presentation-properties">
+<div id="credential-presentation">
 <section id="section-3.2">
-        <h3 id="name-credential-presentation-pro">
-<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-credential-presentation-pro" class="section-name selfRef">Credential Presentation Properties</a>
+        <h3 id="name-credential-presentation">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-credential-presentation" class="section-name selfRef">Credential Presentation</a>
         </h3>
 <p id="section-3.2-1">Credential reuse properties describe ways in which the use of a credential is functionally restricted.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <div id="validity-count">
@@ -1478,10 +1478,10 @@ Substantiation describes credentials containing mechanisms for authoritative sta
 </div>
 </section>
 </div>
-<div id="credential-containment-unlock-properties">
+<div id="credential-containment-unlock">
 <section id="section-3.3">
         <h3 id="name-credential-containment-unlo">
-<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-credential-containment-unlo" class="section-name selfRef">Credential Containment &amp; Unlock Properties</a>
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-credential-containment-unlo" class="section-name selfRef">Credential Containment &amp; Unlock</a>
         </h3>
 <p id="section-3.3-1">Credential containment describes the at-rest state of a credential and its storage location(s). Unlock properties describe how the contained credential is made available for use at runtime and how the containment facility, if any, can play a security role in an observable way at operation time.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
 <div id="containment-todo-reconcile-with-fido-sec-req-the-fido-alliance-publishes-no-sync-fabric-specific-requirements-document">
@@ -1683,9 +1683,29 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
 <a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="CABF-BR">[CABF-BR]</dt>
+        <dd>
+<span class="refAuthor">CA/Browser Forum</span>, <span class="refTitle">"Baseline Requirements for the Issuance and Management of Publicly-Trusted TLS Server Certificates, Version 2.3.0"</span>, <time datetime="2026-09-07" class="refDate">7 September 2026</time>, <span>&lt;<a href="https://cabforum.org/working-groups/server/baseline-requirements/documents/">https://cabforum.org/working-groups/server/baseline-requirements/documents/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="CTAP">[CTAP]</dt>
+        <dd>
+<span class="refAuthor">FIDO Alliance</span>, <span class="refTitle">"Client to Authenticator Protocol (CTAP), Version 2.3"</span>, <span class="seriesInfo">FIDO Alliance Proposed Standard</span>, <time datetime="2026-02-26" class="refDate">26 February 2026</time>, <span>&lt;<a href="https://fidoalliance.org/specs/fido-v2.3-ps-20260226/fido-client-to-authenticator-protocol-v2.3-ps-20260226.html">https://fidoalliance.org/specs/fido-v2.3-ps-20260226/fido-client-to-authenticator-protocol-v2.3-ps-20260226.html</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="DBSC">[DBSC]</dt>
+        <dd>
+<span class="refAuthor">World Wide Web Consortium</span>, <span class="refTitle">"Device Bound Session Credentials"</span>, <span class="seriesInfo">W3C First Public Working Draft WD-dbsc-1-20250821</span>, <time datetime="2025-08-21" class="refDate">21 August 2025</time>, <span>&lt;<a href="https://www.w3.org/TR/dbsc/">https://www.w3.org/TR/dbsc/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="FIDO-SEC-REQ">[FIDO-SEC-REQ]</dt>
         <dd>
 <span class="refAuthor">FIDO Alliance</span>, <span class="refTitle">"FIDO Authenticator Security and Privacy Requirements, Version 1.6"</span>, <time datetime="2025-03-12" class="refDate">12 March 2025</time>, <span>&lt;<a href="https://fidoalliance.org/specs/fido-security-requirements/fido-authenticator-security-requirements-v1.6-fd-20250312.html">https://fidoalliance.org/specs/fido-security-requirements/fido-authenticator-security-requirements-v1.6-fd-20250312.html</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-oauth-sd-jwt-vc">[I-D.ietf-oauth-sd-jwt-vc]</dt>
+        <dd>
+<span class="refAuthor">Terbu, O.</span>, <span class="refAuthor">Fett, D.</span>, and <span class="refAuthor">B. Campbell</span>, <span class="refTitle">"SD-JWT-based Verifiable Digital Credentials (SD-JWT VC)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-sd-jwt-vc-23</span>, <time datetime="2026-10-31" class="refDate">31 October 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-sd-jwt-vc-23">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-sd-jwt-vc-23</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-oauth-v2-1">[I-D.ietf-oauth-v2-1]</dt>
+        <dd>
+<span class="refAuthor">Hardt, D.</span>, <span class="refAuthor">Parecki, A.</span>, and <span class="refAuthor">T. Lodderstedt</span>, <span class="refTitle">"The OAuth 2.1 Authorization Framework"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-v2-1-17</span>, <time datetime="2026-10-30" class="refDate">30 October 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-17">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-17</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="ISO18013-5">[ISO18013-5]</dt>
         <dd>
@@ -1694,6 +1714,10 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
 <dt id="OIDC-CORE">[OIDC-CORE]</dt>
         <dd>
 <span class="refAuthor">OpenID Foundation</span>, <span class="refTitle">"OpenID Connect Core 1.0 incorporating errata set 2"</span>, <time datetime="2023-12-15" class="refDate">15 December 2023</time>, <span>&lt;<a href="https://openid.net/specs/openid-connect-core-1_0.html">https://openid.net/specs/openid-connect-core-1_0.html</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="PCI-DSS">[PCI-DSS]</dt>
+        <dd>
+<span class="refAuthor">PCI Security Standards Council</span>, <span class="refTitle">"Payment Card Industry Data Security Standard: Requirements and Testing Procedures, Version 4.0.1"</span>, <time datetime="2024-06-11" class="refDate">11 June 2024</time>, <span>&lt;<a href="https://www.pcisecuritystandards.org">https://www.pcisecuritystandards.org</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC4226">[RFC4226]</dt>
         <dd>
@@ -1711,6 +1735,18 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
         <dd>
 <span class="refAuthor">M'Raihi, D.</span>, <span class="refAuthor">Machani, S.</span>, <span class="refAuthor">Pei, M.</span>, and <span class="refAuthor">J. Rydell</span>, <span class="refTitle">"TOTP: Time-Based One-Time Password Algorithm"</span>, <span class="seriesInfo">RFC 6238</span>, <span class="seriesInfo">DOI 10.17487/RFC6238</span>, <time datetime="2011-05" class="refDate">May 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6238">https://www.rfc-editor.org/rfc/rfc6238</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC6749">[RFC6749]</dt>
+        <dd>
+<span class="refAuthor">Hardt, D., Ed.</span>, <span class="refTitle">"The OAuth 2.0 Authorization Framework"</span>, <span class="seriesInfo">RFC 6749</span>, <span class="seriesInfo">DOI 10.17487/RFC6749</span>, <time datetime="2012-10" class="refDate">October 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6749">https://www.rfc-editor.org/rfc/rfc6749</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6750">[RFC6750]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span> and <span class="refAuthor">D. Hardt</span>, <span class="refTitle">"The OAuth 2.0 Authorization Framework: Bearer Token Usage"</span>, <span class="seriesInfo">RFC 6750</span>, <span class="seriesInfo">DOI 10.17487/RFC6750</span>, <time datetime="2012-10" class="refDate">October 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6750">https://www.rfc-editor.org/rfc/rfc6750</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7515">[RFC7515]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">N. Sakimura</span>, <span class="refTitle">"JSON Web Signature (JWS)"</span>, <span class="seriesInfo">RFC 7515</span>, <span class="seriesInfo">DOI 10.17487/RFC7515</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7515">https://www.rfc-editor.org/rfc/rfc7515</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC7519">[RFC7519]</dt>
         <dd>
 <span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">N. Sakimura</span>, <span class="refTitle">"JSON Web Token (JWT)"</span>, <span class="seriesInfo">RFC 7519</span>, <span class="seriesInfo">DOI 10.17487/RFC7519</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7519">https://www.rfc-editor.org/rfc/rfc7519</a>&gt;</span>. </dd>
@@ -1718,6 +1754,14 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
 <dt id="RFC8693">[RFC8693]</dt>
         <dd>
 <span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Nadalin, A.</span>, <span class="refAuthor">Campbell, B., Ed.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">C. Mortimore</span>, <span class="refTitle">"OAuth 2.0 Token Exchange"</span>, <span class="seriesInfo">RFC 8693</span>, <span class="seriesInfo">DOI 10.17487/RFC8693</span>, <time datetime="2020-01" class="refDate">January 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8693">https://www.rfc-editor.org/rfc/rfc8693</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8705">[RFC8705]</dt>
+        <dd>
+<span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Sakimura, N.</span>, and <span class="refAuthor">T. Lodderstedt</span>, <span class="refTitle">"OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens"</span>, <span class="seriesInfo">RFC 8705</span>, <span class="seriesInfo">DOI 10.17487/RFC8705</span>, <time datetime="2020-02" class="refDate">February 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8705">https://www.rfc-editor.org/rfc/rfc8705</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9449">[RFC9449]</dt>
+        <dd>
+<span class="refAuthor">Fett, D.</span>, <span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Lodderstedt, T.</span>, <span class="refAuthor">Jones, M.</span>, and <span class="refAuthor">D. Waite</span>, <span class="refTitle">"OAuth 2.0 Demonstrating Proof of Possession (DPoP)"</span>, <span class="seriesInfo">RFC 9449</span>, <span class="seriesInfo">DOI 10.17487/RFC9449</span>, <time datetime="2023-09" class="refDate">September 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9449">https://www.rfc-editor.org/rfc/rfc9449</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9901">[RFC9901]</dt>
         <dd>
@@ -1734,6 +1778,14 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
 <dt id="SP800-63B-rev4">[SP800-63B-rev4]</dt>
         <dd>
 <span class="refAuthor">National Institute of Standards and Technology</span>, <span class="refTitle">"Digital Identity Guidelines: Authentication and Authenticator Management"</span>, <span class="seriesInfo">NIST Special Publication 800-63B-4</span>, <time datetime="2025-07" class="refDate">July 2025</time>, <span>&lt;<a href="https://doi.org/10.6028/NIST.SP.800-63B-4">https://doi.org/10.6028/NIST.SP.800-63B-4</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SPIFFE-JWT-SVID">[SPIFFE-JWT-SVID]</dt>
+        <dd>
+<span class="refAuthor">SPIFFE Project</span>, <span class="refTitle">"The JWT SPIFFE Verifiable Identity Document"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md">https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SPIFFE-X509-SVID">[SPIFFE-X509-SVID]</dt>
+        <dd>
+<span class="refAuthor">SPIFFE Project</span>, <span class="refTitle">"The X.509 SPIFFE Verifiable Identity Document"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/X509-SVID.md">https://github.com/spiffe/spiffe/blob/main/standards/X509-SVID.md</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="VC-DATA-MODEL">[VC-DATA-MODEL]</dt>
         <dd>
@@ -1753,233 +1805,710 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
       <h2 id="name-applying-the-properties-to-">
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-applying-the-properties-to-" class="section-name selfRef">Applying the Properties to Common Credential Types</a>
       </h2>
-<p id="appendix-A-1">This appendix illustrates how the properties defined in this document apply to several common credential types, to validate that the property set is expressive enough to differentiate them:<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-1">This appendix illustrates how the properties defined in this document apply to a range of common credential types, to validate that the property set is expressive enough to differentiate them. Each class of properties defined in <a href="#credential-management-security-properties" class="auto internal xref">Section 3</a> is presented as a table whose rows are credential types and whose columns are the properties of that class.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-2">The credential types examined are:<a href="#appendix-A-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-2.1">
-          <p id="appendix-A-2.1.1"><strong>Password</strong> — A shared secret.<a href="#appendix-A-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A-3.1">
+          <p id="appendix-A-3.1.1"><strong>Password / API key / client credential</strong> — a shared secret presented directly to the verifier with no transformation.<a href="#appendix-A-3.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-2.2">
-          <p id="appendix-A-2.2.1"><strong>Synced passkey - consumer</strong> — a FIDO2/WebAuthn credential synchronized across devices by a credential manager such as 1Password or BitWarden. Consumer focused use case.<a href="#appendix-A-2.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-3.2">
+          <p id="appendix-A-3.2.1"><strong>Synced passkey (consumer)</strong> — a WebAuthn credential synchronized across devices by a consumer credential manager such as a platform provider or password manager.<a href="#appendix-A-3.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-2.3">
-          <p id="appendix-A-2.3.1"><strong>Device-bound passkey (hardware key) - enterprise</strong> — a FIDO2/WebAuthn credential generated on and bound to a hardware security key managed by an enterprise.<a href="#appendix-A-2.3.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-3.3">
+          <p id="appendix-A-3.3.1"><strong>Device-bound passkey on FIDO L2 Certified security key</strong> — a WebAuthn credential generated on and bound to a hardware authenticator implementing CTAP <span>[<a href="#CTAP" class="cite xref">CTAP</a>]</span> and certified at FIDO L2 or above.<a href="#appendix-A-3.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-2.4">
-          <p id="appendix-A-2.4.1"><strong>SPIFFE X.509-SVID</strong> — A workload identity and credentials issued as an X.509 certificate to the workload following attestation of the state of the workload. Credential is presented via mTLS to downstream services.<a href="#appendix-A-2.4.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-3.4">
+          <p id="appendix-A-3.4.1"><strong>SPIFFE X.509-SVID</strong> — a workload identity issued as an X.509 certificate following attestation of the workload, presented via mutual TLS. See <span>[<a href="#SPIFFE-X509-SVID" class="cite xref">SPIFFE-X509-SVID</a>]</span>.<a href="#appendix-A-3.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-3.5">
+          <p id="appendix-A-3.5.1"><strong>SPIFFE JWT-SVID</strong> — the same workload identity expressed as a signed JWT and presented as a bearer token <span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span> to services that cannot terminate mutual TLS. See <span>[<a href="#SPIFFE-JWT-SVID" class="cite xref">SPIFFE-JWT-SVID</a>]</span>.<a href="#appendix-A-3.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-3.6">
+          <p id="appendix-A-3.6.1"><strong>mTLS certificate</strong> — a client certificate issued by a Web PKI or private CA outside of any SPIFFE trust domain, presented during the TLS handshake.<a href="#appendix-A-3.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-3.7">
+          <p id="appendix-A-3.7.1"><strong>OAuth bearer access token</strong> — an access token <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> presented to a resource server as a bearer credential, either as a signed JWT or as an opaque handle the resource server validates by introspection. OAuth 2.1 <span>[<a href="#I-D.ietf-oauth-v2-1" class="cite xref">I-D.ietf-oauth-v2-1</a>]</span> consolidates the OAuth 2.0 core and bearer token specifications and is intended to obsolete both.<a href="#appendix-A-3.7.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-3.8">
+          <p id="appendix-A-3.8.1"><strong>Sender-constrained access token</strong> — the same access token bound to a client key, so that presentation additionally requires proof of possession of that key, whether by DPoP <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span> or by mutual TLS certificate binding <span>[<a href="#RFC8705" class="cite xref">RFC8705</a>]</span>.<a href="#appendix-A-3.8.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-3.9">
+          <p id="appendix-A-3.9.1"><strong>HOTP</strong> — an HMAC-based counter-derived one-time password.<a href="#appendix-A-3.9.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-3.10">
+          <p id="appendix-A-3.10.1"><strong>TOTP</strong> — a time-derived one-time password.<a href="#appendix-A-3.10.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-3.11">
+          <p id="appendix-A-3.11.1"><strong>SMS OTP</strong> — a one-time code generated by the verifier and delivered out of band over the public telephone network.<a href="#appendix-A-3.11.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-3.12">
+          <p id="appendix-A-3.12.1"><strong>SD-JWT VC</strong> — a verifiable credential expressed as a selectively disclosable JWT <span>[<a href="#I-D.ietf-oauth-sd-jwt-vc" class="cite xref">I-D.ietf-oauth-sd-jwt-vc</a>]</span>, built on the SD-JWT construction, optionally bound to a holder key.<a href="#appendix-A-3.12.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-3.13">
+          <p id="appendix-A-3.13.1"><strong>ISO mdoc</strong> — an ISO/IEC 18013-5 mobile document such as a mobile driving licence, comprising an issuer-signed Mobile Security Object and a device-signed response.<a href="#appendix-A-3.13.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-3.14">
+          <p id="appendix-A-3.14.1"><strong>DBSC</strong> — Device Bound Session Credentials <span>[<a href="#DBSC" class="cite xref">DBSC</a>]</span>, a browser session credential bound to a non-exportable device key and periodically refreshed by proof of possession.<a href="#appendix-A-3.14.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<div id="presentation-limits">
+<div id="credential-construction-1">
 <section id="appendix-A.1">
-        <h3 id="name-presentation-limits">
-<a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-presentation-limits" class="section-name selfRef">Presentation Limits</a>
+        <h3 id="name-credential-construction-2">
+<a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-credential-construction-2" class="section-name selfRef">Credential Construction</a>
         </h3>
+<p id="appendix-A.1-1">The following properties describe how a credential asserts and protects its content.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
 <table class="center" id="table-2">
           <caption><a href="#table-2" class="selfRef">Table 2</a></caption>
 <thead>
             <tr>
-              <th class="text-left" rowspan="1" colspan="1">Property</th>
-              <th class="text-left" rowspan="1" colspan="1">Password / API key / client credential</th>
-              <th class="text-left" rowspan="1" colspan="1">Synced passkey</th>
-              <th class="text-left" rowspan="1" colspan="1">Device-bound passkey (hardware key)</th>
-              <th class="text-left" rowspan="1" colspan="1">SPIFFE X.509-SVID</th>
+              <th class="text-left" rowspan="1" colspan="1">Credential Type</th>
+              <th class="text-left" rowspan="1" colspan="1">Substantiation</th>
+              <th class="text-left" rowspan="1" colspan="1">Dynamism</th>
+              <th class="text-left" rowspan="1" colspan="1">Identifier Binding</th>
+              <th class="text-left" rowspan="1" colspan="1">Tamper Proofness</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Validity Count</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-            </tr>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">Validity Window</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1">Short term validity, SVIDs are rotated every 5 minutes.</td>
-            </tr>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">Selective Disclosure</td>
+              <td class="text-left" rowspan="1" colspan="1">Password / API key</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
-              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">None; the stored and presented forms are identical</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Audience Restriction</td>
+              <td class="text-left" rowspan="1" colspan="1">Synced passkey</td>
+              <td class="text-left" rowspan="1" colspan="1">No; attestation is typically not conveyed</td>
+              <td class="text-left" rowspan="1" colspan="1">Dynamic; challenge-response</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; credential ID and user handle bound to the key pair</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; signed assertion</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Device-bound passkey</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; attestation statement conveys authenticator provenance if requested &amp; validated by the RP</td>
+              <td class="text-left" rowspan="1" colspan="1">Dynamic; challenge-response</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; signed assertion</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SPIFFE X.509-SVID</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; CA-signed after workload attestation</td>
+              <td class="text-left" rowspan="1" colspan="1">Dynamic; the private key is never transmitted</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; SPIFFE ID in the SAN URI</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; CA signature</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SPIFFE JWT-SVID</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; signed by the trust domain authority</td>
+              <td class="text-left" rowspan="1" colspan="1">None; presented verbatim as a bearer token</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; SPIFFE ID in <code>sub</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; JWS signature <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">mTLS certificate</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; CA-signed</td>
+              <td class="text-left" rowspan="1" colspan="1">Dynamic; the private key is never transmitted</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; subject DN or SAN</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; CA signature</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">OAuth bearer access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes when the token is a JWT signed by the authorization server; No for an opaque token, which the resource server validates by introspection</td>
+              <td class="text-left" rowspan="1" colspan="1">None; presented verbatim</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes for a JWT, which carries subject and client identifiers; established by introspection for an opaque token</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes for a signed JWT; for an opaque token integrity rests on the issuer datastore rather than on the credential</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Sender-constrained access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuer-signed</td>
+              <td class="text-left" rowspan="1" colspan="1">Dynamic; the token is static but each presentation requires a freshly signed proof of possession or the bound TLS client certificate</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; a confirmation claim binds the token to the client key alongside the subject</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; signed by the authorization server</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">HOTP</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes (FIDO origin binding)</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes (FIDO origin binding)</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes (services within the trust domain or federated trust domains)</td>
+              <td class="text-left" rowspan="1" colspan="1">Dynamic; counter-based derivation from the stored seed</td>
+              <td class="text-left" rowspan="1" colspan="1">No; the code carries no identifier, binding is by enrollment record</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">TOTP</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">Dynamic; time-based derivation from the stored seed</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SMS OTP</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">None; the verifier-generated value is presented verbatim</td>
+              <td class="text-left" rowspan="1" colspan="1">No; bound to a phone number by enrollment record</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SD-JWT VC</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuer-signed</td>
+              <td class="text-left" rowspan="1" colspan="1">None for the issuer-signed JWT; Dynamic when Key Binding is used</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; holder key in <code>cnf</code> when Key Binding is used</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; JWS signature over salted disclosure digests</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ISO mdoc</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuer-signed Mobile Security Object</td>
+              <td class="text-left" rowspan="1" colspan="1">Dynamic; device signature or MAC over the session transcript</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; DeviceKey bound in the MSO</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; per-data-element digests in the MSO</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">DBSC</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">Mixed; the session cookie is static, the refresh proof is challenge-response</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; session identifier bound to the device key</td>
+              <td class="text-left" rowspan="1" colspan="1">No for the cookie; Yes for the signed refresh proof</td>
+            </tr>
+          </tbody>
+        </table>
+<p id="appendix-A.1-3">The following properties describe how a credential scopes and structures its content.<a href="#appendix-A.1-3" class="pilcrow">¶</a></p>
+<table class="center" id="table-3">
+          <caption><a href="#table-3" class="selfRef">Table 3</a></caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Credential Type</th>
+              <th class="text-left" rowspan="1" colspan="1">Chainability</th>
+              <th class="text-left" rowspan="1" colspan="1">Audience Restriction</th>
+              <th class="text-left" rowspan="1" colspan="1">Validity Window</th>
+              <th class="text-left" rowspan="1" colspan="1">Selective Disclosure</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Password / API key</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">Policy-imposed only; not carried in the credential</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Synced passkey</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; RP ID and origin binding</td>
+              <td class="text-left" rowspan="1" colspan="1">No; freshness is established by the challenge</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Device-bound passkey</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; RP ID and origin binding</td>
+              <td class="text-left" rowspan="1" colspan="1">No; freshness is established by the challenge</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SPIFFE X.509-SVID</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; X.509 chain to the trust domain CA</td>
+              <td class="text-left" rowspan="1" colspan="1">Partial; scoped to the trust domain and federated trust domains rather than a named service</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; short-lived and automatically rotated</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SPIFFE JWT-SVID</td>
+              <td class="text-left" rowspan="1" colspan="1">No; single signer, no embedded chain</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; <code>aud</code> names the target service</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; short-lived</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">mTLS certificate</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; X.509 chain</td>
+              <td class="text-left" rowspan="1" colspan="1">No; accepted by any relying party trusting the CA</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; typically months to years</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">OAuth bearer access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; token exchange derives a token from a subject token and can record intermediate actors</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; the audience names the resource server</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; typically minutes to hours</td>
+              <td class="text-left" rowspan="1" colspan="1">No; scope constrains authorization rather than disclosure of credential content</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Sender-constrained access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; token exchange applies, with the bound key re-established for the derived token</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; the audience names the resource server</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; typically minutes to hours</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">HOTP</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">No; valid until the counter advances</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">TOTP</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; one time step plus drift tolerance</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SMS OTP</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuer-set, typically minutes</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SD-JWT VC</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; may reference or embed other credentials</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes with a Key Binding JWT <code>aud</code>; No for the bare issuer-signed credential</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; <code>exp</code> and <code>nbf</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; per claim</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ISO mdoc</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuer certificate chain to the IACA</td>
+              <td class="text-left" rowspan="1" colspan="1">Partial; bound to the reader session transcript rather than a named audience</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; MSO <code>validityInfo</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; per data element</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">DBSC</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; scoped to the registrable domain</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; short-lived cookie, refreshed on expiry</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
             </tr>
           </tbody>
         </table>
 </section>
 </div>
-<div id="credential-containment-unlock">
+<div id="credential-presentation-1">
 <section id="appendix-A.2">
-        <h3 id="name-credential-containment-unloc">
-<a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-credential-containment-unloc" class="section-name selfRef">Credential Containment &amp; Unlock</a>
+        <h3 id="name-credential-presentation-2">
+<a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-credential-presentation-2" class="section-name selfRef">Credential Presentation</a>
         </h3>
-<table class="center" id="table-3">
-          <caption><a href="#table-3" class="selfRef">Table 3</a></caption>
+<table class="center" id="table-4">
+          <caption><a href="#table-4" class="selfRef">Table 4</a></caption>
 <thead>
             <tr>
-              <th class="text-left" rowspan="1" colspan="1">Property</th>
-              <th class="text-left" rowspan="1" colspan="1">Password / API key / client credential</th>
-              <th class="text-left" rowspan="1" colspan="1">Synced passkey</th>
-              <th class="text-left" rowspan="1" colspan="1">Device-bound passkey (hardware key)</th>
-              <th class="text-left" rowspan="1" colspan="1">SPIFFE X.509-SVID</th>
+              <th class="text-left" rowspan="1" colspan="1">Credential Type</th>
+              <th class="text-left" rowspan="1" colspan="1">Validity Count</th>
+              <th class="text-left" rowspan="1" colspan="1">Replayability</th>
+              <th class="text-left" rowspan="1" colspan="1">Referential Identity Posture</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Containment</td>
+              <td class="text-left" rowspan="1" colspan="1">Password / API key</td>
+              <td class="text-left" rowspan="1" colspan="1">Unlimited until rotated</td>
+              <td class="text-left" rowspan="1" colspan="1">Replayable</td>
+              <td class="text-left" rowspan="1" colspan="1">Direct</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Synced passkey</td>
+              <td class="text-left" rowspan="1" colspan="1">Unlimited</td>
+              <td class="text-left" rowspan="1" colspan="1">Not replayable</td>
+              <td class="text-left" rowspan="1" colspan="1">Direct</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Device-bound passkey</td>
+              <td class="text-left" rowspan="1" colspan="1">Unlimited</td>
+              <td class="text-left" rowspan="1" colspan="1">Not replayable</td>
+              <td class="text-left" rowspan="1" colspan="1">Direct</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SPIFFE X.509-SVID</td>
+              <td class="text-left" rowspan="1" colspan="1">Unlimited within the validity window</td>
+              <td class="text-left" rowspan="1" colspan="1">Not replayable</td>
+              <td class="text-left" rowspan="1" colspan="1">Direct; Delegated when carrying on-behalf-of context</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SPIFFE JWT-SVID</td>
+              <td class="text-left" rowspan="1" colspan="1">Unlimited within the validity window</td>
+              <td class="text-left" rowspan="1" colspan="1">Replayable within the validity window</td>
+              <td class="text-left" rowspan="1" colspan="1">Direct; Delegated when carrying end-user context</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">mTLS certificate</td>
+              <td class="text-left" rowspan="1" colspan="1">Unlimited within the validity window</td>
+              <td class="text-left" rowspan="1" colspan="1">Not replayable</td>
+              <td class="text-left" rowspan="1" colspan="1">Direct</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">OAuth bearer access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Unlimited within the validity window</td>
+              <td class="text-left" rowspan="1" colspan="1">Replayable; any party that captures the token can present it</td>
+              <td class="text-left" rowspan="1" colspan="1">Delegated when the token conveys both client and resource owner; Impersonated when it conveys only the resource owner</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Sender-constrained access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Unlimited within the validity window</td>
+              <td class="text-left" rowspan="1" colspan="1">Not replayable; a captured token is unusable without the bound private key</td>
+              <td class="text-left" rowspan="1" colspan="1">Delegated; the client is identified by its bound key alongside the resource owner</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">HOTP</td>
+              <td class="text-left" rowspan="1" colspan="1">One; the counter advances on acceptance</td>
+              <td class="text-left" rowspan="1" colspan="1">Bounded; single use, but the code remains valid until the counter advances</td>
+              <td class="text-left" rowspan="1" colspan="1">Direct</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">TOTP</td>
+              <td class="text-left" rowspan="1" colspan="1">One per time step</td>
+              <td class="text-left" rowspan="1" colspan="1">Bounded; replayable within the time step and drift window</td>
+              <td class="text-left" rowspan="1" colspan="1">Direct</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SMS OTP</td>
+              <td class="text-left" rowspan="1" colspan="1">One</td>
+              <td class="text-left" rowspan="1" colspan="1">Bounded; replayable within the issuer's window, and interceptable in transit</td>
+              <td class="text-left" rowspan="1" colspan="1">Direct</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SD-JWT VC</td>
+              <td class="text-left" rowspan="1" colspan="1">Unlimited unless constrained by the issuer</td>
+              <td class="text-left" rowspan="1" colspan="1">Replayable without Key Binding; not replayable with a Key Binding JWT</td>
+              <td class="text-left" rowspan="1" colspan="1">Direct; Partitioned or Pseudonymous depending on the disclosed claim set</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ISO mdoc</td>
+              <td class="text-left" rowspan="1" colspan="1">Unlimited within the validity window</td>
+              <td class="text-left" rowspan="1" colspan="1">Not replayable; the device signature covers the session transcript</td>
+              <td class="text-left" rowspan="1" colspan="1">Direct; Partitioned when a subset of data elements is released</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">DBSC</td>
+              <td class="text-left" rowspan="1" colspan="1">Unlimited within the cookie lifetime</td>
+              <td class="text-left" rowspan="1" colspan="1">Bounded; the cookie is replayable within its short lifetime, the device key binding is not</td>
+              <td class="text-left" rowspan="1" colspan="1">Direct</td>
+            </tr>
+          </tbody>
+        </table>
+</section>
+</div>
+<div id="credential-containment-unlock-1">
+<section id="appendix-A.3">
+        <h3 id="name-credential-containment-unloc">
+<a href="#appendix-A.3" class="section-number selfRef">A.3. </a><a href="#name-credential-containment-unloc" class="section-name selfRef">Credential Containment &amp; Unlock</a>
+        </h3>
+<p id="appendix-A.3-1">The following properties describe containment of the credential at rest.<a href="#appendix-A.3-1" class="pilcrow">¶</a></p>
+<table class="center" id="table-5">
+          <caption><a href="#table-5" class="selfRef">Table 5</a></caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Credential Type</th>
+              <th class="text-left" rowspan="1" colspan="1">Containment</th>
+              <th class="text-left" rowspan="1" colspan="1">Boundary Binding</th>
+              <th class="text-left" rowspan="1" colspan="1">Boundary Enforcement</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Password / API key</td>
               <td class="text-left" rowspan="1" colspan="1">Uncontained</td>
-              <td class="text-left" rowspan="1" colspan="1">Partially Contained</td>
-              <td class="text-left" rowspan="1" colspan="1">Contained</td>
-              <td class="text-left" rowspan="1" colspan="1">Contained when bound to a TPM</td>
-            </tr>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">Boundary Binding</td>
               <td class="text-left" rowspan="1" colspan="1">Unbounded</td>
-              <td class="text-left" rowspan="1" colspan="1">Bound to the passkey provider.  Specifics are dependent upon the provider.</td>
-              <td class="text-left" rowspan="1" colspan="1">Bound to the hardware key</td>
-              <td class="text-left" rowspan="1" colspan="1">Bound to a TPM</td>
+              <td class="text-left" rowspan="1" colspan="1">Reactive; breach corpus matching and secret scanning</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Boundary Enforcement</td>
-              <td class="text-left" rowspan="1" colspan="1">Reactive (identification in prior breaches, identified in clear text)</td>
-              <td class="text-left" rowspan="1" colspan="1">Managed by the passkey provider.</td>
-              <td class="text-left" rowspan="1" colspan="1">Enforced by hardware.</td>
-              <td class="text-left" rowspan="1" colspan="1">Enforced by hardware.</td>
+              <td class="text-left" rowspan="1" colspan="1">Synced passkey</td>
+              <td class="text-left" rowspan="1" colspan="1">Partially contained by the credential provider</td>
+              <td class="text-left" rowspan="1" colspan="1">Bound to the passkey provider; specifics depend on the provider</td>
+              <td class="text-left" rowspan="1" colspan="1">Managed by the passkey provider</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Transference</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes</td>
-              <td class="text-left" rowspan="1" colspan="1">Within boundary via passkey provider sharing. Mechanisms depend on provider.  Export to another passkey provider via credential exchange protocol may be available.</td>
-              <td class="text-left" rowspan="1" colspan="1">None</td>
-              <td class="text-left" rowspan="1" colspan="1">None</td>
+              <td class="text-left" rowspan="1" colspan="1">Device-bound passkey</td>
+              <td class="text-left" rowspan="1" colspan="1">Contained</td>
+              <td class="text-left" rowspan="1" colspan="1">Bound to the hardware authenticator; non-exportable; verifiable through attestation at registration</td>
+              <td class="text-left" rowspan="1" colspan="1">Proactive; enforced by hardware</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Dynamism</td>
-              <td class="text-left" rowspan="1" colspan="1">None (static shared secret)</td>
-              <td class="text-left" rowspan="1" colspan="1">Dynamic (challenge-response)</td>
-              <td class="text-left" rowspan="1" colspan="1">Dynamic (challenge-response)</td>
-              <td class="text-left" rowspan="1" colspan="1">Dynamic (TLS)</td>
+              <td class="text-left" rowspan="1" colspan="1">SPIFFE X.509-SVID</td>
+              <td class="text-left" rowspan="1" colspan="1">Contained when the key is TPM-bound; otherwise resident in workload memory</td>
+              <td class="text-left" rowspan="1" colspan="1">Bound to the TPM when hardware-backed; otherwise to the attested node and workload</td>
+              <td class="text-left" rowspan="1" colspan="1">Proactive when hardware-backed; otherwise enforced by the node attestor and workload API</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Activation</td>
+              <td class="text-left" rowspan="1" colspan="1">SPIFFE JWT-SVID</td>
+              <td class="text-left" rowspan="1" colspan="1">Uncontained once issued; a bearer token</td>
+              <td class="text-left" rowspan="1" colspan="1">Unbounded after issuance</td>
+              <td class="text-left" rowspan="1" colspan="1">Reactive; mitigated by short lifetime</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">mTLS certificate</td>
+              <td class="text-left" rowspan="1" colspan="1">Contained in an HSM or TPM; uncontained as a key file</td>
+              <td class="text-left" rowspan="1" colspan="1">Bound to the HSM or TPM when hardware-backed; unbounded as an exportable file or PKCS#12</td>
+              <td class="text-left" rowspan="1" colspan="1">Proactive when hardware-backed; otherwise reactive</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">OAuth bearer access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Uncontained; a bearer string held in client memory, logs and intermediaries</td>
+              <td class="text-left" rowspan="1" colspan="1">Unbounded</td>
+              <td class="text-left" rowspan="1" colspan="1">Reactive; short lifetime, revocation and anomaly detection</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Sender-constrained access token</td>
+              <td class="text-left" rowspan="1" colspan="1">The token is uncontained but unusable alone; the bound private key is contained and may be hardware-backed</td>
+              <td class="text-left" rowspan="1" colspan="1">Bound to the client proof-of-possession key</td>
+              <td class="text-left" rowspan="1" colspan="1">Proactive; the resource server rejects any presentation lacking a valid proof of possession</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">HOTP</td>
+              <td class="text-left" rowspan="1" colspan="1">Contained in a hardware token; uncontained as a soft seed</td>
+              <td class="text-left" rowspan="1" colspan="1">Bound to the hardware token; unbounded as a soft seed that can be re-enrolled from the provisioning URI</td>
+              <td class="text-left" rowspan="1" colspan="1">Proactive for hardware tokens; otherwise none</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">TOTP</td>
+              <td class="text-left" rowspan="1" colspan="1">Contained in a hardware token; uncontained as a soft seed</td>
+              <td class="text-left" rowspan="1" colspan="1">Bound to the hardware token; unbounded as a soft seed</td>
+              <td class="text-left" rowspan="1" colspan="1">Proactive for hardware tokens; otherwise none</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SMS OTP</td>
+              <td class="text-left" rowspan="1" colspan="1">Uncontained; delivered in clear text and readable from the notification surface</td>
+              <td class="text-left" rowspan="1" colspan="1">Bound to control of the phone number, not to a device</td>
+              <td class="text-left" rowspan="1" colspan="1">Reactive; carrier-side controls against SIM swap and port-out</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SD-JWT VC</td>
+              <td class="text-left" rowspan="1" colspan="1">Contained when the Key Binding key is in a secure element; the credential itself is data at rest in the wallet</td>
+              <td class="text-left" rowspan="1" colspan="1">Bound to the wallet key store when Key Binding is used; unbounded otherwise</td>
+              <td class="text-left" rowspan="1" colspan="1">Proactive when hardware-backed; otherwise none</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ISO mdoc</td>
+              <td class="text-left" rowspan="1" colspan="1">Contained; DeviceKey resides in the device secure area</td>
+              <td class="text-left" rowspan="1" colspan="1">Bound to the device secure area</td>
+              <td class="text-left" rowspan="1" colspan="1">Proactive; enforced by hardware</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">DBSC</td>
+              <td class="text-left" rowspan="1" colspan="1">Contained if the session key resides in the TPM or secure enclave; Partially contained for software based implementations</td>
+              <td class="text-left" rowspan="1" colspan="1">Bound to the device TPM or secure element where hardware backed, and non-exportable; partially bound for software based implementations</td>
+              <td class="text-left" rowspan="1" colspan="1">Proactive; enforced by hardware or software</td>
+            </tr>
+          </tbody>
+        </table>
+<p id="appendix-A.3-3">The following properties describe how a contained credential is released for use.<a href="#appendix-A.3-3" class="pilcrow">¶</a></p>
+<table class="center" id="table-6">
+          <caption><a href="#table-6" class="selfRef">Table 6</a></caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Credential Type</th>
+              <th class="text-left" rowspan="1" colspan="1">Transference</th>
+              <th class="text-left" rowspan="1" colspan="1">Activation</th>
+              <th class="text-left" rowspan="1" colspan="1">Unlock Scope</th>
+              <th class="text-left" rowspan="1" colspan="1">Unlock Persistence</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Password / API key</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; freely copied</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes (biometric gesture or password/passphrase unlock)</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes (PIN/biometric gesture)</td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Synced passkey</td>
+              <td class="text-left" rowspan="1" colspan="1">Within the boundary via provider sharing; across providers via credential exchange where supported</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; biometric gesture or provider unlock</td>
+              <td class="text-left" rowspan="1" colspan="1">All users of the provider account, on every device the account syncs to</td>
+              <td class="text-left" rowspan="1" colspan="1">Configurable by the provider</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Device-bound passkey</td>
+              <td class="text-left" rowspan="1" colspan="1">None</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; PIN or biometric gesture</td>
+              <td class="text-left" rowspan="1" colspan="1">The holder who can satisfy the PIN or biometric</td>
+              <td class="text-left" rowspan="1" colspan="1">Per-operation, or per-session where user verification caching applies</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SPIFFE X.509-SVID</td>
+              <td class="text-left" rowspan="1" colspan="1">None</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">The attested workload</td>
+              <td class="text-left" rowspan="1" colspan="1">Life of the SVID, then re-issued</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Unlock Scope</td>
-              <td class="text-left" rowspan="1" colspan="1">N/A</td>
-              <td class="text-left" rowspan="1" colspan="1">All users on a shared device.</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1">Workload</td>
+              <td class="text-left" rowspan="1" colspan="1">SPIFFE JWT-SVID</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; any holder can present it</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">Any holder of the token</td>
+              <td class="text-left" rowspan="1" colspan="1">Life of the token</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Unlock Persistence</td>
+              <td class="text-left" rowspan="1" colspan="1">mTLS certificate</td>
+              <td class="text-left" rowspan="1" colspan="1">None when hardware-bound; Yes when exportable</td>
+              <td class="text-left" rowspan="1" colspan="1">Optional; PIN on a smart card or HSM</td>
+              <td class="text-left" rowspan="1" colspan="1">The holder of the key store</td>
+              <td class="text-left" rowspan="1" colspan="1">Per-operation for smart cards; life of the process otherwise</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">OAuth bearer access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; the token is usable by any bearer</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">Any holder of the token</td>
+              <td class="text-left" rowspan="1" colspan="1">Life of the token</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Sender-constrained access token</td>
+              <td class="text-left" rowspan="1" colspan="1">None unless the bound private key is transferred with the token</td>
+              <td class="text-left" rowspan="1" colspan="1">No; presentation is automated and requires no user gesture</td>
+              <td class="text-left" rowspan="1" colspan="1">The client that holds the bound private key</td>
+              <td class="text-left" rowspan="1" colspan="1">Life of the token; the bound key persists independently</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">HOTP</td>
+              <td class="text-left" rowspan="1" colspan="1">None for hardware tokens; Yes for soft seeds, which can be enrolled on multiple devices</td>
+              <td class="text-left" rowspan="1" colspan="1">Button press on some hardware tokens; otherwise No</td>
+              <td class="text-left" rowspan="1" colspan="1">The holder of the token or seed</td>
               <td class="text-left" rowspan="1" colspan="1">N/A</td>
-              <td class="text-left" rowspan="1" colspan="1">Configurable by passkey provider.</td>
-              <td class="text-left" rowspan="1" colspan="1">Per-operation (unlock once)</td>
-              <td class="text-left" rowspan="1" colspan="1">Life of the workload</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">TOTP</td>
+              <td class="text-left" rowspan="1" colspan="1">None for hardware tokens; Yes for soft seeds</td>
+              <td class="text-left" rowspan="1" colspan="1">Typically No</td>
+              <td class="text-left" rowspan="1" colspan="1">The holder of the token or seed</td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SMS OTP</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; the code can be read aloud or forwarded, which is the mechanism exploited by OTP phishing</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">Anyone with access to the device notification surface or the number</td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SD-JWT VC</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes without Key Binding; None with a hardware-bound Key Binding key</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; wallet unlock gesture where required</td>
+              <td class="text-left" rowspan="1" colspan="1">The holder who can unlock the wallet</td>
+              <td class="text-left" rowspan="1" colspan="1">Configurable by the wallet</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ISO mdoc</td>
+              <td class="text-left" rowspan="1" colspan="1">None; the DeviceKey is non-exportable</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; wallet unlock and per-presentation consent</td>
+              <td class="text-left" rowspan="1" colspan="1">The holder who can unlock the wallet</td>
+              <td class="text-left" rowspan="1" colspan="1">Per-presentation</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">DBSC</td>
+              <td class="text-left" rowspan="1" colspan="1">None for the key; the short-lived cookie can be copied</td>
+              <td class="text-left" rowspan="1" colspan="1">No; refresh is automatic with no user gesture</td>
+              <td class="text-left" rowspan="1" colspan="1">The browser profile on the bound device</td>
+              <td class="text-left" rowspan="1" colspan="1">Life of the session, with automatic cookie refresh</td>
             </tr>
           </tbody>
         </table>
 </section>
 </div>
 <div id="credential-enrollment-1">
-<section id="appendix-A.3">
-        <h3 id="name-credential-enrollment-2">
-<a href="#appendix-A.3" class="section-number selfRef">A.3. </a><a href="#name-credential-enrollment-2" class="section-name selfRef">Credential Enrollment</a>
-        </h3>
-<table class="center" id="table-4">
-          <caption><a href="#table-4" class="selfRef">Table 4</a></caption>
-<thead>
-            <tr>
-              <th class="text-left" rowspan="1" colspan="1">Property</th>
-              <th class="text-left" rowspan="1" colspan="1">Password / API key / client credential</th>
-              <th class="text-left" rowspan="1" colspan="1">Synced passkey</th>
-              <th class="text-left" rowspan="1" colspan="1">Device-bound passkey (hardware key)</th>
-              <th class="text-left" rowspan="1" colspan="1">SPIFFE X.509-SVID</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">Enrollment Assurance</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-            </tr>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">Vouching</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-            </tr>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">Enrollment Binding</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-            </tr>
-          </tbody>
-        </table>
-</section>
-</div>
-<div id="substantiation">
 <section id="appendix-A.4">
-        <h3 id="name-substantiation">
-<a href="#appendix-A.4" class="section-number selfRef">A.4. </a><a href="#name-substantiation" class="section-name selfRef">Substantiation</a>
+        <h3 id="name-credential-enrollment-2">
+<a href="#appendix-A.4" class="section-number selfRef">A.4. </a><a href="#name-credential-enrollment-2" class="section-name selfRef">Credential Enrollment</a>
         </h3>
-<table class="center" id="table-5">
-          <caption><a href="#table-5" class="selfRef">Table 5</a></caption>
+<table class="center" id="table-7">
+          <caption><a href="#table-7" class="selfRef">Table 7</a></caption>
 <thead>
             <tr>
-              <th class="text-left" rowspan="1" colspan="1">Property</th>
-              <th class="text-left" rowspan="1" colspan="1">Password / API key / client credential</th>
-              <th class="text-left" rowspan="1" colspan="1">Synced passkey</th>
-              <th class="text-left" rowspan="1" colspan="1">Device-bound passkey (hardware key)</th>
-              <th class="text-left" rowspan="1" colspan="1">SPIFFE X.509-SVID</th>
+              <th class="text-left" rowspan="1" colspan="1">Credential Type</th>
+              <th class="text-left" rowspan="1" colspan="1">Enrollment Assurance</th>
+              <th class="text-left" rowspan="1" colspan="1">Vouching</th>
+              <th class="text-left" rowspan="1" colspan="1">Enrollment Binding</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Identifier Binding</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1">Yes (SPIFFE ID bound in X.509)</td>
+              <td class="text-left" rowspan="1" colspan="1">Password / API key</td>
+              <td class="text-left" rowspan="1" colspan="1">Varies; typically none beyond an existing account context</td>
+              <td class="text-left" rowspan="1" colspan="1">Sometimes; set during a vouched registration or reset flow</td>
+              <td class="text-left" rowspan="1" colspan="1">Association with the account record held by the verifier</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Integrity</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">Synced passkey</td>
+              <td class="text-left" rowspan="1" colspan="1">Inherits the assurance of the session that created it</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; enrollment is gated by a pre-existing credential</td>
+              <td class="text-left" rowspan="1" colspan="1">WebAuthn registration ceremony binds the public key to the user handle</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Authoritative Relationship</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">Device-bound passkey</td>
+              <td class="text-left" rowspan="1" colspan="1">Enterprise-controlled; may require in-person proofing</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; typically gated by an enterprise credential or supervised enrollment</td>
+              <td class="text-left" rowspan="1" colspan="1">WebAuthn registration ceremony binds the public key to the user handle</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Chainability</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">SPIFFE X.509-SVID</td>
+              <td class="text-left" rowspan="1" colspan="1">Derived from node and workload attestation rather than human proofing</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; node attestation acts as the prior gate</td>
+              <td class="text-left" rowspan="1" colspan="1">Attestors bind the SPIFFE ID to the attested workload</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SPIFFE JWT-SVID</td>
+              <td class="text-left" rowspan="1" colspan="1">Derived from node and workload attestation</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; node attestation acts as the prior gate</td>
+              <td class="text-left" rowspan="1" colspan="1">Attestors bind the SPIFFE ID to the attested workload</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">mTLS certificate</td>
+              <td class="text-left" rowspan="1" colspan="1">Varies by CA policy, from domain validation to in-person proofing</td>
+              <td class="text-left" rowspan="1" colspan="1">Often; CSR submission is gated by an existing credential</td>
+              <td class="text-left" rowspan="1" colspan="1">The CA binds the subject and SAN to the public key in the CSR</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">OAuth bearer access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Inherits the assurance of the authorization grant and of the resource owner authentication behind it</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuance is gated by an authorization grant, itself gated by a pre-existing credential</td>
+              <td class="text-left" rowspan="1" colspan="1">The authorization server binds the token to client, resource owner, scope and audience at issuance</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Sender-constrained access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Inherits the assurance of the authorization grant and of the resource owner authentication behind it</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuance is gated by an authorization grant, itself gated by a pre-existing credential</td>
+              <td class="text-left" rowspan="1" colspan="1">As for a bearer token, and additionally binds the client proof-of-possession key into the token</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">HOTP</td>
+              <td class="text-left" rowspan="1" colspan="1">Inherits the assurance of the session that enrolled it</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; enrollment is gated by a pre-existing credential</td>
+              <td class="text-left" rowspan="1" colspan="1">Seed shared between authenticator and verifier and recorded against the account</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">TOTP</td>
+              <td class="text-left" rowspan="1" colspan="1">Inherits the assurance of the session that enrolled it</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; enrollment is gated by a pre-existing credential</td>
+              <td class="text-left" rowspan="1" colspan="1">Seed shared between authenticator and verifier and recorded against the account</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SMS OTP</td>
+              <td class="text-left" rowspan="1" colspan="1">Phone number possession only; no identity proofing</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; the number is registered during a vouched session</td>
+              <td class="text-left" rowspan="1" colspan="1">The verifier binds the phone number to the account record</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SD-JWT VC</td>
+              <td class="text-left" rowspan="1" colspan="1">Set by issuer policy; may require high-assurance proofing</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuance is gated by prior credentials or in-person proofing</td>
+              <td class="text-left" rowspan="1" colspan="1">The issuer binds claims to the holder's <code>cnf</code> key</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ISO mdoc</td>
+              <td class="text-left" rowspan="1" colspan="1">Set by the issuing authority; typically in-person proofing for an mDL</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; gated by the underlying document issuance process</td>
+              <td class="text-left" rowspan="1" colspan="1">The issuer binds the DeviceKey into the signed MSO</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">DBSC</td>
+              <td class="text-left" rowspan="1" colspan="1">Inherits the assurance of the sign-in that established the session</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; the session is established by a prior authentication</td>
+              <td class="text-left" rowspan="1" colspan="1">The browser binds the session identifier to a freshly generated device key</td>
             </tr>
           </tbody>
         </table>
@@ -1990,38 +2519,102 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
         <h3 id="name-credential-compliance-2">
 <a href="#appendix-A.5" class="section-number selfRef">A.5. </a><a href="#name-credential-compliance-2" class="section-name selfRef">Credential Compliance</a>
         </h3>
-<table class="center" id="table-6">
-          <caption><a href="#table-6" class="selfRef">Table 6</a></caption>
+<table class="center" id="table-8">
+          <caption><a href="#table-8" class="selfRef">Table 8</a></caption>
 <thead>
             <tr>
-              <th class="text-left" rowspan="1" colspan="1">Property</th>
-              <th class="text-left" rowspan="1" colspan="1">Password / API key / client credential</th>
-              <th class="text-left" rowspan="1" colspan="1">Synced passkey</th>
-              <th class="text-left" rowspan="1" colspan="1">Device-bound passkey (hardware key)</th>
-              <th class="text-left" rowspan="1" colspan="1">SPIFFE X.509-SVID</th>
+              <th class="text-left" rowspan="1" colspan="1">Credential Type</th>
+              <th class="text-left" rowspan="1" colspan="1">Composition Rules</th>
+              <th class="text-left" rowspan="1" colspan="1">Lifecycle Rules</th>
+              <th class="text-left" rowspan="1" colspan="1">Regulatory Framework</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Composition Rules</td>
-              <td class="text-left" rowspan="1" colspan="1">Length &amp; composition may be enforced</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">Password / API key</td>
+              <td class="text-left" rowspan="1" colspan="1">Length and character composition may be enforced</td>
+              <td class="text-left" rowspan="1" colspan="1">Rotation, expiry, and reuse limits may be enforced</td>
+              <td class="text-left" rowspan="1" colspan="1">; <span>[<a href="#PCI-DSS" class="cite xref">PCI-DSS</a>]</span>
+</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Lifecycle Rules</td>
-              <td class="text-left" rowspan="1" colspan="1">May be enforced</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">Synced passkey</td>
+              <td class="text-left" rowspan="1" colspan="1">Algorithm set constrained by WebAuthn and COSE</td>
+              <td class="text-left" rowspan="1" colspan="1">Revocation by deregistration; no rotation concept</td>
+              <td class="text-left" rowspan="1" colspan="1">NIST SP 800-63B</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Regulatory Framework</td>
-              <td class="text-left" rowspan="1" colspan="1">PCI, NIST SP800-63rev4 Part B</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">Device-bound passkey</td>
+              <td class="text-left" rowspan="1" colspan="1">Algorithm set constrained by WebAuthn and COSE; authenticator certification level</td>
+              <td class="text-left" rowspan="1" colspan="1">Deregistration; key lifetime tied to the authenticator</td>
+              <td class="text-left" rowspan="1" colspan="1">NIST SP 800-63B up to AAL3; FIDO Alliance certification</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SPIFFE X.509-SVID</td>
+              <td class="text-left" rowspan="1" colspan="1">Certificate profile and algorithms fixed by the SPIFFE X.509-SVID specification</td>
+              <td class="text-left" rowspan="1" colspan="1">Mandatory short lifetime with automatic rotation</td>
+              <td class="text-left" rowspan="1" colspan="1">SPIFFE specifications; deployment policy</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SPIFFE JWT-SVID</td>
+              <td class="text-left" rowspan="1" colspan="1">JWS algorithms fixed by the SPIFFE JWT-SVID specification</td>
+              <td class="text-left" rowspan="1" colspan="1">Short lifetime; expiry only, no revocation</td>
+              <td class="text-left" rowspan="1" colspan="1">SPIFFE specifications; deployment policy</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">mTLS certificate</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <span>[<a href="#CABF-BR" class="cite xref">CABF-BR</a>]</span> for the Web PKI; internal policy otherwise</td>
+              <td class="text-left" rowspan="1" colspan="1">Maximum validity period; revocation via CRL or OCSP</td>
+              <td class="text-left" rowspan="1" colspan="1">CA/Browser Forum Baseline Requirements; PKI operator policy</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">OAuth bearer access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Format unconstrained by OAuth itself; the JWT profile applies where used</td>
+              <td class="text-left" rowspan="1" colspan="1">Short expiry; renewal and revocation controlled by the authorization server</td>
+              <td class="text-left" rowspan="1" colspan="1">Deployment policy; sector profiles may impose additional constraints</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Sender-constrained access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Proof-of-possession mechanism fixed by the binding profile in use</td>
+              <td class="text-left" rowspan="1" colspan="1">Short expiry; the bound key rotates independently of token lifetime</td>
+              <td class="text-left" rowspan="1" colspan="1">Deployment policy; financial-grade profiles require sender-constrained tokens</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">HOTP</td>
+              <td class="text-left" rowspan="1" colspan="1">HMAC algorithm and code length fixed by the HOTP specification</td>
+              <td class="text-left" rowspan="1" colspan="1">Seed rotation on re-enrollment; counter resynchronization</td>
+              <td class="text-left" rowspan="1" colspan="1">NIST SP 800-63B; PCI DSS</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">TOTP</td>
+              <td class="text-left" rowspan="1" colspan="1">Algorithm, time step, and code length fixed by the TOTP specification</td>
+              <td class="text-left" rowspan="1" colspan="1">Seed rotation on re-enrollment; time-step policy</td>
+              <td class="text-left" rowspan="1" colspan="1">NIST SP 800-63B; PCI DSS</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SMS OTP</td>
+              <td class="text-left" rowspan="1" colspan="1">Code length and character set set by the verifier</td>
+              <td class="text-left" rowspan="1" colspan="1">Short expiry; per-attempt rate limiting</td>
+              <td class="text-left" rowspan="1" colspan="1">NIST SP 800-63B, which constrains out-of-band authenticators using the public telephone network; PCI DSS</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SD-JWT VC</td>
+              <td class="text-left" rowspan="1" colspan="1">Disclosure construction and algorithms fixed by the SD-JWT specification</td>
+              <td class="text-left" rowspan="1" colspan="1">Issuer-set expiry; status list revocation</td>
+              <td class="text-left" rowspan="1" colspan="1">Issuer policy; wallet ecosystem governance frameworks</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ISO mdoc</td>
+              <td class="text-left" rowspan="1" colspan="1">Cryptographic suites fixed by ISO/IEC 18013-5</td>
+              <td class="text-left" rowspan="1" colspan="1">Issuer-set validity; MSO update and revocation</td>
+              <td class="text-left" rowspan="1" colspan="1">ISO/IEC 18013-5; issuing authority policy</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">DBSC</td>
+              <td class="text-left" rowspan="1" colspan="1">Key type constrained by the DBSC specification and platform TPM support</td>
+              <td class="text-left" rowspan="1" colspan="1">Session lifetime and refresh cadence set by the origin</td>
+              <td class="text-left" rowspan="1" colspan="1">None specific; inherits the session management requirements of the deploying framework</td>
             </tr>
           </tbody>
         </table>
@@ -2032,52 +2625,70 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
         <h3 id="name-credential-recovery-2">
 <a href="#appendix-A.6" class="section-number selfRef">A.6. </a><a href="#name-credential-recovery-2" class="section-name selfRef">Credential Recovery</a>
         </h3>
-<table class="center" id="table-7">
-          <caption><a href="#table-7" class="selfRef">Table 7</a></caption>
+<table class="center" id="table-9">
+          <caption><a href="#table-9" class="selfRef">Table 9</a></caption>
 <thead>
             <tr>
-              <th class="text-left" rowspan="1" colspan="1">Property</th>
-              <th class="text-left" rowspan="1" colspan="1">Password / API key / client credential</th>
-              <th class="text-left" rowspan="1" colspan="1">Synced passkey</th>
-              <th class="text-left" rowspan="1" colspan="1">Device-bound passkey (hardware key)</th>
-              <th class="text-left" rowspan="1" colspan="1">SPIFFE X.509-SVID</th>
+              <th class="text-left" rowspan="1" colspan="1">Credential Type</th>
+              <th class="text-left" rowspan="1" colspan="1">Recoverability</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Recoverability</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">Password / API key</td>
+              <td class="text-left" rowspan="1" colspan="1">Account-driven; reset via an alternate credential, the prior secret is not restored</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Recovery Agent</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">Synced passkey</td>
+              <td class="text-left" rowspan="1" colspan="1">Issuer-driven; the provider's account recovery restores the synced credential</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Recovery Mechanism</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">Device-bound passkey</td>
+              <td class="text-left" rowspan="1" colspan="1">Account-driven; a lost authenticator cannot be restored, a replacement must be enrolled against a backup credential</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Recovery Artifact</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">SPIFFE X.509-SVID</td>
+              <td class="text-left" rowspan="1" colspan="1">Issuer-driven; re-attestation yields a new SVID, recovery of the prior key is neither needed nor possible</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Recovery Assurance</td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
-              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1">SPIFFE JWT-SVID</td>
+              <td class="text-left" rowspan="1" colspan="1">Issuer-driven; re-attestation yields a new SVID</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">mTLS certificate</td>
+              <td class="text-left" rowspan="1" colspan="1">Issuer-driven where the CA supports key escrow or re-issuance; Account-driven otherwise, by revoking and re-enrolling</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">OAuth bearer access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Issuer-driven; a new token is requested with a refresh token or a fresh authorization grant. The token itself is never recovered</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Sender-constrained access token</td>
+              <td class="text-left" rowspan="1" colspan="1">Issuer-driven; a new token is requested and bound to a current key. Loss of the bound key requires a new key and a new token</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">HOTP</td>
+              <td class="text-left" rowspan="1" colspan="1">Container-driven where an authenticator application backup restores the seed; Account-driven otherwise, by enrolling a new seed</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">TOTP</td>
+              <td class="text-left" rowspan="1" colspan="1">Container-driven where an authenticator application backup restores the seed; Account-driven otherwise, by enrolling a new seed</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SMS OTP</td>
+              <td class="text-left" rowspan="1" colspan="1">Account-driven; recovery consists of regaining control of the phone number, typically through the carrier</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SD-JWT VC</td>
+              <td class="text-left" rowspan="1" colspan="1">Issuer-driven; the holder re-requests issuance. A wallet backup may restore the credential but not a hardware-bound Key Binding key</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ISO mdoc</td>
+              <td class="text-left" rowspan="1" colspan="1">Issuer-driven; reissuance by the issuing authority, the DeviceKey cannot be recovered</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">DBSC</td>
+              <td class="text-left" rowspan="1" colspan="1">Account-driven; the session is re-established by re-authenticating and the device key is regenerated</td>
             </tr>
           </tbody>
         </table>
