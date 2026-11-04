@@ -5,8 +5,7 @@
 Network Working Group                                          P. Dingle
 Internet-Draft                                                 Microsoft
 Intended status: Informational                                D. H. Saxe
-Expires: 8 May 2027                                              Remitly
-                                                         4 November 2026
+Expires: 8 May 2027                                      4 November 2026
 
 
                Credential Management Security properties
@@ -67,22 +66,21 @@ Table of Contents
    1.  Introduction
    2.  Credential Management Security Classes
    3.  Credential Management Security Properties
-     3.1.  Credential Construction
-       3.1.1.  Dynamism
-       3.1.2.  Identifier Binding
-       3.1.3.  Tamper Proofness
-       3.1.4.  Chainability
-       3.1.5.  Audience Restriction
-       3.1.6.  Validity Window
-       3.1.7.  Selective Disclosure
+     3.1.  Credential Construction Properties
+       3.1.1.  Substantiation
+       3.1.2.  Dynamism
+       3.1.3.  Identifier Binding
+       3.1.4.  Tamper Proofness
+       3.1.5.  Chainability
+       3.1.6.  Audience Restriction
+       3.1.7.  Validity Window
+       3.1.8.  Selective Disclosure
      3.2.  Credential Presentation
        3.2.1.  Validity Count
        3.2.2.  Replayability
        3.2.3.  Referential Identity Posture
      3.3.  Credential Containment & Unlock
-       3.3.1.  Containment (TODO: reconcile with FIDO-SEC-REQ; the
-               FIDO Alliance publishes no sync fabric specific
-               requirements document)
+       3.3.1.  Containment
        3.3.2.  Boundary Binding
        3.3.3.  Boundary Enforcement
        3.3.4.  Transference
@@ -139,15 +137,16 @@ Table of Contents
 
 3.  Credential Management Security Properties
 
-3.1.  Credential Construction
+3.1.  Credential Construction Properties
 
-   ### Substantiation Substantiation describes credentials containing
-   mechanisms for authoritative statements that can be externally
-   validated.  Examples of substantiated credentials include
-   attestations such as SAML assertions [SAML] or X.509 certificates
-   [RFC5280].
+3.1.1.  Substantiation
 
-3.1.1.  Dynamism
+   Substantiation describes credentials containing mechanisms for
+   authoritative statements that can be externally validated.  Examples
+   of substantiated credentials include attestations such as SAML
+   assertions [SAML] or X.509 certificates [RFC5280].
+
+3.1.2.  Dynamism
 
    Dynamism describes a credential whose stored and active forms are
    different.  Credentials with no dynamism (or dynamic genarativity)
@@ -160,7 +159,7 @@ Table of Contents
    such as shared secrets, usually exhibit replayability and are
    definitionally not able to be contained.
 
-3.1.2.  Identifier Binding
+3.1.3.  Identifier Binding
 
    The primary content of a credential is cryptographically bound to an
    identifier.  Examples of credentials that include bound identifiers
@@ -168,29 +167,29 @@ Table of Contents
    certificates, ISO 18013 mobile driving licence objects [ISO18013-5]
    and verifiable credentials [VC-DATA-MODEL]
 
-3.1.3.  Tamper Proofness
+3.1.4.  Tamper Proofness
 
    A mechanism for credential integrity is built into the credential
    ensuring that the data within the credential is verifiably unchanged
    by external parties.
 
-3.1.4.  Chainability
+3.1.5.  Chainability
 
    The credential is capable of including links to or content of other
    credentials.
 
-3.1.5.  Audience Restriction
+3.1.6.  Audience Restriction
 
    A mechanism that specifies which destination consumers of the
    credential are valid.  Examples include id_token values [OIDC-CORE]
    or origin bindings of FIDO tokens.
 
-3.1.6.  Validity Window
+3.1.7.  Validity Window
 
    A credential becomes invalid outside of a specified time boundary.
    An example would be a SAML assertion or a TOTP [RFC6238].
 
-3.1.7.  Selective Disclosure
+3.1.8.  Selective Disclosure
 
    A mechanism by which some or all of the contents within a credential
    can be made available or unavailable under circumstances determined
@@ -310,9 +309,7 @@ Table of Contents
    containment facility, if any, can play a security role in an
    observable way at operation time.
 
-3.3.1.  Containment (TODO: reconcile with [FIDO-SEC-REQ]; the FIDO
-        Alliance publishes no sync fabric specific requirements
-        document)
+3.3.1.  Containment
 
    Describes how the creation, storage, and usage of a credential is
    managed.  At one extreme, containment be within the boundary of a
@@ -502,13 +499,6 @@ Table of Contents
    [DBSC]     World Wide Web Consortium, "Device Bound Session
               Credentials", W3C First Public Working Draft WD-dbsc-
               1-20250821, 21 August 2025, <https://www.w3.org/TR/dbsc/>.
-
-   [FIDO-SEC-REQ]
-              FIDO Alliance, "FIDO Authenticator Security and Privacy
-              Requirements, Version 1.6", 12 March 2025,
-              <https://fidoalliance.org/specs/fido-security-
-              requirements/fido-authenticator-security-requirements-
-              v1.6-fd-20250312.html>.
 
    [I-D.ietf-oauth-sd-jwt-vc]
               Terbu, O., Fett, D., and B. Campbell, "SD-JWT-based
@@ -1588,5 +1578,4 @@ Authors' Addresses
 
 
    Dean H. Saxe
-   Remitly
-   Email: deans@remitly.com
+   Email: dean@thesax.es
