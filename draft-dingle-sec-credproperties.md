@@ -42,6 +42,7 @@ informative:
   RFC6238:
   RFC7519:
   RFC8693:
+  I-D.ietf-oauth-transaction-tokens:
   RFC9901:
   SAML:
     title: "Assertions and Protocols for the OASIS Security Assertion Markup Language (SAML) V2.0"
@@ -212,7 +213,7 @@ Referential Identity Posture describes the nature of the relationship between a 
 | Chained | Recursive | Claimed identity derives from a backing identity through one or more intermediate referential identities, forming a transitive chain of relationships. |
 | Anonymous | Detached | Claimed identity is visibly severed from any backing identity with no opportunity to recover. |
 
-Examples of delegated referential identity posture include on-behalf-of (OBO) token interactions {{RFC8693}}, where both the identity of the end user and client software are communicated. Examples of impersonated referential identity posture might include privileged access management workflows, where an administrative process sets either the identifier or the credential (or both) based on a backing identity. Examples of a partitioned referential identity posture could include openclaw agents acting with separate accounts and email addresses but loosely affiliated to individuals.
+Examples of delegated referential identity posture include on-behalf-of (OBO) token interactions {{RFC8693}}, where both the identity of the end user and client software are communicated. Token exchange draws the same distinction normatively: a delegated actor retains its own identity while acting as an agent for another party, whereas an impersonating actor gains the rights of the party it impersonates and is indistinguishable from it. Examples of impersonated referential identity posture might include privileged access management workflows, where an administrative process sets either the identifier or the credential (or both) based on a backing identity. Examples of a partitioned referential identity posture could include openclaw agents acting with separate accounts and email addresses but loosely affiliated to individuals. Examples of a chained referential identity posture include transaction tokens {{I-D.ietf-oauth-transaction-tokens}}, which preserve the identity of the original caller as a request traverses a call chain of workloads, and which require the chain of workloads that requested a token to be carried forward each time that token is replaced. Token exchange expresses the same structure directly through nested actor claims, where the outermost actor is the current party and each nested actor a prior one.
 
 ## Credential Containment & Unlock
 Credential containment describes the at-rest state of a credential and its storage location(s). Unlock properties describe how the contained credential is made available for use at runtime and how the containment facility, if any, can play a security role in an observable way at operation time.
