@@ -263,9 +263,9 @@ Credential Recovery properties describe limitations of who can reset a credentia
 
 ### Recoverability
 Recoverability describes remediation capabilities that enable or re-enable access to a valid credential after loss or compromise. Values can be: issuer-driven, container-driven,or account-driven.
- * Issuer-driven: remediation is enabled by a direct party to the creation of the credential. Examples include credentials with multiple configured signing certificates, synced passkeys protected by a consumer trust layer, or hardware keys created with matching/derived seed values.
- * Container-driven: remediation enabled by a direct party to containment or unlock of the credential with pre-established administrative trust. Examples include PAM (privileged access management) systems or corporate password managers.
- * Account-driven: the credential cannot be restored, it can only be removed and replaced, often through a process that requires presentation of an unrelated alternate credential.
+* Issuer-driven: remediation is enabled by a direct party to the creation of the credential. Examples include credentials with multiple configured signing certificates, synced passkeys protected by a consumer trust layer, or hardware keys created with matching/derived seed values.
+* Container-driven: remediation enabled by a direct party to containment or unlock of the credential with pre-established administrative trust. Examples include PAM (privileged access management) systems or corporate password managers.
+* Account-driven: the credential cannot be restored, it can only be removed and replaced, often through a process that requires presentation of an unrelated alternate credential.
 
 # Conventions and Definitions
 
@@ -295,7 +295,7 @@ The credential types examined are:
 - **SPIFFE X.509-SVID** — a workload identity issued as an X.509 certificate following attestation of the workload, presented via mutual TLS. See {{SPIFFE-X509-SVID}}.
 - **SPIFFE JWT-SVID** — the same workload identity expressed as a signed JWT and presented as a bearer token {{RFC6750}} to services that cannot terminate mutual TLS. See {{SPIFFE-JWT-SVID}}.
 - **mTLS certificate** — a client certificate issued by a Web PKI or private CA outside of any SPIFFE trust domain, presented during the TLS handshake.
-- **OAuth bearer access token** — an access token {{RFC6749}} presented to a resource server as a bearer credential, either as a signed JWT or as an opaque handle the resource server validates by introspection. OAuth 2.1 {{I-D.ietf-oauth-v2-1}} consolidates the OAuth 2.0 core and bearer token specifications and is intended to obsolete both.
+- **OAuth access token** — an access token {{RFC6749}} presented to a resource server as a bearer credential, either as a signed JWT or as an opaque handle the resource server validates by introspection. 
 - **Sender-constrained access token** — the same access token bound to a client key, so that presentation additionally requires proof of possession of that key, whether by DPoP {{RFC9449}} or by mutual TLS certificate binding {{RFC8705}}.
 - **HOTP** — an HMAC-based counter-derived one-time password.
 - **TOTP** — a time-derived one-time password.
