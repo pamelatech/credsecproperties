@@ -31,6 +31,7 @@ author:
     email: pamela.dingle@microsoft.com
  -
     fullname: Dean H. Saxe
+    organization: Full Frontal Nerdity Industries
     email: dean@thesax.es
 normative:
 
@@ -150,13 +151,12 @@ This document defines a set of properties which explain and differentiate unique
 --- middle
 
 # Introduction
-Every credential used to identify, authenticate, or otherwise validate a subject is different, and yet there is no specific vocabulary that describes exactly what a given credential should be expected to do, or why exactly it can be called "secure".  To address this shortcoming, this document describes categories of secure credential management and within defines _exact_ labels to describe the intended operation of a given credential.  These labels are intended for colloquial use and designed whenever possible to be accessible and intuitive for laypeople. The specification is scoped only to a credential in its common and expected use; properties for secure administration of credentials are not part of this set. Negative uses (attacks, vulnerabilities) are also not in scope.
+Every credential used to identify, authenticate, or otherwise validate a subject is different, and yet there is no specific vocabulary that describes exactly what a given credential should be expected to do, or why exactly it can be called "secure".  To address this shortcoming, this document describes categories of credential management and within defines _exact_ labels to describe the intended operation of a given credential.  These labels are intended for colloquial use and designed whenever possible to be accessible and intuitive for laypeople. The specification is scoped only to a credential in its common and expected use; properties for secure administration of credentials are not part of this set. Negative uses (attacks, vulnerabilities) are also not in scope.
 
 # Credential Management Security Classes
 Properties are organized into areas of scrutiny, with each class containing the minimum set of properties possible to satisfy differences that have clear security value. The property must have a security benefit that is inherent to the credential type.
 
-# Credential Management Security Properties
-
+# Credential Management Security
 
 ## Credential Construction Properties
 
@@ -164,7 +164,7 @@ Properties are organized into areas of scrutiny, with each class containing the 
 Substantiation describes credentials containing mechanisms for authoritative statements that can be externally validated. Examples of substantiated credentials include attestations such as SAML assertions {{SAML}} or X.509 certificates {{RFC5280}}.
 
 ### Dynamism
-Dynamism describes a credential whose stored and active forms are different. Credentials with no dynamism (or dynamic genarativity) such as passwords exibit no difference between the stored (in memory, in a password manager, etc.) and the credential sent to the verifier. Dynamic generatvity indicates that some function is used to operate on the stored credential such that what is sent over the wire is different than what is stored (e.g. a challenge response protocol like FIDO {{WEBAUTHN}}).  Credentials that do not exhibit dynamism, such as shared secrets, usually exhibit replayability and are definitionally not able to be contained.
+Dynamism describes a credential whose inactive (stored or at-rest) and active forms are different. Credentials with no dynamism (or dynamic generativity) such as passwords exhibit no difference between the stored value (in memory, in a password manager, etc.) and the credential sent to the verifier. Dynamic generativity indicates that some function is used to operate on the stored credential such that what is sent over the wire is different than what is stored (e.g. a challenge response protocol like FIDO {{WEBAUTHN}}).  Credentials that do not exhibit dynamism, such as shared secrets, usually exhibit replayability and are definitionally not able to be contained (see {{credential-containment}}.
 
 ### Identifier Binding
 The primary content of a credential is cryptographically bound to an identifier. Examples of credentials that include bound identifiers include SAML assertions, JSON Web Tokens (JWTs) {{RFC7519}}, X.509 certificates, ISO 18013 mobile driving licence objects {{ISO18013-5}} and verifiable credentials {{VC-DATA-MODEL}}
@@ -176,7 +176,7 @@ A mechanism for credential integrity is built into the credential ensuring that 
 The credential is capable of including links to or content of other credentials.
 
 ### Audience Restriction
-A mechanism that specifies which destination consumers of the credential are valid.  Examples include `id_token` values {{OIDC-CORE}} or origin bindings of FIDO tokens.
+A mechanism that specifies which destination consumers of the credential are valid.  Examples include `id_token` values {{OIDC-CORE}} or origin bindings of FIDO tokens.  Consumers of the credential should be responsible for validating the audience restriction before using an audience-restricted credential.
 
 ### Validity Window
 A credential becomes invalid outside of a specified time boundary.  An example would be a SAML assertion or a TOTP {{RFC6238}}.
@@ -185,7 +185,7 @@ A credential becomes invalid outside of a specified time boundary.  An example w
 A mechanism by which some or all of the contents within a credential can be made available or unavailable under circumstances determined at presentation time. Example is an SD-JWT {{RFC9901}} or a ZKP.
 
 ## Credential Presentation
-Credential reuse properties describe ways in which the use of a credential is functionally restricted.
+Credential presentation properties describe ways in which the use of a credential is functionally restricted.
 
 ### Validity Count
 A credential becomes invalid after a specified number of successful presentations. An example would be a temporary password that can only be used 5 times, or a one-time password.
@@ -210,7 +210,7 @@ Referential Identity Posture describes the nature of the relationship between a 
 
 Examples of delegated referential identity posture include on-behalf-of (OBO) token interactions {{RFC8693}}, where both the identity of the end user and client software are communicated. Token exchange draws the same distinction normatively: a delegated actor retains its own identity while acting as an agent for another party, whereas an impersonating actor gains the rights of the party it impersonates and is indistinguishable from it. Examples of impersonated referential identity posture might include privileged access management workflows, where an administrative process sets either the identifier or the credential (or both) based on a backing identity. Examples of a partitioned referential identity posture could include openclaw agents acting with separate accounts and email addresses but loosely affiliated to individuals. Examples of a chained referential identity posture include transaction tokens {{I-D.ietf-oauth-transaction-tokens}}, which preserve the identity of the original caller as a request traverses a call chain of workloads, and which require the chain of workloads that requested a token to be carried forward each time that token is replaced. Token exchange expresses the same structure directly through nested actor claims, where the outermost actor is the current party and each nested actor a prior one.
 
-## Credential Containment & Unlock
+## Credential Containment & Unlock {#credential-containment}
 Credential containment describes the at-rest state of a credential and its storage location(s). Unlock properties describe how the contained credential is made available for use at runtime and how the containment facility, if any, can play a security role in an observable way at operation time.
 
 ### Containment
@@ -232,7 +232,7 @@ A credential becomes available for an operation only when a local user gesture i
 A credential may be unlocked by different parties which defines the scope of which entities can unlock credential for use.  The owner of a credential is always expected to be able to unlock their own credential. Credentials on shared devices may be unlocked by all users sharing the device. Similarly, credentials in a shared enterprise vault may be unlocked by a vault administrator.  Unlock scope is related to an instance of a credential and is distinct from the Credential Management Security Properties.
 
 ### Unlock Persistence
-Credentials may be unlocked once with an activation factor (e.g. using a hardware security key), or the activation factor may be presented seconds to minutes before use (e.g. a credential vault remains unlocked for 5 minutes after use).
+Credentials may be unlocked once with an activation factor (e.g. entering a PIN or biometric to activate a hardware security key), or the activation factor may be presented seconds to minutes before use (e.g. a credential vault remains unlocked for 5 minutes after use, allowing presentation of credentials from the vault without further activation).
 
 ## Credential Enrollment
 Credential enrollment properties describe requirements required to be met before a credential is created.
