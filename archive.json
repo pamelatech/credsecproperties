@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-17T03:00:28.714937+00:00",
+  "timestamp": "2026-11-05T04:46:32.772953+00:00",
   "repo": "pamelatech/credsecproperties",
   "labels": [
     {
@@ -1631,7 +1631,7 @@
       "labels": [],
       "body": "## What\n\nAdds a tracked pre-commit hook that keeps trailing whitespace out of the draft sources, plus local-setup docs in `CONTRIBUTING.md`.\n\n## Why\n\nThe \"Update Editor's Copy\" CI build runs `make lint`, whose `lint-whitespace` step **fails the entire build on any trailing whitespace**. This has broken the build repeatedly (#27, #33) even though the document itself compiles fine \u2014 the failures were purely trailing whitespace. This hook catches it locally before it reaches CI.\n\n## How it works\n\n- `.githooks/pre-commit` strips trailing whitespace from staged `*.md`, `*.xml`, and `*.org` files and re-stages them (matching the existing `.editorconfig` `trim_trailing_whitespace = true`).\n- If a file has *unstaged* changes too, it is left untouched and the commit is blocked with instructions, to avoid staging unrelated edits.\n- Zero external dependencies \u2014 POSIX `sh` + `perl` (already present on macOS and the CI image).\n\n## Enabling (per clone)\n\nGit does not auto-enable repo-tracked hooks, so each contributor runs once:\n\n```sh\ngit config core.hooksPath .githooks\n```\n\nThis is documented in the new **Local Setup** section of `CONTRIBUTING.md`, alongside instructions for installing the build toolchain (`xml2rfc` + `kramdown-rfc`).\n\n## Testing\n\nVerified locally: a staged file with trailing spaces and trailing tabs is stripped and re-staged, hook exits 0; a clean file is a no-op.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)\n",
       "createdAt": "2026-07-15T11:59:19Z",
-      "updatedAt": "2026-07-15T11:59:19Z",
+      "updatedAt": "2026-11-04T16:02:11Z",
       "baseRepository": "pamelatech/credsecproperties",
       "baseRefName": "main",
       "baseRefOid": "bd7cc0ea5759c4ff736d59df6389b804696cdeea",
@@ -1642,7 +1642,15 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hold on to this - we may never push it.",
+          "createdAt": "2026-11-04T16:02:10Z",
+          "updatedAt": "2026-11-04T16:02:10Z"
+        }
+      ],
       "reviews": []
     },
     {
@@ -1768,24 +1776,26 @@
       "id": "PR_kwDON4ikis8AAAABDp0xlw",
       "title": "Rewrite appendix as credential-type-to-property matrix",
       "url": "https://github.com/pamelatech/credsecproperties/pull/37",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "deansaxe",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "**Merge #36 first.** The second commit here assumes it has landed \u2014 see *Merge order* below.\n\nTransposes the appendix so **credential types are rows and properties are columns**, and reconciles it with the body's reorganized property classes.\n\n### The appendix had drifted further than it looked\n\n| Appendix before | Body today |\n|---|---|\n| \u00a7\"Presentation Limits\" held Validity Window, Selective Disclosure, Audience Restriction | Those moved to **Credential Construction** |\n| \u00a7\"Substantiation\" had rows *Integrity* and *Authoritative Relationship* | Renamed **Tamper Proofness** and **Substantiation** |\n| \u00a7\"Credential Containment & Unlock\" had a *Dynamism* row | Dynamism moved to **Credential Construction** |\n| \u00a7\"Credential Recovery\" had *Recovery Agent / Mechanism / Artifact / Assurance* | **None of these exist in the body anymore**; only Recoverability survives |\n| \u2014 | **Replayability** and **Referential Identity Posture** were defined in the body but missing from the appendix entirely |\n\n### Rows: 4 \u2192 12 credential types\n\nAdded SPIFFE JWT-SVID, mTLS certificate, HOTP, TOTP, SMS OTP, SD-JWT VC, ISO mdoc, and DBSC to the original four.\n\nThe additions are what make the property set testable. With only the original four rows, **Selective Disclosure and Chainability were \"No\" for every row** \u2014 columns that differentiated nothing. SD-JWT VC and ISO mdoc exercise both. DBSC is the only row that is contained but *not* activated, and it demonstrates the bounded-replayability point the body makes about OTPs.\n\n### Substantive correction\n\nThe old appendix claimed SPIFFE X.509-SVIDs are **\"rotated every 5 minutes.\"** That does not verify \u2014 SPIRE's documented default is a **1-hour SVID lifetime rotated at 50% of TTL**. The 5-minute figure appears to be the historical *JWT*-SVID TTL, which changed in SPIRE v0.11.0. I dropped the number rather than restate it.\n\n### Two tables are split\n\nConstruction (8 properties) and Containment & Unlock (7) rendered at **116 and 108 columns** \u2014 well over the 72-column limit and idnits-failing. Each is now two tables under a single heading, so the 1:1 mapping to the body's classes is preserved. The other four classes are single tables and were already within limits.\n\n### Merge order\n\nThe body introduces most of these specifications before the appendix reaches them, so under first-use-only the body owns the citation. Commit 2 here strips those from the appendix, leaving the spec named in plain text, and keeps citations only for what the appendix introduces first (CTAP, SPIFFE, SD-JWT VC, DBSC, PCI DSS, CA/B Forum BR, JWS, Bearer Token Usage).\n\nMerging this **before** #36 would leave those specs uncited. Merging after is clean.\n\nThis branch conflicts with #36 in the YAML reference block. **The resolution is a plain union of the two entry lists** \u2014 git merges the `normative:`/`informative:` headers cleanly and conflicts only on the entries; no judgment required. I verified the merged result builds, has 0 lines over 72 columns, and that all 26 references are still cited exactly once in the text.\n\n### Verification\n\n- `make` builds clean to `.txt`\n- 0 lines exceed the 72-column limit\n- All references resolve\n\nHappy to rebase this onto #36 instead if you'd rather Pam not hit the conflict at merge time.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)",
       "createdAt": "2026-09-15T18:07:21Z",
-      "updatedAt": "2026-09-15T23:03:59Z",
+      "updatedAt": "2026-11-04T15:59:10Z",
       "baseRepository": "pamelatech/credsecproperties",
       "baseRefName": "main",
       "baseRefOid": "869e2143d3124eb842dedd31f1df2512723d2a02",
       "headRepository": "pamelatech/credsecproperties",
       "headRefName": "feature/appendix-credential-type-matrix",
       "headRefOid": "a08f787b1f26eacbbc701048e386dd54f6d3dd38",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-11-04T15:59:09Z",
+      "mergedAt": "2026-11-04T15:59:09Z",
+      "mergedBy": "pamelatech",
+      "mergeCommit": {
+        "oid": "60610314c7462070d6a78fbdbdc6563c59c4bd61"
+      },
       "comments": [
         {
           "author": "deansaxe",
@@ -1967,24 +1977,26 @@
       "id": "PR_kwDON4ikis8AAAABDr2RWA",
       "title": "Add a chained referential identity example and anchor the postures",
       "url": "https://github.com/pamelatech/credsecproperties/pull/39",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "deansaxe",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Carries forward one commit that missed the squash merge of #36. Rebuilt on current `main`.\n\nReferential Identity Posture defines seven postures but illustrated only three \u2014 Delegated, Impersonated and Partitioned. **Chained had no example at all.**\n\n### Chained\n\nCites transaction tokens (`draft-ietf-oauth-transaction-tokens`, OAuth WG, rev 11, WG consensus reached). They preserve the identity of the original caller as a request traverses a call chain of workloads, and \u00a713.15 requires that when a transaction token is replaced, the service **MUST** maintain the chain of workloads that requested the prior token in the newly issued one.\n\nThat is the transitive relationship the posture describes, expressed as a normative requirement rather than an incidental property \u2014 which is what makes it a stronger example than a system that merely happens to produce a chain.\n\nThe text also notes that token exchange encodes the same structure directly through nested `act` claims, where the outermost actor is the current party and each nested actor a prior one.\n\n### Delegated and Impersonated\n\nBoth postures were defined descriptively. RFC 8693 \u00a71.1 already draws the distinction normatively: a delegated actor retains its own identity while acting as an agent for another party, whereas an impersonating actor gains that party's rights and is indistinguishable from it. The definitions are now anchored to that wording.\n\nRFC 8693 is already cited two sentences earlier in the same section, so it is not cited again \u2014 consistent with the first-use-only convention established in #36.\n\n### Verification\n\n- `make` builds clean\n- 0 lines exceed the 72-column limit\n- 18 references, each cited exactly once and listed once\n\n### Note\n\n`draft-ietf-oauth-transaction-tokens` is an active draft targeting IESG submission in December 2026. If it publishes as an RFC before this document does, the citation will need updating \u2014 as will `draft-ietf-oauth-sd-jwt-vc`, referenced in the appendix work.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)\n",
       "createdAt": "2026-09-15T22:54:08Z",
-      "updatedAt": "2026-09-15T22:54:08Z",
+      "updatedAt": "2026-11-04T16:00:08Z",
       "baseRepository": "pamelatech/credsecproperties",
       "baseRefName": "main",
       "baseRefOid": "869e2143d3124eb842dedd31f1df2512723d2a02",
       "headRepository": "pamelatech/credsecproperties",
       "headRefName": "feature/chained-identity-example",
       "headRefOid": "36579072accf849a7e8e73332aa87631a9f5b3de",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-11-04T16:00:08Z",
+      "mergedAt": "2026-11-04T16:00:08Z",
+      "mergedBy": "pamelatech",
+      "mergeCommit": {
+        "oid": "1a5bbb565a666a533fbcaf15dedb1671160085e4"
+      },
       "comments": [],
       "reviews": []
     },
@@ -2000,7 +2012,7 @@
       "labels": [],
       "body": "Commits the rich PDF build, which until now existed only in one working tree and so worked on exactly one machine.\n\nThe template's default rule (`lib/main.mk:148`) pipes the plain text output through `enscript | ps2pdf`, producing a typewriter-style PDF with no hyperlinks, no bookmarks and no real fonts. This overrides it with `xml2rfc --pdf`, producing the datatracker-style document.\n\n### What CI taught us \u2014 the important part\n\nThe first attempt committed the dependency as `requirements.txt`. **That broke the build outright**, and the failure is worth recording because it is a trap for contributors too:\n\n```\n\"pip3\" install -q --no-user -r requirements.txt          \u2190 succeeded\n...\nFile \"/usr/lib/python3.14/site-packages/xml2rfc/__init__.py\", line 38\n    from weasyprint.text.ffi import pango\nKeyError: 'weasyprint'\nmake[1]: *** [lib/main.mk:98: draft-...xml] Error 1\nmake: *** [lib/main.mk:20: all] Error 2\n```\n\nTwo mechanisms combine:\n\n1. `lib/deps.mk:143` globs the **exact literal** `requirements.txt` and installs it automatically, including in CI.\n2. `xml2rfc` imports weasyprint's FFI layer **at module load** whenever weasyprint is present.\n\nThe container has no pango, so that import raised and `xml2rfc` would not start at all. This took down the `xml`, `txt` and `html` builds \u2014 the PDF target was never even reached, since no workflow invokes it.\n\nSo installing weasyprint where pango is absent does not degrade the PDF build; it destroys the whole toolchain.\n\n### The fix\n\nName the file **`requirements-pdf.txt`**. `deps.mk` does not glob it, so nothing is installed automatically and CI is untouched. Anyone who wants the rich PDF opts in:\n\n```\npip install -r requirements-pdf.txt\n# macOS:          brew install pango\n# Debian/Ubuntu:  apt-get install libpango-1.0-0 libpangoft2-1.0-0\n```\n\nThe file documents this in its own header, so the next person to find it learns why the name matters before they rename it back.\n\n`.gitignore` gains a matching `!requirements-pdf.txt` negation, since `*.txt` on line 5 would otherwise swallow it \u2014 the same reason the template already carries `!requirements.txt`.\n\nThe `Makefile` rule is safe to commit unconditionally: it is a static pattern rule whose explicit targets take precedence over the generic `%.pdf: %.txt` pattern, and it is inert until weasyprint is installed. No workflow calls `make pdf`.\n\n### Verified\n\n| Check | Result |\n|---|---|\n| `make all` \u2014 exactly what CI runs | clean (kramdown-rfc, xml2rfc-txt, xml2rfc-html all OK) |\n| `make pdf` \u2014 with weasyprint installed | 85KB datatracker-style PDF |\n| `deps.mk` auto-install | no longer triggered \u2014 glob is for the literal `requirements.txt` |\n\n### Follow-up worth considering\n\nNothing in CI exercises `make pdf`, so the PDF path stays unverified on Linux. If that matters, a `pdf` step could be added to `ghpages.yml` \u2014 but it would need pango and cairo in the i-d-template container, which is exactly what this PR just demonstrated is missing. Probably better left as a documented local-only build.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)\n",
       "createdAt": "2026-09-15T22:54:10Z",
-      "updatedAt": "2026-09-15T23:02:59Z",
+      "updatedAt": "2026-11-04T16:02:02Z",
       "baseRepository": "pamelatech/credsecproperties",
       "baseRefName": "main",
       "baseRefOid": "869e2143d3124eb842dedd31f1df2512723d2a02",
@@ -2011,7 +2023,15 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hold on to this - we may never push it.",
+          "createdAt": "2026-11-04T16:02:02Z",
+          "updatedAt": "2026-11-04T16:02:02Z"
+        }
+      ],
       "reviews": []
     },
     {
@@ -2019,24 +2039,26 @@
       "id": "PR_kwDON4ikis8AAAABDr6sXQ",
       "title": "Delete research-report.md",
       "url": "https://github.com/pamelatech/credsecproperties/pull/41",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "deansaxe",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "This is no longer needed, we should delete.",
       "createdAt": "2026-09-15T23:06:09Z",
-      "updatedAt": "2026-09-15T23:06:09Z",
+      "updatedAt": "2026-11-04T16:01:22Z",
       "baseRepository": "pamelatech/credsecproperties",
       "baseRefName": "main",
       "baseRefOid": "869e2143d3124eb842dedd31f1df2512723d2a02",
       "headRepository": "pamelatech/credsecproperties",
       "headRefName": "remove-research-report",
       "headRefOid": "9bcfc6033ee5d1bf7a20904bc69255f0d3ef4b61",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-11-04T16:01:22Z",
+      "mergedAt": "2026-11-04T16:01:22Z",
+      "mergedBy": "pamelatech",
+      "mergeCommit": {
+        "oid": "c7023ab62929811a152d186aacdf0ce290b1c61a"
+      },
       "comments": [],
       "reviews": []
     },
@@ -2045,24 +2067,26 @@
       "id": "PR_kwDON4ikis8AAAABDr74mg",
       "title": "Cleaning up nits in the doc",
       "url": "https://github.com/pamelatech/credsecproperties/pull/42",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "deansaxe",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Cleaning nits ahead of first publication.",
       "createdAt": "2026-09-15T23:09:27Z",
-      "updatedAt": "2026-09-15T23:23:08Z",
+      "updatedAt": "2026-11-04T16:07:25Z",
       "baseRepository": "pamelatech/credsecproperties",
       "baseRefName": "main",
-      "baseRefOid": "869e2143d3124eb842dedd31f1df2512723d2a02",
+      "baseRefOid": "c7023ab62929811a152d186aacdf0ce290b1c61a",
       "headRepository": "pamelatech/credsecproperties",
       "headRefName": "cleaning-nits",
-      "headRefOid": "b3a1b9e625ac1263d1421b2a22b7be8afb4997d8",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "e98f1e0d215f338aee85be84044af6c71bcbc19f",
+      "closedAt": "2026-11-04T16:07:25Z",
+      "mergedAt": "2026-11-04T16:07:25Z",
+      "mergedBy": "deansaxe",
+      "mergeCommit": {
+        "oid": "6310f1123783036c6632feb117afed318d28dacb"
+      },
       "comments": [],
       "reviews": []
     }
