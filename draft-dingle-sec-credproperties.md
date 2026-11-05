@@ -463,4 +463,4 @@ The following properties describe how a contained credential is released for use
 # Acknowledgments
 {:numbered="false"}
 
-The authors would like to acknowledge the following individuals for their thoughful feedback: George Fletcher, Andrew Hughes, Justin Richer, and the attendees of the Internet Identity Workshop 42 and OAuth Security Workshop 2025.
+The authors would like to acknowledge the following individuals for their thoughtful feedback: George Fletcher, Elizabeth Garber, Ian Glazer, Andrew Hughes, Justin Richer, and the attendees of the Internet Identity Workshop 42, OAuth Security Workshop 2025, and Authenticate 2026.
