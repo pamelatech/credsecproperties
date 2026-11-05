@@ -156,7 +156,7 @@ Every credential used to identify, authenticate, or otherwise validate a subject
 # Credential Management Security Classes
 Properties are organized into areas of scrutiny, with each class containing the minimum set of properties possible to satisfy differences that have clear security value. The property must have a security benefit that is inherent to the credential type.
 
-# Credential Management Security
+# Credential Management Security {#credential-management-security}
 
 ## Credential Construction Properties
 
@@ -164,7 +164,7 @@ Properties are organized into areas of scrutiny, with each class containing the 
 Substantiation describes credentials containing mechanisms for authoritative statements that can be externally validated. Examples of substantiated credentials include attestations such as SAML assertions {{SAML}} or X.509 certificates {{RFC5280}}.
 
 ### Dynamism
-Dynamism describes a credential whose inactive (stored or at-rest) and active forms are different. Credentials with no dynamism (or dynamic generativity) such as passwords exhibit no difference between the stored value (in memory, in a password manager, etc.) and the credential sent to the verifier. Dynamic generativity indicates that some function is used to operate on the stored credential such that what is sent over the wire is different than what is stored (e.g. a challenge response protocol like FIDO {{WEBAUTHN}}).  Credentials that do not exhibit dynamism, such as shared secrets, usually exhibit replayability and are definitionally not able to be contained (see {{credential-containment}}.
+Dynamism describes a credential whose inactive (stored or at-rest) and active forms are different. Credentials with no dynamism (or dynamic generativity) such as passwords exhibit no difference between the stored value (in memory, in a password manager, etc.) and the credential sent to the verifier. Dynamic generativity indicates that some function is used to operate on the stored credential such that what is sent over the wire is different than what is stored (e.g. a challenge response protocol like FIDO {{WEBAUTHN}}).  Credentials that do not exhibit dynamism, such as shared secrets, usually exhibit replayability and are definitionally not able to be contained (see {{credential-containment}}).
 
 ### Identifier Binding
 The primary content of a credential is cryptographically bound to an identifier. Examples of credentials that include bound identifiers include SAML assertions, JSON Web Tokens (JWTs) {{RFC7519}}, X.509 certificates, ISO 18013 mobile driving licence objects {{ISO18013-5}} and verifiable credentials {{VC-DATA-MODEL}}
@@ -285,7 +285,7 @@ This document has no IANA actions.
 
 # Applying the Properties to Common Credential Types
 
-This appendix illustrates how the properties defined in this document apply to a range of common credential types, to validate that the property set is expressive enough to differentiate them. Each class of properties defined in {{credential-management-security-properties}} is presented as a table whose rows are credential types and whose columns are the properties of that class.
+This appendix illustrates how the properties defined in this document apply to a range of common credential types, to validate that the property set is expressive enough to differentiate them. Each class of properties defined in {{credential-management-security}} is presented as a table whose rows are credential types and whose columns are the properties of that class.
 
 The credential types examined are:
 
@@ -295,7 +295,7 @@ The credential types examined are:
 - **SPIFFE X.509-SVID** — a workload identity issued as an X.509 certificate following attestation of the workload, presented via mutual TLS. See {{SPIFFE-X509-SVID}}.
 - **SPIFFE JWT-SVID** — the same workload identity expressed as a signed JWT and presented as a bearer token {{RFC6750}} to services that cannot terminate mutual TLS. See {{SPIFFE-JWT-SVID}}.
 - **mTLS certificate** — a client certificate issued by a Web PKI or private CA outside of any SPIFFE trust domain, presented during the TLS handshake.
-- **OAuth access token** — an access token {{RFC6749}} presented to a resource server as a bearer credential, either as a signed JWT or as an opaque handle the resource server validates by introspection. 
+- **OAuth access token** — an access token {{RFC6749}} presented to a resource server as a bearer credential, either as a signed JWT or as an opaque handle the resource server validates by introspection.
 - **Sender-constrained access token** — the same access token bound to a client key, so that presentation additionally requires proof of possession of that key, whether by DPoP {{RFC9449}} or by mutual TLS certificate binding {{RFC8705}}.
 - **HOTP** — an HMAC-based counter-derived one-time password.
 - **TOTP** — a time-derived one-time password.
