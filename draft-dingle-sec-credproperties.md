@@ -99,7 +99,6 @@ informative:
     seriesinfo:
       NIST: Special Publication 800-63B-4
   RFC6749:
-  I-D.ietf-oauth-v2-1:
   RFC6750:
   RFC7515:
   RFC8705:
