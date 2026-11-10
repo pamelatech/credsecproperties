@@ -43,6 +43,9 @@ informative:
   RFC8693:
   I-D.ietf-oauth-transaction-tokens:
   RFC9901:
+  RFC9577:
+  I-D.irtf-cfrg-bbs-signatures:
+  I-D.irtf-cfrg-bbs-per-verifier-linkability:
   SAML:
     title: "Assertions and Protocols for the OASIS Security Assertion Markup Language (SAML) V2.0"
     target: https://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf
@@ -73,6 +76,14 @@ informative:
       - org: World Wide Web Consortium
     seriesinfo:
       W3C: Recommendation REC-vc-data-model-2.0-20250515
+  VC-DI-BBS:
+    title: "Data Integrity BBS Cryptosuites v1.0"
+    target: https://www.w3.org/TR/vc-di-bbs/
+    date: 2026-09-10
+    author:
+      - org: World Wide Web Consortium
+    seriesinfo:
+      W3C: Candidate Recommendation Draft CRD-vc-di-bbs-20260910
   ISO18013-5:
     title: "Personal identification - ISO-compliant driving licence - Part 5: Mobile driving licence (mDL) application"
     target: https://www.iso.org/standard/69084.html
@@ -147,12 +158,12 @@ informative:
 
 --- abstract
 
-This document defines a set of properties which explain and differentiate unique security characteristics of an authentication method.
+This document defines a set of properties that explain and differentiate the security characteristics of a credential.
 
 --- middle
 
 # Introduction
-Every credential used to identify, authenticate, or otherwise validate a subject is different, and yet there is no specific vocabulary that describes exactly what a given credential should be expected to do, or why exactly it can be called "secure".  To address this shortcoming, this document describes categories of secure credential management and within defines _exact_ labels to describe the intended operation of a given credential.  These labels are intended for colloquial use and designed whenever possible to be accessible and intuitive for laypeople. The specification is scoped only to a credential in its common and expected use; properties for secure administration of credentials are not part of this set. Negative uses (attacks, vulnerabilities) are also not in scope.
+A credential is a set of data used to validate, confirm, or establish one or more claims about a named entity. Many diverse types of credential may be used to identify, authenticate, or otherwise validate a subject, and yet there is no specific vocabulary that describes exactly what a given credential should be expected to do, or why exactly it can be called "secure".  To address this shortcoming, this document describes categories of secure credential management and defines _exact_ labels to describe the intended operation of a given credential.  These labels are intended for colloquial use and designed whenever possible to be accessible and intuitive for laypeople. The specification is scoped only to a credential in its common and expected use; properties for secure administration of credentials are not part of this set. Negative uses (attacks, vulnerabilities) are also not in scope.
 
 # Credential Management Security Classes
 Properties are organized into areas of scrutiny, with each class containing the minimum set of properties possible to satisfy differences that have clear security value. The property must have a security benefit that is inherent to the credential type.
@@ -169,7 +180,7 @@ Substantiation describes credentials containing mechanisms for authoritative sta
 Dynamism describes a credential whose stored and active forms are different. Credentials with no dynamism (or dynamic genarativity) such as passwords exibit no difference between the stored (in memory, in a password manager, etc.) and the credential sent to the verifier. Dynamic generatvity indicates that some function is used to operate on the stored credential such that what is sent over the wire is different than what is stored (e.g. a challenge response protocol like FIDO {{WEBAUTHN}}).  Credentials that do not exhibit dynamism, such as shared secrets, usually exhibit replayability and are definitionally not able to be contained.
 
 ### Identifier Binding
-The primary content of a credential is cryptographically bound to an identifier. Examples of credentials that include bound identifiers include SAML assertions, JSON Web Tokens (JWTs) {{RFC7519}}, X.509 certificates, ISO 18013 mobile driving licence objects {{ISO18013-5}} and verifiable credentials {{VC-DATA-MODEL}}
+The principal content of a credential is cryptographically bound to an identifier. Examples of credentials that include bound identifiers include SAML assertions, JSON Web Tokens (JWTs) {{RFC7519}}, X.509 certificates, ISO 18013 mobile driving licence objects {{ISO18013-5}} and verifiable credentials {{VC-DATA-MODEL}}
 
 ### Tamper Proofness
 A mechanism for credential integrity is built into the credential ensuring that the data within the credential is verifiably unchanged by external parties.
@@ -183,19 +194,38 @@ A mechanism that specifies which destination consumers of the credential are val
 ### Validity Window
 A credential becomes invalid outside of a specified time boundary.  An example would be a SAML assertion or a TOTP {{RFC6238}}.
 
-### Selective Disclosure
-A mechanism by which some or all of the contents within a credential can be made available or unavailable under circumstances determined at presentation time. Example is an SD-JWT {{RFC9901}} or a ZKP.
+### Selective Disclosure {#selective-disclosure}
+A credential is capable of selective disclosure if some or all of the contents within a credential can be made available or unavailable under circumstances determined at presentation time. Values can be: none, per-claim, or predicate.
+
+* None: the credential is presented whole, or not at all.
+* Per-claim: individual claims can be revealed or withheld at presentation time. The mechanism may be a salted hash over each claim, as in an SD-JWT {{RFC9901}} or an ISO mdoc, or a zero-knowledge proof over the issuer's signature, as in a credential signed with the BBS signature scheme {{I-D.irtf-cfrg-bbs-signatures}}.
+* Predicate: a statement about a claim can be proven without revealing the claim itself, such as proving that an age exceeds a threshold rather than disclosing a date of birth. Predicates require a proof construction beyond selective disclosure alone, such as a range proof; the BBS signature scheme selectively discloses claims but does not itself prove predicates.
+
+Selective disclosure describes what a presentation reveals. Whether presentations can be correlated with each other is a separate property, Unlinkability ({{unlinkability}}); a credential may selectively disclose and still be fully linkable.
 
 ## Credential Presentation
 Credential reuse properties describe ways in which the use of a credential is functionally restricted.
 
-### Validity Count
-A credential becomes invalid after a specified number of successful presentations. An example would be a temporary password that can only be used 5 times, or a one-time password.
+### Usage Count Limit
+A credential is usage count limited if it becomes invalid after a specified number of successful presentations by a legitimate presenter. An example would be a temporary password that can only be used 5 times, or a one-time password.
 
 ### Replayability
 Credentials are replayable when they can be captured by an adversary and represented to an authentication service resulting in successful authentication. Credentials that are presented directly, such as shared secrets (passwords) or bearer tokens, are the canonical example of replayable credentials.  Challenge response protocols are considered non-replayable.
 
 OTPs represent an interesting class of crentials when describing replayability.  Deployed at a global scale, there is a small window of opportunity to present a HOTP {{RFC4226}} or TOTP multiple times within its validity window.  Therefore, replayability is not a strictly binary scale.
+
+### Unlinkability {#unlinkability}
+Unlinkability describes whether two presentations of a credential can be correlated with each other, or with the issuance of the credential, by the parties that observe them. A presentation that carries a static value such as an issuer signature, a certificate serial number, or a public key is linkable by any party that sees that value twice. {{RFC9901}} Section 10.1 distinguishes unlinkability between presentations, between verifiers, and between issuer and verifier, and observes that salted hash selective disclosure cannot achieve the last of these because the issuer-signed credential is presented directly to the verifier. The following table defines possible values.
+
+| Value | Who Can Correlate | Characteristics |
+|--------------|----------------------------|------------------------------|
+| Linkable | Any observer | Presentations carry a static correlator. Examples include X.509 certificates, bearer tokens, SD-JWTs, and ISO mdocs, each of which presents the issuer's signature verbatim. |
+| Verifier-unlinkable | Issuer together with a verifier | Verifiers cannot correlate presentations with each other, whether at one verifier or across verifiers, but each presentation still carries a value the issuer saw at issuance, so an issuer that compares notes with a verifier can link a presentation to its issuance. Batch issuance of single-use SD-JWTs with distinct salts and Key Binding keys achieves this {{RFC9901}}. |
+| Issuer-unlinkable | No party | Each presentation is a freshly derived proof carrying no value that was visible at issuance, so even a colluding issuer and verifier cannot link a presentation to its issuance. Examples include a credential signed with the BBS signature scheme {{I-D.irtf-cfrg-bbs-signatures}} and a Privacy Pass token {{RFC9577}}. |
+
+An issuer-unlinkable credential may be deliberately linkable within a single verifier when the holder derives a pseudonym that is stable for one verifier and unlinkable across verifiers {{I-D.irtf-cfrg-bbs-per-verifier-linkability}}. The values above describe the credential mechanism only; disclosed claim values, identifiers, and transport metadata can correlate presentations regardless of the mechanism, as described in Section 8 of {{VC-DATA-MODEL}}.
+
+Unlinkability is independent of Referential Identity Posture. Posture describes whose identity is asserted; unlinkability describes whether presentations can be correlated. A credential with a Direct posture can be issuer-unlinkable, and a credential with a Pseudonymous posture is linkable whenever the same pseudonym is presented each time.
 
 ### Referential Identity Posture
 Referential Identity Posture describes the nature of the relationship between a claimed identity validated as part of an identity transaction and any backing identity that might explicitly or implicitly exist in a larger security context. That larger context may or may not be known to the party validating the credential and represents environmental detail that could be used in security, risk, or governance activities if known. The following table defines possible postures.
@@ -210,7 +240,7 @@ Referential Identity Posture describes the nature of the relationship between a 
 | Chained | Recursive | Claimed identity derives from a backing identity through one or more intermediate referential identities, forming a transitive chain of relationships. |
 | Anonymous | Detached | Claimed identity is visibly severed from any backing identity with no opportunity to recover. |
 
-Examples of delegated referential identity posture include on-behalf-of (OBO) token interactions {{RFC8693}}, where both the identity of the end user and client software are communicated. Token exchange draws the same distinction normatively: a delegated actor retains its own identity while acting as an agent for another party, whereas an impersonating actor gains the rights of the party it impersonates and is indistinguishable from it. Examples of impersonated referential identity posture might include privileged access management workflows, where an administrative process sets either the identifier or the credential (or both) based on a backing identity. Examples of a partitioned referential identity posture could include openclaw agents acting with separate accounts and email addresses but loosely affiliated to individuals. Examples of a chained referential identity posture include transaction tokens {{I-D.ietf-oauth-transaction-tokens}}, which preserve the identity of the original caller as a request traverses a call chain of workloads, and which require the chain of workloads that requested a token to be carried forward each time that token is replaced. Token exchange expresses the same structure directly through nested actor claims, where the outermost actor is the current party and each nested actor a prior one.
+Examples of delegated referential identity posture include on-behalf-of (OBO) token interactions {{RFC8693}}, where both the identity of the end user and client software are communicated. Token exchange draws the same distinction normatively: a delegated actor retains its own identity while acting as an agent for another party, whereas an impersonating actor gains the rights of the party it impersonates and is indistinguishable from it. Examples of impersonated referential identity posture might include privileged access management workflows, where an administrative process sets either the identifier or the credential (or both) based on a backing identity. Examples of a partitioned referential identity posture could include openclaw agents acting with separate accounts and email addresses but loosely affiliated to individuals. Examples of a chained referential identity posture include transaction tokens {{I-D.ietf-oauth-transaction-tokens}}, which preserve the identity of the original caller as a request traverses a call chain of workloads, and which require the chain of workloads that requested a token to be carried forward each time that token is replaced. Token exchange expresses the same structure directly through nested actor claims, where the outermost actor is the current party and each nested actor a prior one. Examples of a pseudonymous referential identity posture include a credential presented under a per-verifier pseudonym {{I-D.irtf-cfrg-bbs-per-verifier-linkability}}, where the issuer holds a backing identity that the pseudonym conceals from the verifier. Examples of an anonymous referential identity posture include a Privacy Pass token {{RFC9577}}, which proves that an issuer vouched for the holder without identifying the holder, and a BBS proof that discloses only non-identifying claims, where the issuer attests a fact about the holder that no party can trace back to an individual.
 
 ## Credential Containment & Unlock
 Credential containment describes the at-rest state of a credential and its storage location(s). Unlock properties describe how the contained credential is made available for use at runtime and how the containment facility, if any, can play a security role in an observable way at operation time.
@@ -273,7 +303,7 @@ Recoverability describes remediation capabilities that enable or re-enable acces
 
 {::boilerplate bcp14-tagged}
 
-TODO define two parts of credential (secret, generated)
+**Credential:** Information or a mechanism used by a subject to prove a claim to a verifier. Depending on the credential type, it may include a stored secret or key, a value generated from that secret or key for presentation, or an assertion issued by another party. The stored and presented forms may be identical or different, as described by {{dynamism}}.
 
 # Security Considerations
 
@@ -305,6 +335,7 @@ The credential types examined are:
 - **SMS OTP** — a one-time code generated by the verifier and delivered out of band over the public telephone network.
 - **SD-JWT VC** — a verifiable credential expressed as a selectively disclosable JWT {{I-D.ietf-oauth-sd-jwt-vc}}, built on the SD-JWT construction, optionally bound to a holder key.
 - **ISO mdoc** — an ISO/IEC 18013-5 mobile document such as a mobile driving licence, comprising an issuer-signed Mobile Security Object and a device-signed response.
+- **BBS verifiable credential** — a verifiable credential {{VC-DATA-MODEL}} secured with the BBS signature scheme {{I-D.irtf-cfrg-bbs-signatures}} through the Data Integrity BBS cryptosuite {{VC-DI-BBS}}, so that each presentation is a freshly derived zero-knowledge proof over the selectively disclosed claims rather than the issuer's signature itself.
 - **DBSC** — Device Bound Session Credentials {{DBSC}}, a browser session credential bound to a non-exportable device key and periodically refreshed by proof of possession.
 
 ## Credential Construction
@@ -327,47 +358,50 @@ The following properties describe how a credential asserts and protects its cont
 | SMS OTP | No | None; the verifier-generated value is presented verbatim | No; bound to a phone number by enrollment record | No |
 | SD-JWT VC | Yes; issuer-signed | None for the issuer-signed JWT; Dynamic when Key Binding is used | Yes; holder key in `cnf` when Key Binding is used | Yes; JWS signature over salted disclosure digests |
 | ISO mdoc | Yes; issuer-signed Mobile Security Object | Dynamic; device signature or MAC over the session transcript | Yes; DeviceKey bound in the MSO | Yes; per-data-element digests in the MSO |
+| BBS verifiable credential | Yes; issuer-signed, though the signature is proven rather than shown | Dynamic; each presentation is a freshly derived proof, never the stored signature | Yes; a holder secret can be bound at issuance without being revealed at presentation, termed anonymous holder binding {{VC-DI-BBS}} | Yes; the proof verifies against the issuer's public key and fails if any disclosed claim is altered |
 | DBSC | No | Mixed; the session cookie is static, the refresh proof is challenge-response | Yes; session identifier bound to the device key | No for the cookie; Yes for the signed refresh proof |
 
 The following properties describe how a credential scopes and structures its content.
 
 | Credential Type | Chainability | Audience Restriction | Validity Window | Selective Disclosure |
 | --- | --- | --- | --- | --- |
-| Password / API key | No | No | Policy-imposed only; not carried in the credential | No |
-| Synced passkey | No | Yes; RP ID and origin binding | No; freshness is established by the challenge | No |
-| Device-bound passkey | No | Yes; RP ID and origin binding | No; freshness is established by the challenge | No |
-| SPIFFE X.509-SVID | Yes; X.509 chain to the trust domain CA | Partial; scoped to the trust domain and federated trust domains rather than a named service | Yes; short-lived and automatically rotated | No |
-| SPIFFE JWT-SVID | No; single signer, no embedded chain | Yes; `aud` names the target service | Yes; short-lived | No |
-| mTLS certificate | Yes; X.509 chain | No; accepted by any relying party trusting the CA | Yes; typically months to years | No |
-| OAuth bearer access token | Yes; token exchange derives a token from a subject token and can record intermediate actors | Yes; the audience names the resource server | Yes; typically minutes to hours | No; scope constrains authorization rather than disclosure of credential content |
-| Sender-constrained access token | Yes; token exchange applies, with the bound key re-established for the derived token | Yes; the audience names the resource server | Yes; typically minutes to hours | No |
-| ID-JAG | Yes; derived by token exchange from an ID token or SAML assertion, itself exchanged for an access token, and may carry an `act` claim | Yes; `aud` names the resource application's authorization server | Yes; `exp`, with short lifetimes recommended | No; `scope` constrains the requested authorization rather than disclosure |
-| HOTP | No | No | No; valid until the counter advances | No |
-| TOTP | No | No | Yes; one time step plus drift tolerance | No |
-| SMS OTP | No | No | Yes; issuer-set, typically minutes | No |
-| SD-JWT VC | Yes; may reference or embed other credentials | Yes with a Key Binding JWT `aud`; No for the bare issuer-signed credential | Yes; `exp` and `nbf` | Yes; per claim |
-| ISO mdoc | Yes; issuer certificate chain to the IACA | Partial; bound to the reader session transcript rather than a named audience | Yes; MSO `validityInfo` | Yes; per data element |
-| DBSC | No | Yes; scoped to the registrable domain | Yes; short-lived cookie, refreshed on expiry | No |
+| Password / API key | No | No | Policy-imposed only; not carried in the credential | None |
+| Synced passkey | No | Yes; RP ID and origin binding | No; freshness is established by the challenge | None |
+| Device-bound passkey | No | Yes; RP ID and origin binding | No; freshness is established by the challenge | None |
+| SPIFFE X.509-SVID | Yes; X.509 chain to the trust domain CA | Partial; scoped to the trust domain and federated trust domains rather than a named service | Yes; short-lived and automatically rotated | None |
+| SPIFFE JWT-SVID | No; single signer, no embedded chain | Yes; `aud` names the target service | Yes; short-lived | None |
+| mTLS certificate | Yes; X.509 chain | No; accepted by any relying party trusting the CA | Yes; typically months to years | None |
+| OAuth bearer access token | Yes; token exchange derives a token from a subject token and can record intermediate actors | Yes; the audience names the resource server | Yes; typically minutes to hours | None; scope constrains authorization rather than disclosure of credential content |
+| Sender-constrained access token | Yes; token exchange applies, with the bound key re-established for the derived token | Yes; the audience names the resource server | Yes; typically minutes to hours | None |
+| ID-JAG | Yes; derived by token exchange from an ID token or SAML assertion, itself exchanged for an access token, and may carry an `act` claim | Yes; `aud` names the resource application's authorization server | Yes; `exp`, with short lifetimes recommended | None; `scope` constrains the requested authorization rather than disclosure |
+| HOTP | No | No | No; valid until the counter advances | None |
+| TOTP | No | No | Yes; one time step plus drift tolerance | None |
+| SMS OTP | No | No | Yes; issuer-set, typically minutes | None |
+| SD-JWT VC | Yes; may reference or embed other credentials | Yes with a Key Binding JWT `aud`; No for the bare issuer-signed credential | Yes; `exp` and `nbf` | Per-claim |
+| ISO mdoc | Yes; issuer certificate chain to the IACA | Partial; bound to the reader session transcript rather than a named audience | Yes; MSO `validityInfo` | Per-claim; per data element |
+| BBS verifiable credential | Yes; may reference or embed other credentials | Yes when the presentation header carries the verifier's challenge or domain; No for the bare issuer-signed credential | Yes; validity claims must be disclosed, or proven by predicate, for the verifier to check them | Per-claim; predicates require a range proof beyond the base scheme |
+| DBSC | No | Yes; scoped to the registrable domain | Yes; short-lived cookie, refreshed on expiry | None |
 
 ## Credential Presentation
 
-| Credential Type | Validity Count | Replayability | Referential Identity Posture |
-| --- | --- | --- | --- |
-| Password / API key | Unlimited until rotated | Replayable | Direct |
-| Synced passkey | Unlimited | Not replayable | Direct |
-| Device-bound passkey | Unlimited | Not replayable | Direct |
-| SPIFFE X.509-SVID | Unlimited within the validity window | Not replayable | Direct; Delegated when carrying on-behalf-of context |
-| SPIFFE JWT-SVID | Unlimited within the validity window | Replayable within the validity window | Direct; Delegated when carrying end-user context |
-| mTLS certificate | Unlimited within the validity window | Not replayable | Direct |
-| OAuth bearer access token | Unlimited within the validity window | Replayable; any party that captures the token can present it | Delegated when the token conveys both client and resource owner; Impersonated when it conveys only the resource owner |
-| Sender-constrained access token | Unlimited within the validity window | Not replayable; a captured token is unusable without the bound private key | Delegated; the client is identified by its bound key alongside the resource owner |
-| ID-JAG | Unlimited within the validity window; the resource authorization server may enforce single use by tracking `jti` | Replayable within the validity window unless bound to a client key by a `cnf` claim; without binding, client authentication at the token endpoint is the only check against presentation by another party | Delegated; the grant conveys both the user and the requesting client. Chained when an `act` claim records intermediate actors |
-| HOTP | One; the counter advances on acceptance | Bounded; single use, but the code remains valid until the counter advances | Direct |
-| TOTP | One per time step | Bounded; replayable within the time step and drift window | Direct |
-| SMS OTP | One | Bounded; replayable within the issuer's window, and interceptable in transit | Direct |
-| SD-JWT VC | Unlimited unless constrained by the issuer | Replayable without Key Binding; not replayable with a Key Binding JWT | Direct; Partitioned or Pseudonymous depending on the disclosed claim set |
-| ISO mdoc | Unlimited within the validity window | Not replayable; the device signature covers the session transcript | Direct; Partitioned when a subset of data elements is released |
-| DBSC | Unlimited within the cookie lifetime | Bounded; the cookie is replayable within its short lifetime, the device key binding is not | Direct |
+| Credential Type | Validity Count | Replayability | Unlinkability | Referential Identity Posture |
+| --- | --- | --- | --- | --- |
+| Password / API key | Unlimited until rotated | Replayable | Linkable; the same secret is presented each time | Direct |
+| Synced passkey | Unlimited | Not replayable | Linkable within an RP by credential ID; a distinct key pair per RP prevents correlation across RPs | Direct |
+| Device-bound passkey | Unlimited | Not replayable | Linkable within an RP by credential ID; a distinct key pair per RP and batch-shared attestation certificates limit correlation across RPs | Direct |
+| SPIFFE X.509-SVID | Unlimited within the validity window | Not replayable | Linkable; the certificate and SPIFFE ID are presented verbatim | Direct; Delegated when carrying on-behalf-of context |
+| SPIFFE JWT-SVID | Unlimited within the validity window | Replayable within the validity window | Linkable; the signed token is presented verbatim | Direct; Delegated when carrying end-user context |
+| mTLS certificate | Unlimited within the validity window | Not replayable | Linkable; the certificate is presented verbatim at every handshake | Direct |
+| OAuth bearer access token | Unlimited within the validity window | Replayable; any party that captures the token can present it | Linkable; the same token is presented each time | Delegated when the token conveys both client and resource owner; Impersonated when it conveys only the resource owner |
+| Sender-constrained access token | Unlimited within the validity window | Not replayable; a captured token is unusable without the bound private key | Linkable; the token and the bound key are stable for the token lifetime | Delegated; the client is identified by its bound key alongside the resource owner |
+| ID-JAG | Unlimited within the validity window; the resource authorization server may enforce single use by tracking `jti` | Replayable within the validity window unless bound to a client key by a `cnf` claim; without binding, client authentication at the token endpoint is the only check against presentation by another party | Linkable; the issuer-signed JWT is presented verbatim, and `sub` is stable for a given resource authorization server | Delegated; the grant conveys both the user and the requesting client. Chained when an `act` claim records intermediate actors |
+| HOTP | One; the counter advances on acceptance | Bounded; single use, but the code remains valid until the counter advances | Linkable; the code carries no correlator but is presented against an enrolled account identifier | Direct |
+| TOTP | One per time step | Bounded; replayable within the time step and drift window | Linkable; presented against an enrolled account identifier | Direct |
+| SMS OTP | One | Bounded; replayable within the issuer's window, and interceptable in transit | Linkable; presented against an enrolled account identifier | Direct |
+| SD-JWT VC | Unlimited unless constrained by the issuer | Replayable without Key Binding; not replayable with a Key Binding JWT | Linkable; the issuer signature is presented verbatim. Verifier-unlinkable with batch issuance of single-use credentials carrying distinct salts and Key Binding keys {{RFC9901}} | Direct; Partitioned or Pseudonymous depending on the disclosed claim set |
+| ISO mdoc | Unlimited within the validity window | Not replayable; the device signature covers the session transcript | Linkable; the issuer-signed MSO and the DeviceKey are presented verbatim | Direct; Partitioned when a subset of data elements is released |
+| BBS verifiable credential | Unlimited unless constrained by the issuer | Not replayable when the presentation header carries a verifier challenge; a proof generated without one can be replayed | Issuer-unlinkable; deliberately linkable at a single verifier when presented under a per-verifier pseudonym | Direct; Pseudonymous under a per-verifier pseudonym; Anonymous when only non-identifying claims are disclosed |
+| DBSC | Unlimited within the cookie lifetime | Bounded; the cookie is replayable within its short lifetime, the device key binding is not | Linkable; the session identifier and device key are stable for the session | Direct |
 
 ## Credential Containment & Unlock
 
@@ -389,6 +423,7 @@ The following properties describe containment of the credential at rest.
 | SMS OTP | Uncontained; delivered in clear text and readable from the notification surface | Bound to control of the phone number, not to a device | Reactive; carrier-side controls against SIM swap and port-out |
 | SD-JWT VC | Contained when the Key Binding key is in a secure element; the credential itself is data at rest in the wallet | Bound to the wallet key store when Key Binding is used; unbounded otherwise | Proactive when hardware-backed; otherwise none |
 | ISO mdoc | Contained; DeviceKey resides in the device secure area | Bound to the device secure area | Proactive; enforced by hardware |
+| BBS verifiable credential | The signed credential is data at rest in the wallet; the holder secret is contained only as far as the wallet software protects it, since proof generation consumes the secret directly and is not typically offered by hardware secure elements | Bound to the wallet key store when a holder secret is bound at issuance; unbounded otherwise | Reactive; enforced by wallet software |
 | DBSC | Contained if the session key resides in the TPM or secure enclave; Partially contained for software based implementations | Bound to the device TPM or secure element where hardware backed, and non-exportable; partially bound for software based implementations | Proactive; enforced by hardware or software |
 
 The following properties describe how a contained credential is released for use.
@@ -409,6 +444,7 @@ The following properties describe how a contained credential is released for use
 | SMS OTP | Yes; the code can be read aloud or forwarded, which is the mechanism exploited by OTP phishing | No | Anyone with access to the device notification surface or the number | N/A |
 | SD-JWT VC | Yes without Key Binding; None with a hardware-bound Key Binding key | Yes; wallet unlock gesture where required | The holder who can unlock the wallet | Configurable by the wallet |
 | ISO mdoc | None; the DeviceKey is non-exportable | Yes; wallet unlock and per-presentation consent | The holder who can unlock the wallet | Per-presentation |
+| BBS verifiable credential | Yes; the signed credential and the holder secret can be copied together when held in software | Yes; wallet unlock gesture where required | The holder who can unlock the wallet | Configurable by the wallet |
 | DBSC | None for the key; the short-lived cookie can be copied | No; refresh is automatic with no user gesture | The browser profile on the bound device | Life of the session, with automatic cookie refresh |
 
 ## Credential Enrollment
@@ -429,6 +465,7 @@ The following properties describe how a contained credential is released for use
 | SMS OTP | Phone number possession only; no identity proofing | Yes; the number is registered during a vouched session | The verifier binds the phone number to the account record |
 | SD-JWT VC | Set by issuer policy; may require high-assurance proofing | Yes; issuance is gated by prior credentials or in-person proofing | The issuer binds claims to the holder's `cnf` key |
 | ISO mdoc | Set by the issuing authority; typically in-person proofing for an mDL | Yes; gated by the underlying document issuance process | The issuer binds the DeviceKey into the signed MSO |
+| BBS verifiable credential | Set by issuer policy; may require high-assurance proofing | Yes; issuance is gated by prior credentials or in-person proofing | The issuer signs the claims together with a committed holder secret that it does not learn {{VC-DI-BBS}} |
 | DBSC | Inherits the assurance of the sign-in that established the session | Yes; the session is established by a prior authentication | The browser binds the session identifier to a freshly generated device key |
 
 ## Credential Compliance
@@ -449,6 +486,7 @@ The following properties describe how a contained credential is released for use
 | SMS OTP | Code length and character set set by the verifier | Short expiry; per-attempt rate limiting | NIST SP 800-63B, which constrains out-of-band authenticators using the public telephone network; PCI DSS |
 | SD-JWT VC | Disclosure construction and algorithms fixed by the SD-JWT specification | Issuer-set expiry; status list revocation | Issuer policy; wallet ecosystem governance frameworks |
 | ISO mdoc | Cryptographic suites fixed by ISO/IEC 18013-5 | Issuer-set validity; MSO update and revocation | ISO/IEC 18013-5; issuing authority policy |
+| BBS verifiable credential | Proof construction and pairing-friendly curve fixed by the BBS signature scheme and the cryptosuite | Issuer-set expiry; revocation requires a status mechanism that does not itself correlate presentations | Issuer policy; wallet ecosystem governance frameworks |
 | DBSC | Key type constrained by the DBSC specification and platform TPM support | Session lifetime and refresh cadence set by the origin | None specific; inherits the session management requirements of the deploying framework |
 
 ## Credential Recovery
@@ -469,6 +507,7 @@ The following properties describe how a contained credential is released for use
 | SMS OTP | Account-driven; recovery consists of regaining control of the phone number, typically through the carrier |
 | SD-JWT VC | Issuer-driven; the holder re-requests issuance. A wallet backup may restore the credential but not a hardware-bound Key Binding key |
 | ISO mdoc | Issuer-driven; reissuance by the issuing authority, the DeviceKey cannot be recovered |
+| BBS verifiable credential | Issuer-driven; the holder re-requests issuance. A wallet backup may restore the credential and, where held in software, the holder secret |
 | DBSC | Account-driven; the session is re-established by re-authenticating and the device key is regenerated |
 
 # Acknowledgments
