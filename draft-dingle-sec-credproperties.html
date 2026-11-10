@@ -1030,7 +1030,7 @@ svg {
   & :is([stroke="white"], [stroke^="#fff"]) {
     stroke: var(--background-color);
   }
-  & :is([fill="black"], [fill^="#000"], :not([fill])) {
+  & :is([fill="black"], [fill^="#000"], :not([fill], [fill] *)) {
     fill: var(--text-color);
   }
   & :is([fill="white"], [fill^="#fff"]) {
@@ -1049,7 +1049,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Dingle &amp; Saxe</td>
-<td class="center">Expires 8 May 2027</td>
+<td class="center">Expires 14 May 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1062,12 +1062,12 @@ svg {
 <dd class="internet-draft">draft-dingle-sec-credproperties-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-11-04" class="published">4 November 2026</time>
+<time datetime="2026-11-10" class="published">10 November 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-05-08">8 May 2027</time></dd>
+<dd class="expires"><time datetime="2027-05-14">14 May 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1115,7 +1115,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 8 May 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 14 May 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1192,7 +1192,10 @@ svg {
                     <p id="section-toc.1-1.3.2.2.2.2.1"><a href="#section-3.2.2" class="auto internal xref">3.2.2</a>.  <a href="#name-replayability" class="internal xref">Replayability</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2.2.3">
-                    <p id="section-toc.1-1.3.2.2.2.3.1"><a href="#section-3.2.3" class="auto internal xref">3.2.3</a>.  <a href="#name-referential-identity-postur" class="internal xref">Referential Identity Posture</a></p>
+                    <p id="section-toc.1-1.3.2.2.2.3.1"><a href="#section-3.2.3" class="auto internal xref">3.2.3</a>.  <a href="#name-unlinkability" class="internal xref">Unlinkability</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2.2.4">
+                    <p id="section-toc.1-1.3.2.2.2.4.1"><a href="#section-3.2.4" class="auto internal xref">3.2.4</a>.  <a href="#name-referential-identity-postur" class="internal xref">Referential Identity Posture</a></p>
 </li>
                 </ul>
 </li>
@@ -1400,7 +1403,19 @@ svg {
           <h4 id="name-selective-disclosure">
 <a href="#section-3.1.8" class="section-number selfRef">3.1.8. </a><a href="#name-selective-disclosure" class="section-name selfRef">Selective Disclosure</a>
           </h4>
-<p id="section-3.1.8-1">A mechanism by which some or all of the contents within a credential can be made available or unavailable under circumstances determined at presentation time. Example is an SD-JWT <span>[<a href="#RFC9901" class="cite xref">RFC9901</a>]</span> or a ZKP.<a href="#section-3.1.8-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.8-1">A mechanism by which some or all of the contents within a credential can be made available or unavailable under circumstances determined at presentation time. Values can be: none, per-claim, or predicate.<a href="#section-3.1.8-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1.8-2.1">
+              <p id="section-3.1.8-2.1.1">None: the credential is presented whole, or not at all.<a href="#section-3.1.8-2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.1.8-2.2">
+              <p id="section-3.1.8-2.2.1">Per-claim: individual claims can be revealed or withheld at presentation time. The mechanism may be a salted hash over each claim, as in an SD-JWT <span>[<a href="#RFC9901" class="cite xref">RFC9901</a>]</span> or an ISO mdoc, or a zero-knowledge proof over the issuer's signature, as in a credential signed with the BBS signature scheme <span>[<a href="#I-D.irtf-cfrg-bbs-signatures" class="cite xref">I-D.irtf-cfrg-bbs-signatures</a>]</span>.<a href="#section-3.1.8-2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.1.8-2.3">
+              <p id="section-3.1.8-2.3.1">Predicate: a statement about a claim can be proven without revealing the claim itself, such as proving that an age exceeds a threshold rather than disclosing a date of birth. Predicates require a proof construction beyond selective disclosure alone, such as a range proof; the BBS signature scheme selectively discloses claims but does not itself prove predicates.<a href="#section-3.1.8-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-3.1.8-3">Selective disclosure describes what a presentation reveals. Whether presentations can be correlated with each other is a separate property, Unlinkability (<a href="#unlinkability" class="auto internal xref">Section 3.2.3</a>); a credential may selectively disclose and still be fully linkable.<a href="#section-3.1.8-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1428,14 +1443,51 @@ svg {
 <p id="section-3.2.2-2">OTPs represent an interesting class of crentials when describing replayability.  Deployed at a global scale, there is a small window of opportunity to present a HOTP <span>[<a href="#RFC4226" class="cite xref">RFC4226</a>]</span> or TOTP multiple times within its validity window.  Therefore, replayability is not a strictly binary scale.<a href="#section-3.2.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="referential-identity-posture">
+<div id="unlinkability">
 <section id="section-3.2.3">
-          <h4 id="name-referential-identity-postur">
-<a href="#section-3.2.3" class="section-number selfRef">3.2.3. </a><a href="#name-referential-identity-postur" class="section-name selfRef">Referential Identity Posture</a>
+          <h4 id="name-unlinkability">
+<a href="#section-3.2.3" class="section-number selfRef">3.2.3. </a><a href="#name-unlinkability" class="section-name selfRef">Unlinkability</a>
           </h4>
-<p id="section-3.2.3-1">Referential Identity Posture describes the nature of the relationship between a claimed identity validated as part of an identity transaction and any backing identity that might explicitly or implicitly exist in a larger security context. That larger context may or may not be known to the party validating the credential and represents environmental detail that could be used in security, risk, or governance activities if known. The following table defines possible postures.<a href="#section-3.2.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.3-1">Unlinkability describes whether two presentations of a credential can be correlated with each other, or with the issuance of the credential, by the parties that observe them. A presentation that carries a static value such as an issuer signature, a certificate serial number, or a public key is linkable by any party that sees that value twice. <span>[<a href="#RFC9901" class="cite xref">RFC9901</a>]</span> Section 10.1 distinguishes unlinkability between presentations, between verifiers, and between issuer and verifier, and observes that salted hash selective disclosure cannot achieve the last of these because the issuer-signed credential is presented directly to the verifier. The following table defines possible values.<a href="#section-3.2.3-1" class="pilcrow">¶</a></p>
 <table class="center" id="table-1">
             <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
+<thead>
+              <tr>
+                <th class="text-left" rowspan="1" colspan="1">Value</th>
+                <th class="text-left" rowspan="1" colspan="1">Who Can Correlate</th>
+                <th class="text-left" rowspan="1" colspan="1">Characteristics</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">Linkable</td>
+                <td class="text-left" rowspan="1" colspan="1">Any observer</td>
+                <td class="text-left" rowspan="1" colspan="1">Presentations carry a static correlator. Examples include X.509 certificates, bearer tokens, SD-JWTs, and ISO mdocs, each of which presents the issuer's signature verbatim.</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">Verifier-unlinkable</td>
+                <td class="text-left" rowspan="1" colspan="1">Issuer together with a verifier</td>
+                <td class="text-left" rowspan="1" colspan="1">Verifiers cannot correlate presentations with each other, whether at one verifier or across verifiers, but each presentation still carries a value the issuer saw at issuance, so an issuer that compares notes with a verifier can link a presentation to its issuance. Batch issuance of single-use SD-JWTs with distinct salts and Key Binding keys achieves this <span>[<a href="#RFC9901" class="cite xref">RFC9901</a>]</span>.</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">Issuer-unlinkable</td>
+                <td class="text-left" rowspan="1" colspan="1">No party</td>
+                <td class="text-left" rowspan="1" colspan="1">Each presentation is a freshly derived proof carrying no value that was visible at issuance, so even a colluding issuer and verifier cannot link a presentation to its issuance. Examples include a credential signed with the BBS signature scheme <span>[<a href="#I-D.irtf-cfrg-bbs-signatures" class="cite xref">I-D.irtf-cfrg-bbs-signatures</a>]</span> and a Privacy Pass token <span>[<a href="#RFC9577" class="cite xref">RFC9577</a>]</span>.</td>
+              </tr>
+            </tbody>
+          </table>
+<p id="section-3.2.3-3">An issuer-unlinkable credential may be deliberately linkable within a single verifier when the holder derives a pseudonym that is stable for one verifier and unlinkable across verifiers <span>[<a href="#I-D.irtf-cfrg-bbs-per-verifier-linkability" class="cite xref">I-D.irtf-cfrg-bbs-per-verifier-linkability</a>]</span>. The values above describe the credential mechanism only; disclosed claim values, identifiers, and transport metadata can correlate presentations regardless of the mechanism, as described in Section 8 of <span>[<a href="#VC-DATA-MODEL" class="cite xref">VC-DATA-MODEL</a>]</span>.<a href="#section-3.2.3-3" class="pilcrow">¶</a></p>
+<p id="section-3.2.3-4">Unlinkability is independent of Referential Identity Posture. Posture describes whose identity is asserted; unlinkability describes whether presentations can be correlated. A credential with a Direct posture can be issuer-unlinkable, and a credential with a Pseudonymous posture is linkable whenever the same pseudonym is presented each time.<a href="#section-3.2.3-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="referential-identity-posture">
+<section id="section-3.2.4">
+          <h4 id="name-referential-identity-postur">
+<a href="#section-3.2.4" class="section-number selfRef">3.2.4. </a><a href="#name-referential-identity-postur" class="section-name selfRef">Referential Identity Posture</a>
+          </h4>
+<p id="section-3.2.4-1">Referential Identity Posture describes the nature of the relationship between a claimed identity validated as part of an identity transaction and any backing identity that might explicitly or implicitly exist in a larger security context. That larger context may or may not be known to the party validating the credential and represents environmental detail that could be used in security, risk, or governance activities if known. The following table defines possible postures.<a href="#section-3.2.4-1" class="pilcrow">¶</a></p>
+<table class="center" id="table-2">
+            <caption><a href="#table-2" class="selfRef">Table 2</a></caption>
 <thead>
               <tr>
                 <th class="text-left" rowspan="1" colspan="1">Posture</th>
@@ -1481,7 +1533,7 @@ svg {
               </tr>
             </tbody>
           </table>
-<p id="section-3.2.3-3">Examples of delegated referential identity posture include on-behalf-of (OBO) token interactions <span>[<a href="#RFC8693" class="cite xref">RFC8693</a>]</span>, where both the identity of the end user and client software are communicated. Token exchange draws the same distinction normatively: a delegated actor retains its own identity while acting as an agent for another party, whereas an impersonating actor gains the rights of the party it impersonates and is indistinguishable from it. Examples of impersonated referential identity posture might include privileged access management workflows, where an administrative process sets either the identifier or the credential (or both) based on a backing identity. Examples of a partitioned referential identity posture could include openclaw agents acting with separate accounts and email addresses but loosely affiliated to individuals. Examples of a chained referential identity posture include transaction tokens <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span>, which preserve the identity of the original caller as a request traverses a call chain of workloads, and which require the chain of workloads that requested a token to be carried forward each time that token is replaced. Token exchange expresses the same structure directly through nested actor claims, where the outermost actor is the current party and each nested actor a prior one.<a href="#section-3.2.3-3" class="pilcrow">¶</a></p>
+<p id="section-3.2.4-3">Examples of delegated referential identity posture include on-behalf-of (OBO) token interactions <span>[<a href="#RFC8693" class="cite xref">RFC8693</a>]</span>, where both the identity of the end user and client software are communicated. Token exchange draws the same distinction normatively: a delegated actor retains its own identity while acting as an agent for another party, whereas an impersonating actor gains the rights of the party it impersonates and is indistinguishable from it. Examples of impersonated referential identity posture might include privileged access management workflows, where an administrative process sets either the identifier or the credential (or both) based on a backing identity. Examples of a partitioned referential identity posture could include openclaw agents acting with separate accounts and email addresses but loosely affiliated to individuals. Examples of a chained referential identity posture include transaction tokens <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span>, which preserve the identity of the original caller as a request traverses a call chain of workloads, and which require the chain of workloads that requested a token to be carried forward each time that token is replaced. Token exchange expresses the same structure directly through nested actor claims, where the outermost actor is the current party and each nested actor a prior one. Examples of a pseudonymous referential identity posture include a credential presented under a per-verifier pseudonym <span>[<a href="#I-D.irtf-cfrg-bbs-per-verifier-linkability" class="cite xref">I-D.irtf-cfrg-bbs-per-verifier-linkability</a>]</span>, where the issuer holds a backing identity that the pseudonym conceals from the verifier. Examples of an anonymous referential identity posture include a Privacy Pass token <span>[<a href="#RFC9577" class="cite xref">RFC9577</a>]</span>, which proves that an issuer vouched for the holder without identifying the holder, and a BBS proof that discloses only non-identifying claims, where the issuer attests a fact about the holder that no party can trace back to an individual.<a href="#section-3.2.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1705,7 +1757,7 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
 <dd class="break"></dd>
 <dt id="I-D.ietf-oauth-sd-jwt-vc">[I-D.ietf-oauth-sd-jwt-vc]</dt>
         <dd>
-<span class="refAuthor">Terbu, O.</span>, <span class="refAuthor">Fett, D.</span>, and <span class="refAuthor">B. Campbell</span>, <span class="refTitle">"SD-JWT-based Verifiable Digital Credentials (SD-JWT VC)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-sd-jwt-vc-23</span>, <time datetime="2026-10-31" class="refDate">31 October 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-sd-jwt-vc-23">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-sd-jwt-vc-23</a>&gt;</span>. </dd>
+<span class="refAuthor">Terbu, O.</span>, <span class="refAuthor">Fett, D.</span>, and <span class="refAuthor">B. Campbell</span>, <span class="refTitle">"SD-JWT-based Verifiable Digital Credentials (SD-JWT VC)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-sd-jwt-vc-26</span>, <time datetime="2026-11-06" class="refDate">6 November 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-sd-jwt-vc-26">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-sd-jwt-vc-26</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-oauth-transaction-tokens">[I-D.ietf-oauth-transaction-tokens]</dt>
         <dd>
@@ -1714,6 +1766,14 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
 <dt id="I-D.ietf-oauth-v2-1">[I-D.ietf-oauth-v2-1]</dt>
         <dd>
 <span class="refAuthor">Hardt, D.</span>, <span class="refAuthor">Parecki, A.</span>, and <span class="refAuthor">T. Lodderstedt</span>, <span class="refTitle">"The OAuth 2.1 Authorization Framework"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-v2-1-17</span>, <time datetime="2026-10-30" class="refDate">30 October 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-17">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-17</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.irtf-cfrg-bbs-per-verifier-linkability">[I-D.irtf-cfrg-bbs-per-verifier-linkability]</dt>
+        <dd>
+<span class="refAuthor">Kalos, V.</span> and <span class="refAuthor">G. M. Bernstein</span>, <span class="refTitle">"BBS per Verifier Linkability"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-cfrg-bbs-per-verifier-linkability-03</span>, <time datetime="2026-06-29" class="refDate">29 June 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-bbs-per-verifier-linkability-03">https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-bbs-per-verifier-linkability-03</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.irtf-cfrg-bbs-signatures">[I-D.irtf-cfrg-bbs-signatures]</dt>
+        <dd>
+<span class="refAuthor">Looker, T.</span>, <span class="refAuthor">Kalos, V.</span>, <span class="refAuthor">Whitehead, A.</span>, <span class="refAuthor">Lodder, M.</span>, and <span class="refAuthor">G. M. Bernstein</span>, <span class="refTitle">"The BBS Signature Scheme"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-cfrg-bbs-signatures-14</span>, <time datetime="2026-10-29" class="refDate">29 October 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-bbs-signatures-14">https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-bbs-signatures-14</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="ISO18013-5">[ISO18013-5]</dt>
         <dd>
@@ -1771,6 +1831,10 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
         <dd>
 <span class="refAuthor">Fett, D.</span>, <span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Lodderstedt, T.</span>, <span class="refAuthor">Jones, M.</span>, and <span class="refAuthor">D. Waite</span>, <span class="refTitle">"OAuth 2.0 Demonstrating Proof of Possession (DPoP)"</span>, <span class="seriesInfo">RFC 9449</span>, <span class="seriesInfo">DOI 10.17487/RFC9449</span>, <time datetime="2023-09" class="refDate">September 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9449">https://www.rfc-editor.org/rfc/rfc9449</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC9577">[RFC9577]</dt>
+        <dd>
+<span class="refAuthor">Pauly, T.</span>, <span class="refAuthor">Valdez, S.</span>, and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"The Privacy Pass HTTP Authentication Scheme"</span>, <span class="seriesInfo">RFC 9577</span>, <span class="seriesInfo">DOI 10.17487/RFC9577</span>, <time datetime="2024-06" class="refDate">June 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9577">https://www.rfc-editor.org/rfc/rfc9577</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC9901">[RFC9901]</dt>
         <dd>
 <span class="refAuthor">Fett, D.</span>, <span class="refAuthor">Yasuda, K.</span>, and <span class="refAuthor">B. Campbell</span>, <span class="refTitle">"Selective Disclosure for JSON Web Tokens"</span>, <span class="seriesInfo">RFC 9901</span>, <span class="seriesInfo">DOI 10.17487/RFC9901</span>, <time datetime="2025-11" class="refDate">November 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9901">https://www.rfc-editor.org/rfc/rfc9901</a>&gt;</span>. </dd>
@@ -1798,6 +1862,10 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
 <dt id="VC-DATA-MODEL">[VC-DATA-MODEL]</dt>
         <dd>
 <span class="refAuthor">World Wide Web Consortium</span>, <span class="refTitle">"Verifiable Credentials Data Model v2.0"</span>, <span class="seriesInfo">W3C Recommendation REC-vc-data-model-2.0-20250515</span>, <time datetime="2025-05-15" class="refDate">15 May 2025</time>, <span>&lt;<a href="https://www.w3.org/TR/vc-data-model-2.0/">https://www.w3.org/TR/vc-data-model-2.0/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="VC-DI-BBS">[VC-DI-BBS]</dt>
+        <dd>
+<span class="refAuthor">World Wide Web Consortium</span>, <span class="refTitle">"Data Integrity BBS Cryptosuites v1.0"</span>, <span class="seriesInfo">W3C Candidate Recommendation Draft CRD-vc-di-bbs-20260910</span>, <time datetime="2026-09-10" class="refDate">10 September 2026</time>, <span>&lt;<a href="https://www.w3.org/TR/vc-di-bbs/">https://www.w3.org/TR/vc-di-bbs/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="WEBAUTHN">[WEBAUTHN]</dt>
       <dd>
@@ -1856,7 +1924,10 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
           <p id="appendix-A-3.13.1"><strong>ISO mdoc</strong> — an ISO/IEC 18013-5 mobile document such as a mobile driving licence, comprising an issuer-signed Mobile Security Object and a device-signed response.<a href="#appendix-A-3.13.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.14">
-          <p id="appendix-A-3.14.1"><strong>DBSC</strong> — Device Bound Session Credentials <span>[<a href="#DBSC" class="cite xref">DBSC</a>]</span>, a browser session credential bound to a non-exportable device key and periodically refreshed by proof of possession.<a href="#appendix-A-3.14.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.14.1"><strong>BBS verifiable credential</strong> — a verifiable credential <span>[<a href="#VC-DATA-MODEL" class="cite xref">VC-DATA-MODEL</a>]</span> secured with the BBS signature scheme <span>[<a href="#I-D.irtf-cfrg-bbs-signatures" class="cite xref">I-D.irtf-cfrg-bbs-signatures</a>]</span> through the Data Integrity BBS cryptosuite <span>[<a href="#VC-DI-BBS" class="cite xref">VC-DI-BBS</a>]</span>, so that each presentation is a freshly derived zero-knowledge proof over the selectively disclosed claims rather than the issuer's signature itself.<a href="#appendix-A-3.14.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-3.15">
+          <p id="appendix-A-3.15.1"><strong>DBSC</strong> — Device Bound Session Credentials <span>[<a href="#DBSC" class="cite xref">DBSC</a>]</span>, a browser session credential bound to a non-exportable device key and periodically refreshed by proof of possession.<a href="#appendix-A-3.15.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <div id="credential-construction">
@@ -1865,8 +1936,8 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
 <a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-credential-construction" class="section-name selfRef">Credential Construction</a>
         </h3>
 <p id="appendix-A.1-1">The following properties describe how a credential asserts and protects its content.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
-<table class="center" id="table-2">
-          <caption><a href="#table-2" class="selfRef">Table 2</a></caption>
+<table class="center" id="table-3">
+          <caption><a href="#table-3" class="selfRef">Table 3</a></caption>
 <thead>
             <tr>
               <th class="text-left" rowspan="1" colspan="1">Credential Type</th>
@@ -1971,6 +2042,14 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Yes; per-data-element digests in the MSO</td>
             </tr>
             <tr>
+              <td class="text-left" rowspan="1" colspan="1">BBS verifiable credential</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuer-signed, though the signature is proven rather than shown</td>
+              <td class="text-left" rowspan="1" colspan="1">Dynamic; each presentation is a freshly derived proof, never the stored signature</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; a holder secret can be bound at issuance without being revealed at presentation, termed anonymous holder binding <span>[<a href="#VC-DI-BBS" class="cite xref">VC-DI-BBS</a>]</span>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; the proof verifies against the issuer's public key and fails if any disclosed claim is altered</td>
+            </tr>
+            <tr>
               <td class="text-left" rowspan="1" colspan="1">DBSC</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">Mixed; the session cookie is static, the refresh proof is challenge-response</td>
@@ -1980,8 +2059,8 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
           </tbody>
         </table>
 <p id="appendix-A.1-3">The following properties describe how a credential scopes and structures its content.<a href="#appendix-A.1-3" class="pilcrow">¶</a></p>
-<table class="center" id="table-3">
-          <caption><a href="#table-3" class="selfRef">Table 3</a></caption>
+<table class="center" id="table-4">
+          <caption><a href="#table-4" class="selfRef">Table 4</a></caption>
 <thead>
             <tr>
               <th class="text-left" rowspan="1" colspan="1">Credential Type</th>
@@ -1997,77 +2076,77 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">Policy-imposed only; not carried in the credential</td>
-              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">None</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Synced passkey</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; RP ID and origin binding</td>
               <td class="text-left" rowspan="1" colspan="1">No; freshness is established by the challenge</td>
-              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">None</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Device-bound passkey</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; RP ID and origin binding</td>
               <td class="text-left" rowspan="1" colspan="1">No; freshness is established by the challenge</td>
-              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">None</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">SPIFFE X.509-SVID</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; X.509 chain to the trust domain CA</td>
               <td class="text-left" rowspan="1" colspan="1">Partial; scoped to the trust domain and federated trust domains rather than a named service</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; short-lived and automatically rotated</td>
-              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">None</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">SPIFFE JWT-SVID</td>
               <td class="text-left" rowspan="1" colspan="1">No; single signer, no embedded chain</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; <code>aud</code> names the target service</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; short-lived</td>
-              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">None</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">mTLS certificate</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; X.509 chain</td>
               <td class="text-left" rowspan="1" colspan="1">No; accepted by any relying party trusting the CA</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; typically months to years</td>
-              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">None</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">OAuth bearer access token</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; token exchange derives a token from a subject token and can record intermediate actors</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; the audience names the resource server</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; typically minutes to hours</td>
-              <td class="text-left" rowspan="1" colspan="1">No; scope constrains authorization rather than disclosure of credential content</td>
+              <td class="text-left" rowspan="1" colspan="1">None; scope constrains authorization rather than disclosure of credential content</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Sender-constrained access token</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; token exchange applies, with the bound key re-established for the derived token</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; the audience names the resource server</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; typically minutes to hours</td>
-              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">None</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">No; valid until the counter advances</td>
-              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">None</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">TOTP</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; one time step plus drift tolerance</td>
-              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">None</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">SMS OTP</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; issuer-set, typically minutes</td>
-              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">None</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">SD-JWT VC</td>
@@ -2075,7 +2154,7 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Yes with a Key Binding JWT <code>aud</code>; No for the bare issuer-signed credential</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; <code>exp</code> and <code>nbf</code>
 </td>
-              <td class="text-left" rowspan="1" colspan="1">Yes; per claim</td>
+              <td class="text-left" rowspan="1" colspan="1">Per-claim</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">ISO mdoc</td>
@@ -2083,14 +2162,21 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Partial; bound to the reader session transcript rather than a named audience</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; MSO <code>validityInfo</code>
 </td>
-              <td class="text-left" rowspan="1" colspan="1">Yes; per data element</td>
+              <td class="text-left" rowspan="1" colspan="1">Per-claim; per data element</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">BBS verifiable credential</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; may reference or embed other credentials</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes when the presentation header carries the verifier's challenge or domain; No for the bare issuer-signed credential</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; validity claims must be disclosed, or proven by predicate, for the verifier to check them</td>
+              <td class="text-left" rowspan="1" colspan="1">Per-claim; predicates require a range proof beyond the base scheme</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">DBSC</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; scoped to the registrable domain</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; short-lived cookie, refreshed on expiry</td>
-              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">None</td>
             </tr>
           </tbody>
         </table>
@@ -2101,13 +2187,14 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
         <h3 id="name-credential-presentation-2">
 <a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-credential-presentation-2" class="section-name selfRef">Credential Presentation</a>
         </h3>
-<table class="center" id="table-4">
-          <caption><a href="#table-4" class="selfRef">Table 4</a></caption>
+<table class="center" id="table-5">
+          <caption><a href="#table-5" class="selfRef">Table 5</a></caption>
 <thead>
             <tr>
               <th class="text-left" rowspan="1" colspan="1">Credential Type</th>
               <th class="text-left" rowspan="1" colspan="1">Validity Count</th>
               <th class="text-left" rowspan="1" colspan="1">Replayability</th>
+              <th class="text-left" rowspan="1" colspan="1">Unlinkability</th>
               <th class="text-left" rowspan="1" colspan="1">Referential Identity Posture</th>
             </tr>
           </thead>
@@ -2116,84 +2203,106 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Password / API key</td>
               <td class="text-left" rowspan="1" colspan="1">Unlimited until rotated</td>
               <td class="text-left" rowspan="1" colspan="1">Replayable</td>
+              <td class="text-left" rowspan="1" colspan="1">Linkable; the same secret is presented each time</td>
               <td class="text-left" rowspan="1" colspan="1">Direct</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Synced passkey</td>
               <td class="text-left" rowspan="1" colspan="1">Unlimited</td>
               <td class="text-left" rowspan="1" colspan="1">Not replayable</td>
+              <td class="text-left" rowspan="1" colspan="1">Linkable within an RP by credential ID; a distinct key pair per RP prevents correlation across RPs</td>
               <td class="text-left" rowspan="1" colspan="1">Direct</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Device-bound passkey</td>
               <td class="text-left" rowspan="1" colspan="1">Unlimited</td>
               <td class="text-left" rowspan="1" colspan="1">Not replayable</td>
+              <td class="text-left" rowspan="1" colspan="1">Linkable within an RP by credential ID; a distinct key pair per RP and batch-shared attestation certificates limit correlation across RPs</td>
               <td class="text-left" rowspan="1" colspan="1">Direct</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">SPIFFE X.509-SVID</td>
               <td class="text-left" rowspan="1" colspan="1">Unlimited within the validity window</td>
               <td class="text-left" rowspan="1" colspan="1">Not replayable</td>
+              <td class="text-left" rowspan="1" colspan="1">Linkable; the certificate and SPIFFE ID are presented verbatim</td>
               <td class="text-left" rowspan="1" colspan="1">Direct; Delegated when carrying on-behalf-of context</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">SPIFFE JWT-SVID</td>
               <td class="text-left" rowspan="1" colspan="1">Unlimited within the validity window</td>
               <td class="text-left" rowspan="1" colspan="1">Replayable within the validity window</td>
+              <td class="text-left" rowspan="1" colspan="1">Linkable; the signed token is presented verbatim</td>
               <td class="text-left" rowspan="1" colspan="1">Direct; Delegated when carrying end-user context</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">mTLS certificate</td>
               <td class="text-left" rowspan="1" colspan="1">Unlimited within the validity window</td>
               <td class="text-left" rowspan="1" colspan="1">Not replayable</td>
+              <td class="text-left" rowspan="1" colspan="1">Linkable; the certificate is presented verbatim at every handshake</td>
               <td class="text-left" rowspan="1" colspan="1">Direct</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">OAuth bearer access token</td>
               <td class="text-left" rowspan="1" colspan="1">Unlimited within the validity window</td>
               <td class="text-left" rowspan="1" colspan="1">Replayable; any party that captures the token can present it</td>
+              <td class="text-left" rowspan="1" colspan="1">Linkable; the same token is presented each time</td>
               <td class="text-left" rowspan="1" colspan="1">Delegated when the token conveys both client and resource owner; Impersonated when it conveys only the resource owner</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Sender-constrained access token</td>
               <td class="text-left" rowspan="1" colspan="1">Unlimited within the validity window</td>
               <td class="text-left" rowspan="1" colspan="1">Not replayable; a captured token is unusable without the bound private key</td>
+              <td class="text-left" rowspan="1" colspan="1">Linkable; the token and the bound key are stable for the token lifetime</td>
               <td class="text-left" rowspan="1" colspan="1">Delegated; the client is identified by its bound key alongside the resource owner</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
               <td class="text-left" rowspan="1" colspan="1">One; the counter advances on acceptance</td>
               <td class="text-left" rowspan="1" colspan="1">Bounded; single use, but the code remains valid until the counter advances</td>
+              <td class="text-left" rowspan="1" colspan="1">Linkable; the code carries no correlator but is presented against an enrolled account identifier</td>
               <td class="text-left" rowspan="1" colspan="1">Direct</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">TOTP</td>
               <td class="text-left" rowspan="1" colspan="1">One per time step</td>
               <td class="text-left" rowspan="1" colspan="1">Bounded; replayable within the time step and drift window</td>
+              <td class="text-left" rowspan="1" colspan="1">Linkable; presented against an enrolled account identifier</td>
               <td class="text-left" rowspan="1" colspan="1">Direct</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">SMS OTP</td>
               <td class="text-left" rowspan="1" colspan="1">One</td>
               <td class="text-left" rowspan="1" colspan="1">Bounded; replayable within the issuer's window, and interceptable in transit</td>
+              <td class="text-left" rowspan="1" colspan="1">Linkable; presented against an enrolled account identifier</td>
               <td class="text-left" rowspan="1" colspan="1">Direct</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">SD-JWT VC</td>
               <td class="text-left" rowspan="1" colspan="1">Unlimited unless constrained by the issuer</td>
               <td class="text-left" rowspan="1" colspan="1">Replayable without Key Binding; not replayable with a Key Binding JWT</td>
+              <td class="text-left" rowspan="1" colspan="1">Linkable; the issuer signature is presented verbatim. Verifier-unlinkable with batch issuance of single-use credentials carrying distinct salts and Key Binding keys <span>[<a href="#RFC9901" class="cite xref">RFC9901</a>]</span>
+</td>
               <td class="text-left" rowspan="1" colspan="1">Direct; Partitioned or Pseudonymous depending on the disclosed claim set</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">ISO mdoc</td>
               <td class="text-left" rowspan="1" colspan="1">Unlimited within the validity window</td>
               <td class="text-left" rowspan="1" colspan="1">Not replayable; the device signature covers the session transcript</td>
+              <td class="text-left" rowspan="1" colspan="1">Linkable; the issuer-signed MSO and the DeviceKey are presented verbatim</td>
               <td class="text-left" rowspan="1" colspan="1">Direct; Partitioned when a subset of data elements is released</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">BBS verifiable credential</td>
+              <td class="text-left" rowspan="1" colspan="1">Unlimited unless constrained by the issuer</td>
+              <td class="text-left" rowspan="1" colspan="1">Not replayable when the presentation header carries a verifier challenge; a proof generated without one can be replayed</td>
+              <td class="text-left" rowspan="1" colspan="1">Issuer-unlinkable; deliberately linkable at a single verifier when presented under a per-verifier pseudonym</td>
+              <td class="text-left" rowspan="1" colspan="1">Direct; Pseudonymous under a per-verifier pseudonym; Anonymous when only non-identifying claims are disclosed</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">DBSC</td>
               <td class="text-left" rowspan="1" colspan="1">Unlimited within the cookie lifetime</td>
               <td class="text-left" rowspan="1" colspan="1">Bounded; the cookie is replayable within its short lifetime, the device key binding is not</td>
+              <td class="text-left" rowspan="1" colspan="1">Linkable; the session identifier and device key are stable for the session</td>
               <td class="text-left" rowspan="1" colspan="1">Direct</td>
             </tr>
           </tbody>
@@ -2206,8 +2315,8 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
 <a href="#appendix-A.3" class="section-number selfRef">A.3. </a><a href="#name-credential-containment-unloc" class="section-name selfRef">Credential Containment &amp; Unlock</a>
         </h3>
 <p id="appendix-A.3-1">The following properties describe containment of the credential at rest.<a href="#appendix-A.3-1" class="pilcrow">¶</a></p>
-<table class="center" id="table-5">
-          <caption><a href="#table-5" class="selfRef">Table 5</a></caption>
+<table class="center" id="table-6">
+          <caption><a href="#table-6" class="selfRef">Table 6</a></caption>
 <thead>
             <tr>
               <th class="text-left" rowspan="1" colspan="1">Credential Type</th>
@@ -2296,6 +2405,12 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Proactive; enforced by hardware</td>
             </tr>
             <tr>
+              <td class="text-left" rowspan="1" colspan="1">BBS verifiable credential</td>
+              <td class="text-left" rowspan="1" colspan="1">The signed credential is data at rest in the wallet; the holder secret is contained only as far as the wallet software protects it, since proof generation consumes the secret directly and is not typically offered by hardware secure elements</td>
+              <td class="text-left" rowspan="1" colspan="1">Bound to the wallet key store when a holder secret is bound at issuance; unbounded otherwise</td>
+              <td class="text-left" rowspan="1" colspan="1">Reactive; enforced by wallet software</td>
+            </tr>
+            <tr>
               <td class="text-left" rowspan="1" colspan="1">DBSC</td>
               <td class="text-left" rowspan="1" colspan="1">Contained if the session key resides in the TPM or secure enclave; Partially contained for software based implementations</td>
               <td class="text-left" rowspan="1" colspan="1">Bound to the device TPM or secure element where hardware backed, and non-exportable; partially bound for software based implementations</td>
@@ -2304,8 +2419,8 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
           </tbody>
         </table>
 <p id="appendix-A.3-3">The following properties describe how a contained credential is released for use.<a href="#appendix-A.3-3" class="pilcrow">¶</a></p>
-<table class="center" id="table-6">
-          <caption><a href="#table-6" class="selfRef">Table 6</a></caption>
+<table class="center" id="table-7">
+          <caption><a href="#table-7" class="selfRef">Table 7</a></caption>
 <thead>
             <tr>
               <th class="text-left" rowspan="1" colspan="1">Credential Type</th>
@@ -2408,6 +2523,13 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Per-presentation</td>
             </tr>
             <tr>
+              <td class="text-left" rowspan="1" colspan="1">BBS verifiable credential</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; the signed credential and the holder secret can be copied together when held in software</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; wallet unlock gesture where required</td>
+              <td class="text-left" rowspan="1" colspan="1">The holder who can unlock the wallet</td>
+              <td class="text-left" rowspan="1" colspan="1">Configurable by the wallet</td>
+            </tr>
+            <tr>
               <td class="text-left" rowspan="1" colspan="1">DBSC</td>
               <td class="text-left" rowspan="1" colspan="1">None for the key; the short-lived cookie can be copied</td>
               <td class="text-left" rowspan="1" colspan="1">No; refresh is automatic with no user gesture</td>
@@ -2423,8 +2545,8 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
         <h3 id="name-credential-enrollment-2">
 <a href="#appendix-A.4" class="section-number selfRef">A.4. </a><a href="#name-credential-enrollment-2" class="section-name selfRef">Credential Enrollment</a>
         </h3>
-<table class="center" id="table-7">
-          <caption><a href="#table-7" class="selfRef">Table 7</a></caption>
+<table class="center" id="table-8">
+          <caption><a href="#table-8" class="selfRef">Table 8</a></caption>
 <thead>
             <tr>
               <th class="text-left" rowspan="1" colspan="1">Credential Type</th>
@@ -2513,6 +2635,13 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">The issuer binds the DeviceKey into the signed MSO</td>
             </tr>
             <tr>
+              <td class="text-left" rowspan="1" colspan="1">BBS verifiable credential</td>
+              <td class="text-left" rowspan="1" colspan="1">Set by issuer policy; may require high-assurance proofing</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuance is gated by prior credentials or in-person proofing</td>
+              <td class="text-left" rowspan="1" colspan="1">The issuer signs the claims together with a committed holder secret that it does not learn <span>[<a href="#VC-DI-BBS" class="cite xref">VC-DI-BBS</a>]</span>
+</td>
+            </tr>
+            <tr>
               <td class="text-left" rowspan="1" colspan="1">DBSC</td>
               <td class="text-left" rowspan="1" colspan="1">Inherits the assurance of the sign-in that established the session</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; the session is established by a prior authentication</td>
@@ -2527,8 +2656,8 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
         <h3 id="name-credential-compliance-2">
 <a href="#appendix-A.5" class="section-number selfRef">A.5. </a><a href="#name-credential-compliance-2" class="section-name selfRef">Credential Compliance</a>
         </h3>
-<table class="center" id="table-8">
-          <caption><a href="#table-8" class="selfRef">Table 8</a></caption>
+<table class="center" id="table-9">
+          <caption><a href="#table-9" class="selfRef">Table 9</a></caption>
 <thead>
             <tr>
               <th class="text-left" rowspan="1" colspan="1">Credential Type</th>
@@ -2619,6 +2748,12 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">ISO/IEC 18013-5; issuing authority policy</td>
             </tr>
             <tr>
+              <td class="text-left" rowspan="1" colspan="1">BBS verifiable credential</td>
+              <td class="text-left" rowspan="1" colspan="1">Proof construction and pairing-friendly curve fixed by the BBS signature scheme and the cryptosuite</td>
+              <td class="text-left" rowspan="1" colspan="1">Issuer-set expiry; revocation requires a status mechanism that does not itself correlate presentations</td>
+              <td class="text-left" rowspan="1" colspan="1">Issuer policy; wallet ecosystem governance frameworks</td>
+            </tr>
+            <tr>
               <td class="text-left" rowspan="1" colspan="1">DBSC</td>
               <td class="text-left" rowspan="1" colspan="1">Key type constrained by the DBSC specification and platform TPM support</td>
               <td class="text-left" rowspan="1" colspan="1">Session lifetime and refresh cadence set by the origin</td>
@@ -2633,8 +2768,8 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
         <h3 id="name-credential-recovery-2">
 <a href="#appendix-A.6" class="section-number selfRef">A.6. </a><a href="#name-credential-recovery-2" class="section-name selfRef">Credential Recovery</a>
         </h3>
-<table class="center" id="table-9">
-          <caption><a href="#table-9" class="selfRef">Table 9</a></caption>
+<table class="center" id="table-10">
+          <caption><a href="#table-10" class="selfRef">Table 10</a></caption>
 <thead>
             <tr>
               <th class="text-left" rowspan="1" colspan="1">Credential Type</th>
@@ -2693,6 +2828,10 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
             <tr>
               <td class="text-left" rowspan="1" colspan="1">ISO mdoc</td>
               <td class="text-left" rowspan="1" colspan="1">Issuer-driven; reissuance by the issuing authority, the DeviceKey cannot be recovered</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">BBS verifiable credential</td>
+              <td class="text-left" rowspan="1" colspan="1">Issuer-driven; the holder re-requests issuance. A wallet backup may restore the credential and, where held in software, the holder secret</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">DBSC</td>
