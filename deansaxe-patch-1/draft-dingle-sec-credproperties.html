@@ -1832,10 +1832,10 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
           <p id="appendix-A-3.6.1"><strong>mTLS certificate</strong> — a client certificate issued by a Web PKI or private CA outside of any SPIFFE trust domain, presented during the TLS handshake.<a href="#appendix-A-3.6.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.7">
-          <p id="appendix-A-3.7.1"><strong>OAuth access token</strong> — an access token <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> presented to a resource server as a bearer credential, either as a signed JWT or as an opaque handle the resource server validates by introspection.<a href="#appendix-A-3.7.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.7.1"><strong>OAuth access token</strong> — an access token <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> presented to a resource server, either as a signed JWT (bearer token) or as an opaque handle (reference token) the resource server validates by introspection.<a href="#appendix-A-3.7.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.8">
-          <p id="appendix-A-3.8.1"><strong>Sender-constrained access token</strong> — the same access token bound to a client key, so that presentation additionally requires proof of possession of that key, whether by DPoP <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span> or by mutual TLS certificate binding <span>[<a href="#RFC8705" class="cite xref">RFC8705</a>]</span>.<a href="#appendix-A-3.8.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.8.1"><strong>Sender-constrained access token</strong> — the same access token bound to a client key, so that presentation additionally requires proof of possession of that key, whether by DPoP <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span> or by mutual TLS certificate binding <span>[<a href="#RFC8705" class="cite xref">RFC8705</a>]</span>.  By adding proof of possession, the token no longer displays the properties of bearer tokens, it is bound to the key holder.<a href="#appendix-A-3.8.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.9">
           <p id="appendix-A-3.9.1"><strong>HOTP</strong> — an HMAC-based counter-derived one-time password.<a href="#appendix-A-3.9.1" class="pilcrow">¶</a></p>

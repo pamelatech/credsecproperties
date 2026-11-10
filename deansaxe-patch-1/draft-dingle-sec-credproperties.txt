@@ -673,14 +673,16 @@ Appendix A.  Applying the Properties to Common Credential Types
       the TLS handshake.
 
    *  *OAuth access token* — an access token [RFC6749] presented to a
-      resource server as a bearer credential, either as a signed JWT or
-      as an opaque handle the resource server validates by
+      resource server, either as a signed JWT (bearer token) or as an
+      opaque handle (reference token) the resource server validates by
       introspection.
 
    *  *Sender-constrained access token* — the same access token bound to
       a client key, so that presentation additionally requires proof of
       possession of that key, whether by DPoP [RFC9449] or by mutual TLS
-      certificate binding [RFC8705].
+      certificate binding [RFC8705].  By adding proof of possession, the
+      token no longer displays the properties of bearer tokens, it is
+      bound to the key holder.
 
    *  *HOTP* — an HMAC-based counter-derived one-time password.
 
