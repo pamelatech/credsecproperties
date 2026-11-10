@@ -177,8 +177,8 @@ Substantiation describes credentials containing mechanisms for authoritative sta
 ### Dynamism
 Dynamism describes a credential whose stored and active forms are different. Credentials with no dynamism (or dynamic genarativity) such as passwords exibit no difference between the stored (in memory, in a password manager, etc.) and the credential sent to the verifier. Dynamic generatvity indicates that some function is used to operate on the stored credential such that what is sent over the wire is different than what is stored (e.g. a challenge response protocol like FIDO {{WEBAUTHN}}).  Credentials that do not exhibit dynamism, such as shared secrets, usually exhibit replayability and are definitionally not able to be contained.
 
-### Identifier Binding
-The primary content of a credential is cryptographically bound to an identifier. Examples of credentials that include bound identifiers include SAML assertions, JSON Web Tokens (JWTs) {{RFC7519}}, X.509 certificates, ISO 18013 mobile driving licence objects {{ISO18013-5}} and verifiable credentials {{VC-DATA-MODEL}}
+### Bindability
+Bindability describes whether a credential or its presentation can provide verifiable evidence of a relationship between the credential or its claims and one or more entities or contexts. These relationships can involve an issuer, subject, audience, communication channel, or device, and can be established or evaluated during issuance or presentation. Bindability is not limited to identifiers; restricting which destinations may consume a credential is described by Audience Restriction.
 
 ### Tamper Proofness
 A mechanism for credential integrity is built into the credential ensuring that the data within the credential is verifiably unchanged by external parties.
@@ -339,23 +339,23 @@ The credential types examined are:
 
 The following properties describe how a credential asserts and protects its content.
 
-| Credential Type | Substantiation | Dynamism | Identifier Binding | Tamper Proofness |
+| Credential Type | Substantiation | Dynamism | Bindability | Tamper Proofness |
 | --- | --- | --- | --- | --- |
-| Password / API key | No | None; the stored and presented forms are identical | No | No |
-| Synced passkey | No; attestation is typically not conveyed | Dynamic; challenge-response | Yes; credential ID and user handle bound to the key pair | Yes; signed assertion |
-| Device-bound passkey | Yes; attestation statement conveys authenticator provenance if requested & validated by the RP | Dynamic; challenge-response | Yes | Yes; signed assertion |
-| SPIFFE X.509-SVID | Yes; CA-signed after workload attestation | Dynamic; the private key is never transmitted | Yes; SPIFFE ID in the SAN URI | Yes; CA signature |
-| SPIFFE JWT-SVID | Yes; signed by the trust domain authority | None; presented verbatim as a bearer token | Yes; SPIFFE ID in `sub` | Yes; JWS signature {{RFC7515}} |
-| mTLS certificate | Yes; CA-signed | Dynamic; the private key is never transmitted | Yes; subject DN or SAN | Yes; CA signature |
-| OAuth bearer access token | Yes when the token is a JWT signed by the authorization server; No for an opaque token, which the resource server validates by introspection | None; presented verbatim | Yes for a JWT, which carries subject and client identifiers; established by introspection for an opaque token | Yes for a signed JWT; for an opaque token integrity rests on the issuer datastore rather than on the credential |
-| Sender-constrained access token | Yes; issuer-signed | Dynamic; the token is static but each presentation requires a freshly signed proof of possession or the bound TLS client certificate | Yes; a confirmation claim binds the token to the client key alongside the subject | Yes; signed by the authorization server |
-| HOTP | No | Dynamic; counter-based derivation from the stored seed | No; the code carries no identifier, binding is by enrollment record | No |
-| TOTP | No | Dynamic; time-based derivation from the stored seed | No | No |
-| SMS OTP | No | None; the verifier-generated value is presented verbatim | No; bound to a phone number by enrollment record | No |
-| SD-JWT VC | Yes; issuer-signed | None for the issuer-signed JWT; Dynamic when Key Binding is used | Yes; holder key in `cnf` when Key Binding is used | Yes; JWS signature over salted disclosure digests |
-| ISO mdoc | Yes; issuer-signed Mobile Security Object | Dynamic; device signature or MAC over the session transcript | Yes; DeviceKey bound in the MSO | Yes; per-data-element digests in the MSO |
-| BBS verifiable credential | Yes; issuer-signed, though the signature is proven rather than shown | Dynamic; each presentation is a freshly derived proof, never the stored signature | Yes; a holder secret can be bound at issuance without being revealed at presentation, termed anonymous holder binding {{VC-DI-BBS}} | Yes; the proof verifies against the issuer's public key and fails if any disclosed claim is altered |
-| DBSC | No | Mixed; the session cookie is static, the refresh proof is challenge-response | Yes; session identifier bound to the device key | No for the cookie; Yes for the signed refresh proof |
+| Password / API key | No | None; the stored and presented forms are identical | No; the value alone proves no relationship to an entity or context | No |
+| Synced passkey | No; attestation is typically not conveyed | Dynamic; challenge-response | Yes; the signed assertion proves possession of a registered key for the relying party | Yes; signed assertion |
+| Device-bound passkey | Yes; attestation statement conveys authenticator provenance if requested & validated by the RP | Dynamic; challenge-response | Yes; the signed assertion proves possession of the registered authenticator key for the relying party | Yes; signed assertion |
+| SPIFFE X.509-SVID | Yes; CA-signed after workload attestation | Dynamic; the private key is never transmitted | Yes; issuer and SPIFFE subject are represented in the certificate, with key possession proven in TLS | Yes; CA signature |
+| SPIFFE JWT-SVID | Yes; signed by the trust domain authority | None; presented verbatim as a bearer token | Yes; issuer, SPIFFE subject in `sub`, and audience are verifiable | Yes; JWS signature {{RFC7515}} |
+| mTLS certificate | Yes; CA-signed | Dynamic; the private key is never transmitted | Yes; issuer and subject are represented in the certificate, with key possession proven in TLS | Yes; CA signature |
+| OAuth bearer access token | Yes when the token is a JWT signed by the authorization server; No for an opaque token, which the resource server validates by introspection | None; presented verbatim | Yes; issuer, subject, and client relationships are carried by a JWT or established by introspection for an opaque token | Yes for a signed JWT; for an opaque token integrity rests on the issuer datastore rather than on the credential |
+| Sender-constrained access token | Yes; issuer-signed | Dynamic; the token is static but each presentation requires a freshly signed proof of possession or the bound TLS client certificate | Yes; issuer and subject are asserted by the token, and proof of possession binds the presentation to the client key | Yes; signed by the authorization server |
+| HOTP | No | Dynamic; counter-based derivation from the stored seed | Yes; the verifier associates the shared seed with an account during enrollment and verifies codes against it | No |
+| TOTP | No | Dynamic; time-based derivation from the stored seed | Yes; the verifier associates the shared seed with an account during enrollment and verifies codes against it | No |
+| SMS OTP | No | None; the verifier-generated value is presented verbatim | Yes; the verifier associates the destination phone number with an account and delivers the code to that number | No |
+| SD-JWT VC | Yes; issuer-signed | None for the issuer-signed JWT; Dynamic when Key Binding is used | Yes; issuer and claims are signed, with an optional holder key in `cnf` when Key Binding is used | Yes; JWS signature over salted disclosure digests |
+| ISO mdoc | Yes; issuer-signed Mobile Security Object | Dynamic; device signature or MAC over the session transcript | Yes; issuer claims are signed and the DeviceKey is bound in the MSO | Yes; per-data-element digests in the MSO |
+| BBS verifiable credential | Yes; issuer-signed, though the signature is proven rather than shown | Dynamic; each presentation is a freshly derived proof, never the stored signature | Yes; issuer claims are proven, and a holder secret can be bound at issuance without being revealed at presentation, termed anonymous holder binding {{VC-DI-BBS}} | Yes; the proof verifies against the issuer's public key and fails if any disclosed claim is altered |
+| DBSC | No | Mixed; the session cookie is static, the refresh proof is challenge-response | Yes; the session identifier and refresh proof are bound to the device key | No for the cookie; Yes for the signed refresh proof |
 
 The following properties describe how a credential scopes and structures its content.
 
