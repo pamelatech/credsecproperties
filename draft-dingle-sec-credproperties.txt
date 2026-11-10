@@ -209,9 +209,9 @@ Table of Contents
 
    *  Per-claim: individual claims can be revealed or withheld at
       presentation time.  The mechanism may be a salted hash over each
-      claim, as in an SD-JWT [RFC9901] or an ISO mdoc, or a zero-
-      knowledge proof over the issuer's signature, as in a credential
-      signed with the BBS signature scheme
+      claim, as in an SD-JWT [RFC9901] or an ISO mdoc [ISO18013-5], or a
+      zero-knowledge proof over the issuer's signature, as in a
+      credential signed with the BBS signature scheme
       [I-D.irtf-cfrg-bbs-signatures].
 
    *  Predicate: a statement about a claim can be proven without
@@ -817,8 +817,8 @@ Appendix A.  Applying the Properties to Common Credential Types
       mutual TLS.  See [SPIFFE-X509-SVID].
 
    *  *SPIFFE JWT-SVID* — the same workload identity expressed as a
-      signed JWT and presented as a bearer token [RFC6750] to services
-      that cannot terminate mutual TLS.  See [SPIFFE-JWT-SVID].
+      signed JWT [RFC7519] and presented as a bearer token [RFC6750] to
+      services that cannot terminate mutual TLS.  See [SPIFFE-JWT-SVID].
 
    *  *mTLS certificate* — a client certificate issued by a Web PKI or
       private CA outside of any SPIFFE trust domain, presented during

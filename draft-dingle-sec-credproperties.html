@@ -1410,7 +1410,7 @@ svg {
               <p id="section-3.1.8-2.1.1">None: the credential is presented whole, or not at all.<a href="#section-3.1.8-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.1.8-2.2">
-              <p id="section-3.1.8-2.2.1">Per-claim: individual claims can be revealed or withheld at presentation time. The mechanism may be a salted hash over each claim, as in an SD-JWT <span>[<a href="#RFC9901" class="cite xref">RFC9901</a>]</span> or an ISO mdoc, or a zero-knowledge proof over the issuer's signature, as in a credential signed with the BBS signature scheme <span>[<a href="#I-D.irtf-cfrg-bbs-signatures" class="cite xref">I-D.irtf-cfrg-bbs-signatures</a>]</span>.<a href="#section-3.1.8-2.2.1" class="pilcrow">¶</a></p>
+              <p id="section-3.1.8-2.2.1">Per-claim: individual claims can be revealed or withheld at presentation time. The mechanism may be a salted hash over each claim, as in an SD-JWT <span>[<a href="#RFC9901" class="cite xref">RFC9901</a>]</span> or an ISO mdoc <span>[<a href="#ISO18013-5" class="cite xref">ISO18013-5</a>]</span>, or a zero-knowledge proof over the issuer's signature, as in a credential signed with the BBS signature scheme <span>[<a href="#I-D.irtf-cfrg-bbs-signatures" class="cite xref">I-D.irtf-cfrg-bbs-signatures</a>]</span>.<a href="#section-3.1.8-2.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.1.8-2.3">
               <p id="section-3.1.8-2.3.1">Predicate: a statement about a claim can be proven without revealing the claim itself, such as proving that an age exceeds a threshold rather than disclosing a date of birth. Predicates require a proof construction beyond selective disclosure alone, such as a range proof; the BBS signature scheme selectively discloses claims but does not itself prove predicates.<a href="#section-3.1.8-2.3.1" class="pilcrow">¶</a></p>
@@ -1902,7 +1902,7 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
           <p id="appendix-A-3.4.1"><strong>SPIFFE X.509-SVID</strong> — a workload identity issued as an X.509 certificate following attestation of the workload, presented via mutual TLS. See <span>[<a href="#SPIFFE-X509-SVID" class="cite xref">SPIFFE-X509-SVID</a>]</span>.<a href="#appendix-A-3.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.5">
-          <p id="appendix-A-3.5.1"><strong>SPIFFE JWT-SVID</strong> — the same workload identity expressed as a signed JWT and presented as a bearer token <span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span> to services that cannot terminate mutual TLS. See <span>[<a href="#SPIFFE-JWT-SVID" class="cite xref">SPIFFE-JWT-SVID</a>]</span>.<a href="#appendix-A-3.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.5.1"><strong>SPIFFE JWT-SVID</strong> — the same workload identity expressed as a signed JWT <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span> and presented as a bearer token <span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span> to services that cannot terminate mutual TLS. See <span>[<a href="#SPIFFE-JWT-SVID" class="cite xref">SPIFFE-JWT-SVID</a>]</span>.<a href="#appendix-A-3.5.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.6">
           <p id="appendix-A-3.6.1"><strong>mTLS certificate</strong> — a client certificate issued by a Web PKI or private CA outside of any SPIFFE trust domain, presented during the TLS handshake.<a href="#appendix-A-3.6.1" class="pilcrow">¶</a></p>
