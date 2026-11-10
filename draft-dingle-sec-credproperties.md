@@ -156,7 +156,7 @@ informative:
 
 --- abstract
 
-This document defines a set of properties which explain and differentiate unique security characteristics of an authentication method.
+This document defines a set of properties that explain and differentiate the security characteristics of a credential.
 
 --- middle
 
@@ -301,7 +301,7 @@ Recoverability describes remediation capabilities that enable or re-enable acces
 
 {::boilerplate bcp14-tagged}
 
-TODO define two parts of credential (secret, generated)
+**Credential:** Information or a mechanism used by a subject to prove a claim to a verifier. Depending on the credential type, it may include a stored secret or key, a value generated from that secret or key for presentation, or an assertion issued by another party. The stored and presented forms may be identical or different, as described by {{dynamism}}.
 
 # Security Considerations
 
