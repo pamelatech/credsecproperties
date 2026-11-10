@@ -5,7 +5,8 @@
 Network Working Group                                          P. Dingle
 Internet-Draft                                                 Microsoft
 Intended status: Informational                                D. H. Saxe
-Expires: 14 May 2027                                    10 November 2026
+Expires: 14 May 2027                     Full Frontal Nerdity Industries
+                                                        10 November 2026
 
 
                Credential Management Security properties
@@ -64,7 +65,7 @@ Table of Contents
 
    1.  Introduction
    2.  Credential Management Security Classes
-   3.  Credential Management Security Properties
+   3.  Credential Management Security
      3.1.  Credential Construction Properties
        3.1.1.  Substantiation
        3.1.2.  Dynamism
@@ -137,7 +138,7 @@ Table of Contents
    differences that have clear security value.  The property must have a
    security benefit that is inherent to the credential type.
 
-3.  Credential Management Security Properties
+3.  Credential Management Security
 
 3.1.  Credential Construction Properties
 
@@ -150,16 +151,17 @@ Table of Contents
 
 3.1.2.  Dynamism
 
-   Dynamism describes a credential whose stored and active forms are
-   different.  Credentials with no dynamism (or dynamic genarativity)
-   such as passwords exibit no difference between the stored (in memory,
-   in a password manager, etc.) and the credential sent to the verifier.
-   Dynamic generatvity indicates that some function is used to operate
-   on the stored credential such that what is sent over the wire is
-   different than what is stored (e.g. a challenge response protocol
-   like FIDO [WEBAUTHN]).  Credentials that do not exhibit dynamism,
-   such as shared secrets, usually exhibit replayability and are
-   definitionally not able to be contained.
+   Dynamism describes a credential whose inactive (stored or at-rest)
+   and active forms are different.  Credentials with no dynamism (or
+   dynamic generativity) such as passwords exhibit no difference between
+   the stored value (in memory, in a password manager, etc.) and the
+   credential sent to the verifier.  Dynamic generativity indicates that
+   some function is used to operate on the stored credential such that
+   what is sent over the wire is different than what is stored (e.g. a
+   challenge response protocol like FIDO [WEBAUTHN]).  Credentials that
+   do not exhibit dynamism, such as shared secrets, usually exhibit
+   replayability and are definitionally not able to be contained (see
+   Section 3.3).
 
 3.1.3.  Identifier Binding
 
@@ -184,7 +186,9 @@ Table of Contents
 
    A mechanism that specifies which destination consumers of the
    credential are valid.  Examples include id_token values [OIDC-CORE]
-   or origin bindings of FIDO tokens.
+   or origin bindings of FIDO tokens.  Consumers of the credential
+   should be responsible for validating the audience restriction before
+   using an audience-restricted credential.
 
 3.1.7.  Validity Window
 
@@ -221,8 +225,8 @@ Table of Contents
 
 3.2.  Credential Presentation
 
-   Credential reuse properties describe ways in which the use of a
-   credential is functionally restricted.
+   Credential presentation properties describe ways in which the use of
+   a credential is functionally restricted.
 
 3.2.1.  Usage Count Limit
 
@@ -482,9 +486,11 @@ Table of Contents
 3.3.7.  Unlock Persistence
 
    Credentials may be unlocked once with an activation factor (e.g.
-   using a hardware security key), or the activation factor may be
-   presented seconds to minutes before use (e.g. a credential vault
-   remains unlocked for 5 minutes after use).
+   entering a PIN or biometric to activate a hardware security key), or
+   the activation factor may be presented seconds to minutes before use
+   (e.g. a credential vault remains unlocked for 5 minutes after use,
+   allowing presentation of credentials from the vault without further
+   activation).
 
 3.4.  Credential Enrollment
 
@@ -543,16 +549,16 @@ Table of Contents
 
    Recoverability describes remediation capabilities that enable or re-
    enable access to a valid credential after loss or compromise.  Values
-   can be: issuer-driven, container-driven,or account-driven.  * Issuer-
+   can be: issuer-driven, container-driven,or account-driven. * Issuer-
    driven: remediation is enabled by a direct party to the creation of
    the credential.  Examples include credentials with multiple
    configured signing certificates, synced passkeys protected by a
    consumer trust layer, or hardware keys created with matching/derived
-   seed values.  * Container-driven: remediation enabled by a direct
+   seed values. * Container-driven: remediation enabled by a direct
    party to containment or unlock of the credential with pre-established
    administrative trust.  Examples include PAM (privileged access
-   management) systems or corporate password managers.  * Account-
-   driven: the credential cannot be restored, it can only be removed and
+   management) systems or corporate password managers. * Account-driven:
+   the credential cannot be restored, it can only be removed and
    replaced, often through a process that requires presentation of an
    unrelated alternate credential.
 
@@ -631,13 +637,6 @@ Table of Contents
               draft-ietf-oauth-transaction-tokens-11, 30 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
               transaction-tokens-11>.
-
-   [I-D.ietf-oauth-v2-1]
-              Hardt, D., Parecki, A., and T. Lodderstedt, "The OAuth 2.1
-              Authorization Framework", Work in Progress, Internet-
-              Draft, draft-ietf-oauth-v2-1-17, 30 October 2026,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              v2-1-17>.
 
    [I-D.irtf-cfrg-bbs-per-verifier-linkability]
               Kalos, V. and G. M. Bernstein, "BBS per Verifier
@@ -822,17 +821,17 @@ Appendix A.  Applying the Properties to Common Credential Types
       private CA outside of any SPIFFE trust domain, presented during
       the TLS handshake.
 
-   *  *OAuth bearer access token* — an access token [RFC6749] presented
-      to a resource server as a bearer credential, either as a signed
-      JWT or as an opaque handle the resource server validates by
-      introspection.  OAuth 2.1 [I-D.ietf-oauth-v2-1] consolidates the
-      OAuth 2.0 core and bearer token specifications and is intended to
-      obsolete both.
+   *  *OAuth access token* — an access token [RFC6749] presented to a
+      resource server, either as a signed JWT (bearer token) or as an
+      opaque handle (reference token) the resource server validates by
+      introspection.
 
    *  *Sender-constrained access token* — the same access token bound to
       a client key, so that presentation additionally requires proof of
       possession of that key, whether by DPoP [RFC9449] or by mutual TLS
-      certificate binding [RFC8705].
+      certificate binding [RFC8705].  By adding proof of possession, the
+      token no longer displays the properties of bearer tokens, it is
+      bound to the key holder.
 
    *  *ID-JAG* — an Identity Assertion JWT Authorization Grant
       [I-D.ietf-oauth-identity-assertion-authz-grant], a JWT issued by
@@ -1945,9 +1944,10 @@ A.6.  Credential Recovery
 Acknowledgments
 
    The authors would like to acknowledge the following individuals for
-   their thoughful feedback: George Fletcher, Andrew Hughes, Justin
-   Richer, and the attendees of the Internet Identity Workshop 42 and
-   OAuth Security Workshop 2025.
+   their thoughtful feedback: George Fletcher, Elizabeth Garber, Ian
+   Glazer, Andrew Hughes, Justin Richer, Jonathan Sander, Nick Steele,
+   and the attendees of the Internet Identity Workshop 42, OAuth
+   Security Workshop 2025, and Authenticate 2026.
 
 Authors' Addresses
 
@@ -1957,4 +1957,5 @@ Authors' Addresses
 
 
    Dean H. Saxe
+   Full Frontal Nerdity Industries
    Email: dean@thesax.es
