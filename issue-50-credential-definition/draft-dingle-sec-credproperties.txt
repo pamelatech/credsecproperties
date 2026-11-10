@@ -75,7 +75,7 @@ Table of Contents
        3.1.7.  Validity Window
        3.1.8.  Selective Disclosure
      3.2.  Credential Presentation
-       3.2.1.  Validity Count
+       3.2.1.  Usage Count Limit
        3.2.2.  Replayability
        3.2.3.  Unlinkability
        3.2.4.  Referential Identity Posture
@@ -120,13 +120,13 @@ Table of Contents
    vocabulary that describes exactly what a given credential should be
    expected to do, or why exactly it can be called "secure".  To address
    this shortcoming, this document describes categories of secure
-   credential management and within defines _exact_ labels to describe
-   the intended operation of a given credential.  These labels are
-   intended for colloquial use and designed whenever possible to be
-   accessible and intuitive for laypeople.  The specification is scoped
-   only to a credential in its common and expected use; properties for
-   secure administration of credentials are not part of this set.
-   Negative uses (attacks, vulnerabilities) are also not in scope.
+   credential management and defines _exact_ labels to describe the
+   intended operation of a given credential.  These labels are intended
+   for colloquial use and designed whenever possible to be accessible
+   and intuitive for laypeople.  The specification is scoped only to a
+   credential in its common and expected use; properties for secure
+   administration of credentials are not part of this set.  Negative
+   uses (attacks, vulnerabilities) are also not in scope.
 
 2.  Credential Management Security Classes
 
@@ -161,11 +161,11 @@ Table of Contents
 
 3.1.3.  Identifier Binding
 
-   The primary content of a credential is cryptographically bound to an
-   identifier.  Examples of credentials that include bound identifiers
-   include SAML assertions, JSON Web Tokens (JWTs) [RFC7519], X.509
-   certificates, ISO 18013 mobile driving licence objects [ISO18013-5]
-   and verifiable credentials [VC-DATA-MODEL]
+   The principal content of a credential is cryptographically bound to
+   an identifier.  Examples of credentials that include bound
+   identifiers include SAML assertions, JSON Web Tokens (JWTs)
+   [RFC7519], X.509 certificates, ISO 18013 mobile driving licence
+   objects [ISO18013-5] and verifiable credentials [VC-DATA-MODEL]
 
 3.1.4.  Tamper Proofness
 
@@ -191,9 +191,10 @@ Table of Contents
 
 3.1.8.  Selective Disclosure
 
-   A mechanism by which some or all of the contents within a credential
-   can be made available or unavailable under circumstances determined
-   at presentation time.  Values can be: none, per-claim, or predicate.
+   A credential is capable of selective disclosure if some or all of the
+   contents within a credential can be made available or unavailable
+   under circumstances determined at presentation time.  Values can be:
+   none, per-claim, or predicate.
 
    *  None: the credential is presented whole, or not at all.
 
@@ -221,11 +222,12 @@ Table of Contents
    Credential reuse properties describe ways in which the use of a
    credential is functionally restricted.
 
-3.2.1.  Validity Count
+3.2.1.  Usage Count Limit
 
-   A credential becomes invalid after a specified number of successful
-   presentations.  An example would be a temporary password that can
-   only be used 5 times, or a one-time password.
+   A credential is usage count limited if it becomes invalid after a
+   specified number of successful presentations by a legitimate
+   presenter.  An example would be a temporary password that can only be
+   used 5 times, or a one-time password.
 
 3.2.2.  Replayability
 
