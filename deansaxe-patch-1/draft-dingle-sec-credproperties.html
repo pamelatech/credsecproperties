@@ -1756,6 +1756,10 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
         <dd>
 <span class="refAuthor">World Wide Web Consortium</span>, <span class="refTitle">"Device Bound Session Credentials"</span>, <span class="seriesInfo">W3C First Public Working Draft WD-dbsc-1-20250821</span>, <time datetime="2025-08-21" class="refDate">21 August 2025</time>, <span>&lt;<a href="https://www.w3.org/TR/dbsc/">https://www.w3.org/TR/dbsc/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="I-D.ietf-oauth-identity-assertion-authz-grant">[I-D.ietf-oauth-identity-assertion-authz-grant]</dt>
+        <dd>
+<span class="refAuthor">Parecki, A.</span>, <span class="refAuthor">McGuinness, K.</span>, and <span class="refAuthor">B. Campbell</span>, <span class="refTitle">"Identity Assertion JWT Authorization Grant"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-identity-assertion-authz-grant-06</span>, <time datetime="2026-10-30" class="refDate">30 October 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-assertion-authz-grant-06">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-assertion-authz-grant-06</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.ietf-oauth-sd-jwt-vc">[I-D.ietf-oauth-sd-jwt-vc]</dt>
         <dd>
 <span class="refAuthor">Terbu, O.</span>, <span class="refAuthor">Fett, D.</span>, and <span class="refAuthor">B. Campbell</span>, <span class="refTitle">"SD-JWT-based Verifiable Digital Credentials (SD-JWT VC)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-sd-jwt-vc-26</span>, <time datetime="2026-11-06" class="refDate">6 November 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-sd-jwt-vc-26">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-sd-jwt-vc-26</a>&gt;</span>. </dd>
@@ -1815,6 +1819,10 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
 <dt id="RFC7519">[RFC7519]</dt>
         <dd>
 <span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">N. Sakimura</span>, <span class="refTitle">"JSON Web Token (JWT)"</span>, <span class="seriesInfo">RFC 7519</span>, <span class="seriesInfo">DOI 10.17487/RFC7519</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7519">https://www.rfc-editor.org/rfc/rfc7519</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7523">[RFC7523]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Campbell, B.</span>, and <span class="refAuthor">C. Mortimore</span>, <span class="refTitle">"JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants"</span>, <span class="seriesInfo">RFC 7523</span>, <span class="seriesInfo">DOI 10.17487/RFC7523</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7523">https://www.rfc-editor.org/rfc/rfc7523</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8693">[RFC8693]</dt>
         <dd>
@@ -1906,25 +1914,28 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
           <p id="appendix-A-3.8.1"><strong>Sender-constrained access token</strong> — the same access token bound to a client key, so that presentation additionally requires proof of possession of that key, whether by DPoP <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span> or by mutual TLS certificate binding <span>[<a href="#RFC8705" class="cite xref">RFC8705</a>]</span>.  By adding proof of possession, the token no longer displays the properties of bearer tokens, it is bound to the key holder.<a href="#appendix-A-3.8.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.9">
-          <p id="appendix-A-3.9.1"><strong>HOTP</strong> — an HMAC-based counter-derived one-time password.<a href="#appendix-A-3.9.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.9.1"><strong>ID-JAG</strong> — an Identity Assertion JWT Authorization Grant <span>[<a href="#I-D.ietf-oauth-identity-assertion-authz-grant" class="cite xref">I-D.ietf-oauth-identity-assertion-authz-grant</a>]</span>, a JWT issued by an enterprise identity provider when a client exchanges its ID token or SAML assertion for one, and presented by that client to a resource application's authorization server as a JWT authorization grant <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span> to obtain an access token.<a href="#appendix-A-3.9.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.10">
-          <p id="appendix-A-3.10.1"><strong>TOTP</strong> — a time-derived one-time password.<a href="#appendix-A-3.10.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.10.1"><strong>HOTP</strong> — an HMAC-based counter-derived one-time password.<a href="#appendix-A-3.10.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.11">
-          <p id="appendix-A-3.11.1"><strong>SMS OTP</strong> — a one-time code generated by the verifier and delivered out of band over the public telephone network.<a href="#appendix-A-3.11.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.11.1"><strong>TOTP</strong> — a time-derived one-time password.<a href="#appendix-A-3.11.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.12">
-          <p id="appendix-A-3.12.1"><strong>SD-JWT VC</strong> — a verifiable credential expressed as a selectively disclosable JWT <span>[<a href="#I-D.ietf-oauth-sd-jwt-vc" class="cite xref">I-D.ietf-oauth-sd-jwt-vc</a>]</span>, built on the SD-JWT construction, optionally bound to a holder key.<a href="#appendix-A-3.12.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.12.1"><strong>SMS OTP</strong> — a one-time code generated by the verifier and delivered out of band over the public telephone network.<a href="#appendix-A-3.12.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.13">
-          <p id="appendix-A-3.13.1"><strong>ISO mdoc</strong> — an ISO/IEC 18013-5 mobile document such as a mobile driving licence, comprising an issuer-signed Mobile Security Object and a device-signed response.<a href="#appendix-A-3.13.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.13.1"><strong>SD-JWT VC</strong> — a verifiable credential expressed as a selectively disclosable JWT <span>[<a href="#I-D.ietf-oauth-sd-jwt-vc" class="cite xref">I-D.ietf-oauth-sd-jwt-vc</a>]</span>, built on the SD-JWT construction, optionally bound to a holder key.<a href="#appendix-A-3.13.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.14">
-          <p id="appendix-A-3.14.1"><strong>BBS verifiable credential</strong> — a verifiable credential <span>[<a href="#VC-DATA-MODEL" class="cite xref">VC-DATA-MODEL</a>]</span> secured with the BBS signature scheme <span>[<a href="#I-D.irtf-cfrg-bbs-signatures" class="cite xref">I-D.irtf-cfrg-bbs-signatures</a>]</span> through the Data Integrity BBS cryptosuite <span>[<a href="#VC-DI-BBS" class="cite xref">VC-DI-BBS</a>]</span>, so that each presentation is a freshly derived zero-knowledge proof over the selectively disclosed claims rather than the issuer's signature itself.<a href="#appendix-A-3.14.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.14.1"><strong>ISO mdoc</strong> — an ISO/IEC 18013-5 mobile document such as a mobile driving licence, comprising an issuer-signed Mobile Security Object and a device-signed response.<a href="#appendix-A-3.14.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.15">
-          <p id="appendix-A-3.15.1"><strong>DBSC</strong> — Device Bound Session Credentials <span>[<a href="#DBSC" class="cite xref">DBSC</a>]</span>, a browser session credential bound to a non-exportable device key and periodically refreshed by proof of possession.<a href="#appendix-A-3.15.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.15.1"><strong>BBS verifiable credential</strong> — a verifiable credential <span>[<a href="#VC-DATA-MODEL" class="cite xref">VC-DATA-MODEL</a>]</span> secured with the BBS signature scheme <span>[<a href="#I-D.irtf-cfrg-bbs-signatures" class="cite xref">I-D.irtf-cfrg-bbs-signatures</a>]</span> through the Data Integrity BBS cryptosuite <span>[<a href="#VC-DI-BBS" class="cite xref">VC-DI-BBS</a>]</span>, so that each presentation is a freshly derived zero-knowledge proof over the selectively disclosed claims rather than the issuer's signature itself.<a href="#appendix-A-3.15.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-3.16">
+          <p id="appendix-A-3.16.1"><strong>DBSC</strong> — Device Bound Session Credentials <span>[<a href="#DBSC" class="cite xref">DBSC</a>]</span>, a browser session credential bound to a non-exportable device key and periodically refreshed by proof of possession.<a href="#appendix-A-3.16.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <div id="credential-construction">
@@ -2002,6 +2013,13 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Dynamic; the token is static but each presentation requires a freshly signed proof of possession or the bound TLS client certificate</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; a confirmation claim binds the token to the client key alongside the subject</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; signed by the authorization server</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ID-JAG</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; signed by the identity provider</td>
+              <td class="text-left" rowspan="1" colspan="1">None; presented verbatim as an assertion grant</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; <code>sub</code> names the user and <code>client_id</code> the requesting client</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; JWS signature</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
@@ -2123,6 +2141,13 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Yes; the audience names the resource server</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; typically minutes to hours</td>
               <td class="text-left" rowspan="1" colspan="1">None</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ID-JAG</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; derived by token exchange from an ID token or SAML assertion, itself exchanged for an access token, and may carry an <code>act</code> claim</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; <code>aud</code> names the resource application's authorization server</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; <code>exp</code>, with short lifetimes recommended</td>
+              <td class="text-left" rowspan="1" colspan="1">None; <code>scope</code> constrains the requested authorization rather than disclosure</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
@@ -2253,6 +2278,14 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Delegated; the client is identified by its bound key alongside the resource owner</td>
             </tr>
             <tr>
+              <td class="text-left" rowspan="1" colspan="1">ID-JAG</td>
+              <td class="text-left" rowspan="1" colspan="1">Unlimited within the validity window; the resource authorization server may enforce single use by tracking <code>jti</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">Replayable within the validity window unless bound to a client key by a <code>cnf</code> claim; without binding, client authentication at the token endpoint is the only check against presentation by another party</td>
+              <td class="text-left" rowspan="1" colspan="1">Linkable; the issuer-signed JWT is presented verbatim, and <code>sub</code> is stable for a given resource authorization server</td>
+              <td class="text-left" rowspan="1" colspan="1">Delegated; the grant conveys both the user and the requesting client. Chained when an <code>act</code> claim records intermediate actors</td>
+            </tr>
+            <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
               <td class="text-left" rowspan="1" colspan="1">One; the counter advances on acceptance</td>
               <td class="text-left" rowspan="1" colspan="1">Bounded; single use, but the code remains valid until the counter advances</td>
@@ -2372,6 +2405,12 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Proactive; the resource server rejects any presentation lacking a valid proof of possession</td>
             </tr>
             <tr>
+              <td class="text-left" rowspan="1" colspan="1">ID-JAG</td>
+              <td class="text-left" rowspan="1" colspan="1">Uncontained; a bearer assertion held in client memory until exchanged. The bound private key is contained when a <code>cnf</code> claim is used</td>
+              <td class="text-left" rowspan="1" colspan="1">Unbounded after issuance; bound to the client proof-of-possession key when sender-constrained</td>
+              <td class="text-left" rowspan="1" colspan="1">Reactive for the bare assertion; short lifetime and the client authentication check at the token endpoint. Proactive when sender-constrained</td>
+            </tr>
+            <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
               <td class="text-left" rowspan="1" colspan="1">Contained in a hardware token; uncontained as a soft seed</td>
               <td class="text-left" rowspan="1" colspan="1">Bound to the hardware token; unbounded as a soft seed that can be re-enrolled from the provisioning URI</td>
@@ -2483,6 +2522,13 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">No; presentation is automated and requires no user gesture</td>
               <td class="text-left" rowspan="1" colspan="1">The client that holds the bound private key</td>
               <td class="text-left" rowspan="1" colspan="1">Life of the token; the bound key persists independently</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ID-JAG</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes for the bare assertion, though unusable by a party that cannot authenticate as the named client; None when bound to a hardware-backed client key</td>
+              <td class="text-left" rowspan="1" colspan="1">No; obtained and exchanged by the client with no user gesture after the initial sign-in</td>
+              <td class="text-left" rowspan="1" colspan="1">Any holder of the assertion that can authenticate as the named client</td>
+              <td class="text-left" rowspan="1" colspan="1">Life of the assertion; intended to be exchanged promptly rather than cached</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
@@ -2602,6 +2648,12 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">As for a bearer token, and additionally binds the client proof-of-possession key into the token</td>
             </tr>
             <tr>
+              <td class="text-left" rowspan="1" colspan="1">ID-JAG</td>
+              <td class="text-left" rowspan="1" colspan="1">Inherits the assurance of the identity provider authentication behind the ID token or SAML assertion exchanged for it</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuance is gated by a prior ID token or SAML assertion presented in token exchange, and by identity provider policy for the client and resource application</td>
+              <td class="text-left" rowspan="1" colspan="1">The identity provider binds subject, requesting client, audience and scope into the signed grant at issuance</td>
+            </tr>
+            <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
               <td class="text-left" rowspan="1" colspan="1">Inherits the assurance of the session that enrolled it</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; enrollment is gated by a pre-existing credential</td>
@@ -2715,6 +2767,12 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Deployment policy; financial-grade profiles require sender-constrained tokens</td>
             </tr>
             <tr>
+              <td class="text-left" rowspan="1" colspan="1">ID-JAG</td>
+              <td class="text-left" rowspan="1" colspan="1">JWT profile, <code>typ</code> value and signing algorithms fixed by the ID-JAG specification</td>
+              <td class="text-left" rowspan="1" colspan="1">Short expiry recommended; clients are directed to request a new grant rather than cache one</td>
+              <td class="text-left" rowspan="1" colspan="1">Deployment policy; the enterprise identity provider governs which clients may obtain grants for which resource applications</td>
+            </tr>
+            <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
               <td class="text-left" rowspan="1" colspan="1">HMAC algorithm and code length fixed by the HOTP specification</td>
               <td class="text-left" rowspan="1" colspan="1">Seed rotation on re-enrollment; counter resynchronization</td>
@@ -2805,6 +2863,10 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Sender-constrained access token</td>
               <td class="text-left" rowspan="1" colspan="1">Issuer-driven; a new token is requested and bound to a current key. Loss of the bound key requires a new key and a new token</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ID-JAG</td>
+              <td class="text-left" rowspan="1" colspan="1">Issuer-driven; a new grant is requested from the identity provider by token exchange. The grant itself is never recovered</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
