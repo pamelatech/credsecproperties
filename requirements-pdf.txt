@@ -1,0 +1,17 @@
+# Optional Python dependency for building the rich, datatracker-style PDF
+# (hyperlinks, bookmarks, real fonts) via `make pdf`.
+#
+# Deliberately NOT named requirements.txt. lib/deps.mk installs a file of that
+# exact name automatically, including in CI, and xml2rfc imports weasyprint's
+# FFI layer at module load whenever weasyprint is present. Where the system
+# lacks pango, that import fails and xml2rfc will not start at all, breaking
+# the txt and html builds too, not merely the PDF.
+#
+# To build the PDF locally, install this yourself and ensure pango and cairo
+# are present:
+#
+#     pip install -r requirements-pdf.txt
+#     # macOS: brew install pango
+#     # Debian/Ubuntu: apt-get install libpango-1.0-0 libpangoft2-1.0-0
+#
+weasyprint
