@@ -156,12 +156,12 @@ informative:
 
 --- abstract
 
-This document defines a set of properties which explain and differentiate unique security characteristics of an authentication method.
+This document defines a set of properties that explain and differentiate the security characteristics of a credential.
 
 --- middle
 
 # Introduction
-Every credential used to identify, authenticate, or otherwise validate a subject is different, and yet there is no specific vocabulary that describes exactly what a given credential should be expected to do, or why exactly it can be called "secure".  To address this shortcoming, this document describes categories of secure credential management and within defines _exact_ labels to describe the intended operation of a given credential.  These labels are intended for colloquial use and designed whenever possible to be accessible and intuitive for laypeople. The specification is scoped only to a credential in its common and expected use; properties for secure administration of credentials are not part of this set. Negative uses (attacks, vulnerabilities) are also not in scope.
+A credential is a set of data used to validate, confirm, or establish one or more claims about a named entity. Many diverse types of credential may be used to identify, authenticate, or otherwise validate a subject, and yet there is no specific vocabulary that describes exactly what a given credential should be expected to do, or why exactly it can be called "secure".  To address this shortcoming, this document describes categories of secure credential management and defines _exact_ labels to describe the intended operation of a given credential.  These labels are intended for colloquial use and designed whenever possible to be accessible and intuitive for laypeople. The specification is scoped only to a credential in its common and expected use; properties for secure administration of credentials are not part of this set. Negative uses (attacks, vulnerabilities) are also not in scope.
 
 # Credential Management Security Classes
 Properties are organized into areas of scrutiny, with each class containing the minimum set of properties possible to satisfy differences that have clear security value. The property must have a security benefit that is inherent to the credential type.
@@ -178,7 +178,7 @@ Substantiation describes credentials containing mechanisms for authoritative sta
 Dynamism describes a credential whose stored and active forms are different. Credentials with no dynamism (or dynamic genarativity) such as passwords exibit no difference between the stored (in memory, in a password manager, etc.) and the credential sent to the verifier. Dynamic generatvity indicates that some function is used to operate on the stored credential such that what is sent over the wire is different than what is stored (e.g. a challenge response protocol like FIDO {{WEBAUTHN}}).  Credentials that do not exhibit dynamism, such as shared secrets, usually exhibit replayability and are definitionally not able to be contained.
 
 ### Identifier Binding
-The primary content of a credential is cryptographically bound to an identifier. Examples of credentials that include bound identifiers include SAML assertions, JSON Web Tokens (JWTs) {{RFC7519}}, X.509 certificates, ISO 18013 mobile driving licence objects {{ISO18013-5}} and verifiable credentials {{VC-DATA-MODEL}}
+The principal content of a credential is cryptographically bound to an identifier. Examples of credentials that include bound identifiers include SAML assertions, JSON Web Tokens (JWTs) {{RFC7519}}, X.509 certificates, ISO 18013 mobile driving licence objects {{ISO18013-5}} and verifiable credentials {{VC-DATA-MODEL}}
 
 ### Tamper Proofness
 A mechanism for credential integrity is built into the credential ensuring that the data within the credential is verifiably unchanged by external parties.
@@ -193,7 +193,7 @@ A mechanism that specifies which destination consumers of the credential are val
 A credential becomes invalid outside of a specified time boundary.  An example would be a SAML assertion or a TOTP {{RFC6238}}.
 
 ### Selective Disclosure {#selective-disclosure}
-A mechanism by which some or all of the contents within a credential can be made available or unavailable under circumstances determined at presentation time. Values can be: none, per-claim, or predicate.
+A credential is capable of selective disclosure if some or all of the contents within a credential can be made available or unavailable under circumstances determined at presentation time. Values can be: none, per-claim, or predicate.
 
 * None: the credential is presented whole, or not at all.
 * Per-claim: individual claims can be revealed or withheld at presentation time. The mechanism may be a salted hash over each claim, as in an SD-JWT {{RFC9901}} or an ISO mdoc, or a zero-knowledge proof over the issuer's signature, as in a credential signed with the BBS signature scheme {{I-D.irtf-cfrg-bbs-signatures}}.
@@ -204,8 +204,8 @@ Selective disclosure describes what a presentation reveals. Whether presentation
 ## Credential Presentation
 Credential reuse properties describe ways in which the use of a credential is functionally restricted.
 
-### Validity Count
-A credential becomes invalid after a specified number of successful presentations. An example would be a temporary password that can only be used 5 times, or a one-time password.
+### Usage Count Limit
+A credential is usage count limited if it becomes invalid after a specified number of successful presentations by a legitimate presenter. An example would be a temporary password that can only be used 5 times, or a one-time password.
 
 ### Replayability
 Credentials are replayable when they can be captured by an adversary and represented to an authentication service resulting in successful authentication. Credentials that are presented directly, such as shared secrets (passwords) or bearer tokens, are the canonical example of replayable credentials.  Challenge response protocols are considered non-replayable.
@@ -301,7 +301,7 @@ Recoverability describes remediation capabilities that enable or re-enable acces
 
 {::boilerplate bcp14-tagged}
 
-TODO define two parts of credential (secret, generated)
+**Credential:** Information or a mechanism used by a subject to prove a claim to a verifier. Depending on the credential type, it may include a stored secret or key, a value generated from that secret or key for presentation, or an assertion issued by another party. The stored and presented forms may be identical or different, as described by {{dynamism}}.
 
 # Security Considerations
 
