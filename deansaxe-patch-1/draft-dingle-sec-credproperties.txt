@@ -5,8 +5,8 @@
 Network Working Group                                          P. Dingle
 Internet-Draft                                                 Microsoft
 Intended status: Informational                                D. H. Saxe
-Expires: 10 May 2027                     Full Frontal Nerdity Industries
-                                                         6 November 2026
+Expires: 14 May 2027                     Full Frontal Nerdity Industries
+                                                        10 November 2026
 
 
                Credential Management Security properties
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 May 2027.
+   This Internet-Draft will expire on 14 May 2027.
 
 Copyright Notice
 
@@ -509,9 +509,9 @@ Table of Contents
    [I-D.ietf-oauth-sd-jwt-vc]
               Terbu, O., Fett, D., and B. Campbell, "SD-JWT-based
               Verifiable Digital Credentials (SD-JWT VC)", Work in
-              Progress, Internet-Draft, draft-ietf-oauth-sd-jwt-vc-25, 5
+              Progress, Internet-Draft, draft-ietf-oauth-sd-jwt-vc-26, 6
               November 2026, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-oauth-sd-jwt-vc-25>.
+              draft-ietf-oauth-sd-jwt-vc-26>.
 
    [I-D.ietf-oauth-transaction-tokens]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
@@ -1563,9 +1563,10 @@ A.6.  Credential Recovery
 Acknowledgments
 
    The authors would like to acknowledge the following individuals for
-   their thoughful feedback: George Fletcher, Andrew Hughes, Justin
-   Richer, and the attendees of the Internet Identity Workshop 42 and
-   OAuth Security Workshop 2025.
+   their thoughtful feedback: George Fletcher, Elizabeth Garber, Ian
+   Glazer, Andrew Hughes, Justin Richer, Jonathan Sander, Nick Steele,
+   and the attendees of the Internet Identity Workshop 42, OAuth
+   Security Workshop 2025, and Authenticate 2026.
 
 Authors' Addresses
 
