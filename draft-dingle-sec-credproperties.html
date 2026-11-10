@@ -1164,7 +1164,7 @@ svg {
                     <p id="section-toc.1-1.3.2.1.2.2.1"><a href="#section-3.1.2" class="auto internal xref">3.1.2</a>.  <a href="#name-dynamism" class="internal xref">Dynamism</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.3">
-                    <p id="section-toc.1-1.3.2.1.2.3.1"><a href="#section-3.1.3" class="auto internal xref">3.1.3</a>.  <a href="#name-identifier-binding" class="internal xref">Identifier Binding</a></p>
+                    <p id="section-toc.1-1.3.2.1.2.3.1"><a href="#section-3.1.3" class="auto internal xref">3.1.3</a>.  <a href="#name-bindability" class="internal xref">Bindability</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.4">
                     <p id="section-toc.1-1.3.2.1.2.4.1"><a href="#section-3.1.4" class="auto internal xref">3.1.4</a>.  <a href="#name-tamper-proofness" class="internal xref">Tamper Proofness</a></p>
@@ -1359,12 +1359,12 @@ svg {
 <p id="section-3.1.2-1">Dynamism describes a credential whose inactive (stored or at-rest) and active forms are different. Credentials with no dynamism (or dynamic generativity) such as passwords exhibit no difference between the stored value (in memory, in a password manager, etc.) and the credential sent to the verifier. Dynamic generativity indicates that some function is used to operate on the stored credential such that what is sent over the wire is different than what is stored (e.g. a challenge response protocol like FIDO <span>[<a href="#WEBAUTHN" class="cite xref">WEBAUTHN</a>]</span>).  Credentials that do not exhibit dynamism, such as shared secrets, usually exhibit replayability and are definitionally not able to be contained (see <a href="#credential-containment" class="auto internal xref">Section 3.3</a>).<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="identifier-binding">
+<div id="bindability">
 <section id="section-3.1.3">
-          <h4 id="name-identifier-binding">
-<a href="#section-3.1.3" class="section-number selfRef">3.1.3. </a><a href="#name-identifier-binding" class="section-name selfRef">Identifier Binding</a>
+          <h4 id="name-bindability">
+<a href="#section-3.1.3" class="section-number selfRef">3.1.3. </a><a href="#name-bindability" class="section-name selfRef">Bindability</a>
           </h4>
-<p id="section-3.1.3-1">The principal content of a credential is cryptographically bound to an identifier. Examples of credentials that include bound identifiers include SAML assertions, JSON Web Tokens (JWTs) <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>, X.509 certificates, ISO 18013 mobile driving licence objects <span>[<a href="#ISO18013-5" class="cite xref">ISO18013-5</a>]</span> and verifiable credentials <span>[<a href="#VC-DATA-MODEL" class="cite xref">VC-DATA-MODEL</a>]</span><a href="#section-3.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.3-1">Bindability describes whether a credential or its presentation can provide verifiable evidence of a relationship between the credential or its claims and one or more entities or contexts. These relationships can involve an issuer, subject, audience, communication channel, or device, and can be established or evaluated during issuance or presentation. When a credential is constructed to be bindable, a receiver of a credential can validate each present binding to mitigate potential threat vectors.<a href="#section-3.1.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="tamper-proofness">
@@ -1951,7 +1951,7 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <th class="text-left" rowspan="1" colspan="1">Credential Type</th>
               <th class="text-left" rowspan="1" colspan="1">Substantiation</th>
               <th class="text-left" rowspan="1" colspan="1">Dynamism</th>
-              <th class="text-left" rowspan="1" colspan="1">Identifier Binding</th>
+              <th class="text-left" rowspan="1" colspan="1">Bindability</th>
               <th class="text-left" rowspan="1" colspan="1">Tamper Proofness</th>
             </tr>
           </thead>
@@ -1960,36 +1960,35 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Password / API key</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">None; the stored and presented forms are identical</td>
-              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">No; the value alone proves no relationship to an entity or context</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Synced passkey</td>
               <td class="text-left" rowspan="1" colspan="1">No; attestation is typically not conveyed</td>
               <td class="text-left" rowspan="1" colspan="1">Dynamic; challenge-response</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes; credential ID and user handle bound to the key pair</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; the signed assertion proves possession of a registered key for the relying party</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; signed assertion</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Device-bound passkey</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; attestation statement conveys authenticator provenance if requested &amp; validated by the RP</td>
               <td class="text-left" rowspan="1" colspan="1">Dynamic; challenge-response</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; the signed assertion proves possession of the registered authenticator key for the relying party</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; signed assertion</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">SPIFFE X.509-SVID</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; CA-signed after workload attestation</td>
               <td class="text-left" rowspan="1" colspan="1">Dynamic; the private key is never transmitted</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes; SPIFFE ID in the SAN URI</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuer and SPIFFE subject are represented in the certificate, with key possession proven in TLS</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; CA signature</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">SPIFFE JWT-SVID</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; signed by the trust domain authority</td>
               <td class="text-left" rowspan="1" colspan="1">None; presented verbatim as a bearer token</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes; SPIFFE ID in <code>sub</code>
-</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuer, SPIFFE subject in <code>sub</code>, and audience are verifiable</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; JWS signature <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>
 </td>
             </tr>
@@ -1997,70 +1996,63 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">mTLS certificate</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; CA-signed</td>
               <td class="text-left" rowspan="1" colspan="1">Dynamic; the private key is never transmitted</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes; subject DN or SAN</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuer and subject are represented in the certificate, with key possession proven in TLS</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; CA signature</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">OAuth bearer access token</td>
               <td class="text-left" rowspan="1" colspan="1">Yes when the token is a JWT signed by the authorization server; No for an opaque token, which the resource server validates by introspection</td>
               <td class="text-left" rowspan="1" colspan="1">None; presented verbatim</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes for a JWT, which carries subject and client identifiers; established by introspection for an opaque token</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuer, subject, and client relationships are carried by a JWT or established by introspection for an opaque token</td>
               <td class="text-left" rowspan="1" colspan="1">Yes for a signed JWT; for an opaque token integrity rests on the issuer datastore rather than on the credential</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Sender-constrained access token</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; issuer-signed</td>
               <td class="text-left" rowspan="1" colspan="1">Dynamic; the token is static but each presentation requires a freshly signed proof of possession or the bound TLS client certificate</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes; a confirmation claim binds the token to the client key alongside the subject</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuer and subject are asserted by the token, and proof of possession binds the presentation to the client key</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; signed by the authorization server</td>
-            </tr>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">ID-JAG</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes; signed by the identity provider</td>
-              <td class="text-left" rowspan="1" colspan="1">None; presented verbatim as an assertion grant</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes; <code>sub</code> names the user and <code>client_id</code> the requesting client</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes; JWS signature</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">Dynamic; counter-based derivation from the stored seed</td>
-              <td class="text-left" rowspan="1" colspan="1">No; the code carries no identifier, binding is by enrollment record</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; the verifier associates the shared seed with an account during enrollment and verifies codes against it</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">TOTP</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">Dynamic; time-based derivation from the stored seed</td>
-              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; the verifier associates the shared seed with an account during enrollment and verifies codes against it</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">SMS OTP</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">None; the verifier-generated value is presented verbatim</td>
-              <td class="text-left" rowspan="1" colspan="1">No; bound to a phone number by enrollment record</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; the verifier associates the destination phone number with an account and delivers the code to that number</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">SD-JWT VC</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; issuer-signed</td>
               <td class="text-left" rowspan="1" colspan="1">None for the issuer-signed JWT; Dynamic when Key Binding is used</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes; holder key in <code>cnf</code> when Key Binding is used</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuer and claims are signed, with an optional holder key in <code>cnf</code> when Key Binding is used</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; JWS signature over salted disclosure digests</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">ISO mdoc</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; issuer-signed Mobile Security Object</td>
               <td class="text-left" rowspan="1" colspan="1">Dynamic; device signature or MAC over the session transcript</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes; DeviceKey bound in the MSO</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuer claims are signed and the DeviceKey is bound in the MSO</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; per-data-element digests in the MSO</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">BBS verifiable credential</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; issuer-signed, though the signature is proven rather than shown</td>
               <td class="text-left" rowspan="1" colspan="1">Dynamic; each presentation is a freshly derived proof, never the stored signature</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes; a holder secret can be bound at issuance without being revealed at presentation, termed anonymous holder binding <span>[<a href="#VC-DI-BBS" class="cite xref">VC-DI-BBS</a>]</span>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuer claims are proven, and a holder secret can be bound at issuance without being revealed at presentation, termed anonymous holder binding <span>[<a href="#VC-DI-BBS" class="cite xref">VC-DI-BBS</a>]</span>
 </td>
               <td class="text-left" rowspan="1" colspan="1">Yes; the proof verifies against the issuer's public key and fails if any disclosed claim is altered</td>
             </tr>
@@ -2068,7 +2060,7 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">DBSC</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">Mixed; the session cookie is static, the refresh proof is challenge-response</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes; session identifier bound to the device key</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; the session identifier and refresh proof are bound to the device key</td>
               <td class="text-left" rowspan="1" colspan="1">No for the cookie; Yes for the signed refresh proof</td>
             </tr>
           </tbody>

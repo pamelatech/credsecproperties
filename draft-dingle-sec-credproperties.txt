@@ -69,7 +69,7 @@ Table of Contents
      3.1.  Credential Construction Properties
        3.1.1.  Substantiation
        3.1.2.  Dynamism
-       3.1.3.  Identifier Binding
+       3.1.3.  Bindability
        3.1.4.  Tamper Proofness
        3.1.5.  Chainability
        3.1.6.  Audience Restriction
@@ -163,13 +163,16 @@ Table of Contents
    replayability and are definitionally not able to be contained (see
    Section 3.3).
 
-3.1.3.  Identifier Binding
+3.1.3.  Bindability
 
-   The principal content of a credential is cryptographically bound to
-   an identifier.  Examples of credentials that include bound
-   identifiers include SAML assertions, JSON Web Tokens (JWTs)
-   [RFC7519], X.509 certificates, ISO 18013 mobile driving licence
-   objects [ISO18013-5] and verifiable credentials [VC-DATA-MODEL]
+   Bindability describes whether a credential or its presentation can
+   provide verifiable evidence of a relationship between the credential
+   or its claims and one or more entities or contexts.  These
+   relationships can involve an issuer, subject, audience, communication
+   channel, or device, and can be established or evaluated during
+   issuance or presentation.  When a credential is constructed to be
+   bindable, a receiver of a credential can validate each present
+   binding to mitigate potential threat vectors.
 
 3.1.4.  Tamper Proofness
 
@@ -872,135 +875,164 @@ A.1.  Credential Construction
    protects its content.
 
    +===========+==============+============+=============+=============+
-   |Credential |Substantiation|Dynamism    |Identifier   |Tamper       |
-   |Type       |              |            |Binding      |Proofness    |
+   |Credential |Substantiation|Dynamism    |Bindability  |Tamper       |
+   |Type       |              |            |             |Proofness    |
    +===========+==============+============+=============+=============+
-   |Password / |No            |None; the   |No           |No           |
-   |API key    |              |stored and  |             |             |
-   |           |              |presented   |             |             |
-   |           |              |forms are   |             |             |
-   |           |              |identical   |             |             |
+   |Password / |No            |None; the   |No; the value|No           |
+   |API key    |              |stored and  |alone proves |             |
+   |           |              |presented   |no           |             |
+   |           |              |forms are   |relationship |             |
+   |           |              |identical   |to an entity |             |
+   |           |              |            |or context   |             |
    +-----------+--------------+------------+-------------+-------------+
-   |Synced     |No;           |Dynamic;    |Yes;         |Yes; signed  |
-   |passkey    |attestation is|challenge-  |credential ID|assertion    |
-   |           |typically not |response    |and user     |             |
-   |           |conveyed      |            |handle bound |             |
-   |           |              |            |to the key   |             |
-   |           |              |            |pair         |             |
+   |Synced     |No;           |Dynamic;    |Yes; the     |Yes; signed  |
+   |passkey    |attestation is|challenge-  |signed       |assertion    |
+   |           |typically not |response    |assertion    |             |
+   |           |conveyed      |            |proves       |             |
+   |           |              |            |possession of|             |
+   |           |              |            |a registered |             |
+   |           |              |            |key for the  |             |
+   |           |              |            |relying party|             |
    +-----------+--------------+------------+-------------+-------------+
-   |Device-    |Yes;          |Dynamic;    |Yes          |Yes; signed  |
-   |bound      |attestation   |challenge-  |             |assertion    |
-   |passkey    |statement     |response    |             |             |
-   |           |conveys       |            |             |             |
-   |           |authenticator |            |             |             |
-   |           |provenance if |            |             |             |
-   |           |requested &   |            |             |             |
-   |           |validated by  |            |             |             |
-   |           |the RP        |            |             |             |
+   |Device-    |Yes;          |Dynamic;    |Yes; the     |Yes; signed  |
+   |bound      |attestation   |challenge-  |signed       |assertion    |
+   |passkey    |statement     |response    |assertion    |             |
+   |           |conveys       |            |proves       |             |
+   |           |authenticator |            |possession of|             |
+   |           |provenance if |            |the          |             |
+   |           |requested &   |            |registered   |             |
+   |           |validated by  |            |authenticator|             |
+   |           |the RP        |            |key for the  |             |
+   |           |              |            |relying party|             |
    +-----------+--------------+------------+-------------+-------------+
-   |SPIFFE     |Yes; CA-signed|Dynamic; the|Yes; SPIFFE  |Yes; CA      |
-   |X.509-SVID |after workload|private key |ID in the SAN|signature    |
-   |           |attestation   |is never    |URI          |             |
-   |           |              |transmitted |             |             |
+   |SPIFFE     |Yes; CA-signed|Dynamic; the|Yes; issuer  |Yes; CA      |
+   |X.509-SVID |after workload|private key |and SPIFFE   |signature    |
+   |           |attestation   |is never    |subject are  |             |
+   |           |              |transmitted |represented  |             |
+   |           |              |            |in the       |             |
+   |           |              |            |certificate, |             |
+   |           |              |            |with key     |             |
+   |           |              |            |possession   |             |
+   |           |              |            |proven in TLS|             |
    +-----------+--------------+------------+-------------+-------------+
-   |SPIFFE JWT-|Yes; signed by|None;       |Yes; SPIFFE  |Yes; JWS     |
-   |SVID       |the trust     |presented   |ID in sub    |signature    |
-   |           |domain        |verbatim as |             |[RFC7515]    |
-   |           |authority     |a bearer    |             |             |
-   |           |              |token       |             |             |
+   |SPIFFE JWT-|Yes; signed by|None;       |Yes; issuer, |Yes; JWS     |
+   |SVID       |the trust     |presented   |SPIFFE       |signature    |
+   |           |domain        |verbatim as |subject in   |[RFC7515]    |
+   |           |authority     |a bearer    |sub, and     |             |
+   |           |              |token       |audience are |             |
+   |           |              |            |verifiable   |             |
    +-----------+--------------+------------+-------------+-------------+
-   |mTLS       |Yes; CA-signed|Dynamic; the|Yes; subject |Yes; CA      |
-   |certificate|              |private key |DN or SAN    |signature    |
-   |           |              |is never    |             |             |
-   |           |              |transmitted |             |             |
+   |mTLS       |Yes; CA-signed|Dynamic; the|Yes; issuer  |Yes; CA      |
+   |certificate|              |private key |and subject  |signature    |
+   |           |              |is never    |are          |             |
+   |           |              |transmitted |represented  |             |
+   |           |              |            |in the       |             |
+   |           |              |            |certificate, |             |
+   |           |              |            |with key     |             |
+   |           |              |            |possession   |             |
+   |           |              |            |proven in TLS|             |
    +-----------+--------------+------------+-------------+-------------+
-   |OAuth      |Yes when the  |None;       |Yes for a    |Yes for a    |
-   |bearer     |token is a JWT|presented   |JWT, which   |signed JWT;  |
-   |access     |signed by the |verbatim    |carries      |for an opaque|
-   |token      |authorization |            |subject and  |token        |
-   |           |server; No for|            |client       |integrity    |
-   |           |an opaque     |            |identifiers; |rests on the |
+   |OAuth      |Yes when the  |None;       |Yes; issuer, |Yes for a    |
+   |bearer     |token is a JWT|presented   |subject, and |signed JWT;  |
+   |access     |signed by the |verbatim    |client       |for an opaque|
+   |token      |authorization |            |relationships|token        |
+   |           |server; No for|            |are carried  |integrity    |
+   |           |an opaque     |            |by a JWT or  |rests on the |
    |           |token, which  |            |established  |issuer       |
    |           |the resource  |            |by           |datastore    |
    |           |server        |            |introspection|rather than  |
    |           |validates by  |            |for an opaque|on the       |
    |           |introspection |            |token        |credential   |
    +-----------+--------------+------------+-------------+-------------+
-   |Sender-    |Yes; issuer-  |Dynamic; the|Yes; a       |Yes; signed  |
-   |constrained|signed        |token is    |confirmation |by the       |
-   |access     |              |static but  |claim binds  |authorization|
-   |token      |              |each        |the token to |server       |
-   |           |              |presentation|the client   |             |
-   |           |              |requires a  |key alongside|             |
-   |           |              |freshly     |the subject  |             |
-   |           |              |signed proof|             |             |
-   |           |              |of          |             |             |
-   |           |              |possession  |             |             |
+   |Sender-    |Yes; issuer-  |Dynamic; the|Yes; issuer  |Yes; signed  |
+   |constrained|signed        |token is    |and subject  |by the       |
+   |access     |              |static but  |are asserted |authorization|
+   |token      |              |each        |by the token,|server       |
+   |           |              |presentation|and proof of |             |
+   |           |              |requires a  |possession   |             |
+   |           |              |freshly     |binds the    |             |
+   |           |              |signed proof|presentation |             |
+   |           |              |of          |to the client|             |
+   |           |              |possession  |key          |             |
    |           |              |or the bound|             |             |
    |           |              |TLS client  |             |             |
    |           |              |certificate |             |             |
    +-----------+--------------+------------+-------------+-------------+
-   |ID-JAG     |Yes; signed by|None;       |Yes; sub     |Yes; JWS     |
-   |           |the identity  |presented   |names the    |signature    |
-   |           |provider      |verbatim as |user and     |             |
-   |           |              |an assertion|client_id the|             |
-   |           |              |grant       |requesting   |             |
-   |           |              |            |client       |             |
+   |HOTP       |No            |Dynamic;    |Yes; the     |No           |
+   |           |              |counter-    |verifier     |             |
+   |           |              |based       |associates   |             |
+   |           |              |derivation  |the shared   |             |
+   |           |              |from the    |seed with an |             |
+   |           |              |stored seed |account      |             |
+   |           |              |            |during       |             |
+   |           |              |            |enrollment   |             |
+   |           |              |            |and verifies |             |
+   |           |              |            |codes against|             |
+   |           |              |            |it           |             |
    +-----------+--------------+------------+-------------+-------------+
-   |HOTP       |No            |Dynamic;    |No; the code |No           |
-   |           |              |counter-    |carries no   |             |
-   |           |              |based       |identifier,  |             |
-   |           |              |derivation  |binding is by|             |
-   |           |              |from the    |enrollment   |             |
-   |           |              |stored seed |record       |             |
+   |TOTP       |No            |Dynamic;    |Yes; the     |No           |
+   |           |              |time-based  |verifier     |             |
+   |           |              |derivation  |associates   |             |
+   |           |              |from the    |the shared   |             |
+   |           |              |stored seed |seed with an |             |
+   |           |              |            |account      |             |
+   |           |              |            |during       |             |
+   |           |              |            |enrollment   |             |
+   |           |              |            |and verifies |             |
+   |           |              |            |codes against|             |
+   |           |              |            |it           |             |
    +-----------+--------------+------------+-------------+-------------+
-   |TOTP       |No            |Dynamic;    |No           |No           |
-   |           |              |time-based  |             |             |
-   |           |              |derivation  |             |             |
-   |           |              |from the    |             |             |
-   |           |              |stored seed |             |             |
+   |SMS OTP    |No            |None; the   |Yes; the     |No           |
+   |           |              |verifier-   |verifier     |             |
+   |           |              |generated   |associates   |             |
+   |           |              |value is    |the          |             |
+   |           |              |presented   |destination  |             |
+   |           |              |verbatim    |phone number |             |
+   |           |              |            |with an      |             |
+   |           |              |            |account and  |             |
+   |           |              |            |delivers the |             |
+   |           |              |            |code to that |             |
+   |           |              |            |number       |             |
    +-----------+--------------+------------+-------------+-------------+
-   |SMS OTP    |No            |None; the   |No; bound to |No           |
-   |           |              |verifier-   |a phone      |             |
-   |           |              |generated   |number by    |             |
-   |           |              |value is    |enrollment   |             |
-   |           |              |presented   |record       |             |
-   |           |              |verbatim    |             |             |
+   |SD-JWT VC  |Yes; issuer-  |None for the|Yes; issuer  |Yes; JWS     |
+   |           |signed        |issuer-     |and claims   |signature    |
+   |           |              |signed JWT; |are signed,  |over salted  |
+   |           |              |Dynamic when|with an      |disclosure   |
+   |           |              |Key Binding |optional     |digests      |
+   |           |              |is used     |holder key in|             |
+   |           |              |            |cnf when Key |             |
+   |           |              |            |Binding is   |             |
+   |           |              |            |used         |             |
    +-----------+--------------+------------+-------------+-------------+
-   |SD-JWT VC  |Yes; issuer-  |None for the|Yes; holder  |Yes; JWS     |
-   |           |signed        |issuer-     |key in cnf   |signature    |
-   |           |              |signed JWT; |when Key     |over salted  |
-   |           |              |Dynamic when|Binding is   |disclosure   |
-   |           |              |Key Binding |used         |digests      |
-   |           |              |is used     |             |             |
+   |ISO mdoc   |Yes; issuer-  |Dynamic;    |Yes; issuer  |Yes; per-    |
+   |           |signed Mobile |device      |claims are   |data-element |
+   |           |Security      |signature or|signed and   |digests in   |
+   |           |Object        |MAC over the|the DeviceKey|the MSO      |
+   |           |              |session     |is bound in  |             |
+   |           |              |transcript  |the MSO      |             |
    +-----------+--------------+------------+-------------+-------------+
-   |ISO mdoc   |Yes; issuer-  |Dynamic;    |Yes;         |Yes; per-    |
-   |           |signed Mobile |device      |DeviceKey    |data-element |
-   |           |Security      |signature or|bound in the |digests in   |
-   |           |Object        |MAC over the|MSO          |the MSO      |
-   |           |              |session     |             |             |
-   |           |              |transcript  |             |             |
-   +-----------+--------------+------------+-------------+-------------+
-   |BBS        |Yes; issuer-  |Dynamic;    |Yes; a holder|Yes; the     |
-   |verifiable |signed, though|each        |secret can be|proof        |
-   |credential |the signature |presentation|bound at     |verifies     |
-   |           |is proven     |is a freshly|issuance     |against the  |
-   |           |rather than   |derived     |without being|issuer's     |
-   |           |shown         |proof, never|revealed at  |public key   |
-   |           |              |the stored  |presentation,|and fails if |
-   |           |              |signature   |termed       |any disclosed|
-   |           |              |            |anonymous    |claim is     |
-   |           |              |            |holder       |altered      |
+   |BBS        |Yes; issuer-  |Dynamic;    |Yes; issuer  |Yes; the     |
+   |verifiable |signed, though|each        |claims are   |proof        |
+   |credential |the signature |presentation|proven, and a|verifies     |
+   |           |is proven     |is a freshly|holder secret|against the  |
+   |           |rather than   |derived     |can be bound |issuer's     |
+   |           |shown         |proof, never|at issuance  |public key   |
+   |           |              |the stored  |without being|and fails if |
+   |           |              |signature   |revealed at  |any disclosed|
+   |           |              |            |presentation,|claim is     |
+   |           |              |            |termed       |altered      |
+   |           |              |            |anonymous    |             |
+   |           |              |            |holder       |             |
    |           |              |            |binding      |             |
    |           |              |            |[VC-DI-BBS]  |             |
    +-----------+--------------+------------+-------------+-------------+
-   |DBSC       |No            |Mixed; the  |Yes; session |No for the   |
-   |           |              |session     |identifier   |cookie; Yes  |
-   |           |              |cookie is   |bound to the |for the      |
-   |           |              |static, the |device key   |signed       |
-   |           |              |refresh     |             |refresh proof|
-   |           |              |proof is    |             |             |
-   |           |              |challenge-  |             |             |
+   |DBSC       |No            |Mixed; the  |Yes; the     |No for the   |
+   |           |              |session     |session      |cookie; Yes  |
+   |           |              |cookie is   |identifier   |for the      |
+   |           |              |static, the |and refresh  |signed       |
+   |           |              |refresh     |proof are    |refresh proof|
+   |           |              |proof is    |bound to the |             |
+   |           |              |challenge-  |device key   |             |
    |           |              |response    |             |             |
    +-----------+--------------+------------+-------------+-------------+
 
