@@ -31,6 +31,7 @@ author:
     email: pamela.dingle@microsoft.com
  -
     fullname: Dean H. Saxe
+    organization: Full Frontal Nerdity Industries
     email: dean@thesax.es
 normative:
 
@@ -109,11 +110,12 @@ informative:
     seriesinfo:
       NIST: Special Publication 800-63B-4
   RFC6749:
-  I-D.ietf-oauth-v2-1:
   RFC6750:
   RFC7515:
   RFC8705:
   RFC9449:
+  RFC7523:
+  I-D.ietf-oauth-identity-assertion-authz-grant:
   I-D.ietf-oauth-sd-jwt-vc:
   CTAP:
     title: "Client to Authenticator Protocol (CTAP), Version 2.3"
@@ -156,18 +158,17 @@ informative:
 
 --- abstract
 
-This document defines a set of properties which explain and differentiate unique security characteristics of an authentication method.
+This document defines a set of properties that explain and differentiate the security characteristics of a credential.
 
 --- middle
 
 # Introduction
-Every credential used to identify, authenticate, or otherwise validate a subject is different, and yet there is no specific vocabulary that describes exactly what a given credential should be expected to do, or why exactly it can be called "secure".  To address this shortcoming, this document describes categories of secure credential management and within defines _exact_ labels to describe the intended operation of a given credential.  These labels are intended for colloquial use and designed whenever possible to be accessible and intuitive for laypeople. The specification is scoped only to a credential in its common and expected use; properties for secure administration of credentials are not part of this set. Negative uses (attacks, vulnerabilities) are also not in scope.
+A credential is a set of data used to validate, confirm, or establish one or more claims about a named entity. Many diverse types of credential may be used to identify, authenticate, or otherwise validate a subject, and yet there is no specific vocabulary that describes exactly what a given credential should be expected to do, or why exactly it can be called "secure".  To address this shortcoming, this document describes categories of secure credential management and defines _exact_ labels to describe the intended operation of a given credential.  These labels are intended for colloquial use and designed whenever possible to be accessible and intuitive for laypeople. The specification is scoped only to a credential in its common and expected use; properties for secure administration of credentials are not part of this set. Negative uses (attacks, vulnerabilities) are also not in scope.
 
 # Credential Management Security Classes
 Properties are organized into areas of scrutiny, with each class containing the minimum set of properties possible to satisfy differences that have clear security value. The property must have a security benefit that is inherent to the credential type.
 
-# Credential Management Security Properties
-
+# Credential Management Security {#credential-management-security}
 
 ## Credential Construction Properties
 
@@ -175,7 +176,7 @@ Properties are organized into areas of scrutiny, with each class containing the 
 Substantiation describes credentials containing mechanisms for authoritative statements that can be externally validated. Examples of substantiated credentials include attestations such as SAML assertions {{SAML}} or X.509 certificates {{RFC5280}}.
 
 ### Dynamism
-Dynamism describes a credential whose stored and active forms are different. Credentials with no dynamism (or dynamic genarativity) such as passwords exibit no difference between the stored (in memory, in a password manager, etc.) and the credential sent to the verifier. Dynamic generatvity indicates that some function is used to operate on the stored credential such that what is sent over the wire is different than what is stored (e.g. a challenge response protocol like FIDO {{WEBAUTHN}}).  Credentials that do not exhibit dynamism, such as shared secrets, usually exhibit replayability and are definitionally not able to be contained.
+Dynamism describes a credential whose inactive (stored or at-rest) and active forms are different. Credentials with no dynamism (or dynamic generativity) such as passwords exhibit no difference between the stored value (in memory, in a password manager, etc.) and the credential sent to the verifier. Dynamic generativity indicates that some function is used to operate on the stored credential such that what is sent over the wire is different than what is stored (e.g. a challenge response protocol like FIDO {{WEBAUTHN}}).  Credentials that do not exhibit dynamism, such as shared secrets, usually exhibit replayability and are definitionally not able to be contained (see {{credential-containment}}).
 
 ### Bindability
 Bindability describes whether a credential or its presentation can provide verifiable evidence of a relationship between the credential or its claims and one or more entities or contexts. These relationships can involve an issuer, subject, audience, communication channel, or device, and can be established or evaluated during issuance or presentation. When a credential is constructed to be bindable, a receiver of a credential can validate each present binding to mitigate potential threat vectors.
@@ -187,13 +188,13 @@ A mechanism for credential integrity is built into the credential ensuring that 
 The credential is capable of including links to or content of other credentials.
 
 ### Audience Restriction
-A mechanism that specifies which destination consumers of the credential are valid.  Examples include `id_token` values {{OIDC-CORE}} or origin bindings of FIDO tokens.
+A mechanism that specifies which destination consumers of the credential are valid.  Examples include `id_token` values {{OIDC-CORE}} or origin bindings of FIDO tokens.  Consumers of the credential should be responsible for validating the audience restriction before using an audience-restricted credential.
 
 ### Validity Window
 A credential becomes invalid outside of a specified time boundary.  An example would be a SAML assertion or a TOTP {{RFC6238}}.
 
 ### Selective Disclosure {#selective-disclosure}
-A mechanism by which some or all of the contents within a credential can be made available or unavailable under circumstances determined at presentation time. Values can be: none, per-claim, or predicate.
+A credential is capable of selective disclosure if some or all of the contents within a credential can be made available or unavailable under circumstances determined at presentation time. Values can be: none, per-claim, or predicate.
 
 * None: the credential is presented whole, or not at all.
 * Per-claim: individual claims can be revealed or withheld at presentation time. The mechanism may be a salted hash over each claim, as in an SD-JWT {{RFC9901}} or an ISO mdoc, or a zero-knowledge proof over the issuer's signature, as in a credential signed with the BBS signature scheme {{I-D.irtf-cfrg-bbs-signatures}}.
@@ -202,10 +203,10 @@ A mechanism by which some or all of the contents within a credential can be made
 Selective disclosure describes what a presentation reveals. Whether presentations can be correlated with each other is a separate property, Unlinkability ({{unlinkability}}); a credential may selectively disclose and still be fully linkable.
 
 ## Credential Presentation
-Credential reuse properties describe ways in which the use of a credential is functionally restricted.
+Credential presentation properties describe ways in which the use of a credential is functionally restricted.
 
-### Validity Count
-A credential becomes invalid after a specified number of successful presentations. An example would be a temporary password that can only be used 5 times, or a one-time password.
+### Usage Count Limit
+A credential is usage count limited if it becomes invalid after a specified number of successful presentations by a legitimate presenter. An example would be a temporary password that can only be used 5 times, or a one-time password.
 
 ### Replayability
 Credentials are replayable when they can be captured by an adversary and represented to an authentication service resulting in successful authentication. Credentials that are presented directly, such as shared secrets (passwords) or bearer tokens, are the canonical example of replayable credentials.  Challenge response protocols are considered non-replayable.
@@ -240,7 +241,7 @@ Referential Identity Posture describes the nature of the relationship between a 
 
 Examples of delegated referential identity posture include on-behalf-of (OBO) token interactions {{RFC8693}}, where both the identity of the end user and client software are communicated. Token exchange draws the same distinction normatively: a delegated actor retains its own identity while acting as an agent for another party, whereas an impersonating actor gains the rights of the party it impersonates and is indistinguishable from it. Examples of impersonated referential identity posture might include privileged access management workflows, where an administrative process sets either the identifier or the credential (or both) based on a backing identity. Examples of a partitioned referential identity posture could include openclaw agents acting with separate accounts and email addresses but loosely affiliated to individuals. Examples of a chained referential identity posture include transaction tokens {{I-D.ietf-oauth-transaction-tokens}}, which preserve the identity of the original caller as a request traverses a call chain of workloads, and which require the chain of workloads that requested a token to be carried forward each time that token is replaced. Token exchange expresses the same structure directly through nested actor claims, where the outermost actor is the current party and each nested actor a prior one. Examples of a pseudonymous referential identity posture include a credential presented under a per-verifier pseudonym {{I-D.irtf-cfrg-bbs-per-verifier-linkability}}, where the issuer holds a backing identity that the pseudonym conceals from the verifier. Examples of an anonymous referential identity posture include a Privacy Pass token {{RFC9577}}, which proves that an issuer vouched for the holder without identifying the holder, and a BBS proof that discloses only non-identifying claims, where the issuer attests a fact about the holder that no party can trace back to an individual.
 
-## Credential Containment & Unlock
+## Credential Containment & Unlock {#credential-containment}
 Credential containment describes the at-rest state of a credential and its storage location(s). Unlock properties describe how the contained credential is made available for use at runtime and how the containment facility, if any, can play a security role in an observable way at operation time.
 
 ### Containment
@@ -262,7 +263,7 @@ A credential becomes available for an operation only when a local user gesture i
 A credential may be unlocked by different parties which defines the scope of which entities can unlock credential for use.  The owner of a credential is always expected to be able to unlock their own credential. Credentials on shared devices may be unlocked by all users sharing the device. Similarly, credentials in a shared enterprise vault may be unlocked by a vault administrator.  Unlock scope is related to an instance of a credential and is distinct from the Credential Management Security Properties.
 
 ### Unlock Persistence
-Credentials may be unlocked once with an activation factor (e.g. using a hardware security key), or the activation factor may be presented seconds to minutes before use (e.g. a credential vault remains unlocked for 5 minutes after use).
+Credentials may be unlocked once with an activation factor (e.g. entering a PIN or biometric to activate a hardware security key), or the activation factor may be presented seconds to minutes before use (e.g. a credential vault remains unlocked for 5 minutes after use, allowing presentation of credentials from the vault without further activation).
 
 ## Credential Enrollment
 Credential enrollment properties describe requirements required to be met before a credential is created.
@@ -293,15 +294,15 @@ Credential Recovery properties describe limitations of who can reset a credentia
 
 ### Recoverability
 Recoverability describes remediation capabilities that enable or re-enable access to a valid credential after loss or compromise. Values can be: issuer-driven, container-driven,or account-driven.
- * Issuer-driven: remediation is enabled by a direct party to the creation of the credential. Examples include credentials with multiple configured signing certificates, synced passkeys protected by a consumer trust layer, or hardware keys created with matching/derived seed values.
- * Container-driven: remediation enabled by a direct party to containment or unlock of the credential with pre-established administrative trust. Examples include PAM (privileged access management) systems or corporate password managers.
- * Account-driven: the credential cannot be restored, it can only be removed and replaced, often through a process that requires presentation of an unrelated alternate credential.
+* Issuer-driven: remediation is enabled by a direct party to the creation of the credential. Examples include credentials with multiple configured signing certificates, synced passkeys protected by a consumer trust layer, or hardware keys created with matching/derived seed values.
+* Container-driven: remediation enabled by a direct party to containment or unlock of the credential with pre-established administrative trust. Examples include PAM (privileged access management) systems or corporate password managers.
+* Account-driven: the credential cannot be restored, it can only be removed and replaced, often through a process that requires presentation of an unrelated alternate credential.
 
 # Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
 
-TODO define two parts of credential (secret, generated)
+**Credential:** Information or a mechanism used by a subject to prove a claim to a verifier. Depending on the credential type, it may include a stored secret or key, a value generated from that secret or key for presentation, or an assertion issued by another party. The stored and presented forms may be identical or different, as described by {{dynamism}}.
 
 # Security Considerations
 
@@ -315,7 +316,7 @@ This document has no IANA actions.
 
 # Applying the Properties to Common Credential Types
 
-This appendix illustrates how the properties defined in this document apply to a range of common credential types, to validate that the property set is expressive enough to differentiate them. Each class of properties defined in {{credential-management-security-properties}} is presented as a table whose rows are credential types and whose columns are the properties of that class.
+This appendix illustrates how the properties defined in this document apply to a range of common credential types, to validate that the property set is expressive enough to differentiate them. Each class of properties defined in {{credential-management-security}} is presented as a table whose rows are credential types and whose columns are the properties of that class.
 
 The credential types examined are:
 
@@ -325,8 +326,9 @@ The credential types examined are:
 - **SPIFFE X.509-SVID** — a workload identity issued as an X.509 certificate following attestation of the workload, presented via mutual TLS. See {{SPIFFE-X509-SVID}}.
 - **SPIFFE JWT-SVID** — the same workload identity expressed as a signed JWT and presented as a bearer token {{RFC6750}} to services that cannot terminate mutual TLS. See {{SPIFFE-JWT-SVID}}.
 - **mTLS certificate** — a client certificate issued by a Web PKI or private CA outside of any SPIFFE trust domain, presented during the TLS handshake.
-- **OAuth bearer access token** — an access token {{RFC6749}} presented to a resource server as a bearer credential, either as a signed JWT or as an opaque handle the resource server validates by introspection. OAuth 2.1 {{I-D.ietf-oauth-v2-1}} consolidates the OAuth 2.0 core and bearer token specifications and is intended to obsolete both.
-- **Sender-constrained access token** — the same access token bound to a client key, so that presentation additionally requires proof of possession of that key, whether by DPoP {{RFC9449}} or by mutual TLS certificate binding {{RFC8705}}.
+- **OAuth access token** — an access token {{RFC6749}} presented to a resource server, either as a signed JWT (bearer token) or as an opaque handle (reference token) the resource server validates by introspection.
+- **Sender-constrained access token** — the same access token bound to a client key, so that presentation additionally requires proof of possession of that key, whether by DPoP {{RFC9449}} or by mutual TLS certificate binding {{RFC8705}}.  By adding proof of possession, the token no longer displays the properties of bearer tokens, it is bound to the key holder.
+- **ID-JAG** — an Identity Assertion JWT Authorization Grant {{I-D.ietf-oauth-identity-assertion-authz-grant}}, a JWT issued by an enterprise identity provider when a client exchanges its ID token or SAML assertion for one, and presented by that client to a resource application's authorization server as a JWT authorization grant {{RFC7523}} to obtain an access token.
 - **HOTP** — an HMAC-based counter-derived one-time password.
 - **TOTP** — a time-derived one-time password.
 - **SMS OTP** — a one-time code generated by the verifier and delivered out of band over the public telephone network.
@@ -369,6 +371,7 @@ The following properties describe how a credential scopes and structures its con
 | mTLS certificate | Yes; X.509 chain | No; accepted by any relying party trusting the CA | Yes; typically months to years | None |
 | OAuth bearer access token | Yes; token exchange derives a token from a subject token and can record intermediate actors | Yes; the audience names the resource server | Yes; typically minutes to hours | None; scope constrains authorization rather than disclosure of credential content |
 | Sender-constrained access token | Yes; token exchange applies, with the bound key re-established for the derived token | Yes; the audience names the resource server | Yes; typically minutes to hours | None |
+| ID-JAG | Yes; derived by token exchange from an ID token or SAML assertion, itself exchanged for an access token, and may carry an `act` claim | Yes; `aud` names the resource application's authorization server | Yes; `exp`, with short lifetimes recommended | None; `scope` constrains the requested authorization rather than disclosure |
 | HOTP | No | No | No; valid until the counter advances | None |
 | TOTP | No | No | Yes; one time step plus drift tolerance | None |
 | SMS OTP | No | No | Yes; issuer-set, typically minutes | None |
@@ -389,6 +392,7 @@ The following properties describe how a credential scopes and structures its con
 | mTLS certificate | Unlimited within the validity window | Not replayable | Linkable; the certificate is presented verbatim at every handshake | Direct |
 | OAuth bearer access token | Unlimited within the validity window | Replayable; any party that captures the token can present it | Linkable; the same token is presented each time | Delegated when the token conveys both client and resource owner; Impersonated when it conveys only the resource owner |
 | Sender-constrained access token | Unlimited within the validity window | Not replayable; a captured token is unusable without the bound private key | Linkable; the token and the bound key are stable for the token lifetime | Delegated; the client is identified by its bound key alongside the resource owner |
+| ID-JAG | Unlimited within the validity window; the resource authorization server may enforce single use by tracking `jti` | Replayable within the validity window unless bound to a client key by a `cnf` claim; without binding, client authentication at the token endpoint is the only check against presentation by another party | Linkable; the issuer-signed JWT is presented verbatim, and `sub` is stable for a given resource authorization server | Delegated; the grant conveys both the user and the requesting client. Chained when an `act` claim records intermediate actors |
 | HOTP | One; the counter advances on acceptance | Bounded; single use, but the code remains valid until the counter advances | Linkable; the code carries no correlator but is presented against an enrolled account identifier | Direct |
 | TOTP | One per time step | Bounded; replayable within the time step and drift window | Linkable; presented against an enrolled account identifier | Direct |
 | SMS OTP | One | Bounded; replayable within the issuer's window, and interceptable in transit | Linkable; presented against an enrolled account identifier | Direct |
@@ -411,6 +415,7 @@ The following properties describe containment of the credential at rest.
 | mTLS certificate | Contained in an HSM or TPM; uncontained as a key file | Bound to the HSM or TPM when hardware-backed; unbounded as an exportable file or PKCS#12 | Proactive when hardware-backed; otherwise reactive |
 | OAuth bearer access token | Uncontained; a bearer string held in client memory, logs and intermediaries | Unbounded | Reactive; short lifetime, revocation and anomaly detection |
 | Sender-constrained access token | The token is uncontained but unusable alone; the bound private key is contained and may be hardware-backed | Bound to the client proof-of-possession key | Proactive; the resource server rejects any presentation lacking a valid proof of possession |
+| ID-JAG | Uncontained; a bearer assertion held in client memory until exchanged. The bound private key is contained when a `cnf` claim is used | Unbounded after issuance; bound to the client proof-of-possession key when sender-constrained | Reactive for the bare assertion; short lifetime and the client authentication check at the token endpoint. Proactive when sender-constrained |
 | HOTP | Contained in a hardware token; uncontained as a soft seed | Bound to the hardware token; unbounded as a soft seed that can be re-enrolled from the provisioning URI | Proactive for hardware tokens; otherwise none |
 | TOTP | Contained in a hardware token; uncontained as a soft seed | Bound to the hardware token; unbounded as a soft seed | Proactive for hardware tokens; otherwise none |
 | SMS OTP | Uncontained; delivered in clear text and readable from the notification surface | Bound to control of the phone number, not to a device | Reactive; carrier-side controls against SIM swap and port-out |
@@ -431,6 +436,7 @@ The following properties describe how a contained credential is released for use
 | mTLS certificate | None when hardware-bound; Yes when exportable | Optional; PIN on a smart card or HSM | The holder of the key store | Per-operation for smart cards; life of the process otherwise |
 | OAuth bearer access token | Yes; the token is usable by any bearer | No | Any holder of the token | Life of the token |
 | Sender-constrained access token | None unless the bound private key is transferred with the token | No; presentation is automated and requires no user gesture | The client that holds the bound private key | Life of the token; the bound key persists independently |
+| ID-JAG | Yes for the bare assertion, though unusable by a party that cannot authenticate as the named client; None when bound to a hardware-backed client key | No; obtained and exchanged by the client with no user gesture after the initial sign-in | Any holder of the assertion that can authenticate as the named client | Life of the assertion; intended to be exchanged promptly rather than cached |
 | HOTP | None for hardware tokens; Yes for soft seeds, which can be enrolled on multiple devices | Button press on some hardware tokens; otherwise No | The holder of the token or seed | N/A |
 | TOTP | None for hardware tokens; Yes for soft seeds | Typically No | The holder of the token or seed | N/A |
 | SMS OTP | Yes; the code can be read aloud or forwarded, which is the mechanism exploited by OTP phishing | No | Anyone with access to the device notification surface or the number | N/A |
@@ -451,6 +457,7 @@ The following properties describe how a contained credential is released for use
 | mTLS certificate | Varies by CA policy, from domain validation to in-person proofing | Often; CSR submission is gated by an existing credential | The CA binds the subject and SAN to the public key in the CSR |
 | OAuth bearer access token | Inherits the assurance of the authorization grant and of the resource owner authentication behind it | Yes; issuance is gated by an authorization grant, itself gated by a pre-existing credential | The authorization server binds the token to client, resource owner, scope and audience at issuance |
 | Sender-constrained access token | Inherits the assurance of the authorization grant and of the resource owner authentication behind it | Yes; issuance is gated by an authorization grant, itself gated by a pre-existing credential | As for a bearer token, and additionally binds the client proof-of-possession key into the token |
+| ID-JAG | Inherits the assurance of the identity provider authentication behind the ID token or SAML assertion exchanged for it | Yes; issuance is gated by a prior ID token or SAML assertion presented in token exchange, and by identity provider policy for the client and resource application | The identity provider binds subject, requesting client, audience and scope into the signed grant at issuance |
 | HOTP | Inherits the assurance of the session that enrolled it | Yes; enrollment is gated by a pre-existing credential | Seed shared between authenticator and verifier and recorded against the account |
 | TOTP | Inherits the assurance of the session that enrolled it | Yes; enrollment is gated by a pre-existing credential | Seed shared between authenticator and verifier and recorded against the account |
 | SMS OTP | Phone number possession only; no identity proofing | Yes; the number is registered during a vouched session | The verifier binds the phone number to the account record |
@@ -471,6 +478,7 @@ The following properties describe how a contained credential is released for use
 | mTLS certificate | {{CABF-BR}} for the Web PKI; internal policy otherwise | Maximum validity period; revocation via CRL or OCSP | CA/Browser Forum Baseline Requirements; PKI operator policy |
 | OAuth bearer access token | Format unconstrained by OAuth itself; the JWT profile applies where used | Short expiry; renewal and revocation controlled by the authorization server | Deployment policy; sector profiles may impose additional constraints |
 | Sender-constrained access token | Proof-of-possession mechanism fixed by the binding profile in use | Short expiry; the bound key rotates independently of token lifetime | Deployment policy; financial-grade profiles require sender-constrained tokens |
+| ID-JAG | JWT profile, `typ` value and signing algorithms fixed by the ID-JAG specification | Short expiry recommended; clients are directed to request a new grant rather than cache one | Deployment policy; the enterprise identity provider governs which clients may obtain grants for which resource applications |
 | HOTP | HMAC algorithm and code length fixed by the HOTP specification | Seed rotation on re-enrollment; counter resynchronization | NIST SP 800-63B; PCI DSS |
 | TOTP | Algorithm, time step, and code length fixed by the TOTP specification | Seed rotation on re-enrollment; time-step policy | NIST SP 800-63B; PCI DSS |
 | SMS OTP | Code length and character set set by the verifier | Short expiry; per-attempt rate limiting | NIST SP 800-63B, which constrains out-of-band authenticators using the public telephone network; PCI DSS |
@@ -491,6 +499,7 @@ The following properties describe how a contained credential is released for use
 | mTLS certificate | Issuer-driven where the CA supports key escrow or re-issuance; Account-driven otherwise, by revoking and re-enrolling |
 | OAuth bearer access token | Issuer-driven; a new token is requested with a refresh token or a fresh authorization grant. The token itself is never recovered |
 | Sender-constrained access token | Issuer-driven; a new token is requested and bound to a current key. Loss of the bound key requires a new key and a new token |
+| ID-JAG | Issuer-driven; a new grant is requested from the identity provider by token exchange. The grant itself is never recovered |
 | HOTP | Container-driven where an authenticator application backup restores the seed; Account-driven otherwise, by enrolling a new seed |
 | TOTP | Container-driven where an authenticator application backup restores the seed; Account-driven otherwise, by enrolling a new seed |
 | SMS OTP | Account-driven; recovery consists of regaining control of the phone number, typically through the carrier |
@@ -502,4 +511,4 @@ The following properties describe how a contained credential is released for use
 # Acknowledgments
 {:numbered="false"}
 
-The authors would like to acknowledge the following individuals for their thoughful feedback: George Fletcher, Andrew Hughes, Justin Richer, and the attendees of the Internet Identity Workshop 42 and OAuth Security Workshop 2025.
+The authors would like to acknowledge the following individuals for their thoughtful feedback: George Fletcher, Elizabeth Garber, Ian Glazer, Andrew Hughes, Justin Richer, Jonathan Sander, Nick Steele, and the attendees of the Internet Identity Workshop 42, OAuth Security Workshop 2025, and Authenticate 2026.
