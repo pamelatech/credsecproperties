@@ -8,7 +8,7 @@
 <meta content="Pamela Dingle" name="author">
 <meta content="Dean H. Saxe" name="author">
 <meta content="
-       This document defines a set of properties which explain and differentiate unique security characteristics of an authentication method. 
+       This document defines a set of properties that explain and differentiate the security characteristics of a credential. 
     " name="description">
 <meta content="xml2rfc 3.35.0" name="generator">
 <meta content="credentials" name="keyword">
@@ -1076,6 +1076,7 @@ svg {
 </div>
 <div class="author">
       <div class="author-name">D. H. Saxe</div>
+<div class="org">Full Frontal Nerdity Industries</div>
 </div>
 </dd>
 </dl>
@@ -1083,7 +1084,7 @@ svg {
 <h1 id="title">Credential Management Security properties</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document defines a set of properties which explain and differentiate unique security characteristics of an authentication method.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document defines a set of properties that explain and differentiate the security characteristics of a credential.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1151,7 +1152,7 @@ svg {
             <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-credential-management-secur" class="internal xref">Credential Management Security Classes</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-credential-management-securi" class="internal xref">Credential Management Security Properties</a></p>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-credential-management-securi" class="internal xref">Credential Management Security</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
                 <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-credential-construction-pro" class="internal xref">Credential Construction Properties</a></p>
@@ -1186,7 +1187,7 @@ svg {
                 <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-credential-presentation" class="internal xref">Credential Presentation</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2.2.1">
-                    <p id="section-toc.1-1.3.2.2.2.1.1"><a href="#section-3.2.1" class="auto internal xref">3.2.1</a>.  <a href="#name-validity-count" class="internal xref">Validity Count</a></p>
+                    <p id="section-toc.1-1.3.2.2.2.1.1"><a href="#section-3.2.1" class="auto internal xref">3.2.1</a>.  <a href="#name-usage-count-limit" class="internal xref">Usage Count Limit</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2.2.2">
                     <p id="section-toc.1-1.3.2.2.2.2.1"><a href="#section-3.2.2" class="auto internal xref">3.2.2</a>.  <a href="#name-replayability" class="internal xref">Replayability</a></p>
@@ -1321,7 +1322,7 @@ svg {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">Every credential used to identify, authenticate, or otherwise validate a subject is different, and yet there is no specific vocabulary that describes exactly what a given credential should be expected to do, or why exactly it can be called "secure".  To address this shortcoming, this document describes categories of secure credential management and within defines <em>exact</em> labels to describe the intended operation of a given credential.  These labels are intended for colloquial use and designed whenever possible to be accessible and intuitive for laypeople. The specification is scoped only to a credential in its common and expected use; properties for secure administration of credentials are not part of this set. Negative uses (attacks, vulnerabilities) are also not in scope.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">A credential is a set of data used to validate, confirm, or establish one or more claims about a named entity. Many diverse types of credential may be used to identify, authenticate, or otherwise validate a subject, and yet there is no specific vocabulary that describes exactly what a given credential should be expected to do, or why exactly it can be called "secure".  To address this shortcoming, this document describes categories of secure credential management and defines <em>exact</em> labels to describe the intended operation of a given credential.  These labels are intended for colloquial use and designed whenever possible to be accessible and intuitive for laypeople. The specification is scoped only to a credential in its common and expected use; properties for secure administration of credentials are not part of this set. Negative uses (attacks, vulnerabilities) are also not in scope.<a href="#section-1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="credential-management-security-classes">
@@ -1332,10 +1333,10 @@ svg {
 <p id="section-2-1">Properties are organized into areas of scrutiny, with each class containing the minimum set of properties possible to satisfy differences that have clear security value. The property must have a security benefit that is inherent to the credential type.<a href="#section-2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="credential-management-security-properties">
+<div id="credential-management-security">
 <section id="section-3">
       <h2 id="name-credential-management-securi">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-credential-management-securi" class="section-name selfRef">Credential Management Security Properties</a>
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-credential-management-securi" class="section-name selfRef">Credential Management Security</a>
       </h2>
 <div id="credential-construction-properties">
 <section id="section-3.1">
@@ -1355,7 +1356,7 @@ svg {
           <h4 id="name-dynamism">
 <a href="#section-3.1.2" class="section-number selfRef">3.1.2. </a><a href="#name-dynamism" class="section-name selfRef">Dynamism</a>
           </h4>
-<p id="section-3.1.2-1">Dynamism describes a credential whose stored and active forms are different. Credentials with no dynamism (or dynamic genarativity) such as passwords exibit no difference between the stored (in memory, in a password manager, etc.) and the credential sent to the verifier. Dynamic generatvity indicates that some function is used to operate on the stored credential such that what is sent over the wire is different than what is stored (e.g. a challenge response protocol like FIDO <span>[<a href="#WEBAUTHN" class="cite xref">WEBAUTHN</a>]</span>).  Credentials that do not exhibit dynamism, such as shared secrets, usually exhibit replayability and are definitionally not able to be contained.<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-1">Dynamism describes a credential whose inactive (stored or at-rest) and active forms are different. Credentials with no dynamism (or dynamic generativity) such as passwords exhibit no difference between the stored value (in memory, in a password manager, etc.) and the credential sent to the verifier. Dynamic generativity indicates that some function is used to operate on the stored credential such that what is sent over the wire is different than what is stored (e.g. a challenge response protocol like FIDO <span>[<a href="#WEBAUTHN" class="cite xref">WEBAUTHN</a>]</span>).  Credentials that do not exhibit dynamism, such as shared secrets, usually exhibit replayability and are definitionally not able to be contained (see <a href="#credential-containment" class="auto internal xref">Section 3.3</a>).<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="bindability">
@@ -1387,7 +1388,7 @@ svg {
           <h4 id="name-audience-restriction">
 <a href="#section-3.1.6" class="section-number selfRef">3.1.6. </a><a href="#name-audience-restriction" class="section-name selfRef">Audience Restriction</a>
           </h4>
-<p id="section-3.1.6-1">A mechanism that specifies which destination consumers of the credential are valid.  Examples include <code>id_token</code> values <span>[<a href="#OIDC-CORE" class="cite xref">OIDC-CORE</a>]</span> or origin bindings of FIDO tokens.<a href="#section-3.1.6-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.6-1">A mechanism that specifies which destination consumers of the credential are valid.  Examples include <code>id_token</code> values <span>[<a href="#OIDC-CORE" class="cite xref">OIDC-CORE</a>]</span> or origin bindings of FIDO tokens.  Consumers of the credential should be responsible for validating the audience restriction before using an audience-restricted credential.<a href="#section-3.1.6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="validity-window">
@@ -1403,7 +1404,7 @@ svg {
           <h4 id="name-selective-disclosure">
 <a href="#section-3.1.8" class="section-number selfRef">3.1.8. </a><a href="#name-selective-disclosure" class="section-name selfRef">Selective Disclosure</a>
           </h4>
-<p id="section-3.1.8-1">A mechanism by which some or all of the contents within a credential can be made available or unavailable under circumstances determined at presentation time. Values can be: none, per-claim, or predicate.<a href="#section-3.1.8-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.8-1">A credential is capable of selective disclosure if some or all of the contents within a credential can be made available or unavailable under circumstances determined at presentation time. Values can be: none, per-claim, or predicate.<a href="#section-3.1.8-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.1.8-2.1">
               <p id="section-3.1.8-2.1.1">None: the credential is presented whole, or not at all.<a href="#section-3.1.8-2.1.1" class="pilcrow">¶</a></p>
@@ -1425,13 +1426,13 @@ svg {
         <h3 id="name-credential-presentation">
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-credential-presentation" class="section-name selfRef">Credential Presentation</a>
         </h3>
-<p id="section-3.2-1">Credential reuse properties describe ways in which the use of a credential is functionally restricted.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
-<div id="validity-count">
+<p id="section-3.2-1">Credential presentation properties describe ways in which the use of a credential is functionally restricted.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<div id="usage-count-limit">
 <section id="section-3.2.1">
-          <h4 id="name-validity-count">
-<a href="#section-3.2.1" class="section-number selfRef">3.2.1. </a><a href="#name-validity-count" class="section-name selfRef">Validity Count</a>
+          <h4 id="name-usage-count-limit">
+<a href="#section-3.2.1" class="section-number selfRef">3.2.1. </a><a href="#name-usage-count-limit" class="section-name selfRef">Usage Count Limit</a>
           </h4>
-<p id="section-3.2.1-1">A credential becomes invalid after a specified number of successful presentations. An example would be a temporary password that can only be used 5 times, or a one-time password.<a href="#section-3.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.1-1">A credential is usage count limited if it becomes invalid after a specified number of successful presentations by a legitimate presenter. An example would be a temporary password that can only be used 5 times, or a one-time password.<a href="#section-3.2.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="replayability">
@@ -1538,7 +1539,7 @@ svg {
 </div>
 </section>
 </div>
-<div id="credential-containment-unlock">
+<div id="credential-containment">
 <section id="section-3.3">
         <h3 id="name-credential-containment-unlo">
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-credential-containment-unlo" class="section-name selfRef">Credential Containment &amp; Unlock</a>
@@ -1597,7 +1598,7 @@ svg {
           <h4 id="name-unlock-persistence">
 <a href="#section-3.3.7" class="section-number selfRef">3.3.7. </a><a href="#name-unlock-persistence" class="section-name selfRef">Unlock Persistence</a>
           </h4>
-<p id="section-3.3.7-1">Credentials may be unlocked once with an activation factor (e.g. using a hardware security key), or the activation factor may be presented seconds to minutes before use (e.g. a credential vault remains unlocked for 5 minutes after use).<a href="#section-3.3.7-1" class="pilcrow">¶</a></p>
+<p id="section-3.3.7-1">Credentials may be unlocked once with an activation factor (e.g. entering a PIN or biometric to activate a hardware security key), or the activation factor may be presented seconds to minutes before use (e.g. a credential vault remains unlocked for 5 minutes after use, allowing presentation of credentials from the vault without further activation).<a href="#section-3.3.7-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1678,9 +1679,9 @@ svg {
 <a href="#section-3.6.1" class="section-number selfRef">3.6.1. </a><a href="#name-recoverability" class="section-name selfRef">Recoverability</a>
           </h4>
 <p id="section-3.6.1-1">Recoverability describes remediation capabilities that enable or re-enable access to a valid credential after loss or compromise. Values can be: issuer-driven, container-driven,or account-driven.
- * Issuer-driven: remediation is enabled by a direct party to the creation of the credential. Examples include credentials with multiple configured signing certificates, synced passkeys protected by a consumer trust layer, or hardware keys created with matching/derived seed values.
- * Container-driven: remediation enabled by a direct party to containment or unlock of the credential with pre-established administrative trust. Examples include PAM (privileged access management) systems or corporate password managers.
- * Account-driven: the credential cannot be restored, it can only be removed and replaced, often through a process that requires presentation of an unrelated alternate credential.<a href="#section-3.6.1-1" class="pilcrow">¶</a></p>
+* Issuer-driven: remediation is enabled by a direct party to the creation of the credential. Examples include credentials with multiple configured signing certificates, synced passkeys protected by a consumer trust layer, or hardware keys created with matching/derived seed values.
+* Container-driven: remediation enabled by a direct party to containment or unlock of the credential with pre-established administrative trust. Examples include PAM (privileged access management) systems or corporate password managers.
+* Account-driven: the credential cannot be restored, it can only be removed and replaced, often through a process that requires presentation of an unrelated alternate credential.<a href="#section-3.6.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1696,7 +1697,7 @@ svg {
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
 described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
 appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶</a></p>
-<p id="section-4-2">TODO define two parts of credential (secret, generated)<a href="#section-4-2" class="pilcrow">¶</a></p>
+<p id="section-4-2"><strong>Credential:</strong> Information or a mechanism used by a subject to prove a claim to a verifier. Depending on the credential type, it may include a stored secret or key, a value generated from that secret or key for presentation, or an assertion issued by another party. The stored and presented forms may be identical or different, as described by <a href="#dynamism" class="auto internal xref">Section 3.1.2</a>.<a href="#section-4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-considerations">
@@ -1755,6 +1756,10 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
         <dd>
 <span class="refAuthor">World Wide Web Consortium</span>, <span class="refTitle">"Device Bound Session Credentials"</span>, <span class="seriesInfo">W3C First Public Working Draft WD-dbsc-1-20250821</span>, <time datetime="2025-08-21" class="refDate">21 August 2025</time>, <span>&lt;<a href="https://www.w3.org/TR/dbsc/">https://www.w3.org/TR/dbsc/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="I-D.ietf-oauth-identity-assertion-authz-grant">[I-D.ietf-oauth-identity-assertion-authz-grant]</dt>
+        <dd>
+<span class="refAuthor">Parecki, A.</span>, <span class="refAuthor">McGuinness, K.</span>, and <span class="refAuthor">B. Campbell</span>, <span class="refTitle">"Identity Assertion JWT Authorization Grant"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-identity-assertion-authz-grant-06</span>, <time datetime="2026-10-30" class="refDate">30 October 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-assertion-authz-grant-06">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-assertion-authz-grant-06</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.ietf-oauth-sd-jwt-vc">[I-D.ietf-oauth-sd-jwt-vc]</dt>
         <dd>
 <span class="refAuthor">Terbu, O.</span>, <span class="refAuthor">Fett, D.</span>, and <span class="refAuthor">B. Campbell</span>, <span class="refTitle">"SD-JWT-based Verifiable Digital Credentials (SD-JWT VC)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-sd-jwt-vc-26</span>, <time datetime="2026-11-06" class="refDate">6 November 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-sd-jwt-vc-26">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-sd-jwt-vc-26</a>&gt;</span>. </dd>
@@ -1762,10 +1767,6 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
 <dt id="I-D.ietf-oauth-transaction-tokens">[I-D.ietf-oauth-transaction-tokens]</dt>
         <dd>
 <span class="refAuthor">Tulshibagwale, A.</span>, <span class="refAuthor">Fletcher, G.</span>, and <span class="refAuthor">P. Kasselman</span>, <span class="refTitle">"Transaction Tokens"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-transaction-tokens-11</span>, <time datetime="2026-07-30" class="refDate">30 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-11">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-11</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="I-D.ietf-oauth-v2-1">[I-D.ietf-oauth-v2-1]</dt>
-        <dd>
-<span class="refAuthor">Hardt, D.</span>, <span class="refAuthor">Parecki, A.</span>, and <span class="refAuthor">T. Lodderstedt</span>, <span class="refTitle">"The OAuth 2.1 Authorization Framework"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-v2-1-17</span>, <time datetime="2026-10-30" class="refDate">30 October 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-17">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-17</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.irtf-cfrg-bbs-per-verifier-linkability">[I-D.irtf-cfrg-bbs-per-verifier-linkability]</dt>
         <dd>
@@ -1818,6 +1819,10 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
 <dt id="RFC7519">[RFC7519]</dt>
         <dd>
 <span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">N. Sakimura</span>, <span class="refTitle">"JSON Web Token (JWT)"</span>, <span class="seriesInfo">RFC 7519</span>, <span class="seriesInfo">DOI 10.17487/RFC7519</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7519">https://www.rfc-editor.org/rfc/rfc7519</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7523">[RFC7523]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Campbell, B.</span>, and <span class="refAuthor">C. Mortimore</span>, <span class="refTitle">"JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants"</span>, <span class="seriesInfo">RFC 7523</span>, <span class="seriesInfo">DOI 10.17487/RFC7523</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7523">https://www.rfc-editor.org/rfc/rfc7523</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8693">[RFC8693]</dt>
         <dd>
@@ -1881,7 +1886,7 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
       <h2 id="name-applying-the-properties-to-">
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-applying-the-properties-to-" class="section-name selfRef">Applying the Properties to Common Credential Types</a>
       </h2>
-<p id="appendix-A-1">This appendix illustrates how the properties defined in this document apply to a range of common credential types, to validate that the property set is expressive enough to differentiate them. Each class of properties defined in <a href="#credential-management-security-properties" class="auto internal xref">Section 3</a> is presented as a table whose rows are credential types and whose columns are the properties of that class.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-1">This appendix illustrates how the properties defined in this document apply to a range of common credential types, to validate that the property set is expressive enough to differentiate them. Each class of properties defined in <a href="#credential-management-security" class="auto internal xref">Section 3</a> is presented as a table whose rows are credential types and whose columns are the properties of that class.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
 <p id="appendix-A-2">The credential types examined are:<a href="#appendix-A-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-A-3.1">
@@ -1903,31 +1908,34 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
           <p id="appendix-A-3.6.1"><strong>mTLS certificate</strong> — a client certificate issued by a Web PKI or private CA outside of any SPIFFE trust domain, presented during the TLS handshake.<a href="#appendix-A-3.6.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.7">
-          <p id="appendix-A-3.7.1"><strong>OAuth bearer access token</strong> — an access token <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> presented to a resource server as a bearer credential, either as a signed JWT or as an opaque handle the resource server validates by introspection. OAuth 2.1 <span>[<a href="#I-D.ietf-oauth-v2-1" class="cite xref">I-D.ietf-oauth-v2-1</a>]</span> consolidates the OAuth 2.0 core and bearer token specifications and is intended to obsolete both.<a href="#appendix-A-3.7.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.7.1"><strong>OAuth access token</strong> — an access token <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> presented to a resource server, either as a signed JWT (bearer token) or as an opaque handle (reference token) the resource server validates by introspection.<a href="#appendix-A-3.7.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.8">
-          <p id="appendix-A-3.8.1"><strong>Sender-constrained access token</strong> — the same access token bound to a client key, so that presentation additionally requires proof of possession of that key, whether by DPoP <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span> or by mutual TLS certificate binding <span>[<a href="#RFC8705" class="cite xref">RFC8705</a>]</span>.<a href="#appendix-A-3.8.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.8.1"><strong>Sender-constrained access token</strong> — the same access token bound to a client key, so that presentation additionally requires proof of possession of that key, whether by DPoP <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span> or by mutual TLS certificate binding <span>[<a href="#RFC8705" class="cite xref">RFC8705</a>]</span>.  By adding proof of possession, the token no longer displays the properties of bearer tokens, it is bound to the key holder.<a href="#appendix-A-3.8.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.9">
-          <p id="appendix-A-3.9.1"><strong>HOTP</strong> — an HMAC-based counter-derived one-time password.<a href="#appendix-A-3.9.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.9.1"><strong>ID-JAG</strong> — an Identity Assertion JWT Authorization Grant <span>[<a href="#I-D.ietf-oauth-identity-assertion-authz-grant" class="cite xref">I-D.ietf-oauth-identity-assertion-authz-grant</a>]</span>, a JWT issued by an enterprise identity provider when a client exchanges its ID token or SAML assertion for one, and presented by that client to a resource application's authorization server as a JWT authorization grant <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span> to obtain an access token.<a href="#appendix-A-3.9.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.10">
-          <p id="appendix-A-3.10.1"><strong>TOTP</strong> — a time-derived one-time password.<a href="#appendix-A-3.10.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.10.1"><strong>HOTP</strong> — an HMAC-based counter-derived one-time password.<a href="#appendix-A-3.10.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.11">
-          <p id="appendix-A-3.11.1"><strong>SMS OTP</strong> — a one-time code generated by the verifier and delivered out of band over the public telephone network.<a href="#appendix-A-3.11.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.11.1"><strong>TOTP</strong> — a time-derived one-time password.<a href="#appendix-A-3.11.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.12">
-          <p id="appendix-A-3.12.1"><strong>SD-JWT VC</strong> — a verifiable credential expressed as a selectively disclosable JWT <span>[<a href="#I-D.ietf-oauth-sd-jwt-vc" class="cite xref">I-D.ietf-oauth-sd-jwt-vc</a>]</span>, built on the SD-JWT construction, optionally bound to a holder key.<a href="#appendix-A-3.12.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.12.1"><strong>SMS OTP</strong> — a one-time code generated by the verifier and delivered out of band over the public telephone network.<a href="#appendix-A-3.12.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.13">
-          <p id="appendix-A-3.13.1"><strong>ISO mdoc</strong> — an ISO/IEC 18013-5 mobile document such as a mobile driving licence, comprising an issuer-signed Mobile Security Object and a device-signed response.<a href="#appendix-A-3.13.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.13.1"><strong>SD-JWT VC</strong> — a verifiable credential expressed as a selectively disclosable JWT <span>[<a href="#I-D.ietf-oauth-sd-jwt-vc" class="cite xref">I-D.ietf-oauth-sd-jwt-vc</a>]</span>, built on the SD-JWT construction, optionally bound to a holder key.<a href="#appendix-A-3.13.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.14">
-          <p id="appendix-A-3.14.1"><strong>BBS verifiable credential</strong> — a verifiable credential <span>[<a href="#VC-DATA-MODEL" class="cite xref">VC-DATA-MODEL</a>]</span> secured with the BBS signature scheme <span>[<a href="#I-D.irtf-cfrg-bbs-signatures" class="cite xref">I-D.irtf-cfrg-bbs-signatures</a>]</span> through the Data Integrity BBS cryptosuite <span>[<a href="#VC-DI-BBS" class="cite xref">VC-DI-BBS</a>]</span>, so that each presentation is a freshly derived zero-knowledge proof over the selectively disclosed claims rather than the issuer's signature itself.<a href="#appendix-A-3.14.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.14.1"><strong>ISO mdoc</strong> — an ISO/IEC 18013-5 mobile document such as a mobile driving licence, comprising an issuer-signed Mobile Security Object and a device-signed response.<a href="#appendix-A-3.14.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-A-3.15">
-          <p id="appendix-A-3.15.1"><strong>DBSC</strong> — Device Bound Session Credentials <span>[<a href="#DBSC" class="cite xref">DBSC</a>]</span>, a browser session credential bound to a non-exportable device key and periodically refreshed by proof of possession.<a href="#appendix-A-3.15.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.15.1"><strong>BBS verifiable credential</strong> — a verifiable credential <span>[<a href="#VC-DATA-MODEL" class="cite xref">VC-DATA-MODEL</a>]</span> secured with the BBS signature scheme <span>[<a href="#I-D.irtf-cfrg-bbs-signatures" class="cite xref">I-D.irtf-cfrg-bbs-signatures</a>]</span> through the Data Integrity BBS cryptosuite <span>[<a href="#VC-DI-BBS" class="cite xref">VC-DI-BBS</a>]</span>, so that each presentation is a freshly derived zero-knowledge proof over the selectively disclosed claims rather than the issuer's signature itself.<a href="#appendix-A-3.15.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-3.16">
+          <p id="appendix-A-3.16.1"><strong>DBSC</strong> — Device Bound Session Credentials <span>[<a href="#DBSC" class="cite xref">DBSC</a>]</span>, a browser session credential bound to a non-exportable device key and periodically refreshed by proof of possession.<a href="#appendix-A-3.16.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <div id="credential-construction">
@@ -2127,6 +2135,13 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">None</td>
             </tr>
             <tr>
+              <td class="text-left" rowspan="1" colspan="1">ID-JAG</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; derived by token exchange from an ID token or SAML assertion, itself exchanged for an access token, and may carry an <code>act</code> claim</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; <code>aud</code> names the resource application's authorization server</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; <code>exp</code>, with short lifetimes recommended</td>
+              <td class="text-left" rowspan="1" colspan="1">None; <code>scope</code> constrains the requested authorization rather than disclosure</td>
+            </tr>
+            <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
@@ -2255,6 +2270,14 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Delegated; the client is identified by its bound key alongside the resource owner</td>
             </tr>
             <tr>
+              <td class="text-left" rowspan="1" colspan="1">ID-JAG</td>
+              <td class="text-left" rowspan="1" colspan="1">Unlimited within the validity window; the resource authorization server may enforce single use by tracking <code>jti</code>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">Replayable within the validity window unless bound to a client key by a <code>cnf</code> claim; without binding, client authentication at the token endpoint is the only check against presentation by another party</td>
+              <td class="text-left" rowspan="1" colspan="1">Linkable; the issuer-signed JWT is presented verbatim, and <code>sub</code> is stable for a given resource authorization server</td>
+              <td class="text-left" rowspan="1" colspan="1">Delegated; the grant conveys both the user and the requesting client. Chained when an <code>act</code> claim records intermediate actors</td>
+            </tr>
+            <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
               <td class="text-left" rowspan="1" colspan="1">One; the counter advances on acceptance</td>
               <td class="text-left" rowspan="1" colspan="1">Bounded; single use, but the code remains valid until the counter advances</td>
@@ -2308,7 +2331,7 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
         </table>
 </section>
 </div>
-<div id="credential-containment-unlock-1">
+<div id="credential-containment-unlock">
 <section id="appendix-A.3">
         <h3 id="name-credential-containment-unloc">
 <a href="#appendix-A.3" class="section-number selfRef">A.3. </a><a href="#name-credential-containment-unloc" class="section-name selfRef">Credential Containment &amp; Unlock</a>
@@ -2372,6 +2395,12 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">The token is uncontained but unusable alone; the bound private key is contained and may be hardware-backed</td>
               <td class="text-left" rowspan="1" colspan="1">Bound to the client proof-of-possession key</td>
               <td class="text-left" rowspan="1" colspan="1">Proactive; the resource server rejects any presentation lacking a valid proof of possession</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ID-JAG</td>
+              <td class="text-left" rowspan="1" colspan="1">Uncontained; a bearer assertion held in client memory until exchanged. The bound private key is contained when a <code>cnf</code> claim is used</td>
+              <td class="text-left" rowspan="1" colspan="1">Unbounded after issuance; bound to the client proof-of-possession key when sender-constrained</td>
+              <td class="text-left" rowspan="1" colspan="1">Reactive for the bare assertion; short lifetime and the client authentication check at the token endpoint. Proactive when sender-constrained</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
@@ -2485,6 +2514,13 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">No; presentation is automated and requires no user gesture</td>
               <td class="text-left" rowspan="1" colspan="1">The client that holds the bound private key</td>
               <td class="text-left" rowspan="1" colspan="1">Life of the token; the bound key persists independently</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ID-JAG</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes for the bare assertion, though unusable by a party that cannot authenticate as the named client; None when bound to a hardware-backed client key</td>
+              <td class="text-left" rowspan="1" colspan="1">No; obtained and exchanged by the client with no user gesture after the initial sign-in</td>
+              <td class="text-left" rowspan="1" colspan="1">Any holder of the assertion that can authenticate as the named client</td>
+              <td class="text-left" rowspan="1" colspan="1">Life of the assertion; intended to be exchanged promptly rather than cached</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
@@ -2604,6 +2640,12 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">As for a bearer token, and additionally binds the client proof-of-possession key into the token</td>
             </tr>
             <tr>
+              <td class="text-left" rowspan="1" colspan="1">ID-JAG</td>
+              <td class="text-left" rowspan="1" colspan="1">Inherits the assurance of the identity provider authentication behind the ID token or SAML assertion exchanged for it</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes; issuance is gated by a prior ID token or SAML assertion presented in token exchange, and by identity provider policy for the client and resource application</td>
+              <td class="text-left" rowspan="1" colspan="1">The identity provider binds subject, requesting client, audience and scope into the signed grant at issuance</td>
+            </tr>
+            <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
               <td class="text-left" rowspan="1" colspan="1">Inherits the assurance of the session that enrolled it</td>
               <td class="text-left" rowspan="1" colspan="1">Yes; enrollment is gated by a pre-existing credential</td>
@@ -2717,6 +2759,12 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Deployment policy; financial-grade profiles require sender-constrained tokens</td>
             </tr>
             <tr>
+              <td class="text-left" rowspan="1" colspan="1">ID-JAG</td>
+              <td class="text-left" rowspan="1" colspan="1">JWT profile, <code>typ</code> value and signing algorithms fixed by the ID-JAG specification</td>
+              <td class="text-left" rowspan="1" colspan="1">Short expiry recommended; clients are directed to request a new grant rather than cache one</td>
+              <td class="text-left" rowspan="1" colspan="1">Deployment policy; the enterprise identity provider governs which clients may obtain grants for which resource applications</td>
+            </tr>
+            <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
               <td class="text-left" rowspan="1" colspan="1">HMAC algorithm and code length fixed by the HOTP specification</td>
               <td class="text-left" rowspan="1" colspan="1">Seed rotation on re-enrollment; counter resynchronization</td>
@@ -2809,6 +2857,10 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
               <td class="text-left" rowspan="1" colspan="1">Issuer-driven; a new token is requested and bound to a current key. Loss of the bound key requires a new key and a new token</td>
             </tr>
             <tr>
+              <td class="text-left" rowspan="1" colspan="1">ID-JAG</td>
+              <td class="text-left" rowspan="1" colspan="1">Issuer-driven; a new grant is requested from the identity provider by token exchange. The grant itself is never recovered</td>
+            </tr>
+            <tr>
               <td class="text-left" rowspan="1" colspan="1">HOTP</td>
               <td class="text-left" rowspan="1" colspan="1">Container-driven where an authenticator application backup restores the seed; Account-driven otherwise, by enrolling a new seed</td>
             </tr>
@@ -2847,7 +2899,7 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
       <h2 id="name-acknowledgments">
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
-<p id="appendix-B-1">The authors would like to acknowledge the following individuals for their thoughful feedback: George Fletcher, Andrew Hughes, Justin Richer, and the attendees of the Internet Identity Workshop 42 and OAuth Security Workshop 2025.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+<p id="appendix-B-1">The authors would like to acknowledge the following individuals for their thoughtful feedback: George Fletcher, Elizabeth Garber, Ian Glazer, Andrew Hughes, Justin Richer, Jonathan Sander, Nick Steele, and the attendees of the Internet Identity Workshop 42, OAuth Security Workshop 2025, and Authenticate 2026.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
@@ -2865,6 +2917,7 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
 </address>
 <address class="vcard">
         <div dir="auto" class="left"><span class="fn nameRole">Dean H. Saxe</span></div>
+<div dir="auto" class="left"><span class="org">Full Frontal Nerdity Industries</span></div>
 <div class="email">
 <span>Email:</span>
 <a href="mailto:dean@thesax.es" class="email">dean@thesax.es</a>
