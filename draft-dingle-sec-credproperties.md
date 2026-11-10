@@ -199,7 +199,7 @@ A credential becomes invalid outside of a specified time boundary.  An example w
 A credential is capable of selective disclosure if some or all of the contents within a credential can be made available or unavailable under circumstances determined at presentation time. Values can be: none, per-claim, or predicate.
 
 * None: the credential is presented whole, or not at all.
-* Per-claim: individual claims can be revealed or withheld at presentation time. The mechanism may be a salted hash over each claim, as in an SD-JWT {{RFC9901}} or an ISO mdoc, or a zero-knowledge proof over the issuer's signature, as in a credential signed with the BBS signature scheme {{I-D.irtf-cfrg-bbs-signatures}}.
+* Per-claim: individual claims can be revealed or withheld at presentation time. The mechanism may be a salted hash over each claim, as in an SD-JWT {{RFC9901}} or an ISO mdoc {{ISO18013-5}}, or a zero-knowledge proof over the issuer's signature, as in a credential signed with the BBS signature scheme {{I-D.irtf-cfrg-bbs-signatures}}.
 * Predicate: a statement about a claim can be proven without revealing the claim itself, such as proving that an age exceeds a threshold rather than disclosing a date of birth. Predicates require a proof construction beyond selective disclosure alone, such as a range proof; the BBS signature scheme selectively discloses claims but does not itself prove predicates.
 
 Selective disclosure describes what a presentation reveals. Whether presentations can be correlated with each other is a separate property, Unlinkability ({{unlinkability}}); a credential may selectively disclose and still be fully linkable.
@@ -326,7 +326,7 @@ The credential types examined are:
 - **Synced passkey (consumer)** — a WebAuthn credential synchronized across devices by a consumer credential manager such as a platform provider or password manager.
 - **Device-bound passkey on FIDO L2 Certified security key** — a WebAuthn credential generated on and bound to a hardware authenticator implementing CTAP {{CTAP}} and certified at FIDO L2 or above.
 - **SPIFFE X.509-SVID** — a workload identity issued as an X.509 certificate following attestation of the workload, presented via mutual TLS. See {{SPIFFE-X509-SVID}}.
-- **SPIFFE JWT-SVID** — the same workload identity expressed as a signed JWT and presented as a bearer token {{RFC6750}} to services that cannot terminate mutual TLS. See {{SPIFFE-JWT-SVID}}.
+- **SPIFFE JWT-SVID** — the same workload identity expressed as a signed JWT {{RFC7519}} and presented as a bearer token {{RFC6750}} to services that cannot terminate mutual TLS. See {{SPIFFE-JWT-SVID}}.
 - **mTLS certificate** — a client certificate issued by a Web PKI or private CA outside of any SPIFFE trust domain, presented during the TLS handshake.
 - **OAuth access token** — an access token {{RFC6749}} presented to a resource server, either as a signed JWT (bearer token) or as an opaque handle (reference token) the resource server validates by introspection.
 - **Sender-constrained access token** — the same access token bound to a client key, so that presentation additionally requires proof of possession of that key, whether by DPoP {{RFC9449}} or by mutual TLS certificate binding {{RFC8705}}.  By adding proof of possession, the token no longer displays the properties of bearer tokens, it is bound to the key holder.
