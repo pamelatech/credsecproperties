@@ -16,6 +16,7 @@ keyword:
  - credential management
  - multifactor authentication
  - mfa
+
 venue:
 #  group: WG
 #  type: Working Group
@@ -33,6 +34,7 @@ author:
     fullname: Dean H. Saxe
     organization: Full Frontal Nerdity Industries
     email: dean@thesax.es
+
 normative:
 
 informative:
