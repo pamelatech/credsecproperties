@@ -2,11 +2,11 @@
 
 
 
-Network Working Group                                          P. Dingle
+TBD                                                            P. Dingle
 Internet-Draft                                                 Microsoft
 Intended status: Informational                                D. H. Saxe
-Expires: 14 May 2027                     Full Frontal Nerdity Industries
-                                                        10 November 2026
+Expires: 19 May 2027                     Full Frontal Nerdity Industries
+                                                        15 November 2026
 
 
                Credential Management Security properties
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 May 2027.
+   This Internet-Draft will expire on 19 May 2027.
 
 Copyright Notice
 
