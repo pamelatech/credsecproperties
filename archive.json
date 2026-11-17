@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-11-12T05:26:41.323869+00:00",
+  "timestamp": "2026-11-17T06:08:30.400908+00:00",
   "repo": "pamelatech/credsecproperties",
   "labels": [
     {
@@ -2501,25 +2501,35 @@
       "id": "PR_kwDON4ikis8AAAABOdufaQ",
       "title": "Set the working group to TBD",
       "url": "https://github.com/pamelatech/credsecproperties/pull/55",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "deansaxe",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "The draft was rendering with **\"Network Working Group\"** in the top-left header. Nothing added that \u2014 it is xml2rfc's default when no working group is set, and the template's `workgroup` line was still commented out:\n\n```\n# workgroup: WG Working Group\n```\n\nThis sets `workgroup: TBD`, so the header states plainly that no working group has adopted the draft.\n\nBefore:\n\n```\nNetwork Working Group                                          P. Dingle\nInternet-Draft                                                 Microsoft\n```\n\nAfter:\n\n```\nTBD                                                            P. Dingle\nInternet-Draft                                                 Microsoft\n```\n\nVerified in both the text and HTML renders. `make all` and `make lint` both exit 0.\n\nNote the `venue:` block above is a separate setting and is left alone \u2014 its `group`/`type`/`mail`/`arch` entries are still commented out, which is correct until a working group actually picks this up.\n",
       "createdAt": "2026-11-11T19:35:22Z",
-      "updatedAt": "2026-11-11T19:35:22Z",
+      "updatedAt": "2026-11-15T19:41:16Z",
       "baseRepository": "pamelatech/credsecproperties",
       "baseRefName": "main",
       "baseRefOid": "c9212f9e1f809531d49f8c5a5c866ef10a20334e",
       "headRepository": "pamelatech/credsecproperties",
       "headRefName": "feature/workgroup-tbd",
       "headRefOid": "f06e37f3ad81481702cadda4a0701981f4648a19",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "closedAt": "2026-11-15T19:41:15Z",
+      "mergedAt": "2026-11-15T19:41:15Z",
+      "mergedBy": "deansaxe",
+      "mergeCommit": {
+        "oid": "39a180dd54c94b72cb2de6b91ce940573a4e049e"
+      },
+      "comments": [
+        {
+          "author": "deansaxe",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I'm going to merge this so it doesn't appear that this is assigned to a WG when it is not.",
+          "createdAt": "2026-11-15T19:41:08Z",
+          "updatedAt": "2026-11-15T19:41:08Z"
+        }
+      ],
       "reviews": []
     }
   ]
